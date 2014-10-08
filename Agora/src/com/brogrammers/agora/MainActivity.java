@@ -1,4 +1,4 @@
-package com.example.agora;
+package com.brogrammers.agora;
 
 import android.app.Activity;
 import android.os.Bundle;
