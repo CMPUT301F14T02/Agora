@@ -31,5 +31,8 @@ public class FindNumberOFQuestionAnswersTest extends TestCase{
 	long questionID = addedQuestion.uniqueID;
 	webServiceModel.addAnswer('Body Test', questionID, img);
 	assertTrue(addedQuestion.countAnswer() == 1);
+	assertTrue(addedQuestion.image != null);
 	assertTrue(addedQuestionCached.countAnswers() == 1);
+	assertTrue(addedQuestionCached.image != null);
+
 }
