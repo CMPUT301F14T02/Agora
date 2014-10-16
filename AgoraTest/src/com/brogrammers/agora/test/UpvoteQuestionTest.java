@@ -7,9 +7,14 @@ public class UpvoteQuestionTest extends TestCase
 {
 //Assuming questions start with 0 upvotes
 	QuestionController controller = QuestionController.getController();
-	controller.addQuestion(questionTitle, 'Body Body Body', 0);
-	controller.upvote(questionID);
+	controller.addQuestion("Test Title", "Test Body", null);
 	
-	assertTrue("Question is upvoted.", QuestionController.getQuestion(questionID).getRating() == 1);
+	WebServiceModel webModel = WebServiceModel.getModel();
+	List<Question> questions = 	webModel.getQuestions();
+	
+	testQuestion = questions.get(0);
+	controller.upvote(testQuestion.getUniqueID());
+	
+	assertTrue("Question is upvoted.", testQuestion.getRating());
 	
 }
