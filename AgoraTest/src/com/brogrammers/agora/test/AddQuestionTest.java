@@ -30,7 +30,7 @@ public class AddQuestionTest extends TestCase {
 	assertTrue(addedQuestion.get(0).image != null);
 	
 	LocalCacheModel localCacheModel = LocalCacheModel.getModel();
-	Question addedQuestion = localCacheModel.searchQuestions('questionTitle');
+	Question addedQuestion = localCacheModel.getQuestions();
 	assertTrue(addedQuestion.size() == 1);
 	assertTrue(addedQuestion.get(0).title == questionTitle);
 	assertTrue(addedQuestion.get(0).body == 'Body Test');
