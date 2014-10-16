@@ -23,8 +23,8 @@ public class FindNumberOFQuestionAnswersTest extends TestCase{
 	
 	WebServiceModel webServiceModel = WebServiceModel.getModel();
 	LocalCacheModel localCacheModel = LocalCacheModel.getModel();
-	Question addedQuestion = webServiceModel.searchQuestions('questionTitle');
-	Question addedQuestionCached = localCacheModel.searchQuestion('questionTitle');
+	Question addedQuestion = webServiceModel.searchQuestions('questionTitle').get(0);
+	Question addedQuestionCached = localCacheModel.getQuestions().get(0);
 	assertTrue(addedQuestion.countAnswers() == 0);
 	assertTrue(addedQuestionCached.countAnswers() == 0);
 
