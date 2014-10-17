@@ -36,5 +36,5 @@ public class SortByDateTest extends TestCase {
 	assertTrue("secondDate not second", questions[1] == secondDate);
 	assertTrue("thirdDate not third", questions[2] == thirdDate);
 	assertTrue("fourthDate not last", questions[-1] == fourthDate);
-
+	assertTrue("Correct count", questions.size() = 4);
 }
