@@ -7,7 +7,7 @@ import junit.framework.TestCase;
 
 public class FindNumberOFQuestionAnswersTest extends TestCase{
 	QuestionController controller = QuestionController.getController();
-	String questionTitle = String.valueOf(System.currentTimeMillis());
+	String questionTitle1 = String.valueOf(System.currentTimeMillis());
 	
 	// http://stackoverflow.com/questions/5882005/how-to-download-image-from-any-web-page-in-java
 	// Author: planetjones
@@ -19,18 +19,19 @@ public class FindNumberOFQuestionAnswersTest extends TestCase{
 	} catch (IOException e) {
 	}
 	
-	long questionID = controller.addQuestion(questionTitle, 'Body Test', img);
+	long questionID1 = controller.addQuestion(questionTitle1, 'Body Test', img);
 	
 	WebServiceModel webServiceModel = WebServiceModel.getModel();
 	LocalCacheModel localCacheModel = LocalCacheModel.getModel();
-	Question addedQuestion = webServiceModel.searchQuestions(questionTitle).get(0);
+	Question addedQuestion = webServiceModel.searchQuestions(questionTitle1).get(0);
 	Question addedQuestionCached = localCacheModel.getQuestions().get(0);
 	assertTrue(addedQuestion.countAnswers() == 0);
 	assertTrue(addedQuestionCached.countAnswers() == 0);
 
-	long answerId1 = webServiceModel.addAnswer('Body Test', questionID, img);
-	long answerId2 = webServiceModel.addAnswer('Body Test', questionID, img);
-	long answerId3 = webServiceModel.addAnswer('Body Test', questionID, img);
+	ArrayList<long> answerIdsq1 = new ArrayList<long>;
+	answerIdsq1.add(webServiceModel.addAnswer('Body Test', questionID1, img));
+	answerIdsq1.add(webServiceModel.addAnswer('Body Test', questionID1, img));
+	answerIdsq1.add(webServiceModel.addAnswer('Body Test', questionID1, img));
 
 	assertTrue(addedQuestion.countAnswer() == 3);
 	assertTrue(addedQuestion.image != null);
@@ -44,18 +45,22 @@ public class FindNumberOFQuestionAnswersTest extends TestCase{
 	Question addedQuestion2 = webServiceModel.searchQuestions(questionTitle2).get(0);
 	
 	// assumes the model returns the answer id
-	ArrayList<long> answerIds = new ArrayList<long>;
-	answerIds.add(webServiceModel.addAnswer('Body Test', questionID2, img));	
-	answerIds.add(webServiceModel.addAnswer('Body Test', questionID2, img));
-	answerIds.add(webServiceModel.addAnswer('Body Test', questionID2, img));
+	ArrayList<long> answerIdsq2 = new ArrayList<long>;
+	answerIdsq2.add(webServiceModel.addAnswer('Body Test', questionID2, img));	
+	answerIdsq2.add(webServiceModel.addAnswer('Body Test', questionID2, img));
+	answerIdsq2.add(webServiceModel.addAnswer('Body Test', questionID2, img));
 	
 	// ensure the first question created does not have reference to the new answers.
-	Question addedQuestion = webServiceModel.searchQuestions(questionTitle).get(0);
-	for (Answer a: addedQuestion.answers){
-		assertFalse(answerIds.contains(a.uniqueID));
+	Question addedQuestion1 = webServiceModel.searchQuestions(questionTitle1).get(0);
+	for (Answer a: addedQuestion1.answers){
+		assertFalse(answerIdsq2.contains(a.uniqueID));
 	}
 
-	
+	// ensure the first question created does not have reference to the new answers.
+	Question addedQuestion2 = webServiceModel.searchQuestions(questionTitle2).get(0);
+	for (Answer a: addedQuestion2.answers){
+		assertFalse(answerIdsq1.contains(a.uniqueID));
+	}
 	
 	
 
