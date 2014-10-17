@@ -23,19 +23,19 @@ Question noimage3 = new Question ("What should I wear today?", "I heard shorts a
 Image img1 = null;
 try {
 URL url = new URL("http://cdn.bulbagarden.net/upload/2/25/Bulbapedia_logo.png");
-img = ImageIO.read(url);
+img1 = ImageIO.read(url);
 } catch (IOException e) {
 }
 Image img2 = null;
 try {
 URL url = new URL("http://cdn.bulbagarden.net/upload/thumb/0/0d/025Pikachu.png/600px-025Pikachu.png");
-img = ImageIO.read(url);
+img2 = ImageIO.read(url);
 } catch (IOException e) {
 }
 Image img3 = null;
 try {
 URL url = new URL("http://cdn.bulbagarden.net/upload/thumb/9/98/192Sunflora.png/600px-192Sunflora.png");
-img = ImageIO.read(url);
+img3 = ImageIO.read(url);
 } catch (IOException e) {
 }
 
