@@ -15,11 +15,16 @@ public class UpvoteQuestionTest extends TestCase
 	Question testQuestion = webModel.getQuestionById(questionID);
 	controller.upvote(questionID);
 	
-	assertTrue("Question is upvoted.", testQuestion.getRating()== 1);
+	void testQuestionUpvoted() {
+		assertTrue("Question is upvoted.", testQuestion.getRating()== 1);
+	}
 	
 	//upvoting 100 times
 	for (int i = 1; i < 99; i++){
 		controller.upvote(questionID);
 	}
-	assertTrue("Question is not upvoted 100 times.", testQuestion.getRating() == 100);
+	
+	void testQuestionUpvoteCount() {
+		assertTrue("Question is not upvoted 100 times.", testQuestion.getRating() == 100);
+	}
 }
