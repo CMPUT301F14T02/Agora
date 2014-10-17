@@ -20,7 +20,7 @@ public class UpvoteQuestionTest extends TestCase
 	}
 	
 	//upvoting 100 times
-	for (int i = 1; i < 99; i++){
+	for (int i = 0; i < 99; i++){
 		controller.upvote(questionID);
 	}
 	
