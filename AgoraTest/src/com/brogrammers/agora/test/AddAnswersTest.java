@@ -5,7 +5,7 @@ import java.net.URL;
 
 import junit.framework.TestCase;
 
-public class FindNumberOFQuestionAnswersTest extends TestCase{
+public class AddAnswersTest extends TestCase{
 	QuestionController controller = QuestionController.getController();
 	String questionTitle1 = String.valueOf(System.currentTimeMillis());
 	
