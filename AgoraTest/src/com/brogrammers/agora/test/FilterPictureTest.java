@@ -14,7 +14,7 @@ Question<List> plainlist;
 // assuming enum 0 = IMAGE, 1 = NOIMAGE
 Question image1 = new Question("How do I beat rain teams?", "They are too fast. Thunder is too accurate in the rain.", null);
 Question image2 = new Question ("How do I beat sand teams?", "Tyranitar is a broken mon.", null );
-Question image 3 = new Question ("How do I beat sun teams?", "Sunflora is too good.", null );
+Question image3 = new Question ("How do I beat sun teams?", "Sunflora is too good.", null );
 Question noimage1 = new Question ("How many apricots do I need for a masterball", "I want one to catch a magikarp.", null );
 Question noimage2 = new Question ("My pokemon won't listen to me.", "My friend traded me his lv100 Oddish and it won't listen to me. Please help!", null );
 Question noimage3 = new Question ("What should I wear today?", "I heard shorts are comfy.", null );
