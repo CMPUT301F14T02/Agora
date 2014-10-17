@@ -61,10 +61,4 @@ public class AddAnswersTest extends TestCase{
 	for (Answer a: addedQuestion2.answers){
 		assertFalse(answerIdsq1.contains(a.uniqueID));
 	}
-	
-	
-
-	
-	
-
 }
