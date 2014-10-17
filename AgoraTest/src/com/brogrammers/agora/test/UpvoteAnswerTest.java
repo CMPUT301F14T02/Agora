@@ -16,11 +16,15 @@ public class UpvoteAnswerTest extends TestCase
 	//upvoting
 	controller.upvote(answerID);
 	Answer testAnswer = webModel.getAnswerById(answerID);
-	assertTrue("Answer is not upvoted.", testAnswer.getRating() == 1);
+	void testAnswerUpVote() {
+		assertTrue("Answer is not upvoted.", testAnswer.getRating() == 1);
+	}
 	
 	//upvoting 100 times
 	for (int i = 1; i < 99; i++){
 		controller.upvote(answerID);
 	}
-	assertTrue("Answer is not upvoted 100 times.", testAnswer.getRating() == 100);
+	void testUpvoteAnswerCount() {
+		assertTrue("Answer is not upvoted 100 times.", testAnswer.getRating() == 100);
+	}
 }
