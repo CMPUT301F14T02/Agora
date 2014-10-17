@@ -20,7 +20,7 @@ public class UpvoteAnswerTest extends TestCase
 	
 	//upvoting 100 times
 	for (int i = 1; i < 99; i++){
-		controller.upvote(testAnswer.getUniqueID());
+		controller.upvote(answerID);
 	}
 	assertTrue("Answer is not upvoted 100 times.", testAnswer.getRating() == 100);
 }

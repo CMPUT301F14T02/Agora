@@ -38,5 +38,5 @@ public class SortByVoteTest extends TestCase {
 	assertTrue("fiveVote not second", questions[1] == fiveVote);
 	assertTrue("threeVote not third", questions[2] == threeVote);
 	assertTrue("noVote not last", questions[-1] == noVote);
-
+	assertTrue("Correct count", questions.size() = 4);
 }
