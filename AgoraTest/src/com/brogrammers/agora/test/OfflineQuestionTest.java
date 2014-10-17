@@ -29,23 +29,29 @@ public class OfflineQuestionTest extends TestCase {
 	controller.addQuestion('Question Title', 'Body Test', img);
 	
 	//Offline Test
-	Question addedQuestion = webServiceModel.searchQuestions('Question Title');
-	assertTrue(addedQuestion.size() == 0);
+	void testNoQuestionAddedOffline() {
+		Question addedQuestion = webServiceModel.searchQuestions('Question Title');
+		assertTrue(addedQuestion.size() == 0);
+	}
 	
 	//Test Cache
-	LocalCacheModel localCacheModel = LocalCacheModel.getModel();
-	Question addedQuestion = localCacheModel.getQuestions();
-	assertTrue(addedQuestion.size() == 1);
-	assertTrue(addedQuestion.get(0).title == 'Question Title');
-	assertTrue(addedQuestion.get(0).body == 'Body Test');
-	assertTrue(addedQuestion.get(0).image != null);
+	void testLocalCacheHasQuestion() {
+		LocalCacheModel localCacheModel = LocalCacheModel.getModel();
+		Question addedQuestion = localCacheModel.getQuestions();
+		assertTrue(addedQuestion.size() == 1);
+		assertTrue(addedQuestion.get(0).title == 'Question Title');
+		assertTrue(addedQuestion.get(0).body == 'Body Test');
+		assertTrue(addedQuestion.get(0).image != null);
+	}
 
 	webServiceModel.openConnection(); //Open Network
 
 	//Test if question gets pushed if network opens
-	Question addedQuestion = webServiceModel.searchQuestions('Question Title');
-	assertTrue(addedQuestion.size() == 1);
-	assertTrue(addedQuestion.get(0).title == 'Question Title');
-	assertTrue(addedQuestion.get(0).body == 'Body Test');
-	assertTrue(addedQuestion.get(0).image != null);
+	void testQuestionPushedOnNetworkOpen() {
+		Question addedQuestion = webServiceModel.searchQuestions('Question Title');
+		assertTrue(addedQuestion.size() == 1);
+		assertTrue(addedQuestion.get(0).title == 'Question Title');
+		assertTrue(addedQuestion.get(0).body == 'Body Test');
+		assertTrue(addedQuestion.get(0).image != null);
+	}
 }
