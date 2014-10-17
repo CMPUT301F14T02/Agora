@@ -7,7 +7,7 @@ public class UpvoteQuestionTest extends TestCase
 {
 //Assuming questions start with 0 upvotes
 	QuestionController controller = QuestionController.getController();
-	controller.addQuestion("Test Title", "Test Body", null);
+	controller.addQuestion("I can't get past this road.", "There is a snorlax blocking the path.", null);
 	
 	WebServiceModel webModel = WebServiceModel.getModel();
 	List<Question> questions = 	webModel.getQuestions();
@@ -17,4 +17,9 @@ public class UpvoteQuestionTest extends TestCase
 	
 	assertTrue("Question is upvoted.", testQuestion.getRating());
 	
+	//upvoting 100 times
+	for (int i = 1; i < 99; i++){
+		controller.upvote(testQuestion.getUniqueID());
+	}
+	assertTrue("Question is not upvoted 100 times.", testQuestion.getRating() == 100);
 }
