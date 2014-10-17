@@ -10,16 +10,12 @@ public class UpvoteAnswerTest extends TestCase
 	WebServiceModel webModel = WebServiceModel.getModel();
 	
 	//retrieving and adding answer
-	controller.addQuestion("Why won't my Pikachu evolve?", "He just slaps me.", null);
-	List<Question> questions = webModel.getQuestions();
-	testQuestion = questions[0]
-	questionID = questions[0].getUniqueID();
-	controller.addAnswer("You should love Pikachu for who he is", null, questionID);
+	long questionID = controller.addQuestion("Why won't my Pikachu evolve?", "He just slaps me.", null);
+	long answerID = controller.addAnswer("You should love Pikachu for who he is", null, questionID);
 	
 	//upvoting
-	ArrayList<Answers> testAnswers = testQuestion.getAnswers():
-	testAnswer = testAnswers[0];
-	controller.upvote(testAnswer.getUniqueID());
+	controller.upvote(answerID);
+	Answer testAnswer = webModel.getAnswerById(answerID);
 	assertTrue("Answer is not upvoted.", testAnswer.getRating() == 1);
 	
 	//upvoting 100 times
