@@ -34,9 +34,11 @@ public class SortByVoteTest extends TestCase {
 	questions.sortBy(0);
 	
 	//order should now be { tenVote, fiveVote, threeVote, noVote}
-	assertTrue("tenVote not first", questions[0] == tenVote);
-	assertTrue("fiveVote not second", questions[1] == fiveVote);
-	assertTrue("threeVote not third", questions[2] == threeVote);
-	assertTrue("noVote not last", questions[-1] == noVote);
-	assertTrue("Correct count", questions.size() = 4);
+	void testSortOnVote() {
+		assertTrue("tenVote not first", questions[0] == tenVote);
+		assertTrue("fiveVote not second", questions[1] == fiveVote);
+		assertTrue("threeVote not third", questions[2] == threeVote);
+		assertTrue("noVote not last", questions[-1] == noVote);
+		assertTrue("Correct count", questions.size() = 4);
+	}
 }
