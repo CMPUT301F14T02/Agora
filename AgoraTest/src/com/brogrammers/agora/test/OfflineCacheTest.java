@@ -37,20 +37,22 @@ public class OfflineCacheTest extends TestCase {
 	
 	webServiceModel.closeConnection(); //Close Network
 	
-	//Offline Test
-	Question addedQuestion = webServiceModel.searchQuestions('Question Title');
-	assertTrue(addedQuestion.size() == 0);
+	void testOfflineCache() {	
+		//Offline Test
+		Question addedQuestion = webServiceModel.searchQuestions('Question Title');
+		assertTrue(addedQuestion.size() == 0);
 	
-	//Test Cache
-	LocalCacheModel localCacheModel = LocalCacheModel.getModel();
-	Question addedQuestion = localCacheModel.getQuestions();
-	assertTrue(addedQuestion.size() == 2);
-	
-	assertTrue(addedQuestion.get(0).title == 'Question Title');
-	assertTrue(addedQuestion.get(0).body == 'Body Test');
-	assertTrue(addedQuestion.get(0).image != null);
-	
-	assertTrue(addedQuestion.get(1).title == 'Question Title2');
-	assertTrue(addedQuestion.get(1).body == 'Body Test');
-	assertTrue(addedQuestion.get(1).image != null);
+		//Test Cache
+		LocalCacheModel localCacheModel = LocalCacheModel.getModel();
+		Question addedQuestion = localCacheModel.getQuestions();
+		assertTrue(addedQuestion.size() == 2);
+		
+		assertTrue(addedQuestion.get(0).title == 'Question Title');
+		assertTrue(addedQuestion.get(0).body == 'Body Test');
+		assertTrue(addedQuestion.get(0).image != null);
+		
+		assertTrue(addedQuestion.get(1).title == 'Question Title2');
+		assertTrue(addedQuestion.get(1).body == 'Body Test');
+		assertTrue(addedQuestion.get(1).image != null);
+	}
 }

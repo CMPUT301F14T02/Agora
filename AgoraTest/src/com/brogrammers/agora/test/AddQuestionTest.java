@@ -24,15 +24,20 @@ public class AddQuestionTest extends TestCase {
 	
 	WebServiceModel webServiceModel = WebServiceModel.getModel();
 	Question addedQuestion = webServiceModel.searchQuestions('questionTitle');
-	assertTrue(addedQuestion.size() == 1);
-	assertTrue(addedQuestion.get(0).title == questionTitle);
-	assertTrue(addedQuestion.get(0).body == 'Body Test');
-	assertTrue(addedQuestion.get(0).image != null);
+	
+	void testEnsureQuestionAdded() {
+		assertTrue(addedQuestion.size() == 1);
+		assertTrue(addedQuestion.get(0).title == questionTitle);
+		assertTrue(addedQuestion.get(0).body == 'Body Test');
+		assertTrue(addedQuestion.get(0).image != null);
+	}
 	
 	LocalCacheModel localCacheModel = LocalCacheModel.getModel();
 	Question addedQuestion = localCacheModel.getQuestions();
-	assertTrue(addedQuestion.size() == 1);
-	assertTrue(addedQuestion.get(0).title == questionTitle);
-	assertTrue(addedQuestion.get(0).body == 'Body Test');
-	assertTrue(addedQuestion.get(0).image != null);
+	void testLocalCacheModel() {
+		assertTrue(addedQuestion.size() == 1);
+		assertTrue(addedQuestion.get(0).title == questionTitle);
+		assertTrue(addedQuestion.get(0).body == 'Body Test');
+		assertTrue(addedQuestion.get(0).image != null);
+	}
 }

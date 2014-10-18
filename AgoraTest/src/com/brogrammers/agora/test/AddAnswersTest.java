@@ -5,7 +5,7 @@ import java.net.URL;
 
 import junit.framework.TestCase;
 
-public class FindNumberOFQuestionAnswersTest extends TestCase{
+public class AddAnswersTest extends TestCase{
 	QuestionController controller = QuestionController.getController();
 	String questionTitle1 = String.valueOf(System.currentTimeMillis());
 	
@@ -25,18 +25,23 @@ public class FindNumberOFQuestionAnswersTest extends TestCase{
 	LocalCacheModel localCacheModel = LocalCacheModel.getModel();
 	Question addedQuestion = webServiceModel.searchQuestions(questionTitle1).get(0);
 	Question addedQuestionCached = localCacheModel.getQuestions().get(0);
-	assertTrue(addedQuestion.countAnswers() == 0);
-	assertTrue(addedQuestionCached.countAnswers() == 0);
+	
+	void testNoAnswers() {
+		assertTrue(addedQuestion.countAnswers() == 0);
+		assertTrue(addedQuestionCached.countAnswers() == 0);
+	}
 
 	ArrayList<long> answerIdsq1 = new ArrayList<long>;
 	answerIdsq1.add(webServiceModel.addAnswer('Body Test', questionID1, img));
 	answerIdsq1.add(webServiceModel.addAnswer('Body Test', questionID1, img));
 	answerIdsq1.add(webServiceModel.addAnswer('Body Test', questionID1, img));
 
-	assertTrue(addedQuestion.countAnswer() == 3);
-	assertTrue(addedQuestion.image != null);
-	assertTrue(addedQuestionCached.countAnswers() == 3);
-	assertTrue(addedQuestionCached.image != null);
+	void testAnswerCount() {
+		assertTrue(addedQuestion.countAnswer() == 3);
+		assertTrue(addedQuestion.image != null);
+		assertTrue(addedQuestionCached.countAnswers() == 3);
+		assertTrue(addedQuestionCached.image != null);
+	}
 	
 	// add another question with answers and ensure each question
 	// only maintains references to its answers and not the other questions.
@@ -51,20 +56,18 @@ public class FindNumberOFQuestionAnswersTest extends TestCase{
 	answerIdsq2.add(webServiceModel.addAnswer('Body Test', questionID2, img));
 	
 	// ensure the first question created does not have reference to the new answers.
-	Question addedQuestion1 = webServiceModel.searchQuestions(questionTitle1).get(0);
-	for (Answer a: addedQuestion1.answers){
-		assertFalse(answerIdsq2.contains(a.uniqueID));
-	}
-
-	// ensure the first question created does not have reference to the new answers.
-	Question addedQuestion2 = webServiceModel.searchQuestions(questionTitle2).get(0);
-	for (Answer a: addedQuestion2.answers){
-		assertFalse(answerIdsq1.contains(a.uniqueID));
+	void testNoAnswerConflict() {
+		Question addedQuestion1 = webServiceModel.searchQuestions(questionTitle1).get(0);
+		for (Answer a: addedQuestion1.answers){
+			assertFalse(answerIdsq2.contains(a.uniqueID));
+		}
 	}
 	
-	
-
-	
-	
-
+	void testNoAnswerQuestion2() {
+		// ensure the first question created does not have reference to the new answers.
+		Question addedQuestion2 = webServiceModel.searchQuestions(questionTitle2).get(0);
+		for (Answer a: addedQuestion2.answers){
+			assertFalse(answerIdsq1.contains(a.uniqueID));
+		}
+	}
 }

@@ -32,9 +32,11 @@ public class SortByDateTest extends TestCase {
 	questions.setFilter(1);
 	
 	//order should now be { firstDate, secondDate, thirdDate, fourthDate}
-	assertTrue("firstDate not first", questions[0] == firstDate);
-	assertTrue("secondDate not second", questions[1] == secondDate);
-	assertTrue("thirdDate not third", questions[2] == thirdDate);
-	assertTrue("fourthDate not last", questions[-1] == fourthDate);
-	assertTrue("Correct count", questions.size() = 4);
+	void testEnsureDateOrder() {
+		assertTrue("firstDate not first", questions[0] == firstDate);
+		assertTrue("secondDate not second", questions[1] == secondDate);
+		assertTrue("thirdDate not third", questions[2] == thirdDate);
+		assertTrue("fourthDate not last", questions[-1] == fourthDate);
+		assertTrue("Correct count", questions.size() = 4);
+	}
 }
