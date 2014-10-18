@@ -2,10 +2,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brogrammers.agora.MainActivity" >
 
+    <item android:id="@+id/addQuestionBQV" 
+        android:title="@string/addQuestion" 
+        android:icon="@drawable/ic_action_new" 
+        android:titleCondensed="@string/add" android:showAsAction="always">
+    </item>
+    
+    <item android:id="@+id/searchBQV" 
+        android:title="@string/search"
+         android:icon='@drawable/ic_action_search' android:showAsAction="always">   
+    </item>
+    
+    <item android:id="@+id/sortBQV" 
+        android:title="@string/sortBy" 
+        android:icon="@drawable/ic_action_view_as_list" 
+        android:titleCondensed="@string/sort" android:showAsAction="always">
+    </item>
+    
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:title="@string/action_settings" 
+        android:icon="@drawable/ic_action_settings" android:showAsAction="always"/>
+    
+    
+    
 
 </menu>
