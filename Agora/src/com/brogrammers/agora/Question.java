@@ -16,7 +16,17 @@ public class Question {
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
 	private ArrayList<Answer> answers;
+	private int version;
+	private boolean posted;
 	
+	public boolean isPosted() {
+		return posted;
+	}
+
+	public void setPosted(boolean posted) {
+		this.posted = posted;
+	}
+
 	public Question(String title, String body, Bitmap image, Author author) {
 		this.title = title;
 		this.body = body;
@@ -27,8 +37,17 @@ public class Question {
 		uniqueID = md5.hash(date.toString()+author.getUsername()+body+title);
 		comments = new ArrayList<Comment>();
 		answers = new ArrayList<Answer>();
+		version = 0;
 	}
 	
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	public void setImage(Bitmap image) {
 		this.image = image;
 	}

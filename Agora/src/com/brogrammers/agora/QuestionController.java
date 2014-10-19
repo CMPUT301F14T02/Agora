@@ -28,42 +28,50 @@ public class QuestionController {
 		Question q = new Question(title, body, image, user);
 		user.addAuthoredQuestionID(q.getID());
 		q.setImage(resizer.resizeTo64KB());
-		webservice.updateQuestion(q);
-		return q.getID();
+		
+		// TODO: generate query string and pass to webservice
+		
+		cache.getQuestions().add(q);
+		return q.getID(); // for testing
 	}
 	
 	public Long addAnswer(String body, Bitmap image, Long qID) {
 		Answer a = new Answer(body, image, user);
-		a.setImage(resizer.resizeTo64KB());
-		Question q = webservice.getQuestionByID(qID);
+		a.setImage(resizer.resizeTo64KB(image));
+		Question q = cache.getQuestionByID(qID);
 		q.addAnswer(a);
-		// TODO: find a more efficient way to implement this:
-		// (what facilities for modifying/adding-to data does elastic-search provide,
-		// other than simple replacement?)
-		webservice.updateQuestion(q);
+		
+		// TODO: generate query string and pass to webservice
+		
 		return a.getID();
 	}
 	
 	// if adding a comment to a question, pass null for aID
 	public void addComment(String body, Long qID, Long aID) {
 		Comment c = new Comment(body);
-		Question q = webservice.getQuestionByID(qID);
+		Question q = cache.getQuestionByID(qID);
 		if (aID == null) {
 			q.addComment(c);
 		} else {
 			q.getAnswerByID(aID).addComment(c);
 		}
-		// TODO: find a more efficient way to implement this:
-		// (what facilities for modifying/adding-to data does elastic-search provide,
-		// other than simple replacement?)
-		webservice.updateQuestion(q);
+		
+		// TODO: generate query string and pass to webservice
+
 	}
 	
-	public void upvote(Question q) {
-		q.upvote();
+	public void upvote(Long qID, Long aID) {
+		Question q = cache.getQuestionByID(qID);
+		if (aID == null) {
+			// upvoting question
+			q.upvote();
+			// TODO: generate query string and pass to webservice
+			// 
+		} else {
+			// upvoting answer
+			q.getAnswerByID(aID).upvote();
+			// TODO: generate query string and pass to webservice
+		}
 	}
 	
-	public void upvote(Answer a) {
-		a.upvote();
-	}
 }
