@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageButton
+        android:id="@+id/qFlag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@android:drawable/btn_star" />
+
+    <ImageButton
+        android:id="@+id/qFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/qFlag"
+        android:src="@drawable/ic_action_rating_favoritePink" />
+
+    <ImageButton
+        android:id="@+id/qUpvote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/qFavourite"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/ic_action_upvote" />
+
+    <TextView
+        android:id="@+id/qTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/qFavourite"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/qFlag"
+        android:layout_toRightOf="@+id/qUpvote"
+        android:hint="Question Title" />
+
+    <TextView
+        android:id="@+id/qScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/qUpvote"
+        android:layout_alignTop="@+id/qFavourite"
+        android:hint="Score" />
+
+    <TextView
+        android:id="@+id/AuthourDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/qTitle"
+        android:layout_toRightOf="@+id/qScore"
+        android:hint="Author, Date"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/AuthourDate"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/qScore"
+        android:layout_below="@+id/qScore"
+        android:src="@drawable/ic_action_new" />
+
+</RelativeLayout>
