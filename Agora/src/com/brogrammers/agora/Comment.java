@@ -7,6 +7,16 @@ public class Comment {
 	private Long date;
 	private String body;
 	private Author author;
+	private boolean posted;
+	
+	public boolean isPosted() {
+		return posted;
+	}
+
+	public void setPosted(boolean posted) {
+		this.posted = posted;
+	}
+
 	
 	public Comment(String text) {
 		body = text;

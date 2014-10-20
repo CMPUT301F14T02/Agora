@@ -15,6 +15,16 @@ public class Answer {
 	private Long date;
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
+	private boolean posted;
+	
+	public boolean isPosted() {
+		return posted;
+	}
+
+	public void setPosted(boolean posted) {
+		this.posted = posted;
+	}
+
 	
 	public Answer(String body, Bitmap image, Author author) {
 		this.body = body;
