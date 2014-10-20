@@ -17,6 +17,8 @@
         android:title="@string/sortBy" 
         android:icon="@drawable/ic_action_view_as_list" 
         android:titleCondensed="@string/sort" android:showAsAction="always">
+
+        
     </item>
     
     <item
