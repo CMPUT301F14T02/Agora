@@ -1,11 +1,14 @@
 package com.brogrammers.agora;
 
+import java.util.ArrayList;
 import java.util.List;
+import com.loopj.android.http.*;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import org.apache.http.Header;
 
 public class WebserviceModel {
 	// domain
@@ -42,28 +45,45 @@ public class WebserviceModel {
 		
 	}
 	
-	public List<QuestionPreview> getQuestions(){
-		// This function should compare the id's and versions of the list 
-		// of questions held in the cache. If the id's from the get question
-		// items aren't in the cache, download them and insert them into the cache
-		// if the id's are present but the version numbers are different, theres
-		// been an update to the question and we'll have to redownload the changes
-		
+	public List<QuestionPreview> getQuestionsPreviews(){
 		// assuming the question view by default sorts by date
-		int responseCode = HttpRequest.get(DOMAIN + INDEXNAME + TYPENAME).code();
-		// want to sort based on most upvoted or newest first?
-		
-		
-		// TO-DO return list of question previews objects.
-		// Create a query that only returns required list view info.
-		
-		
-		
+		AsyncHttpClient client = new AsyncHttpClient();
+		// querry to return question preview information
+		// elastic search queries must use double quotes, hence the mess.
+		RequestParams params = new RequestParams();
+		params.put("sort", "[{ \"date\" :{\"order\":\"desc\"}}]");
+		params.put("fields", "[{ \"date\" :{\"order\":\"desc\"}}]");
+		params.put("query", "{\"match_all\" : {}}");
+				
+		client.post(DOMAIN + INDEXNAME + TYPENAME + "_search", params, new AsyncHttpResponseHandler() {
+
+		    @Override
+		    public void onStart() {
+		        // called before request is started
+		    	// TO-DO Think about setting the list here instead of
+		    	// returning it.
+		    }
+
+		    @Override
+		    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+		        // called when response HTTP status is "200 OK"
+		    }
+
+		    @Override
+		    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+		        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+		    }
+
+		    @Override
+		    public void onRetry(int retryNo) {
+		        // called when request is retried
+			}
+		    
+		});
+		// return a dummy empty list to the caller
+		List<QuestionPreview> qpList = new ArrayList<QuestionPreview>();
+		return qpList;	
 
 	}
-		
-	
-	// the following methods should be called when the user
-	// makes local changes that need to be pushed to server.
 	
 }

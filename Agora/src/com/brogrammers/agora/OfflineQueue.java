@@ -24,6 +24,7 @@ public class OfflineQueue {
 		return self;
 	}
 	
+	// TO-DO deal with setting context.
 	public OfflineQueue(){
 		// load serialized commands to be run.
 		deserializeQueue();
