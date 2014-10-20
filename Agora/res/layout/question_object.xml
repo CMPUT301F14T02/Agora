@@ -4,38 +4,12 @@
     android:layout_height="match_parent" >
 
     <ImageButton
-        android:id="@+id/qFlag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@android:drawable/btn_star" />
-
-    <ImageButton
-        android:id="@+id/qFavourite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/qFlag"
-        android:src="@drawable/ic_action_rating_favoritePink" />
-
-    <ImageButton
         android:id="@+id/qUpvote"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/qFavourite"
         android:layout_alignParentLeft="true"
         android:src="@drawable/ic_action_upvote" />
-
-    <TextView
-        android:id="@+id/qTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/qFavourite"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/qFlag"
-        android:layout_toRightOf="@+id/qUpvote"
-        android:hint="Question Title" />
 
     <TextView
         android:id="@+id/qScore"
@@ -64,6 +38,32 @@
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/qScore"
         android:layout_below="@+id/qScore"
-        android:src="@drawable/ic_action_new" />
+        android:src="@drawable/ic_action_flag" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_action_flag" />
+
+    <ImageButton
+        android:id="@+id/qFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageButton1"
+        android:src="@drawable/ic_action_rating_favoritepink" />
+
+    <TextView
+        android:id="@+id/qTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/qFavourite"
+        android:layout_alignLeft="@+id/AuthourDate"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/imageButton1"
+        android:hint="Question Title" />
 
 </RelativeLayout>
