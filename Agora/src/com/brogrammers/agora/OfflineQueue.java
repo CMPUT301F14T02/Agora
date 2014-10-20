@@ -6,6 +6,7 @@ import java.util.Queue;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class OfflineQueue {
 	static private OfflineQueue self = null;
@@ -24,7 +25,8 @@ public class OfflineQueue {
 	}
 	
 	public OfflineQueue(){
-		updateQueue = deserializeQueue();
+		// load serialized commands to be run.
+		deserializeQueue();
 	}
 	
 	public void addToQueue(String queryString){
@@ -51,8 +53,13 @@ public class OfflineQueue {
 	}
 	
 	// return desiarilized queue
-	public Queue<String> deserializeQueue(){
-		
-		return updateQueue;
+	public void deserializeQueue(){
+		Gson gson = new Gson();
+		SharedPreferences sp = context.getSharedPreferences(dataFile, 0);
+        String savedQueue = sp.getString(queueKeyName, "NO_DATA_TO_READ");
+        if (savedQueue != "NO_DATA_TO_READ"){
+        	// recreate the queue object
+        	updateQueue = gson.fromJson(savedQueue, new TypeToken<Queue<String>>(){}.getType());
+        }		
 	}
 }
