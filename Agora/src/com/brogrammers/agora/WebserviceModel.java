@@ -1,13 +1,20 @@
 package com.brogrammers.agora;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import com.loopj.android.http.*;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONArray;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.util.Log;
+import android.widget.Toast;
+
 import org.apache.http.Header;
 
 public class WebserviceModel {
@@ -22,6 +29,8 @@ public class WebserviceModel {
 	// Queue of statements that need to be run on
 	// the server
 	private OfflineQueue offlineQueue;
+	
+	// TODO: Register a broadcast receiver for connectivity status.
 	
 	private static WebserviceModel webserviceModel;
 			
@@ -52,38 +61,70 @@ public class WebserviceModel {
 		// elastic search queries must use double quotes, hence the mess.
 		RequestParams params = new RequestParams();
 		params.put("sort", "[{ \"date\" :{\"order\":\"desc\"}}]");
-		params.put("fields", "[{ \"date\" :{\"order\":\"desc\"}}]");
+		params.put("fields", "[\"date\", \"ID\", \"title\", \"rating\", \"answerCount\", \"author\"]");
 		params.put("query", "{\"match_all\" : {}}");
 				
-		client.post(DOMAIN + INDEXNAME + TYPENAME + "_search", params, new AsyncHttpResponseHandler() {
-
+		client.post(DOMAIN + INDEXNAME + TYPENAME + "_search", params, new JsonHttpResponseHandler() {
 		    @Override
 		    public void onStart() {
 		        // called before request is started
-		    	// TO-DO Think about setting the list here instead of
+		    	// TODO: Think about creating the empty list here instead of
 		    	// returning it.
 		    }
 
 		    @Override
-		    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+		    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
 		        // called when response HTTP status is "200 OK"
+		    	JSONArray questionPreviews = null;
+				try {
+					questionPreviews = (JSONArray) ((JSONObject) response.get("hits")).get("hits");
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	List<QuestionPreview> questionPreviewList = new ArrayList<QuestionPreview>();
+				for (int i = 0; i < questionPreviews.length(); i++) {
+		    		try {
+						JSONObject questionObject = questionPreviews.getJSONObject(i);
+						questionObject = questionObject.getJSONObject("fields");
+						String title = (String) ((JSONArray) questionObject.getJSONArray("title")).get(0);
+						int rating = Integer.parseInt((String) 
+											((JSONArray) questionObject.getJSONArray("rating")).get(0));
+						int answerCount = Integer.parseInt((String) 
+											((JSONArray) questionObject.getJSONArray("answerCount")).get(0));
+						long date = Long.parseLong((String) 
+											((JSONArray) questionObject.getJSONArray("date")).get(0));
+						String author = (String) 
+											((JSONArray) questionObject.getJSONArray("author")).get(0);
+						long ID = Long.parseLong((String) 
+											((JSONArray) questionObject.getJSONArray("ID")).get(0));
+						QuestionPreview qp = new QuestionPreview(
+											title, rating, answerCount, date, new Author(author), ID);
+						questionPreviewList.add(qp);
+		    		} catch (JSONException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+		    	// assuming question previews are cached in the localcachemodel
+		    	// Makes more sense than caching in view or not caching at all
+		    	LocalCacheModel.getLocalCacheModel.setQuestionPreviewList = questionPreviewList;   		
+		    	}
 		    }
-
-		    @Override
-		    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-		        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-		    }
-
+		    
 		    @Override
 		    public void onRetry(int retryNo) {
 		        // called when request is retried
 			}
 		    
+		    @Override
+		    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e){
+		    	Log.d("Question Preview Download Error", "Could not download question preview list");
+		    }
+		    
 		});
 		// return a dummy empty list to the caller
 		List<QuestionPreview> qpList = new ArrayList<QuestionPreview>();
 		return qpList;	
-
 	}
 	
 }

@@ -8,5 +8,7 @@
 	<classpathentry kind="lib" path="libs/android-support-v4.jar"/>
 	<classpathentry kind="lib" path="libs/android-async-http-1.4.6.jar"/>
 	<classpathentry kind="lib" path="libs/httpclient-android-4.3.3.jar"/>
+	<classpathentry kind="lib" path="libs/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="libs/java-json.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

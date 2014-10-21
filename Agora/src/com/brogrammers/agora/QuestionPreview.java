@@ -8,7 +8,7 @@ public class QuestionPreview {
 	public Author author;
 	public long ID;
 	
-	public void QuestionPreview(String title, int rating, int answerCount, long date, Author author, long ID){
+	public QuestionPreview(String title, int rating, int answerCount, long date, Author author, long ID){
 		this.title = title;
 		this.rating = rating;
 		this.answerCount = answerCount;
