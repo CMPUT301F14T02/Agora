@@ -1,0 +1,6 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.brogrammers.agora.QuestionAnswerActivity" >
+    <item android:id="@+id/action_upvote" android:onClick="upvote" android:showAsAction="ifRoom" android:icon="@drawable/ic_action_upvote" android:title="upvote" android:titleCondensed="upvote"></item>
+
+</menu>
