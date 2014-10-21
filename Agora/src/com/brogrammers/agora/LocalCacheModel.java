@@ -22,6 +22,7 @@ public class LocalCacheModel {
 				questionCache.put(qp.ID, webservice.getQuestionByID(qp.ID));
 			}
 		}
+	}
 
 	static public LocalCacheModel getLocalCacheModel() {
 		if (self == null) {

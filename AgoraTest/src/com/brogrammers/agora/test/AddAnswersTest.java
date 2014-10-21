@@ -3,6 +3,8 @@ package com.brogrammers.agora.test;
 import java.io.IOException;
 import java.net.URL;
 
+import com.brogrammers.agora.QuestionController;
+
 import junit.framework.TestCase;
 
 public class AddAnswersTest extends TestCase{
@@ -21,9 +23,9 @@ public class AddAnswersTest extends TestCase{
 	
 	long questionID1 = controller.addQuestion(questionTitle1, 'Body Test', img);
 	
-	WebServiceModel webServiceModel = WebServiceModel.getModel();
+	WebserviceModel WebserviceModel = WebserviceModel.getModel();
 	LocalCacheModel localCacheModel = LocalCacheModel.getModel();
-	Question addedQuestion = webServiceModel.searchQuestions(questionTitle1).get(0);
+	Question addedQuestion = WebserviceModel.searchQuestions(questionTitle1).get(0);
 	Question addedQuestionCached = localCacheModel.getQuestions().get(0);
 	
 	void testNoAnswers() {
@@ -31,10 +33,10 @@ public class AddAnswersTest extends TestCase{
 		assertTrue(addedQuestionCached.countAnswers() == 0);
 	}
 
-	ArrayList<long> answerIdsq1 = new ArrayList<long>;
-	answerIdsq1.add(webServiceModel.addAnswer('Body Test', questionID1, img));
-	answerIdsq1.add(webServiceModel.addAnswer('Body Test', questionID1, img));
-	answerIdsq1.add(webServiceModel.addAnswer('Body Test', questionID1, img));
+	ArrayList<long> answerIdsq1 = new ArrayList<long>();
+	answerIdsq1.add(WebserviceModel.addAnswer("Body Test", questionID1, img));
+	answerIdsq1.add(WebserviceModel.addAnswer("Body Test", questionID1, img));
+	answerIdsq1.add(WebserviceModel.addAnswer("Body Test", questionID1, img));
 
 	void testAnswerCount() {
 		assertTrue(addedQuestion.countAnswer() == 3);
@@ -47,17 +49,17 @@ public class AddAnswersTest extends TestCase{
 	// only maintains references to its answers and not the other questions.
 	String questionTitle2 = String.valueOf(System.currentTimeMillis());
 	long questionID2 = controller.addQuestion(questionTitle2, 'Body Test', img);
-	Question addedQuestion2 = webServiceModel.searchQuestions(questionTitle2).get(0);
+	Question addedQuestion2 = WebserviceModel.searchQuestions(questionTitle2).get(0);
 	
 	// assumes the model returns the answer id
 	ArrayList<long> answerIdsq2 = new ArrayList<long>;
-	answerIdsq2.add(webServiceModel.addAnswer('Body Test', questionID2, img));	
-	answerIdsq2.add(webServiceModel.addAnswer('Body Test', questionID2, img));
-	answerIdsq2.add(webServiceModel.addAnswer('Body Test', questionID2, img));
+	answerIdsq2.add(WebserviceModel.addAnswer('Body Test', questionID2, img));	
+	answerIdsq2.add(WebserviceModel.addAnswer('Body Test', questionID2, img));
+	answerIdsq2.add(WebserviceModel.addAnswer('Body Test', questionID2, img));
 	
 	// ensure the first question created does not have reference to the new answers.
 	void testNoAnswerConflict() {
-		Question addedQuestion1 = webServiceModel.searchQuestions(questionTitle1).get(0);
+		Question addedQuestion1 = WebserviceModel.searchQuestions(questionTitle1).get(0);
 		for (Answer a: addedQuestion1.answers){
 			assertFalse(answerIdsq2.contains(a.uniqueID));
 		}
@@ -65,7 +67,7 @@ public class AddAnswersTest extends TestCase{
 	
 	void testNoAnswerQuestion2() {
 		// ensure the first question created does not have reference to the new answers.
-		Question addedQuestion2 = webServiceModel.searchQuestions(questionTitle2).get(0);
+		Question addedQuestion2 = WebserviceModel.searchQuestions(questionTitle2).get(0);
 		for (Answer a: addedQuestion2.answers){
 			assertFalse(answerIdsq1.contains(a.uniqueID));
 		}
