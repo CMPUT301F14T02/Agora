@@ -87,6 +87,9 @@ public class DeviceUser extends Author {
 		authoredQuestionIDs.add(id);
 	}
 	
+	public void setUsername(String name) {
+		this.username = name;
+	}
 }
 
 

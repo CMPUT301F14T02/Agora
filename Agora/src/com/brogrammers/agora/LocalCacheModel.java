@@ -23,6 +23,17 @@ public class LocalCacheModel {
 			}
 		}
 
+	static public LocalCacheModel getLocalCacheModel() {
+		if (self == null) {
+			self = new LocalCacheModel();
+		}
+		return self;
+	}
+	
+	static public void setQuestionPreviewList(List<QuestionPreview> qpList){
+		questionPreviewList = qpList;
+		//notifyUpdate();
+	}
 	}
 
 	public List<Question> getQuestions() {
