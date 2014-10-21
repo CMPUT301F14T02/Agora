@@ -39,7 +39,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:text="@string/submitQuestionButton" />
+        android:onClick="postAnswer"
+        android:text="@string/submitAnswerButton" />
 
     <Button
         android:id="@+id/authorAnswerAddPictureButton"
@@ -48,6 +49,7 @@
         android:layout_above="@+id/authorAnswerAddPostButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
+        android:onClick="addPicture"
         android:text="@string/addPictureButton" />
 
 </RelativeLayout>

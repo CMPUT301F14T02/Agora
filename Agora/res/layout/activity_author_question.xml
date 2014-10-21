@@ -59,6 +59,7 @@
         android:layout_alignLeft="@+id/authorAnswerAddPictureButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:onClick="postQuestion"
         android:text="@string/submitQuestionButton" />
 
     <Button
@@ -68,6 +69,7 @@
         android:layout_above="@+id/authorAnswerAddPostButton"
         android:layout_alignLeft="@+id/authorAnswerBodyEditText"
         android:layout_alignParentRight="true"
+        android:onClick="addPicture"
         android:text="@string/addPictureButton" />
 
 </RelativeLayout>

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 public class AuthorQuestionActivity extends Activity {
 
@@ -30,5 +32,12 @@ public class AuthorQuestionActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	void addPicture(View v){
+		Toast.makeText(this, "Picture Added!", Toast.LENGTH_SHORT).show();
+	}
+	//submitting
+	void postQuestion(View v){
+		Toast.makeText(this, "Question Posted!", Toast.LENGTH_SHORT).show();
 	}
 }
