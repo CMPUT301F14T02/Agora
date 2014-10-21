@@ -54,7 +54,7 @@ public class WebserviceModel {
 		
 	}
 	
-	public List<QuestionPreview> getQuestionsPreviews(){
+	public List<QuestionPreview> getQuestionPreviews(){
 		// assuming the question view by default sorts by date
 		AsyncHttpClient client = new AsyncHttpClient();
 		// querry to return question preview information
@@ -107,7 +107,7 @@ public class WebserviceModel {
 					}
 		    	// assuming question previews are cached in the localcachemodel
 		    	// Makes more sense than caching in view or not caching at all
-		    	LocalCacheModel.getLocalCacheModel.setQuestionPreviewList(questionPreviewList);   		
+		    	LocalCacheModel.getLocalCacheModel().setQuestionPreviewList(questionPreviewList);   		
 		    	}
 		    }
 		    
