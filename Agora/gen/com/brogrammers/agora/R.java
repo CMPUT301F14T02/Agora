@@ -22,20 +22,6 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-<<<<<<< HEAD
-        public static final int ic_action_new=0x7f020000;
-        public static final int ic_action_search=0x7f020001;
-        public static final int ic_action_settings=0x7f020002;
-        public static final int ic_action_view_as_list=0x7f020003;
-        public static final int ic_launcher=0x7f020004;
-    }
-    public static final class id {
-        public static final int action_settings=0x7f080004;
-        public static final int addQuestionBQV=0x7f080001;
-        public static final int listView1=0x7f080000;
-        public static final int searchBQV=0x7f080002;
-        public static final int sortBQV=0x7f080003;
-=======
         public static final int ic_action_flag=0x7f020000;
         public static final int ic_action_new=0x7f020001;
         public static final int ic_action_rating_favoritepink=0x7f020002;
@@ -46,61 +32,63 @@ public final class R {
         public static final int ic_launcher=0x7f020007;
     }
     public static final class id {
-        public static final int AuthourDate=0x7f08000a;
-        public static final int action_settings=0x7f08000e;
-        public static final int addQuestionBQV=0x7f08000f;
+        public static final int AuthourDate=0x7f08000c;
+        public static final int action_settings=0x7f080010;
+        public static final int addQuestionBQV=0x7f080011;
         public static final int authorAnswerAddPictureButton=0x7f080002;
         public static final int authorAnswerAddPostButton=0x7f080003;
         public static final int authorAnswerBodyEditText=0x7f080001;
         public static final int authorAnswerTextView=0x7f080000;
         public static final int authorQuestionTitleEditText=0x7f080005;
         public static final int authorQuestionTitleTextView=0x7f080004;
-        public static final int imageButton1=0x7f08000d;
-        public static final int imageView1=0x7f08000c;
+        public static final int imageButton1=0x7f08000f;
+        public static final int imageView1=0x7f08000e;
         public static final int listView1=0x7f080006;
-        public static final int qFavourite=0x7f080008;
-        public static final int qScore=0x7f080009;
-        public static final int qTitle=0x7f08000b;
-        public static final int qUpvote=0x7f080007;
-        public static final int searchBQV=0x7f080010;
-        public static final int sortBQV=0x7f080011;
->>>>>>> 5a1f673477da6782c430559e6a5ce39949c5bad8
+        public static final int pager=0x7f080007;
+        public static final int qFavourite=0x7f08000a;
+        public static final int qScore=0x7f08000b;
+        public static final int qTitle=0x7f08000d;
+        public static final int qUpvote=0x7f080009;
+        public static final int searchBQV=0x7f080012;
+        public static final int section_label=0x7f080008;
+        public static final int sortBQV=0x7f080013;
     }
     public static final class layout {
         public static final int activity_author_answer=0x7f030000;
         public static final int activity_author_question=0x7f030001;
         public static final int activity_main=0x7f030002;
-        public static final int question_object=0x7f030003;
+        public static final int activity_search=0x7f030003;
+        public static final int fragment_search=0x7f030004;
+        public static final int question_object=0x7f030005;
     }
     public static final class menu {
         public static final int author_answer=0x7f070000;
         public static final int author_question=0x7f070001;
         public static final int main=0x7f070002;
+        public static final int search=0x7f070003;
     }
     public static final class string {
         public static final int action_settings=0x7f050002;
         public static final int add=0x7f050004;
-<<<<<<< HEAD
-=======
-        public static final int addPictureButton=0x7f05000d;
->>>>>>> 5a1f673477da6782c430559e6a5ce39949c5bad8
+        public static final int addPictureButton=0x7f050011;
         public static final int addQuestion=0x7f050003;
         public static final int app_name=0x7f050000;
-        public static final int enterbodytext=0x7f05000c;
-        public static final int entertitletext=0x7f05000b;
+        public static final int enterbodytext=0x7f050010;
+        public static final int entertitletext=0x7f05000f;
         public static final int hello_world=0x7f050001;
         public static final int search=0x7f050005;
         public static final int sort=0x7f050007;
         public static final int sortBy=0x7f050006;
-<<<<<<< HEAD
-=======
-        public static final int submitAnswerButton=0x7f05000f;
-        public static final int submitQuestionButton=0x7f05000e;
-        public static final int title_activity_author_answer=0x7f050010;
-        public static final int title_activity_author_question=0x7f050008;
-        public static final int titlebodytext=0x7f05000a;
-        public static final int titletext=0x7f050009;
->>>>>>> 5a1f673477da6782c430559e6a5ce39949c5bad8
+        public static final int submitAnswerButton=0x7f050013;
+        public static final int submitQuestionButton=0x7f050012;
+        public static final int title_activity_author_answer=0x7f050014;
+        public static final int title_activity_author_question=0x7f05000c;
+        public static final int title_activity_search=0x7f050008;
+        public static final int title_section1=0x7f050009;
+        public static final int title_section2=0x7f05000a;
+        public static final int title_section3=0x7f05000b;
+        public static final int titlebodytext=0x7f05000e;
+        public static final int titletext=0x7f05000d;
     }
     public static final class style {
         /** 
