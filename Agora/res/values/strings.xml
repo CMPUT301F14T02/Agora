@@ -9,5 +9,9 @@
     <string name="search">Search</string>
     <string name="sortBy">Sort By</string>
     <string name="sort">Sort</string>
+    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
 
 </resources>
