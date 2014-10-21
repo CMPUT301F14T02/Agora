@@ -15,6 +15,7 @@ public class Answer {
 	private Long date;
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
+	private int version;
 	private boolean posted;
 	
 	public boolean isPosted() {

@@ -6,7 +6,7 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 
-public class Question {
+public class Question implements Comparable<Question> {
 	private String title;
 	private String body;
 	private int rating;
@@ -17,15 +17,8 @@ public class Question {
 	private ArrayList<Comment> comments;
 	private ArrayList<Answer> answers;
 	private int version;
+	private int answerCount;
 	private boolean posted;
-	
-	public boolean isPosted() {
-		return posted;
-	}
-
-	public void setPosted(boolean posted) {
-		this.posted = posted;
-	}
 
 	public Question(String title, String body, Bitmap image, Author author) {
 		this.title = title;
@@ -117,6 +110,27 @@ public class Question {
 
 	public Long getID() {
 		return uniqueID;
+	}
+	
+	public boolean isPosted() {
+		return posted;
+	}
+
+	public void setPosted(boolean posted) {
+		this.posted = posted;
+	}
+
+	public int getAnswerCount() {
+		return answerCount;
+	}
+
+	public void setAnswerCount(int answerCount) {
+		this.answerCount = answerCount;
+	}
+
+	@Override
+	public int compareTo(Question other) {
+		return uniqueID.compareTo(other.uniqueID);
 	}
 
 }
