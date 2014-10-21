@@ -107,6 +107,7 @@ public class WebserviceModel {
 					}
 		    	// assuming question previews are cached in the localcachemodel
 		    	// Makes more sense than caching in view or not caching at all
+		    	// TODO: switch threads to main ui thread before setting values on model.
 		    	LocalCacheModel.getLocalCacheModel().setQuestionPreviewList(questionPreviewList);   		
 		    	}
 		    }
