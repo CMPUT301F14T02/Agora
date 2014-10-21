@@ -1,5 +1,6 @@
 package com.brogrammers.agora;
 
+import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,7 +8,9 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 
-public class Answer {
+public class Answer implements Serializable {
+	private static final long serialVersionUID = 1340865626156695502L;
+
 	private String body;
 	private int rating;
 	private Bitmap image = null;

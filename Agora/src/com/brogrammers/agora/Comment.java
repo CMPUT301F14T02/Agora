@@ -1,9 +1,12 @@
 package com.brogrammers.agora;
 
+import java.io.Serializable;
 import java.util.Date;
 import com.brogrammers.agora.DeviceUser;
 
-public class Comment {
+public class Comment implements Serializable {
+	
+	private static final long serialVersionUID = 5525876100406087372L;
 	private Long date;
 	private String body;
 	private Author author;

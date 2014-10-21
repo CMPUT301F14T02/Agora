@@ -11,7 +11,11 @@ public class LocalCacheModel {
 	private WebserviceModel webservice;
 
 	private LocalCacheModel() {
-		questionCache = QuestionLoaderSaver.loadQuestions();
+		questionCache = new TreeMap<Long, Question>();
+		// load saved questions from file
+		for (Question q : QuestionLoaderSaver.loadQuestions()) {
+			questionCache.put(q.getID(), q);
+		}
 		webservice = WebserviceModel.getWebservice();
 	}
 	
@@ -22,7 +26,8 @@ public class LocalCacheModel {
 				questionCache.put(qp.ID, webservice.getQuestionByID(qp.ID));
 			}
 		}
-
+	}
+	
 	static public LocalCacheModel getLocalCacheModel() {
 		if (self == null) {
 			self = new LocalCacheModel();

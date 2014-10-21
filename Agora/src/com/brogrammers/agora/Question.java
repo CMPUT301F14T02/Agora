@@ -1,12 +1,15 @@
 package com.brogrammers.agora;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import android.graphics.Bitmap;
 
-public class Question implements Comparable<Question> {
+public class Question implements Serializable, Comparable<Question> {
+	private static final long serialVersionUID = -4895951515889586534L;
+
 	private String title;
 	private String body;
 	private int rating;
