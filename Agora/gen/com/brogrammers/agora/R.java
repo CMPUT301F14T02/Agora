@@ -35,12 +35,12 @@ public final class R {
         public static final int AuthourDate=0x7f08000a;
         public static final int action_settings=0x7f08000e;
         public static final int addQuestionBQV=0x7f08000f;
-        public static final int authorAnswerAddPictureButton=0x7f080004;
-        public static final int authorAnswerAddPostButton=0x7f080005;
-        public static final int authorAnswerBodyEditText=0x7f080003;
-        public static final int authorAnswerTextView=0x7f080002;
-        public static final int authorQuestionTitleEditText=0x7f080001;
-        public static final int authorQuestionTitleTextView=0x7f080000;
+        public static final int authorAnswerAddPictureButton=0x7f080002;
+        public static final int authorAnswerAddPostButton=0x7f080003;
+        public static final int authorAnswerBodyEditText=0x7f080001;
+        public static final int authorAnswerTextView=0x7f080000;
+        public static final int authorQuestionTitleEditText=0x7f080005;
+        public static final int authorQuestionTitleTextView=0x7f080004;
         public static final int imageButton1=0x7f08000d;
         public static final int imageView1=0x7f08000c;
         public static final int listView1=0x7f080006;
@@ -52,13 +52,15 @@ public final class R {
         public static final int sortBQV=0x7f080011;
     }
     public static final class layout {
-        public static final int activity_author_question=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int question_object=0x7f030002;
+        public static final int activity_author_answer=0x7f030000;
+        public static final int activity_author_question=0x7f030001;
+        public static final int activity_main=0x7f030002;
+        public static final int question_object=0x7f030003;
     }
     public static final class menu {
-        public static final int author_question=0x7f070000;
-        public static final int main=0x7f070001;
+        public static final int author_answer=0x7f070000;
+        public static final int author_question=0x7f070001;
+        public static final int main=0x7f070002;
     }
     public static final class string {
         public static final int action_settings=0x7f050002;

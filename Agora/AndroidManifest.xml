@@ -26,6 +26,10 @@
             android:name=".AuthorQuestionActivity"
             android:label="@string/title_activity_author_question" >
         </activity>
+        <activity
+            android:name=".AuthorAnswerActivity"
+            android:label="@string/title_activity_author_answer" >
+        </activity>
     </application>
 
 </manifest>
