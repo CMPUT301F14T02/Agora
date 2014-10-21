@@ -6,11 +6,12 @@ import java.util.Queue;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 public class OfflineQueue {
 	static private OfflineQueue self = null;
 	// list of commands to be run on the server
-	public Queue<String> updateQueue;
+	public Queue<QueueItem> updateQueue;
 	// name of queue data file
 	String dataFile = "QUEUE_DATA_FILE";
 	// name of key for queue in data file
@@ -23,16 +24,18 @@ public class OfflineQueue {
 		return self;
 	}
 	
+	// TO-DO deal with setting context.
 	public OfflineQueue(){
-		updateQueue = deserializeQueue();
+		// load serialized commands to be run.
+		deserializeQueue();
 	}
 	
-	public void addToQueue(String queryString){
-		updateQueue.add(queryString);
+	public void addToQueue(QueueItem queueItem){
+		updateQueue.add(queueItem);
 		serializeQueue();
 	}
 	
-	public String peekAtQueue(){
+	public QueueItem peekAtQueue(){
 		return updateQueue.peek();
 	}
 	
@@ -51,8 +54,13 @@ public class OfflineQueue {
 	}
 	
 	// return desiarilized queue
-	public Queue<String> deserializeQueue(){
-		
-		return updateQueue;
+	public void deserializeQueue(){
+		Gson gson = new Gson();
+		SharedPreferences sp = context.getSharedPreferences(dataFile, 0);
+        String savedQueue = sp.getString(queueKeyName, "NO_DATA_TO_READ");
+        if (savedQueue != "NO_DATA_TO_READ"){
+        	// recreate the queue object
+        	updateQueue = gson.fromJson(savedQueue, new TypeToken<Queue<String>>(){}.getType());
+        }		
 	}
 }

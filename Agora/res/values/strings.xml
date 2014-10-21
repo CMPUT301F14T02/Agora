@@ -9,9 +9,21 @@
     <string name="search">Search</string>
     <string name="sortBy">Sort By</string>
     <string name="sort">Sort</string>
+<<<<<<< HEAD
     <string name="title_activity_search">SearchActivity</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
+=======
+    <string name="title_activity_author_question">submit a question</string>
+    <string name="titletext">Title</string>
+    <string name="titlebodytext">Text</string>
+    <string name="entertitletext">Enter a title</string>
+    <string name="enterbodytext">Write your description here</string>
+    <string name="addPictureButton">Select Picture</string>
+    <string name="submitQuestionButton">Submit Question</string>
+    <string name="submitAnswerButton">Submit Answer</string>
+    <string name="title_activity_author_answer">submit an answer</string>
+>>>>>>> 5a1f673477da6782c430559e6a5ce39949c5bad8
 
 </resources>

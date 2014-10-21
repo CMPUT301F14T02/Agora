@@ -1,5 +1,7 @@
 package com.brogrammers.agora;
 
+import com.google.gson.Gson;
+
 import android.graphics.Bitmap;
 
 public class QuestionController {
@@ -29,7 +31,11 @@ public class QuestionController {
 		user.addAuthoredQuestionID(q.getID());
 		q.setImage(resizer.resizeTo64KB());
 		
-		// TODO: generate query string and pass to webservice
+		Gson gson = new Gson();
+		String question = gson.toJson(q);
+		String URI = DOMAIN + INDEX + TYPE + q.getID();
+		QueueItem queueItem = new QueueItem(URI , question);
+		// TODO: Pass queue item to webservice for posting.
 		
 		cache.getQuestions().add(q);
 		return q.getID(); // for testing
@@ -42,6 +48,7 @@ public class QuestionController {
 		q.addAnswer(a);
 		
 		// TODO: generate query string and pass to webservice
+
 		
 		return a.getID();
 	}
