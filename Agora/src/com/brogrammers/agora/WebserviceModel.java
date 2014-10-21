@@ -107,7 +107,7 @@ public class WebserviceModel {
 					}
 		    	// assuming question previews are cached in the localcachemodel
 		    	// Makes more sense than caching in view or not caching at all
-		    	LocalCacheModel.getLocalCacheModel.setQuestionPreviewList = questionPreviewList;   		
+		    	LocalCacheModel.getLocalCacheModel.setQuestionPreviewList(questionPreviewList);   		
 		    	}
 		    }
 		    
@@ -117,8 +117,8 @@ public class WebserviceModel {
 			}
 		    
 		    @Override
-		    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e){
-		    	Log.d("Question Preview Download Error", "Could not download question preview list");
+		    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+		        Log.w("Question Preview Load Failure", "onFailure(int, Header[], Throwable, JSONObject) was not overriden, but callback was received", throwable);
 		    }
 		    
 		});
