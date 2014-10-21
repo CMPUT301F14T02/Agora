@@ -34,7 +34,7 @@ public class QuestionController {
 		Gson gson = new Gson();
 		String question = gson.toJson(q);
 		String URI = DOMAIN + INDEX + TYPE + q.getID();
-		QueueItem queueItem = new QueueItem(URI , question);
+		QueueItem queueItem = new QueueItem(URI, questionParams, post);
 		// TODO: Pass queue item to webservice for posting.
 		
 		cache.getQuestions().add(q);

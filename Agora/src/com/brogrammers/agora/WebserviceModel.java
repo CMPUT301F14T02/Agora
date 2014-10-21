@@ -45,12 +45,44 @@ public class WebserviceModel {
 		// get connection status
 		// after creation connectivity status will be monitored by a
 		// broadcast receiver.
-		ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE); 
+		ConnectivityManager cm = (ConnectivityManager) Agora.getContext().getSystemService(Context.CONNECTIVITY_SERVICE); 
 		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 		connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 	}
 
-	public void updateServer(String queryString){
+	public void updateServer(QueueItem qItem){
+		if (connected){
+			AsyncHttpClient client = new AsyncHttpClient();
+			// TODO: check for request type, don't assume post 
+			// qItem.requestType
+			client.post(qItem.URI, qItem.getRequestParams, new AsyncHttpResponseHandler() {
+
+			    @Override
+			    public void onStart() {
+			        // called before request is started
+			    }
+
+			    @Override
+			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+			        // called when response HTTP status is "200 OK"
+			    }
+
+			    @Override
+			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+			        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+					//TODO: Switch threads.
+			    	OfflineQueue.addToQueue(qItem);
+			    }
+
+			    @Override
+			    public void onRetry(int retryNo) {
+			        // called when request is retried
+				}
+			});
+			
+		} else {
+			OfflineQueue.addToQueue(qItem);
+		}
 		
 	}
 	
