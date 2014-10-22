@@ -21,9 +21,9 @@ public class ElasticSearch {
 	// domain
 	public static final String DOMAIN = "http://cmput301.softwareprocess.es:8080/testing/";
 	// name of the ES database/index
-	public static final String INDEXNAME = "agora/";
+	public static final String INDEXNAME = "";
 	// name of the ES table/type 
-	public static final String TYPENAME = "question/";
+	public static final String TYPENAME = "";
 	// connected status
 	public boolean connected;
 	// Queue of statements that need to be run on
@@ -55,7 +55,7 @@ public class ElasticSearch {
 			AsyncHttpClient client = new AsyncHttpClient();
 			// TODO: check for request type, don't assume post 
 			// qItem.requestType
-			client.post(qItem.URI, qItem.getRequestParams(), new AsyncHttpResponseHandler() {
+			client.post(Agora.getContext(), qItem.getURI(), qItem.getBody(), "application/json", new AsyncHttpResponseHandler() {
 
 			    @Override
 			    public void onStart() {
