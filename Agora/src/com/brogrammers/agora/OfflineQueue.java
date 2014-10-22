@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken;
 public class OfflineQueue {
 	static private OfflineQueue self = null;
 	// list of commands to be run on the server
-	public Queue<QueueItem> updateQueue;
+	public Queue<QueryItem> updateQueue;
 	// name of queue data file
 	String dataFile = "QUEUE_DATA_FILE";
 	// name of key for queue in data file
@@ -30,12 +30,12 @@ public class OfflineQueue {
 		deserializeQueue();
 	}
 	
-	public static void addToQueue(QueueItem queueItem){
+	public void addToQueue(QueryItem queueItem){
 		updateQueue.add(queueItem);
 		serializeQueue();
 	}
 	
-	public QueueItem peekAtQueue(){
+	public QueryItem peekAtQueue(){
 		return updateQueue.peek();
 	}
 	

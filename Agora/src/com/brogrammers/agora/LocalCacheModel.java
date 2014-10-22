@@ -39,7 +39,7 @@ public class LocalCacheModel {
 		questionPreviewList = qpList;
 		//notifyUpdate();
 	}
-	}
+	
 
 	public List<Question> getQuestions() {
 		return new ArrayList<Question>(questionCache.values());

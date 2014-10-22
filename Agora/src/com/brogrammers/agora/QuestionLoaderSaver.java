@@ -5,7 +5,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,52 +21,26 @@ public class QuestionLoaderSaver {
 	private static final String questionPrefsFileName = "QUESTION";
 	
 	public static void saveQuestion(Question q) {
-		 SharedPreferences prefsFile = 
-				 Agora.getContext().getSharedPreferences(questionPrefsFileName, Context.MODE_PRIVATE);
-		 SharedPreferences.Editor editor = prefsFile.edit();
-		 String serializedQuestion = serializeQuestion(q); 
-		 editor.putString(q.getID().toString(), serializedQuestion);
-		 editor.commit();
+		String jsonQuestion = (new Gson()).toJson(q);
+		SharedPreferences prefsFile = 
+			Agora.getContext().getSharedPreferences(questionPrefsFileName, Context.MODE_PRIVATE);
+    	SharedPreferences.Editor editor = prefsFile.edit();
+		editor.putString(q.getID().toString(), jsonQuestion);
+		editor.commit();
 	}
 	
 	public static List<Question> loadQuestions() {
-		// TODO
-		return null;
-	}
-	
-	 /* 
-	  * Serialization solution below adapted from Matthias @ stackoverflow:
-	  * http://stackoverflow.com/questions/1636623/how-do-i-preserve-a-complex-object-across-activity-restarts
-	  */
-	 // Question object --> Base64-encoded String
-	 private static String serializeQuestion (Question q) {
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	
-		try {
-			// Use an ObjectOutputStream to write the to-do to the ByteArrayOutputStream
-			new ObjectOutputStream(baos).writeObject(q);  
-			// Use the ByteArrayOutputStream to convert the serialized todo to raw bytes.
-			byte[] raw_data = baos.toByteArray(); 
-			baos.close();
-			// return a Base64-encoded String representing the serialized todo.
-			return Base64.encodeToString(raw_data, Base64.DEFAULT);
-		} catch (IOException e) {
-			e.printStackTrace();
+		List<Question> qList = new ArrayList<Question>();
+		SharedPreferences prefsFile = 
+			Agora.getContext().getSharedPreferences(questionPrefsFileName, Context.MODE_PRIVATE);
+		Map<String, String> prefsMap = (Map<String, String>) prefsFile.getAll();
+		
+		for (String jsonQuestion : prefsMap.values()) {
+			Question q = (new Gson()).fromJson(jsonQuestion, new TypeToken<Question>(){}.getType());
+			qList.add(q);
 		}
-		return null;
-
+		
+		return qList;
 	}
 
-	// Base64-encoded String --> Question object (the inverse of this.serializeTodo())
-	private Question deserializeTodo (String str){
-		byte[] raw_data = Base64.decode(str, Base64.DEFAULT);
-		ByteArrayInputStream bais = new ByteArrayInputStream(raw_data);
-	
-		try {
-			return (Question) new ObjectInputStream(bais).readObject();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-		return null;
-	}
 }

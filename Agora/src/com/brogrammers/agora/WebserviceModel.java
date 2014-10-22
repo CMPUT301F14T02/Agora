@@ -50,12 +50,12 @@ public class WebserviceModel {
 		connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 	}
 
-	public void updateServer(QueueItem qItem){
+	public void updateServer(QueryItem qItem){
 		if (connected){
 			AsyncHttpClient client = new AsyncHttpClient();
 			// TODO: check for request type, don't assume post 
 			// qItem.requestType
-			client.post(qItem.URI, qItem.getRequestParams, new AsyncHttpResponseHandler() {
+			client.post(qItem.URI, qItem.getRequestParams(), new AsyncHttpResponseHandler() {
 
 			    @Override
 			    public void onStart() {
