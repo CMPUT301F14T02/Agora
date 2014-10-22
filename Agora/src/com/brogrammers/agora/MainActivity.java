@@ -1,6 +1,8 @@
 package com.brogrammers.agora;
 
+
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,7 +50,9 @@ public class MainActivity extends Activity {
         
     public void openAddQuestionView() {
         // 1. Switch views for add a Question
-    	Toast.makeText(this, "Hook up Add a question here", Toast.LENGTH_SHORT).show();
+    	Toast.makeText(this, "Adding question!", Toast.LENGTH_SHORT).show();
+    	Intent intent = new Intent(MainActivity.this, AuthorQuestionActivity.class);
+		startActivity(intent);
     }
     
     public void openSearchDropDown() {

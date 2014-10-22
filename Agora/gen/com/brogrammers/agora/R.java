@@ -32,28 +32,32 @@ public final class R {
         public static final int ic_launcher=0x7f020007;
     }
     public static final class id {
-        public static final int AuthourDate=0x7f08000e;
-        public static final int action_settings=0x7f080012;
-        public static final int action_upvote=0x7f080007;
-        public static final int addQuestionBQV=0x7f080013;
+        public static final int AuthourDate=0x7f080012;
+        public static final int action_settings=0x7f080016;
+        public static final int action_upvote=0x7f08000b;
+        public static final int addQuestionBQV=0x7f080017;
+        public static final int authorAnswerAddAnswerButton=0x7f080001;
         public static final int authorAnswerAddPictureButton=0x7f080002;
-        public static final int authorAnswerAddPostButton=0x7f080003;
-        public static final int authorAnswerBodyEditText=0x7f080001;
-        public static final int authorAnswerTextView=0x7f080000;
-        public static final int authorQuestionTitleEditText=0x7f080005;
-        public static final int authorQuestionTitleTextView=0x7f080004;
-        public static final int expandableListView1=0x7f080008;
-        public static final int imageButton1=0x7f080011;
-        public static final int imageView1=0x7f080010;
-        public static final int listView1=0x7f080006;
-        public static final int pager=0x7f080009;
-        public static final int qFavourite=0x7f08000c;
-        public static final int qScore=0x7f08000d;
-        public static final int qTitle=0x7f08000f;
-        public static final int qUpvote=0x7f08000b;
-        public static final int searchBQV=0x7f080014;
-        public static final int section_label=0x7f08000a;
-        public static final int sortBQV=0x7f080015;
+        public static final int authorAnswerBodyTextView=0x7f080000;
+        public static final int authorQuestionAddPictureButton=0x7f080008;
+        public static final int authorQuestionAddQuestionButton=0x7f080009;
+        public static final int authorQuestionBodyEditText=0x7f080007;
+        public static final int authorQuestionBodyTextView=0x7f080006;
+        public static final int authorQuestionEditText=0x7f080005;
+        public static final int authorQuestionTitleView=0x7f080004;
+        public static final int editText1=0x7f080003;
+        public static final int expandableListView1=0x7f08000c;
+        public static final int imageButton1=0x7f080015;
+        public static final int imageView1=0x7f080014;
+        public static final int listView1=0x7f08000a;
+        public static final int pager=0x7f08000d;
+        public static final int qFavourite=0x7f080010;
+        public static final int qScore=0x7f080011;
+        public static final int qTitle=0x7f080013;
+        public static final int qUpvote=0x7f08000f;
+        public static final int searchBQV=0x7f080018;
+        public static final int section_label=0x7f08000e;
+        public static final int sortBQV=0x7f080019;
     }
     public static final class layout {
         public static final int activity_author_answer=0x7f030000;

@@ -9,7 +9,7 @@
     tools:context="com.brogrammers.agora.AuthorQuestionActivity" >
 
     <TextView
-        android:id="@+id/authorQuestionTitleTextView"
+        android:id="@+id/authorQuestionTitleView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -18,58 +18,58 @@
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/authorQuestionTitleEditText"
+        android:id="@+id/authorQuestionEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/authorQuestionTitleTextView"
+        android:layout_below="@+id/authorQuestionTitleView"
         android:ems="10"
-        android:text="@string/entertitletext" >
+        android:hint="Enter Title." >
 
         <requestFocus />
     </EditText>
 
     <TextView
-        android:id="@+id/authorAnswerTextView"
+        android:id="@+id/authorQuestionBodyTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/authorQuestionTitleEditText"
-        android:layout_marginTop="20dp"
+        android:layout_below="@+id/authorQuestionEditText"
         android:text="@string/titlebodytext"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText
-        android:id="@+id/authorAnswerBodyEditText"
+        android:id="@+id/authorQuestionBodyEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/authorAnswerAddPictureButton"
+        android:layout_above="@+id/authorQuestionAddPictureButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/authorAnswerTextView"
+        android:layout_below="@+id/authorQuestionBodyTextView"
         android:ems="10"
-        android:inputType="textMultiLine"
-        android:text="@string/enterbodytext" />
+        android:gravity="top|left"
+        android:hint="Enter Description Here."
+        android:inputType="textMultiLine" />
 
     <Button
-        android:id="@+id/authorAnswerAddPostButton"
+        android:id="@+id/authorQuestionAddQuestionButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/authorAnswerAddPictureButton"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:onClick="postQuestion"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/authorQuestionBodyEditText"
+        android:onClick="postquestion"
         android:text="@string/submitQuestionButton" />
 
     <Button
-        android:id="@+id/authorAnswerAddPictureButton"
+        android:id="@+id/authorQuestionAddPictureButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/authorAnswerAddPostButton"
-        android:layout_alignLeft="@+id/authorAnswerBodyEditText"
+        android:layout_above="@+id/authorQuestionAddQuestionButton"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:onClick="addPicture"
+        android:onClick="addpicture"
         android:text="@string/addPictureButton" />
 
 </RelativeLayout>

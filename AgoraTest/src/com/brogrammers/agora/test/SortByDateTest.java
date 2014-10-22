@@ -10,8 +10,8 @@ import junit.framework.TestCase;
 
 public class SortByDateTest extends TestCase {
 	QuestionController controller = QuestionController.getController();
-	ElasticSearch webModel1 = ElasticSearch.getInstance();
-	List<Question> questions = webModel1.getQuestions();
+	ElasticSearch webModel = ElasticSearch.getInstance();
+	List<Question> questions = webModel.getQuestions();
 
 	
 	//Order should be {fourthDate, secondDate, thirdDate, firstDate}
