@@ -14,9 +14,7 @@ import android.widget.SearchView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
-
-    
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +46,7 @@ public class MainActivity extends Activity {
         	openSearchBar(item);
         	return true;
         case R.id.sortBQV:
-        	openSortContextMenu();
+        	openSortMenu();
         	return true;
         	
         default:
@@ -67,8 +65,8 @@ public class MainActivity extends Activity {
     	Toast.makeText(Agora.getContext(), "Add Dropdown Search", Toast.LENGTH_SHORT).show();
     }
     
-    public void openSortContextMenu() {
-        // 3. Create a context menu for sort 
+    public void openSortMenu() {
+        //new Dialog 
     	Toast.makeText(Agora.getContext(), "Sort Context", Toast.LENGTH_SHORT).show();
     }
     

@@ -13,7 +13,7 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
-    <string name="title_activity_author_question">submit a question</string>
+    <string name="title_activity_author_question">Submit a Question</string>
     <string name="titletext">Title</string>
     <string name="titlebodytext">Text</string>
     <string name="entertitletext">Enter a title</string>
@@ -23,6 +23,8 @@
     <string name="submitAnswerButton">Submit Answer</string>
     <string name="title_activity_author_answer">submit an answer</string>
     <string name="title_activity_question_answer">QuestionAnswerActivity</string>
+    <string name="arrangeby">Arrange By</string>
+    <string name="filterby">Filter By</string>
  
 
 </resources>
