@@ -55,7 +55,7 @@ public class ElasticSearch {
 			AsyncHttpClient client = new AsyncHttpClient();
 			// TODO: check for request type, don't assume post 
 			// qItem.requestType
-			client.post(qItem.URI, qItem.getRequestParams(), new AsyncHttpResponseHandler() {
+			client.post(Agora.getContext(), qItem.getURI(), qItem.getBody(), "application/json", new AsyncHttpResponseHandler() {
 
 			    @Override
 			    public void onStart() {

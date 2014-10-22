@@ -1,6 +1,9 @@
 package com.brogrammers.agora;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
+
+import org.apache.http.entity.StringEntity;
 
 import com.brogrammers.agora.QueryItem.RequestType;
 import com.google.gson.Gson;
@@ -32,18 +35,16 @@ public class QuestionController {
 		
 	}
 	
-	public Long addQuestion(String title, String body, Bitmap image) {
+	public Long addQuestion(String title, String body, Bitmap image) throws UnsupportedEncodingException {
 		Question q = new Question(title, body, image, user);
 		user.addAuthoredQuestionID(q.getID());
 		q.setImage(resizer.resizeTo64KB(image));
 		
 		Gson gson = new Gson();
-		String question = gson.toJson(q);
-		Type type = (Type) new TypeToken<Map<String, String>>(){}.getType();
-		Map<String, String> paramMap = gson.fromJson(question, (java.lang.reflect.Type) type);
-		RequestParams params = new RequestParams(paramMap);
-		String URI = ElasticSearch.DOMAIN + ElasticSearch.INDEXNAME + ElasticSearch.TYPENAME;
-		QueryItem queryItem = new QueryItem(params, URI, RequestType.POST);
+		String questionSerialized = gson.toJson(q);
+		StringEntity stringEntityBody = new StringEntity(questionSerialized);
+		String URI = ElasticSearch.DOMAIN + ElasticSearch.INDEXNAME + ElasticSearch.TYPENAME + Long.toString(q.getID());
+		QueryItem queryItem = new QueryItem(stringEntityBody, URI, RequestType.POST);
 		eSearch.updateServer(queryItem);
 		
 		cache.setQuestion(q);
@@ -59,12 +60,9 @@ public class QuestionController {
 		// TODO: generate query string and pass to webservice
 		Gson gson = new Gson();
 		String answer = gson.toJson(a);
-		Type type = (Type) new TypeToken<Map<String, String>>(){}.getType();
-		Map<String, String> paramMap = gson.fromJson(answer, (java.lang.reflect.Type) type);
-		RequestParams params = new RequestParams(paramMap);
 		String URI = ElasticSearch.DOMAIN + ElasticSearch.INDEXNAME + ElasticSearch.TYPENAME + qID;
-		QueryItem queryItem = new QueryItem(params, URI, RequestType.POST);
-		eSearch.updateServer(queryItem);
+		//QueryItem queryItem = new QueryItem(params, URI, RequestType.POST);
+		//eSearch.updateServer(queryItem);
 		
 
 		
