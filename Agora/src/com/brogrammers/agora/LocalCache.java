@@ -7,11 +7,14 @@ import java.util.TreeMap;
 import android.widget.Toast;
 
 public class LocalCache {
-	private TreeMap<Long, Question> questionCache;
+	private List<Observer> observerList;
 	private ElasticSearch eSearch;
 	static private LocalCache self;
-	private List<QuestionPreview> questionPreviewList;
-	private List<Observer> observerList;
+	
+	private TreeMap<Long, Question> questionCache; // for getQuestionByID()
+	private List<QuestionPreview> questionPreviewList; // for getQuestions()
+
+	/* Construction */
 	
 	private LocalCache() {
 		questionCache = new TreeMap<Long, Question>();
@@ -21,16 +24,7 @@ public class LocalCache {
 		}
 		eSearch = ElasticSearch.getInstance();
 	}
-	
-	public void update() {
-		List<QuestionPreview> previews = eSearch.getQuestions(); 
-		for (QuestionPreview qp : previews) {
-			if (qp.version > getQuestionByID(qp.ID).getVersion()) {
-				questionCache.put(qp.ID, eSearch.getQuestionByID(qp.ID));
-			}
-		}
-	}
-	
+
 	static public LocalCache getInstance() {
 		if (self == null) {
 			self = new LocalCache();
@@ -38,13 +32,16 @@ public class LocalCache {
 		return self;
 	}
 	
-	public void setQuestionPreviewList(List<QuestionPreview> qpList){
+	/* Methods */
+	
+	public void setQuestionPreviewList(List<QuestionPreview> qpList) {
 		questionPreviewList = qpList;
 		notifyUpdate();
 	}
-
-	public List<Question> getQuestions() {
-		return new ArrayList<Question>(questionCache.values());
+	
+	public List<QuestionPreview> getQuestionPreviews() {
+		eSearch.getQuestionPreviews();
+		return questionPreviewList;
 	}
 	
 	public void addObserver(Observer o) {
@@ -55,15 +52,19 @@ public class LocalCache {
 		observerList.remove(o);
 	}
 	
-	// Returns null if the Question with the specified ID does not exist in the cache.
-	// This should never happen.
+	// Warning: this can return null if the question isn't in the cache.
+	// In this case, the calling observer will be notified when the Question
+	// is retrieved from ElasticSearch.
 	public Question getQuestionByID(Long id) {
-		return questionCache.get(id);
+		eSearch.getQuestionByID(id);
+		Question q = questionCache.get(id);
+		return q;
 	}
 	
-	public void addQuestion(Question q) {
+	public void setQuestion(Question q) {
 		questionCache.put(q.getID(), q);
 		QuestionLoaderSaver.saveQuestion(q);
+		notifyUpdate();
 	} 
 	
 	private void notifyUpdate() {
@@ -73,4 +74,3 @@ public class LocalCache {
 	}
 	
 }
-
