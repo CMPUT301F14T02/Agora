@@ -171,5 +171,10 @@ public class ElasticSearch {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Answer getAnswerById(long answerID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

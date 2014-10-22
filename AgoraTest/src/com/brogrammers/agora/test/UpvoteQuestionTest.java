@@ -1,5 +1,9 @@
 package com.brogrammers.agora.test;
 
+import com.brogrammers.agora.ElasticSearch;
+import com.brogrammers.agora.Question;
+import com.brogrammers.agora.QuestionController;
+
 import junit.framework.TestCase;
 
 
@@ -7,12 +11,12 @@ public class UpvoteQuestionTest extends TestCase
 {
 //Assuming questions start with 0 upvotes
 	QuestionController controller = QuestionController.getController();
-	WebServiceModel webModel = WebServiceModel.getModel();
+	ElasticSearch webModel = ElasticSearch.getInstance();
 
 	long questionID = controller.addQuestion("I can't get past this road.", "There is a snorlax blocking the path.", null);
-
+	Question testQuestion = webModel.getQuestionByID(questionID);
+	
 	//upvoting once
-	Question testQuestion = webModel.getQuestionById(questionID);
 	controller.upvote(questionID);
 	
 	void testQuestionUpvoted() {
