@@ -6,40 +6,42 @@ import java.util.TreeMap;
 
 import android.widget.Toast;
 
-public class LocalCacheModel {
+public class LocalCache {
 	private TreeMap<Long, Question> questionCache;
-	private WebserviceModel webservice;
-
-	private LocalCacheModel() {
+	private ElasticSearch eSearch;
+	static private LocalCache self;
+	private List<QuestionPreview> questionPreviewList;
+	private List<Observer> observerList;
+	
+	private LocalCache() {
 		questionCache = new TreeMap<Long, Question>();
 		// load saved questions from file
 		for (Question q : QuestionLoaderSaver.loadQuestions()) {
 			questionCache.put(q.getID(), q);
 		}
-		webservice = WebserviceModel.getWebservice();
+		eSearch = ElasticSearch.getInstance();
 	}
 	
 	public void update() {
-		List<QuestionPreview> previews = webservice.getQuestions(); 
+		List<QuestionPreview> previews = eSearch.getQuestions(); 
 		for (QuestionPreview qp : previews) {
 			if (qp.version > getQuestionByID(qp.ID).getVersion()) {
-				questionCache.put(qp.ID, webservice.getQuestionByID(qp.ID));
+				questionCache.put(qp.ID, eSearch.getQuestionByID(qp.ID));
 			}
 		}
 	}
 	
-	static public LocalCacheModel getLocalCacheModel() {
+	static public LocalCache getInstance() {
 		if (self == null) {
-			self = new LocalCacheModel();
+			self = new LocalCache();
 		}
 		return self;
 	}
 	
-	static public void setQuestionPreviewList(List<QuestionPreview> qpList){
+	public void setQuestionPreviewList(List<QuestionPreview> qpList){
 		questionPreviewList = qpList;
-		//notifyUpdate();
+		notifyUpdate();
 	}
-	
 
 	public List<Question> getQuestions() {
 		return new ArrayList<Question>(questionCache.values());
@@ -62,6 +64,12 @@ public class LocalCacheModel {
 	public void addQuestion(Question q) {
 		questionCache.put(q.getID(), q);
 		QuestionLoaderSaver.saveQuestion(q);
+	} 
+	
+	private void notifyUpdate() {
+		for (Observer o : observerList) {
+			o.update();
+		}
 	}
 	
 }

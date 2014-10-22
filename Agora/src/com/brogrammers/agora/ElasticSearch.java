@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import org.apache.http.Header;
 
-public class WebserviceModel {
+public class ElasticSearch {
 	// domain
 	private String DOMAIN = "http://cmput301.softwareprocess.es:8080/testing/";
 	// name of the ES database/index
@@ -32,16 +32,16 @@ public class WebserviceModel {
 	
 	// TODO: Register a broadcast receiver for connectivity status.
 	
-	private static WebserviceModel webserviceModel;
+	private static ElasticSearch self;
 			
-	public static WebserviceModel getWebserviceModel(){
-		if (webserviceModel == null) {
-			webserviceModel = new WebserviceModel();
+	public static ElasticSearch getInstance(){
+		if (self == null) {
+			self = new ElasticSearch();
 		}
-		return webserviceModel;
+		return self;
 	}
 	
-	private WebserviceModel(){
+	private ElasticSearch(){
 		// get connection status
 		// after creation connectivity status will be monitored by a
 		// broadcast receiver.
@@ -140,7 +140,7 @@ public class WebserviceModel {
 		    	// assuming question previews are cached in the localcachemodel
 		    	// Makes more sense than caching in view or not caching at all
 		    	// TODO: switch threads to main ui thread before setting values on model.
-		    	LocalCacheModel.getLocalCacheModel().setQuestionPreviewList(questionPreviewList);   		
+		    	LocalCache.getInstance().setQuestionPreviewList(questionPreviewList);   		
 		    	}
 		    }
 		    
@@ -158,6 +158,16 @@ public class WebserviceModel {
 		// return a dummy empty list to the caller
 		List<QuestionPreview> qpList = new ArrayList<QuestionPreview>();
 		return qpList;	
+	}
+
+	public List<QuestionPreview> getQuestions() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Question getQuestionByID(Long iD) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

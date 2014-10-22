@@ -6,8 +6,8 @@ import android.graphics.Bitmap;
 
 public class QuestionController {
 	private DeviceUser user;
-	private LocalCacheModel cache;
-	private WebserviceModel webservice;
+	private LocalCache cache;
+	private ElasticSearch webservice;
 	private ImageResizer resizer;
 	
 	static private QuestionController self = null;
@@ -21,8 +21,8 @@ public class QuestionController {
 	
 	private QuestionController() {
 		user = DeviceUser.getUser();
-		cache = LocalCacheModel.getCache();
-		webservice = WebserviceModel.getWebservice();
+		cache = LocalCache.getCache();
+		webservice = ElasticSearch.getWebservice();
 		
 	}
 	
