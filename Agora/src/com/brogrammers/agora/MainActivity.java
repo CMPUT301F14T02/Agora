@@ -3,6 +3,7 @@ package com.brogrammers.agora;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.SearchManager;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;

@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken;
 public class OfflineQueue {
 	static private OfflineQueue self = null;
 	// list of commands to be run on the server
-	public Queue<QueueItem> updateQueue;
+	public Queue<QueryItem> updateQueue;
 	// name of queue data file
 	String dataFile = "QUEUE_DATA_FILE";
 	// name of key for queue in data file
@@ -30,12 +30,12 @@ public class OfflineQueue {
 		deserializeQueue();
 	}
 	
-	public void addToQueue(QueueItem queueItem){
+	public void addToQueue(QueryItem queueItem){
 		updateQueue.add(queueItem);
 		serializeQueue();
 	}
 	
-	public QueueItem peekAtQueue(){
+	public QueryItem peekAtQueue(){
 		return updateQueue.peek();
 	}
 	
@@ -47,7 +47,7 @@ public class OfflineQueue {
 	public void serializeQueue(){
 		Gson gson = new Gson();
 		String serializedQueue = gson.toJson(updateQueue);
-		SharedPreferences sp = context.getSharedPrefernces(dataFile, 0);
+		SharedPreferences sp = Agora.getContext().getSharedPreferences(dataFile, 0);
 		SharedPreferences.Editor spEditor = sp.edit();
 		spEditor.putString(queueKeyName, serializedQueue);
 		spEditor.commit();
@@ -56,11 +56,12 @@ public class OfflineQueue {
 	// return desiarilized queue
 	public void deserializeQueue(){
 		Gson gson = new Gson();
-		SharedPreferences sp = context.getSharedPreferences(dataFile, 0);
+		SharedPreferences sp = Agora.getContext().getSharedPreferences(dataFile, 0);
         String savedQueue = sp.getString(queueKeyName, "NO_DATA_TO_READ");
         if (savedQueue != "NO_DATA_TO_READ"){
         	// recreate the queue object
         	updateQueue = gson.fromJson(savedQueue, new TypeToken<Queue<String>>(){}.getType());
         }		
 	}
+
 }

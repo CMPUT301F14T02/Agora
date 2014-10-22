@@ -1,23 +1,24 @@
 package com.brogrammers.agora.test;
 
+import java.util.List;
+
+import com.brogrammers.agora.ElasticSearch;
+import com.brogrammers.agora.Question;
+import com.brogrammers.agora.QuestionController;
+
 import junit.framework.TestCase;
 
 public class SortByVoteTest extends TestCase {
 
 	QuestionController controller = QuestionController.getController();
-	WebServiceModel webModel = WebServiceModel.getModel();
-	List<Question> questions = weModel.getQuestions();
-	
-	Question tenVote = new Question("Test post please ignore", "ignore pls", null );
-	Question fiveVote = new Question("Why can't my Meowth talk?", "talk pls", null );
-	Question threeVote = new Question("Where is infinity and beyond?", "the claw", null );
-	Question noVote = new Question("There's a snake in my boot.", "howdy howdy howdy", null );
-	
+	ElasticSearch webModel = ElasticSearch.getInstance();
+	List<Question> questions = webModel.getQuestions();
+
 	//Order should be {noVote, fiveVote, threeVote, tenVote}
-	long noID = controller.addQuestion(noVote);
-	long fiveID = controller.addQuestion(fiveVote);
-	long threeVote = controller.addQuestion(threeVote);
-	long tenID = controller.addQuestion(tenVote);
+	long noID = controller.addQuestion("There's a snake in my boot.", "howdy howdy howdy", null );
+	long fiveID = controller.addQuestion("Why can't my Meowth talk?", "talk pls", null );
+	long threeID = controller.addQuestion("Where is infinity and beyond?", "the claw", null );
+	long tenID = controller.addQuestion("Test post please ignore", "ignore pls", null );
 	
 	//upvoting
 	for (int i = 0; i < 10; i++){

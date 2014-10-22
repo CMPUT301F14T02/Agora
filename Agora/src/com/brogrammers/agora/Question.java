@@ -33,7 +33,21 @@ public class Question implements Serializable, Comparable<Question> {
 		uniqueID = md5.hash(date.toString()+author.getUsername()+body+title);
 		comments = new ArrayList<Comment>();
 		answers = new ArrayList<Answer>();
-		version = 0;
+		//ES indexes from 1
+		version = 1;
+	}
+	
+	public Question(String title, String body, Author author) {
+		this.title = title;
+		this.body = body;
+		this.author = author;
+		rating = 0;
+		date = System.currentTimeMillis();
+		uniqueID = md5.hash(date.toString()+author.getUsername()+body+title);
+		comments = new ArrayList<Comment>();
+		answers = new ArrayList<Answer>();
+		//ES indexes from 1
+		version = 1;
 	}
 	
 	public int getVersion() {

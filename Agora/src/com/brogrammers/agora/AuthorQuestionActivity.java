@@ -33,11 +33,11 @@ public class AuthorQuestionActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	void addPicture(View v){
+	void addpicture(View view){
 		Toast.makeText(this, "Picture Added!", Toast.LENGTH_SHORT).show();
 	}
 	//submitting
-	void postQuestion(View v){
+	void postquestion(View view){
 		Toast.makeText(this, "Question Posted!", Toast.LENGTH_SHORT).show();
 	}
 }

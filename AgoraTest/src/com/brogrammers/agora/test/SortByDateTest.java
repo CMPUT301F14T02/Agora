@@ -2,31 +2,30 @@ package com.brogrammers.agora.test;
 
 import java.util.Date;
 
+import com.brogrammers.agora.ElasticSearch;
+import com.brogrammers.agora.QuestionController;
+
 import junit.framework.TestCase;
 
 
 public class SortByDateTest extends TestCase {
 	QuestionController controller = QuestionController.getController();
-	WebServiceModel webModel = WebServiceModel.getModel();
-	List<Question> questions = weModel.getQuestions();
-	
-	Question firstDate= new Question("Test post please ignore", "ignore pls", null );
-	Question secondDate = new Question("Why can't my Meowth talk?", "talk pls", null );
-	Question thirdDate = new Question("Where is infinity and beyond?", "the claw", null );
-	Question fourthDate = new Question("There's a snake in my boot.", "howdy howdy howdy", null );
+	ElasticSearch webModel = ElasticSearch.getInstance();
+	List<Question> questions = webModel.getQuestions();
+
 	
 	//Order should be {fourthDate, secondDate, thirdDate, firstDate}
 	//because automatically, newest is first
-	long firstID = controller.addQuestion(noVote);
-	long thirdID= controller.addQuestion(threeVote);
-	long secondID = controller.addQuestion(fiveVote);
-	long fourthID = controller.addQuestion(tenVote);
+	long firstID = controller.addQuestion("Test post please ignore", "ignore pls", null);
+	long thirdID= controller.addQuestion("Why can't my Meowth talk?", "talk pls", null);
+	long secondID = controller.addQuestion("Where is infinity and beyond?", "the claw", null);
+	long fourthID = controller.addQuestion("There's a snake in my boot.", "howdy howdy howdy", null);
 	
 	//manually set date so fourth is oldest and first is now newest
-	controller.getQuestionById(fourthID).setDate(Date());
-	controller.getQuestionById(thirdID).setDate(Date());
-	controller.getQuestionById(secondID).setDate(Date());
-	controller.getQuestionById(firstID).setDate(Date());
+	webModel.getQuestionById(fourthID).setDate(new Date());
+	webModel.getQuestionById(thirdID).setDate(new Date());
+	webModel.getQuestionById(secondID).setDate(new Date());
+	webModel.getQuestionById(firstID).setDate(new Date());
 	
 	//assuming enum {VOTES, DATE};
 	questions.setFilter(1);
