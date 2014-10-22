@@ -8,7 +8,7 @@ public class QueryItem {
 	RequestParams requestParams;
 	String URI;
 	
-	public QueueItem(RequestParams requestParams, String URI, RequestType requestType){
+	public QueryItem(RequestParams requestParams, String URI, RequestType requestType){
 		this.requestParams = requestParams;
 		this.URI = URI;
 		this.requestType = requestType;

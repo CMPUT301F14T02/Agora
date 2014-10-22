@@ -40,6 +40,15 @@ public class Answer implements Serializable {
 		comments = new ArrayList<Comment>();
 	}
 	
+	public Answer(String body, Author author) {
+		this.body = body;
+		this.author = author;
+		rating = 0;
+		date = System.currentTimeMillis();
+		uniqueID = md5.hash(date.toString()+author.getUsername()+body);
+		comments = new ArrayList<Comment>();
+	}
+	
 	public int countComments() {
 		return comments.size();
 	}

@@ -1,8 +1,14 @@
 package com.brogrammers.agora;
 
+import java.util.Map;
+
+import com.brogrammers.agora.QueryItem.RequestType;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.loopj.android.http.RequestParams;
 
 import android.graphics.Bitmap;
+import android.renderscript.Type;
 
 public class QuestionController {
 	private DeviceUser user;
@@ -33,9 +39,12 @@ public class QuestionController {
 		
 		Gson gson = new Gson();
 		String question = gson.toJson(q);
+		Type type = (Type) new TypeToken<Map<String, String>>(){}.getType();
+		Map<String, String> paramMap = gson.fromJson(question, (java.lang.reflect.Type) type);
+		RequestParams params = new RequestParams(paramMap);
 		String URI = DOMAIN + INDEX + TYPE + q.getID();
-		QueueItem queueItem = new QueueItem(URI, questionParams, post);
-		// TODO: Pass queue item to webservice for posting.
+		QueryItem queryItem = new QueryItem(params, URI, RequestType.POST);
+		WebserviceModel.getWebserviceModel().updateServer(queryItem);
 		
 		cache.getQuestions().add(q);
 		return q.getID(); // for testing
@@ -48,6 +57,15 @@ public class QuestionController {
 		q.addAnswer(a);
 		
 		// TODO: generate query string and pass to webservice
+		Gson gson = new Gson();
+		String answer = gson.toJson(a);
+		Type type = (Type) new TypeToken<Map<String, String>>(){}.getType();
+		Map<String, String> paramMap = gson.fromJson(answer, (java.lang.reflect.Type) type);
+		RequestParams params = new RequestParams(paramMap);
+		String URI = DOMAIN + INDEX + TYPE + qID;
+		QueryItem queryItem = new QueryItem(params, URI, RequestType.POST);
+		WebserviceModel.getWebserviceModel().updateServer(queryItem);
+		
 
 		
 		return a.getID();
