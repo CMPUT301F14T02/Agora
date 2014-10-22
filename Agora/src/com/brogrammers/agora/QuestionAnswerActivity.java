@@ -11,13 +11,13 @@ public class QuestionAnswerActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_question_answer);
+//		setContentView(R.layout.activity_question_answer);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.question_answer, menu);
+//		getMenuInflater().inflate(R.menu.question_answer, menu);
 		return true;
 	}
 
@@ -30,9 +30,9 @@ public class QuestionAnswerActivity extends Activity {
 		switch (id){
 			case R.id.action_settings:
 				return true;
-			case R.id.action_upvote:
-				upvote();
-				return true;
+//			case R.id.action_upvote:
+//				upvote();
+//				return true;
 			default:
 				return super.onOptionsItemSelected(item);
 		}

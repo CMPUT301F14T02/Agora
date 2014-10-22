@@ -21,23 +21,23 @@ public class QuestionController {
 	
 	private QuestionController() {
 		user = DeviceUser.getUser();
-		cache = LocalCache.getCache();
-		webservice = ElasticSearch.getWebservice();
+		cache = LocalCache.getInstance();
+		webservice = ElasticSearch.getInstance();
 		
 	}
 	
 	public Long addQuestion(String title, String body, Bitmap image) {
 		Question q = new Question(title, body, image, user);
 		user.addAuthoredQuestionID(q.getID());
-		q.setImage(resizer.resizeTo64KB());
+		q.setImage(resizer.resizeTo64KB(image));
 		
 		Gson gson = new Gson();
 		String question = gson.toJson(q);
-		String URI = DOMAIN + INDEX + TYPE + q.getID();
-		QueueItem queueItem = new QueueItem(URI, questionParams, post);
+		String URI = ElasticSearch.DOMAIN + ElasticSearch.INDEXNAME + ElasticSearch.TYPENAME + q.getID();
+//		QueryItem queueItem = new QueryItem(URI, questionParams, post);
 		// TODO: Pass queue item to webservice for posting.
 		
-		cache.getQuestions().add(q);
+		cache.setQuestion(q);
 		return q.getID(); // for testing
 	}
 	

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:icon="@drawable/ic_action_upvote"
         android:showAsAction="ifRoom"
-        android:title="@string/action"/>
+        android:title="QuestionAnswerView"/>
     
     <ExpandableListView
         android:id="@+id/expandableListView1"
