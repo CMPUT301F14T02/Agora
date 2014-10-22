@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 
+import com.brogrammers.agora.QuestionController;
+
 import junit.framework.TestCase;
 
 public class AddQuestionTest extends TestCase {
@@ -30,6 +32,7 @@ public class AddQuestionTest extends TestCase {
 		assertTrue(addedQuestion.get(0).title == questionTitle);
 		assertTrue(addedQuestion.get(0).body == 'Body Test');
 		assertTrue(addedQuestion.get(0).image != null);
+		
 	}
 	
 	LocalCacheModel localCacheModel = LocalCacheModel.getModel();

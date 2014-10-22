@@ -13,7 +13,7 @@ import android.renderscript.Type;
 public class QuestionController {
 	private DeviceUser user;
 	private LocalCache cache;
-	private ElasticSearch webservice;
+	private ElasticSearch eSearch;
 	private ImageResizer resizer;
 	
 	static private QuestionController self = null;
@@ -28,7 +28,7 @@ public class QuestionController {
 	private QuestionController() {
 		user = DeviceUser.getUser();
 		cache = LocalCache.getInstance();
-		webservice = ElasticSearch.getInstance();
+		eSearch = ElasticSearch.getInstance();
 		
 	}
 	
@@ -42,8 +42,9 @@ public class QuestionController {
 		Type type = (Type) new TypeToken<Map<String, String>>(){}.getType();
 		Map<String, String> paramMap = gson.fromJson(question, (java.lang.reflect.Type) type);
 		RequestParams params = new RequestParams(paramMap);
+		String URI = ElasticSearch.DOMAIN + ElasticSearch.INDEXNAME + ElasticSearch.TYPENAME;
 		QueryItem queryItem = new QueryItem(params, URI, RequestType.POST);
-		WebserviceModel.getWebserviceModel().updateServer(queryItem);
+		eSearch.updateServer(queryItem);
 		
 		cache.setQuestion(q);
 		return q.getID(); // for testing
@@ -61,9 +62,9 @@ public class QuestionController {
 		Type type = (Type) new TypeToken<Map<String, String>>(){}.getType();
 		Map<String, String> paramMap = gson.fromJson(answer, (java.lang.reflect.Type) type);
 		RequestParams params = new RequestParams(paramMap);
-		String URI = DOMAIN + INDEX + TYPE + qID;
+		String URI = ElasticSearch.DOMAIN + ElasticSearch.INDEXNAME + ElasticSearch.TYPENAME + qID;
 		QueryItem queryItem = new QueryItem(params, URI, RequestType.POST);
-		WebserviceModel.getWebserviceModel().updateServer(queryItem);
+		eSearch.updateServer(queryItem);
 		
 
 		
