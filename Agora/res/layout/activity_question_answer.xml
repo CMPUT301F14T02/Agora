@@ -8,13 +8,6 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.brogrammers.agora.QuestionAnswerActivity" >
 
-    <item
-        android:id="@+id/action_upvote"
-        android:layout_width="match_parent"
-        android:icon="@drawable/ic_action_upvote"
-        android:showAsAction="ifRoom"
-        android:title="QuestionAnswerView"/>
-    
     <ExpandableListView
         android:id="@+id/expandableListView1"
         android:layout_width="match_parent"

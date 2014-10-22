@@ -1,23 +1,25 @@
 package com.brogrammers.agora;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
 
 public class QuestionAnswerActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-//		setContentView(R.layout.activity_question_answer);
+		setContentView(R.layout.activity_question_answer);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-//		getMenuInflater().inflate(R.menu.question_answer, menu);
+		getMenuInflater().inflate(R.menu.question_answer, menu);
 		return true;
 	}
 
@@ -30,9 +32,15 @@ public class QuestionAnswerActivity extends Activity {
 		switch (id){
 			case R.id.action_settings:
 				return true;
-//			case R.id.action_upvote:
-//				upvote();
-//				return true;
+			case R.id.action_upvote:
+				upvote();
+				return true;
+			case R.id.action_favorite:
+				upvote();
+				return true;
+			case R.id.action_flag:
+				upvote();
+				return true;	
 			default:
 				return super.onOptionsItemSelected(item);
 		}
@@ -46,9 +54,19 @@ public class QuestionAnswerActivity extends Activity {
 		Toast.makeText(this, "expanded comments", Toast.LENGTH_SHORT).show();
 	}
 	
-	//remove later, implemented in controller.
+	//remove these later, made for button testing. actual function is implemented in controller.
 	public void upvote(){
 		Toast.makeText(this, "upvote", Toast.LENGTH_SHORT).show();
 	}
+	public void favorite(){
+		Toast.makeText(this, "favorite", Toast.LENGTH_SHORT).show();
+	}
+	public void flag(){
+		Toast.makeText(this, "flag", Toast.LENGTH_SHORT).show();
+	}
+	public void settings(){
+		Toast.makeText(this, "settings", Toast.LENGTH_SHORT).show();
+	}
+	
 }
 
