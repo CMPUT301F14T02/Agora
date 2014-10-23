@@ -56,6 +56,8 @@ public class MainActivity extends Activity {
         
     public void openAddQuestionView() {
     	Intent intent = new Intent(Agora.getContext(), AuthorQuestionActivity.class);
+    	//Intent intent = new Intent(Agora.getContext(), QuestionAnswerActivity.class);
+    	
     	startActivity(intent);
     	//Toast.makeText(Agora.getContext(), "Hook up Add a question here", Toast.LENGTH_SHORT).show();
     }

@@ -32,14 +32,14 @@ public class QuestionAnswerActivity extends Activity {
 		switch (id){
 			case R.id.action_settings:
 				return true;
-			case R.id.action_upvote:
-				upvote();
-				return true;
 			case R.id.action_favorite:
-				upvote();
+				favorite();
 				return true;
 			case R.id.action_flag:
-				upvote();
+				flag();
+				return true;
+			case R.id.action_addanswer:
+				openAddAnswerView();
 				return true;	
 			default:
 				return super.onOptionsItemSelected(item);
@@ -53,6 +53,12 @@ public class QuestionAnswerActivity extends Activity {
 	public void expandcomment(){
 		Toast.makeText(this, "expanded comments", Toast.LENGTH_SHORT).show();
 	}
+	
+    public void openAddAnswerView() {
+    	Intent intent = new Intent(Agora.getContext(), AuthorAnswerActivity.class);
+    	startActivity(intent);
+    	//Toast.makeText(Agora.getContext(), "Hook up Add a question here", Toast.LENGTH_SHORT).show();
+    }
 	
 	//remove these later, made for button testing. actual function is implemented in controller.
 	public void upvote(){

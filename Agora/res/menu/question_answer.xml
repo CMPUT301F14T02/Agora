@@ -1,10 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brogrammers.agora.QuestionAnswerActivity" >
-    <item android:id="@+id/action_upvote" 
-        android:icon="@drawable/ic_action_upvote" 
-        android:title="upvote" 
-        android:titleCondensed="upvote"
+    <item android:id="@+id/action_addanswer" 
+        android:icon="@drawable/ic_action_new" 
+        android:title="addanswer" 
+        android:titleCondensed="addanswer"
         android:showAsAction="always"></item>
     
     <item android:id="@+id/action_favorite" 
