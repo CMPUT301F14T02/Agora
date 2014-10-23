@@ -29,8 +29,8 @@
         android:orderInCategory="100"
         android:title="@string/action_settings" 
         android:icon="@drawable/ic_action_settings" 
-        android:showAsAction="ifRoom"
-    />
+        android:showAsAction="ifRoom">
+    </item>
     
     
     

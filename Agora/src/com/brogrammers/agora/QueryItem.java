@@ -1,21 +1,23 @@
 package com.brogrammers.agora;
 
+import org.apache.http.entity.StringEntity;
+
 import com.loopj.android.http.RequestParams;
 
 public class QueryItem {
 	enum RequestType{POST, GET}
 	RequestType requestType;
-	RequestParams requestParams;
+	StringEntity body;
 	String URI;
 	
-	public QueryItem(RequestParams requestParams, String URI, RequestType requestType){
-		this.requestParams = requestParams;
+	public QueryItem(StringEntity body, String URI, RequestType requestType){
+		this.body = body;
 		this.URI = URI;
 		this.requestType = requestType;
 	}
 
-	public RequestParams getRequestParams() {
-		return requestParams;
+	public StringEntity getBody() {
+		return this.body;
 	}
 
 	public String getURI() {
