@@ -126,13 +126,19 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a PlaceholderFragment (defined as a static inner class
 			// below).
-			return PlaceholderFragment.newInstance(position + 1);
+			switch (position) {
+			case 0:
+				return QuestionsFragment.newInstance(position + 1);
+			case 1:
+				return AnswersFragment.newInstance(position + 1);
+			}
+			return null;
 		}
 
 		@Override
 		public int getCount() {
 			// Show 3 total pages.
-			return 3;
+			return 2;
 		}
 
 		@Override
@@ -140,20 +146,18 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
+				return getString(R.string.searchtab_questions).toUpperCase(l);
 			case 1:
-				return getString(R.string.title_section2).toUpperCase(l);
-			case 2:
-				return getString(R.string.title_section3).toUpperCase(l);
+				return getString(R.string.searchtab_answers).toUpperCase(l);
 			}
 			return null;
 		}
 	}
 
 	/**
-	 * A placeholder fragment containing a simple view.
+	 * A fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
+	 public static class QuestionsFragment extends Fragment {
 		/**
 		 * The fragment argument representing the section number for this
 		 * fragment.
@@ -163,24 +167,57 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 		/**
 		 * Returns a new instance of this fragment for the given section number.
 		 */
-		public static PlaceholderFragment newInstance(int sectionNumber) {
-			PlaceholderFragment fragment = new PlaceholderFragment();
+		public static QuestionsFragment newInstance(int sectionNumber) {
+			QuestionsFragment fragment = new QuestionsFragment();
 			Bundle args = new Bundle();
 			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 			fragment.setArguments(args);
 			return fragment;
 		}
 
-		public PlaceholderFragment() {
+		public QuestionsFragment() {
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_search,
+			View rootView = inflater.inflate(R.layout.fragment_search_questions,
 					container, false);
 			return rootView;
 		}
 	}
+	 
+	 	/**
+		 * A fragment containing a simple view.
+		 */
+		 public static class AnswersFragment extends Fragment {
+			/**
+			 * The fragment argument representing the section number for this
+			 * fragment.
+			 */
+			private static final String ARG_SECTION_NUMBER = "section_number";
+
+			/**
+			 * Returns a new instance of this fragment for the given section number.
+			 */
+			public static AnswersFragment newInstance(int sectionNumber) {
+				AnswersFragment fragment = new AnswersFragment();
+				Bundle args = new Bundle();
+				args.putInt(ARG_SECTION_NUMBER, sectionNumber);
+				fragment.setArguments(args);
+				return fragment;
+			}
+
+			public AnswersFragment() {
+			}
+
+			@Override
+			public View onCreateView(LayoutInflater inflater, ViewGroup container,
+					Bundle savedInstanceState) {
+				View rootView = inflater.inflate(R.layout.fragment_search_answers,
+						container, false);
+				return rootView;
+			}
+		}
 
 }

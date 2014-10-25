@@ -74,7 +74,9 @@ public class MainActivity extends Activity {
     
     public void openSearchBar(MenuItem item) {
         SearchView searchView = (SearchView) item.getActionView();
-    	Toast.makeText(Agora.getContext(), "Add Dropdown Search", Toast.LENGTH_SHORT).show();
+    		Toast.makeText(Agora.getContext(), "Add Dropdown Search", Toast.LENGTH_SHORT).show();
+    		Intent i = new Intent(this, SearchActivity.class);
+        startActivity(i);
     }
     
     public void openSortMenu() {

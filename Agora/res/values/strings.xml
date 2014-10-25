@@ -10,9 +10,8 @@
     <string name="sortBy">Sort By</string>
     <string name="sort">Sort</string>
     <string name="title_activity_search">SearchActivity</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="searchtab_questions">Questions</string>
+    <string name="searchtab_answers">Answers</string>
     <string name="title_activity_author_question">Submit a Question</string>
     <string name="titletext">Title</string>
     <string name="titlebodytext">Text</string>
