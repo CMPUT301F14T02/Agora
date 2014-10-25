@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/questionExpand"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@+id/questionUpVote"
         android:layout_toRightOf="@+id/questionRating"
         android:text="Body" />
 
@@ -45,5 +45,15 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/questionUpVote"
         android:src="@drawable/ic_action_rating_favoritepink" />
+
+    <TextView
+        android:id="@+id/questionTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/questionRating"
+        android:text="Question Title"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
