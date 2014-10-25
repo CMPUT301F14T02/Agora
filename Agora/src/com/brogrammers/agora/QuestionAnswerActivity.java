@@ -5,15 +5,21 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
 import android.widget.Toast;
 
 
 public class QuestionAnswerActivity extends Activity {
 
+	private ExpandableListView lv;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question_answer);
+		
+		lv = (ExpandableListView)findViewById(R.id)
+		
 	}
 
 	@Override
