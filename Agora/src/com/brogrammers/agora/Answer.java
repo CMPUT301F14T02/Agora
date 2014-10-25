@@ -8,7 +8,7 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 
-public class Answer implements Serializable {
+public class Answer implements Serializable, Post {
 	private static final long serialVersionUID = 1340865626156695502L;
 
 	private String body;
