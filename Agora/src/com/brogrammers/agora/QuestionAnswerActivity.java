@@ -18,7 +18,7 @@ public class QuestionAnswerActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question_answer);
 		
-		lv = (ExpandableListView)findViewById(R.id)
+		//lv = (ExpandableListView)findViewById(R.id)
 		
 	}
 
