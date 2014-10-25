@@ -22,17 +22,21 @@ public final class R {
         public static final int activity_vertical_margin=0x7f040001;
     }
     public static final class drawable {
-        public static final int ic_action_flag=0x7f020000;
-        public static final int ic_action_new=0x7f020001;
-        public static final int ic_action_rating_favoritepink=0x7f020002;
-        public static final int ic_action_search=0x7f020003;
-        public static final int ic_action_settings=0x7f020004;
-        public static final int ic_action_upvote=0x7f020005;
-        public static final int ic_action_view_as_list=0x7f020006;
-        public static final int ic_launcher=0x7f020007;
+        public static final int ic_action_collapse=0x7f020000;
+        public static final int ic_action_expand=0x7f020001;
+        public static final int ic_action_flag=0x7f020002;
+        public static final int ic_action_new=0x7f020003;
+        public static final int ic_action_rating_favoritepink=0x7f020004;
+        public static final int ic_action_search=0x7f020005;
+        public static final int ic_action_settings=0x7f020006;
+        public static final int ic_action_unfavorite=0x7f020007;
+        public static final int ic_action_upvote=0x7f020008;
+        public static final int ic_action_view_as_list=0x7f020009;
+        public static final int ic_launcher=0x7f02000a;
     }
     public static final class id {
         public static final int AuthourDate=0x7f08001c;
+        public static final int ELV=0x7f08000b;
         public static final int action_addanswer=0x7f08002c;
         public static final int action_favorite=0x7f08002d;
         public static final int action_flag=0x7f08002e;
@@ -56,7 +60,6 @@ public final class R {
         public static final int button2=0x7f080025;
         public static final int commentText=0x7f080010;
         public static final int editText1=0x7f080003;
-        public static final int expandableListView1=0x7f08000b;
         public static final int filterbyTextDialoug=0x7f080023;
         public static final int goto_question_answer=0x7f08002b;
         public static final int imageButton1=0x7f08001f;

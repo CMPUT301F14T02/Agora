@@ -50,17 +50,5 @@ public class Comment implements Serializable {
 	public void setAuthor(Author author) {
 		this.author = author;
 	}
-
-	// These aren't used.
-	@Override
-	public Long getID() {
-		return null;	
-	}
-
-	@Override
-	public int getRating() {
-		return 0;
-	}
-	
 	
 }
