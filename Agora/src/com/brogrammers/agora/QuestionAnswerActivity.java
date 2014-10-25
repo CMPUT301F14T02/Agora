@@ -11,14 +11,22 @@ import android.widget.Toast;
 
 public class QuestionAnswerActivity extends Activity {
 
-	private ExpandableListView lv;
+	private ExpandableListView elv;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question_answer);
 		
-		//lv = (ExpandableListView)findViewById(R.id)
+		Long qID = 0L; //TODO: get question ID out of Intent/Bundle
+		
+		Question q = LocalCache.getInstance().getQuestionByID(qID);
+		
+		// For testing:
+		q = new Question("Thunderwave OP?", "Why is it OP?", null, new Author("Mudkip"));
+
+		elv = (ExpandableListView)findViewById(R.id.ELV);
+		elv.setAdapter(new QuestionAnswerAdapter(q));
 		
 	}
 

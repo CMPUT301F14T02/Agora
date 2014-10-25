@@ -33,6 +33,7 @@ public final class R {
     }
     public static final class id {
         public static final int AuthourDate=0x7f08001b;
+        public static final int ELV=0x7f08000b;
         public static final int action_addanswer=0x7f08002b;
         public static final int action_favorite=0x7f08002c;
         public static final int action_flag=0x7f08002d;
@@ -56,7 +57,6 @@ public final class R {
         public static final int button2=0x7f080024;
         public static final int commentText=0x7f080010;
         public static final int editText1=0x7f080003;
-        public static final int expandableListView1=0x7f08000b;
         public static final int filterbyTextDialoug=0x7f080022;
         public static final int goto_question_answer=0x7f08002a;
         public static final int imageButton1=0x7f08001e;
