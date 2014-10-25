@@ -2,19 +2,26 @@ package com.brogrammers.agora;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.app.Activity;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	
+    private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,11 +78,29 @@ public class MainActivity extends Activity {
     }
     
     public void openSortMenu() {
-        //new Dialog 
-    	Toast.makeText(Agora.getContext(), "Sort Context", Toast.LENGTH_SHORT).show();
+        // Create Dialog Menu for the Sorting Menu
+    	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        // Get the layout inflater;
+        // Inflate and set the layout for the dialog
+        // Pass null as the parent view because its going in the dialog layout
+    	builder.setTitle("Sorting Options");
+        builder.setView(inflater.inflate(R.layout.sortdialogue, null))
+        // Add action buttons
+               .setPositiveButton(R.string.sort, new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialog, int id) {
+                       // Do something (i.e. pull id from sorting option)
+                   }
+               })
+               .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                   }
+               }); 
+        
+        builder.create();
+        builder.show();
+    		         	
     }
     
-    
-
     
 }

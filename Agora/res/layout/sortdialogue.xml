@@ -6,11 +6,10 @@
     android:layout_alignParentTop="true"
     android:layout_marginLeft="14dp"
     android:orientation="vertical" >
-    
-	<View
-	    android:layout_width="fill_parent"
-	    android:layout_height="10dp"
-	    android:background="@android:color/white"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp" />
 
     <TextView
         android:id="@+id/sortbyTextDialoug"
@@ -24,11 +23,19 @@
         android:layout_width="282dp"
         android:layout_height="61dp" >
     </ListView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp" />
     
 	<View
 	    android:layout_width="fill_parent"
 	    android:layout_height="1dp"
 	    android:background="@android:color/darker_gray"/>
+
+	<View
+	    android:layout_width="fill_parent"
+	    android:layout_height="10dp" />
 
 	<TextView
 	    android:id="@+id/arrangebyTextDialoug"
@@ -42,11 +49,19 @@
         android:layout_width="match_parent"
         android:layout_height="60dp" >
     </ListView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp" />
     
 	<View
 	    android:layout_width="fill_parent"
 	    android:layout_height="1dp"
 	    android:background="@android:color/darker_gray"/>
+
+	<View
+	    android:layout_width="fill_parent"
+	    android:layout_height="10dp" />
 	
     <TextView
         android:id="@+id/filterbyTextDialoug"
@@ -60,29 +75,23 @@
         android:layout_width="match_parent"
         android:layout_height="59dp" >
     </ListView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp" />
     
 	<View
 	    android:layout_width="fill_parent"
 	    android:layout_height="1dp"
 	    android:background="@android:color/darker_gray"/>
+
+	<View
+	    android:layout_width="fill_parent"
+	    android:layout_height="10dp" />
 	
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.97"
-            android:text="Button" />
-
-        <Button
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1.13"
-            android:text="Button" />
     </LinearLayout>
 
 </LinearLayout>
