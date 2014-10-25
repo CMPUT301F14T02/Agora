@@ -46,7 +46,8 @@ public class Answer implements Serializable, Post {
 	
 	public List<Comment> getComments() {
 		// don't modify the list directly!
-		return Collections.unmodifiableList(comments);
+//		return Collections.unmodifiableList(comments);
+		return comments;
 	}
 	
 	public void addComment(Comment c) {
