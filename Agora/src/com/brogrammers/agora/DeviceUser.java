@@ -18,27 +18,23 @@ public class DeviceUser extends Author {
 	transient private SharedPreferences cachedPrefFile;
 	transient private SharedPreferences authoredPrefFile;
 	transient private SharedPreferences usernamePrefFile;
-	transient private ArrayList<Long> favoritedQuestionIDs;
-	transient private ArrayList<Long> cachedQuestionIDs;
-	transient private ArrayList<Long> authoredQuestionIDs;
+	transient private ArrayList<Long> favoritedQuestionIDs = new ArrayList<Long>();
+	transient private ArrayList<Long> cachedQuestionIDs = new ArrayList<Long>();
+	transient private ArrayList<Long> authoredQuestionIDs = new ArrayList<Long>();
 	
 	// singleton
 	static private DeviceUser self = null;
 
 	// The first call to getUser (probably from BrowseQuestionsView) should pass an activity
-	static public DeviceUser getUser(Activity activity) {
+	static public DeviceUser getUser() {
 		if (self == null) {
-			self = new DeviceUser(activity);
+			self = new DeviceUser();
 		}
 		return self;
-	}
-	// Subsequent calls may omit an Activity
-	static public DeviceUser getUser() {
-		return self;
-	}
+	}	
 	
-	
-	private DeviceUser(Activity activity) {
+	private DeviceUser() {
+		Context activity = Agora.getContext();
 		favoritesPrefFile = activity.getSharedPreferences(favoritesPrefFileName, Context.MODE_PRIVATE);
 		cachedPrefFile = activity.getSharedPreferences(cachedPrefFileName, Context.MODE_PRIVATE);
 		authoredPrefFile = activity.getSharedPreferences(authoredPrefFileName, Context.MODE_PRIVATE);

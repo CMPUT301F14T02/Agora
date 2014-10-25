@@ -4,23 +4,14 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/answerBody"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/answerExpand"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/answerUpVote"
-        android:text="Body" />
-
-    <TextView
         android:id="@+id/answerRating"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="Rating"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
 
     <ImageButton
         android:id="@+id/answerExpand"
@@ -28,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_launcher" />
+        android:src="@drawable/ic_launcher"
+         />
 
     <ImageButton
         android:id="@+id/answerUpVote"
@@ -37,5 +29,14 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/answerRating"
         android:src="@drawable/ic_action_upvote" />
+
+    <TextView
+        android:id="@+id/answerBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:text="Body"
+        android:textColor="#000000" />
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.brogrammers.agora;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
@@ -10,17 +11,22 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class QuestionAnswerAdapter extends BaseExpandableListAdapter {
 
 	private Question question;
 	private LayoutInflater inflater;
-	private List<Answer> answers;
+	private List<Answer> answers = new ArrayList<Answer>();
 	
 	QuestionAnswerAdapter(Question q) {
 		this.question = q;
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		this.answers = q.getAnswers();
+//		this.answers = q.getAnswers();
+		Answer a = (new Answer("Thunderwave is OP because of the paralysis", null, new Author("BingsF")));
+		a.upvote();
+		answers.add(a);
+//		Toast.makeText(Agora.getContext(), q.getBody(), 0).show();
 	}
 	
 	@Override
@@ -68,7 +74,7 @@ public class QuestionAnswerAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public int getGroupCount() {
-		return answers.size(); 
+		return answers.size()+1; 
 	}
 
 	@Override
@@ -78,12 +84,13 @@ public class QuestionAnswerAdapter extends BaseExpandableListAdapter {
 
 	@Override
 	public View getGroupView(int groupPos, boolean isExpanded, View convertView, ViewGroup parent) {
+//		Toast.makeText(Agora.getContext(), question.getBody(), 0).show();
 		if (convertView == null) {
 			if (groupPos == 0) {
 				convertView = inflater.inflate(R.layout.activity_question_answer_question, null);
 				((TextView)convertView.findViewById(R.id.questionBody)).setText(question.getBody());
 				((TextView)convertView.findViewById(R.id.questionTitle)).setText(question.getTitle());
-				((TextView)convertView.findViewById(R.id.questionRating)).setText(question.getRating());
+				((TextView)convertView.findViewById(R.id.questionRating)).setText(Integer.toString(question.getRating()));
 				if (isExpanded) {
 					((ImageButton)convertView.findViewById(R.id.questionExpand)).setImageResource(R.drawable.ic_action_collapse);	
 				} else {
@@ -100,7 +107,7 @@ public class QuestionAnswerAdapter extends BaseExpandableListAdapter {
 				convertView = inflater.inflate(R.layout.activity_question_answer_answer, null);
 				Answer answer = (Answer)getGroup(groupPos);
 				((TextView)convertView.findViewById(R.id.answerBody)).setText(answer.getBody());
-				((TextView)convertView.findViewById(R.id.answerRating)).setText(answer.getRating());
+				((TextView)convertView.findViewById(R.id.answerRating)).setText(Integer.toString(answer.getRating()));
 				if (isExpanded) {
 					((ImageButton)convertView.findViewById(R.id.answerExpand)).setImageResource(R.drawable.ic_action_collapse);	
 				} else {

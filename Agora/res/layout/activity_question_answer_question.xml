@@ -11,7 +11,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/questionUpVote"
         android:layout_toRightOf="@+id/questionRating"
-        android:text="Body" />
+        android:text="Body" 
+        android:textColor="#000000"/>
 
     <TextView
         android:id="@+id/questionRating"
@@ -20,9 +21,10 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:text="Rating"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
 
-    <ImageView
+    <ImageButton
         android:id="@+id/questionExpand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -54,6 +56,7 @@
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/questionRating"
         android:text="Question Title"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
 
 </RelativeLayout>
