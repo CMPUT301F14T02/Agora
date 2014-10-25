@@ -33,9 +33,9 @@ public final class R {
     }
     public static final class id {
         public static final int AuthourDate=0x7f08001c;
-        public static final int action_addanswer=0x7f08002b;
-        public static final int action_favorite=0x7f08002c;
-        public static final int action_flag=0x7f08002d;
+        public static final int action_addanswer=0x7f08002c;
+        public static final int action_favorite=0x7f08002d;
+        public static final int action_flag=0x7f08002e;
         public static final int action_settings=0x7f080027;
         public static final int addQuestionBQV=0x7f080028;
         public static final int answerBody=0x7f08000c;
@@ -54,9 +54,11 @@ public final class R {
         public static final int authorQuestionTitleView=0x7f080004;
         public static final int button1=0x7f080026;
         public static final int button2=0x7f080025;
+        public static final int commentText=0x7f080010;
         public static final int editText1=0x7f080003;
         public static final int expandableListView1=0x7f08000b;
         public static final int filterbyTextDialoug=0x7f080023;
+        public static final int goto_question_answer=0x7f08002b;
         public static final int imageButton1=0x7f08001f;
         public static final int imageView1=0x7f08001e;
         public static final int listView1=0x7f08000a;
@@ -77,7 +79,6 @@ public final class R {
         public static final int section_label=0x7f080018;
         public static final int sortBQV=0x7f08002a;
         public static final int sortbyTextDialoug=0x7f080020;
-        public static final int textView1=0x7f080010;
     }
     public static final class layout {
         public static final int activity_author_answer=0x7f030000;

@@ -18,7 +18,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_question_answer);
         
     }
 
@@ -48,6 +48,9 @@ public class MainActivity extends Activity {
         case R.id.sortBQV:
         	openSortMenu();
         	return true;
+        case R.id.goto_question_answer:
+        	Intent intent = new Intent(Agora.getContext(), QuestionAnswerActivity.class);
+        	startActivity(intent);
         	
         default:
             return super.onOptionsItemSelected(item);

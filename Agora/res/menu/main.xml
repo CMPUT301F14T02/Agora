@@ -32,7 +32,13 @@
         android:showAsAction="ifRoom">
     </item>
     
-    
+    <item
+        android:id="@+id/goto_question_answer"
+        android:orderInCategory="100"
+        android:title="Goto Q/A View" 
+        android:icon="@drawable/ic_action_settings" 
+        android:showAsAction="ifRoom">
+    </item>
     
 
 </menu>
