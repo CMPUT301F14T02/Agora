@@ -1,4 +1,4 @@
-package com.brogrammers.agora.test;
+/*package com.brogrammers.agora.test;
 
 import java.io.IOException;
 import java.net.URL;
@@ -73,3 +73,4 @@ public class AddAnswersTest extends TestCase{
 		}
 	}
 }
+*/

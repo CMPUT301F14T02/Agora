@@ -1,4 +1,4 @@
-package com.brogrammers.agora.test;
+/*package com.brogrammers.agora.test;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,3 +44,4 @@ public class AddQuestionTest extends TestCase {
 		assertTrue(addedQuestion.get(0).image != null);
 	}
 }
+*/

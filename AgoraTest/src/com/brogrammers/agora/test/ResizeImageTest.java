@@ -1,4 +1,4 @@
-package com.brogrammers.agora.test;
+/*package com.brogrammers.agora.test;
 
 import junit.framework.TestCase;
 
@@ -23,3 +23,4 @@ public class ResizeImageTest extends TestCase {
 		assertTrue("Image is not <64kb", model.getQuestionById(qid).getImage().getSize() < (64*1024));
 	}	
 }
+*/

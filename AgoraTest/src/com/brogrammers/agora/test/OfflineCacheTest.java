@@ -1,4 +1,4 @@
-package com.brogrammers.agora.test;
+/*package com.brogrammers.agora.test;
 
 import java.io.IOException;
 import java.net.URL;
@@ -6,9 +6,9 @@ import java.net.URL;
 import junit.framework.TestCase;
 
 public class OfflineCacheTest extends TestCase {
-	/* Tests if cached and favorite questions are still there when network
+	 Tests if cached and favorite questions are still there when network
 	 * connection is down.
-	 */
+	 
 	
 	QuestionController controller = QuestionController.getController();
 	
@@ -56,3 +56,4 @@ public class OfflineCacheTest extends TestCase {
 		assertTrue(addedQuestion.get(1).image != null);
 	}
 }
+*/

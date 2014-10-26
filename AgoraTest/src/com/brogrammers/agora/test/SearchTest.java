@@ -1,4 +1,4 @@
-package com.brogrammers.agora.test;
+/*package com.brogrammers.agora.test;
 
 import java.util.List;
 
@@ -65,3 +65,4 @@ public class SearchTest extends TestCase {
 	
 	
 }
+*/

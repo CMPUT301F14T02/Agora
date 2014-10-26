@@ -1,4 +1,4 @@
-package com.brogrammers.agora.test;
+/*package com.brogrammers.agora.test;
 
 import junit.framework.TestCase;
 
@@ -67,3 +67,4 @@ public class FilterPictureTest extends TestCase {
 
 
 }
+*/

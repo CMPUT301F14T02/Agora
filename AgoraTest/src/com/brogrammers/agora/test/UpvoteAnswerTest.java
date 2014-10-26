@@ -1,4 +1,4 @@
-package com.brogrammers.agora.test;
+/*package com.brogrammers.agora.test;
 
 import com.brogrammers.agora.Answer;
 import com.brogrammers.agora.ElasticSearch;
@@ -31,3 +31,4 @@ public class UpvoteAnswerTest extends TestCase
 		assertTrue("Answer is not upvoted 100 times.", testAnswer.getRating() == 100);
 	}
 }
+*/
