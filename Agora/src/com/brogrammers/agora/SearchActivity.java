@@ -219,5 +219,4 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 				return rootView;
 			}
 		}
-
 }
