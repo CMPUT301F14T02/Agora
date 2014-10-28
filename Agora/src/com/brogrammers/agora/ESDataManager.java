@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 import org.apache.http.Header;
 
-public class ElasticSearch {
+public class ESDataManager implements DataManager {
 	// domain
 	public static final String DOMAIN = "http://cmput301.softwareprocess.es:8080/testing/";
 	// name of the ES database/index
@@ -32,16 +32,16 @@ public class ElasticSearch {
 	
 	// TODO: Register a broadcast receiver for connectivity status.
 	
-	private static ElasticSearch self;
+	private static ESDataManager self;
 			
-	public static ElasticSearch getInstance(){
+	public static ESDataManager getInstance(){
 		if (self == null) {
-			self = new ElasticSearch();
+			self = new ESDataManager();
 		}
 		return self;
 	}
 	
-	private ElasticSearch(){
+	private ESDataManager(){
 		// get connection status
 		// after creation connectivity status will be monitored by a
 		// broadcast receiver.
@@ -142,7 +142,7 @@ public class ElasticSearch {
 		    	// assuming question previews are cached in the localcachemodel
 		    	// Makes more sense than caching in view or not caching at all
 		    	// TODO: switch threads to main ui thread before setting values on model.
-		    	LocalCache.getInstance().setQuestionPreviewList(questionPreviewList);   		
+		    	CacheDataManager.getInstance().setQuestionPreviewList(questionPreviewList);   		
 		    	}
 		    }
 		    

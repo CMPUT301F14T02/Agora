@@ -15,8 +15,8 @@ import android.renderscript.Type;
 
 public class QuestionController {
 	private DeviceUser user;
-	private LocalCache cache;
-	private ElasticSearch eSearch;
+	private CacheDataManager cache;
+	private ESDataManager eSearch;
 	private ImageResizer resizer;
 	
 	static private QuestionController self = null;
@@ -30,8 +30,8 @@ public class QuestionController {
 	
 	private QuestionController() {
 		user = DeviceUser.getUser();
-		cache = LocalCache.getInstance();
-		eSearch = ElasticSearch.getInstance();
+		cache = CacheDataManager.getInstance();
+		eSearch = ESDataManager.getInstance();
 		
 	}
 	
@@ -43,7 +43,7 @@ public class QuestionController {
 		Gson gson = new Gson();
 		String questionSerialized = gson.toJson(q);
 		StringEntity stringEntityBody = new StringEntity(questionSerialized);
-		String URI = ElasticSearch.DOMAIN + ElasticSearch.INDEXNAME + ElasticSearch.TYPENAME + Long.toString(q.getID());
+		String URI = ESDataManager.DOMAIN + ESDataManager.INDEXNAME + ESDataManager.TYPENAME + Long.toString(q.getID());
 		QueryItem queryItem = new QueryItem(stringEntityBody, URI, RequestType.POST);
 		eSearch.updateServer(queryItem);
 		
@@ -60,7 +60,7 @@ public class QuestionController {
 		// TODO: generate query string and pass to webservice
 		Gson gson = new Gson();
 		String answer = gson.toJson(a);
-		String URI = ElasticSearch.DOMAIN + ElasticSearch.INDEXNAME + ElasticSearch.TYPENAME + qID;
+		String URI = ESDataManager.DOMAIN + ESDataManager.INDEXNAME + ESDataManager.TYPENAME + qID;
 		//QueryItem queryItem = new QueryItem(params, URI, RequestType.POST);
 		//eSearch.updateServer(queryItem);
 		

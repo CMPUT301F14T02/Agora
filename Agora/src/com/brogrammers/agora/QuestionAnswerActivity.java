@@ -20,7 +20,7 @@ public class QuestionAnswerActivity extends Activity {
 		
 		Long qID = 0L; //TODO: get question ID out of Intent/Bundle
 		
-		Question q = LocalCache.getInstance().getQuestionByID(qID);
+		Question q = CacheDataManager.getInstance().getQuestionByID(qID);
 		
 		// For testing:
 		q = new Question("Thunderwave OP?", "Why is it OP?", null, new Author("Mudkip"));
