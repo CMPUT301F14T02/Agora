@@ -12,7 +12,7 @@ public class CacheDataManager implements DataManager{
 	private ESDataManager eSearch;
 	static private CacheDataManager self;
 	
-	private TreeMap<Long, Question> questionCache; // for getQuestionByID()
+	TreeMap<Long, Question> questionCache; // for getQuestionByID()
 	private List<QuestionPreview> questionPreviewList; // for getQuestions()
 
 	/* Constructors */

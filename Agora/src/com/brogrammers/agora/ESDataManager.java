@@ -1,8 +1,12 @@
 package com.brogrammers.agora;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import com.brogrammers.agora.QueryItem.RequestType;
+import com.google.gson.Gson;
 import com.loopj.android.http.*;
 
 import org.json.JSONException;
@@ -16,14 +20,15 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
 
 public class ESDataManager implements DataManager {
 	// domain
-	public static final String DOMAIN = "http://cmput301.softwareprocess.es:8080/testing/";
+	public static final String DOMAIN = "http://cmput301.softwareprocess.es:8080/";
 	// name of the ES database/index
-	public static final String INDEXNAME = "";
+	public static final String INDEXNAME = "testing/";
 	// name of the ES table/type 
-	public static final String TYPENAME = "";
+	public static final String TYPENAME = "question/";
 	// connected status
 	public boolean connected;
 	// Queue of statements that need to be run on
@@ -177,21 +182,67 @@ public class ESDataManager implements DataManager {
 	}
 
 	@Override
-	public boolean pushQuestion(Question q) {
-		// TODO Auto-generated method stub
+	public boolean pushQuestion(Question q) throws UnsupportedEncodingException {		
+		Gson gson = new Gson();
+		String questionSerialized = gson.toJson(q);
+		StringEntity stringEntityBody = new StringEntity(questionSerialized);
+		String URI = DOMAIN + INDEXNAME + TYPENAME + Long.toString(q.getID());
+		QueryItem queryItem = new QueryItem(stringEntityBody, URI, RequestType.POST);
+		updateServer(queryItem);
 		return false;
 	}
 
 	@Override
-	public boolean pushAnswer(Answer a, Long qID) {
-		// TODO Auto-generated method stub
+	public boolean pushAnswer(Answer a, Long qID) throws UnsupportedEncodingException {
+		Question q = CacheDataManager.getInstance().questionCache.get(qID);
+		Gson gson = new Gson();
+		String answerSerialized = gson.toJson(q.getAnswers());
+		answerSerialized = "{" +
+				"\"doc\": { " +
+				"\"answers\":" + answerSerialized + 
+					"}" +
+				"}";
+		StringEntity stringEntityAnswer = new StringEntity(answerSerialized);
+		String test = stringEntityAnswer.toString();
+		String URI = DOMAIN + INDEXNAME + TYPENAME + Long.toString(qID) + "/" + "_update";
+		QueryItem queryItem = new QueryItem(stringEntityAnswer, URI, RequestType.POST);
+		updateServer(queryItem);
 		return false;
 	}
 
 	@Override
-	public boolean pushComment(Comment c, Long qID, Long aID) {
-		// TODO Auto-generated method stub
+	public boolean pushComment(Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
+		Question q = CacheDataManager.getInstance().questionCache.get(qID);
+		Gson gson = new Gson();
+		if (aID == null) {
+			String commentSerialized = gson.toJson(q.getComments());
+			commentSerialized = "{" +
+					"\"doc\": { " +
+					"\"comments\":" + commentSerialized + 
+						"}" +
+					"}";
+			StringEntity stringEntityComments = new StringEntity(commentSerialized);
+			String URI = DOMAIN + INDEXNAME + TYPENAME + Long.toString(qID) + "/" + "_update";
+			String test = commentSerialized.toString();
+			QueryItem queryItem = new QueryItem(stringEntityComments, URI, RequestType.POST);
+			updateServer(queryItem);
+		} else {
+			// if qid is not null re-upload the answer array
+			String answerSerialized = gson.toJson(q.getAnswers());
+			// add server syntax
+			answerSerialized = "{" +
+					"\"doc\": { " +
+					"\"answers\":" + answerSerialized + 
+						"}" +
+					"}";
+			StringEntity stringEntityAnswer = new StringEntity(answerSerialized);
+			String URI = DOMAIN + INDEXNAME + TYPENAME + Long.toString(qID) + "/" + "_update";
+			QueryItem queryItem = new QueryItem(stringEntityAnswer, URI, RequestType.POST);
+			updateServer(queryItem);
+		}
+	
 		return false;
 	}
 	
 }
+
