@@ -45,17 +45,17 @@ public class QuestionController {
 		StringEntity stringEntityBody = new StringEntity(questionSerialized);
 		String URI = ESDataManager.DOMAIN + ESDataManager.INDEXNAME + ESDataManager.TYPENAME + Long.toString(q.getID());
 		QueryItem queryItem = new QueryItem(stringEntityBody, URI, RequestType.POST);
-		eSearch.updateServer(queryItem);
+//		eSearch.updateServer(queryItem);
 		
-		cache.setQuestion(q);
+//		cache.setQuestion(q);
 		return q.getID(); // for testing
 	}
 	
 	public Long addAnswer(String body, Bitmap image, Long qID) {
 		Answer a = new Answer(body, image, user);
 		a.setImage(resizer.resizeTo64KB(image));
-		Question q = cache.getQuestionByID(qID);
-		q.addAnswer(a);
+//		Question q = cache.getQuestionByID(qID);
+//		q.addAnswer(a);
 		
 		// TODO: generate query string and pass to webservice
 		Gson gson = new Gson();
@@ -72,27 +72,27 @@ public class QuestionController {
 	// if adding a comment to a question, pass null for aID
 	public void addComment(String body, Long qID, Long aID) {
 		Comment c = new Comment(body);
-		Question q = cache.getQuestionByID(qID);
-		if (aID == null) {
-			q.addComment(c);
-		} else {
-			q.getAnswerByID(aID).addComment(c);
-		}
-		
+//		Question q = cache.getQuestionByID(qID);
+//		if (aID == null) {
+//			q.addComment(c);
+//		} else {
+//			q.getAnswerByID(aID).addComment(c);
+//		}
+//		
 		// TODO: generate query string and pass to webservice
 
 	}
 	
 	public void upvote(Long qID, Long aID) {
-		Question q = cache.getQuestionByID(qID);
+//		Question q = cache.getQuestionByID(qID);
 		if (aID == null) {
 			// upvoting question
-			q.upvote();
+//			q.upvote();
 			// TODO: generate query string and pass to webservice
 			// 
 		} else {
 			// upvoting answer
-			q.getAnswerByID(aID).upvote();
+//			q.getAnswerByID(aID).upvote();
 			// TODO: generate query string and pass to webservice
 		}
 	}

@@ -50,7 +50,7 @@ public class ESDataManager implements DataManager {
 		connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 	}
 
-	public void updateServer(final QueryItem qItem){
+	private void updateServer(final QueryItem qItem){
 		if (connected){
 			AsyncHttpClient client = new AsyncHttpClient();
 			// TODO: check for request type, don't assume post 
@@ -86,7 +86,7 @@ public class ESDataManager implements DataManager {
 		
 	}
 	
-	public List<QuestionPreview> getQuestionPreviews(){
+	public List<Question> getQuestions(){
 		// assuming the question view by default sorts by date
 		AsyncHttpClient client = new AsyncHttpClient();
 		// querry to return question preview information
@@ -142,7 +142,7 @@ public class ESDataManager implements DataManager {
 		    	// assuming question previews are cached in the localcachemodel
 		    	// Makes more sense than caching in view or not caching at all
 		    	// TODO: switch threads to main ui thread before setting values on model.
-		    	CacheDataManager.getInstance().setQuestionPreviewList(questionPreviewList);   		
+//		    	CacheDataManager.getInstance().setQuestionPreviewList(questionPreviewList);   		
 		    	}
 		    }
 		    
@@ -159,22 +159,39 @@ public class ESDataManager implements DataManager {
 		});
 		// return a dummy empty list to the caller
 		List<QuestionPreview> qpList = new ArrayList<QuestionPreview>();
-		return qpList;	
+//		return qpList;	
+		return null;
 	}
 
-	public List<QuestionPreview> getQuestions() {
+
+	public Answer getAnswerById(Long answerID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Question getQuestionByID(Long iD) {
+	
+	@Override
+	public Question getQuestionById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public Answer getAnswerById(long answerID) {
+	@Override
+	public boolean pushQuestion(Question q) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
+	}
+
+	@Override
+	public boolean pushAnswer(Answer a, Long qID) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean pushComment(Comment c, Long qID, Long aID) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }

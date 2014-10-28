@@ -20,10 +20,10 @@ public class QuestionAnswerActivity extends Activity {
 		
 		Long qID = 0L; //TODO: get question ID out of Intent/Bundle
 		
-		Question q = CacheDataManager.getInstance().getQuestionByID(qID);
+//		Question q = CacheDataManager.getInstance().getQuestionByID(qID);
 		
 		// For testing:
-		q = new Question("Thunderwave OP?", "Why is it OP?", null, new Author("Mudkip"));
+		Question q = new Question("Thunderwave OP?", "Why is it OP?", null, new Author("Mudkip"));
 
 		elv = (ExpandableListView)findViewById(R.id.ELV);
 		elv.setAdapter(new QuestionAnswerAdapter(q));
