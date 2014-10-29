@@ -24,6 +24,8 @@
     <string name="title_activity_question_answer">QuestionAnswerActivity</string>
     <string name="arrangeby">Arrange By</string>
     <string name="filterby">Filter By</string>
+    <string name="date">Date</string>
+    <string name="upvote">Upvote</string>
  
 
 </resources>
