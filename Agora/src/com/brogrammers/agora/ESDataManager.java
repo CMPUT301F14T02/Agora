@@ -4,9 +4,14 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.TreeMap;
+
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.brogrammers.agora.QueryItem.RequestType;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.*;
 
 import org.json.JSONException;
@@ -45,6 +50,7 @@ public class ESDataManager implements DataManager {
 		}
 		return self;
 	}
+
 	
 	private ESDataManager(){
 		// get connection status
@@ -55,21 +61,17 @@ public class ESDataManager implements DataManager {
 		connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 	}
 
+
 	private void updateServer(final QueryItem qItem){
 		if (connected){
 			AsyncHttpClient client = new AsyncHttpClient();
 			// TODO: check for request type, don't assume post 
 			// qItem.requestType
 			client.post(Agora.getContext(), qItem.getURI(), qItem.getBody(), "application/json", new AsyncHttpResponseHandler() {
-
-			    @Override
-			    public void onStart() {
-			        // called before request is started
-			    }
-
-			    @Override
+				@Override
 			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
 			        // called when response HTTP status is "200 OK"
+					Log.i("SERVER UPDATED", "Update server method success.");
 			    }
 
 			    @Override
@@ -78,11 +80,6 @@ public class ESDataManager implements DataManager {
 					//TODO: Switch threads.
 			    	offlineQueue.addToQueue(qItem);
 			    }
-
-			    @Override
-			    public void onRetry(int retryNo) {
-			        // called when request is retried
-				}
 			});
 			
 		} else {
@@ -91,70 +88,64 @@ public class ESDataManager implements DataManager {
 		
 	}
 	
-	public List<Question> getQuestions(){
+	public List<Question> getQuestions() throws UnsupportedEncodingException{
 		// assuming the question view by default sorts by date
 		AsyncHttpClient client = new AsyncHttpClient();
-		// querry to return question preview information
-		// elastic search queries must use double quotes, hence the mess.
-		RequestParams params = new RequestParams();
-		params.put("sort", "[{ \"date\" :{\"order\":\"desc\"}}]");
-		params.put("fields", "[\"date\", \"ID\", \"title\", \"rating\", \"answerCount\", \"author\"]");
-		params.put("query", "{\"match_all\" : {}}");
-				
-		client.post(DOMAIN + INDEXNAME + TYPENAME + "_search", params, new JsonHttpResponseHandler() {
-		    @Override
-		    public void onStart() {
-		        // called before request is started
-		    	// TODO: Think about creating the empty list here instead of
-		    	// returning it.
-		    }
+		// default sort by date
+		String requestBody = "{\"query\":{\"match_all\":{}}," +
+			     			 "\"sort\": \"[{ \"date\" :{\"order\":\"desc\"}}]}";
+		StringEntity stringEntityBody = new StringEntity(requestBody);
+		List<Question> questionList = new ArrayList<Question>();
+		client.post(Agora.getContext(), DOMAIN + INDEXNAME + TYPENAME + "_search", 
+								stringEntityBody, "application/json", new JsonHttpResponseHandler() {
 
 		    @Override
 		    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-		        // called when response HTTP status is "200 OK"
-		    	JSONArray questionPreviews = null;
+		    	String questionResponseList = null;
 				try {
-					questionPreviews = (JSONArray) ((JSONObject) response.get("hits")).get("hits");
+					// response should be array of question objects
+					questionResponseList = (String) ((JSONObject) response.get("hits")).get("hits");
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-		    	List<QuestionPreview> questionPreviewList = new ArrayList<QuestionPreview>();
-						for (int i = 0; i < questionPreviews.length(); i++) {
-		    		try {
-						JSONObject questionObject = questionPreviews.getJSONObject(i);
-						questionObject = questionObject.getJSONObject("fields");
-						String title = (String) ((JSONArray) questionObject.getJSONArray("title")).get(0);
-						int rating = Integer.parseInt((String) 
-											((JSONArray) questionObject.getJSONArray("rating")).get(0));
-						int answerCount = Integer.parseInt((String) 
-											((JSONArray) questionObject.getJSONArray("answerCount")).get(0));
-						long date = Long.parseLong((String) 
-											((JSONArray) questionObject.getJSONArray("date")).get(0));
-						String author = (String) 
-											((JSONArray) questionObject.getJSONArray("author")).get(0);
-						long ID = Long.parseLong((String) 
-											((JSONArray) questionObject.getJSONArray("ID")).get(0));
-						int version = Integer.parseInt((String)
-											((JSONArray) questionObject.getJSONArray("version")).get(0));
-						QuestionPreview qp = new QuestionPreview(
-											title, rating, new Author(author), date, answerCount, ID, version);
-						questionPreviewList.add(qp);
-		    		} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		    	// assuming question previews are cached in the localcachemodel
-		    	// Makes more sense than caching in view or not caching at all
-		    	// TODO: switch threads to main ui thread before setting values on model.
-//		    	CacheDataManager.getInstance().setQuestionPreviewList(questionPreviewList);   		
-		    	}
+		    	List<Question> questionList = new ArrayList<Question>();
+				Gson gson = new Gson();
+		    	List<Question> q = gson.fromJson(questionResponseList, new TypeToken<List<Question>>(){}.getType());
+		    	// TODO: place result into cache  		
 		    }
 		    
+		    
 		    @Override
-		    public void onRetry(int retryNo) {
-		        // called when request is retried
-			}
+		    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+		        Log.w("Question Preview Load Failure", "onFailure(int, Header[], Throwable, JSONObject) was not overriden, but callback was received", throwable);
+		    }
+		    
+		});	
+		return null;
+	}
+	public List<Question> searchQuestions(String query) throws UnsupportedEncodingException{
+		AsyncHttpClient client = new AsyncHttpClient();
+		String requestBody = "{\"query\":{\"match_all\":{}}}";
+		StringEntity stringEntityBody = new StringEntity(requestBody);
+		List<Question> questionList = new ArrayList<Question>();
+		client.post(Agora.getContext(), DOMAIN + INDEXNAME + TYPENAME + "_search", 
+								stringEntityBody, "application/json", new JsonHttpResponseHandler() {
+
+		    @Override
+		    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+		    	String questionResponseList = null;
+				try {
+					// response should be array of question objects
+					questionResponseList = (String) ((JSONObject) response.get("hits")).get("hits");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+		    	List<Question> questionList = new ArrayList<Question>();
+				Gson gson = new Gson();
+		    	List<Question> q = gson.fromJson(questionResponseList, new TypeToken<List<Question>>(){}.getType());
+		    	CacheDataManager.getInstance().questionCache = (TreeMap<Long, Question>) q;
+		    }
+		    
 		    
 		    @Override
 		    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
@@ -162,18 +153,15 @@ public class ESDataManager implements DataManager {
 		    }
 		    
 		});
-		// return a dummy empty list to the caller
-		List<QuestionPreview> qpList = new ArrayList<QuestionPreview>();
-//		return qpList;	
 		return null;
 	}
+
 
 
 	public Answer getAnswerById(Long answerID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 	
 	@Override
 	public Question getQuestionById(Long id) {
