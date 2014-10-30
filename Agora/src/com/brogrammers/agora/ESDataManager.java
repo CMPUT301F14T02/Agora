@@ -52,13 +52,14 @@ public class ESDataManager implements DataManager {
 	}
 
 	
-	private ESDataManager(){
+	private ESDataManager() {
 		// get connection status
 		// after creation connectivity status will be monitored by a
 		// broadcast receiver.
 		ConnectivityManager cm = (ConnectivityManager) Agora.getContext().getSystemService(Context.CONNECTIVITY_SERVICE); 
 		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 		connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+		
 	}
 
 
@@ -110,8 +111,7 @@ public class ESDataManager implements DataManager {
 				}
 		    	List<Question> questionList = new ArrayList<Question>();
 				Gson gson = new Gson();
-		    	List<Question> q = gson.fromJson(questionResponseList, new TypeToken<List<Question>>(){}.getType());
-		    	// TODO: place result into cache  		
+		    	List<Question> q = gson.fromJson(questionResponseList, new TypeToken<List<Question>>(){}.getType());	
 		    }
 		    
 		    

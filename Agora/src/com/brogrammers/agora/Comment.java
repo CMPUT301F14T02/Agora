@@ -26,6 +26,13 @@ public class Comment implements Serializable {
 		author = DeviceUser.getUser();
 		date = System.currentTimeMillis();
 	}
+	
+	// for testing: add different author
+	public Comment(String text, Author author) {
+		body = text;
+		this.author = author;  
+		date = System.currentTimeMillis();
+	}
 
 	public Long getDate() {
 		return date;

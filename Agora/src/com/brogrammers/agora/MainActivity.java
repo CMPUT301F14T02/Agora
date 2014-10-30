@@ -1,5 +1,7 @@
 package com.brogrammers.agora;
 
+import java.io.UnsupportedEncodingException;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -27,7 +29,8 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_answer);
         
-    }
+  
+    } 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

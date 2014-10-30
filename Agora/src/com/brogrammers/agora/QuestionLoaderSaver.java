@@ -18,9 +18,18 @@ import android.content.SharedPreferences;
 import android.util.Base64;
 
 public class QuestionLoaderSaver {
-	private static final String questionPrefsFileName = "QUESTION";
+	private String questionPrefsFileName = null;
 	
-	public static void saveQuestion(Question q) {
+	// Dependency injection
+	public void saveQuestion(Question q, String filename) {
+		questionPrefsFileName = filename;
+		saveQuestion(q);
+	}
+	
+	public void saveQuestion(Question q) {
+		if (questionPrefsFileName == null) {
+			questionPrefsFileName = "QUESTION";
+		}
 		String jsonQuestion = (new Gson()).toJson(q);
 		SharedPreferences prefsFile = 
 			Agora.getContext().getSharedPreferences(questionPrefsFileName, Context.MODE_PRIVATE);
@@ -29,7 +38,16 @@ public class QuestionLoaderSaver {
 		editor.commit();
 	}
 	
-	public static List<Question> loadQuestions() {
+	// Dependency injection
+	public List<Question> loadQuestions(String filename) {
+		questionPrefsFileName = filename;
+		return loadQuestions();
+	}
+	
+	public List<Question> loadQuestions() {
+		if (questionPrefsFileName == null) {
+			questionPrefsFileName = "QUESTION";
+		}
 		List<Question> qList = new ArrayList<Question>();
 		SharedPreferences prefsFile = 
 			Agora.getContext().getSharedPreferences(questionPrefsFileName, Context.MODE_PRIVATE);

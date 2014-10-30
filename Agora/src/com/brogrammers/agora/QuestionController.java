@@ -14,10 +14,10 @@ import android.graphics.Bitmap;
 import android.renderscript.Type;
 
 public class QuestionController {
-	private DeviceUser user;
-	private CacheDataManager cache;
-	private ESDataManager eSearch;
-	private ImageResizer resizer;
+	private static DeviceUser user;
+	private static CacheDataManager cache;
+	private static ESDataManager eSearch;
+	private static ImageResizer resizer;
 	
 	static private QuestionController self = null;
 	
@@ -28,26 +28,37 @@ public class QuestionController {
 		return self;
 	}
 	
+//	Dependency injection, for testing.
+	static public QuestionController getController(DeviceUser user, 
+			CacheDataManager cache, ESDataManager eSearch) {
+		if (self == null) {
+			self = new QuestionController(user, cache, eSearch);
+		}
+		return self;
+	}
+	
 	private QuestionController() {
 		user = DeviceUser.getUser();
 		cache = CacheDataManager.getInstance();
 		eSearch = ESDataManager.getInstance();
-		
+	}
+	
+//	Dependency injection, for testing.
+	private QuestionController(DeviceUser user_, 
+			CacheDataManager cache_, ESDataManager eSearch_) {
+		user = user_;
+		cache = cache_;
+		eSearch = eSearch_;
 	}
 	
 	public Long addQuestion(String title, String body, Bitmap image) throws UnsupportedEncodingException {
 		Question q = new Question(title, body, image, user);
+//		q.setImage(resizer.resizeTo64KB(image)); TODO: implement
+		q.setImage(null); // Images to be implemented in Part 4
+		
 		user.addAuthoredQuestionID(q.getID());
-		q.setImage(resizer.resizeTo64KB(image));
+		eSearch.pushQuestion(q);
 		
-		Gson gson = new Gson();
-		String questionSerialized = gson.toJson(q);
-		StringEntity stringEntityBody = new StringEntity(questionSerialized);
-		String URI = ESDataManager.DOMAIN + ESDataManager.INDEXNAME + ESDataManager.TYPENAME + Long.toString(q.getID());
-		QueryItem queryItem = new QueryItem(stringEntityBody, URI, RequestType.POST);
-//		eSearch.updateServer(queryItem);
-		
-//		cache.setQuestion(q);
 		return q.getID(); // for testing
 	}
 	

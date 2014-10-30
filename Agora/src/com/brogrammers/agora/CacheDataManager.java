@@ -19,7 +19,8 @@ public class CacheDataManager implements DataManager{
 	private CacheDataManager() {
 		questionCache = new TreeMap<Long, Question>();
 		// load saved questions from file
-		for (Question q : QuestionLoaderSaver.loadQuestions()) {
+		QuestionLoaderSaver qls = new QuestionLoaderSaver();
+		for (Question q : qls.loadQuestions()) {
 			questionCache.put(q.getID(), q);
 		}
 		eSearch = ESDataManager.getInstance();
@@ -44,7 +45,8 @@ public class CacheDataManager implements DataManager{
 	
 	public boolean pushQuestion(Question q) {
 		questionCache.put(q.getID(), q);
-		QuestionLoaderSaver.saveQuestion(q);
+		QuestionLoaderSaver qls = new QuestionLoaderSaver();
+		qls.saveQuestion(q);
 		return true;
 	} 
 	
