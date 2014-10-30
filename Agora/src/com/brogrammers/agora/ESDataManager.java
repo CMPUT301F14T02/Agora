@@ -66,8 +66,6 @@ public class ESDataManager implements DataManager {
 	private void updateServer(final QueryItem qItem){
 		if (connected) {
 			AsyncHttpClient client = new AsyncHttpClient();
-			// TODO: check for request type, don't assume post 
-			// qItem.requestType
 			client.post(Agora.getContext(), qItem.getURI(), qItem.getBody(), "application/json", new AsyncHttpResponseHandler() {
 				@Override
 			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
@@ -78,7 +76,6 @@ public class ESDataManager implements DataManager {
 			    @Override
 			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
 			        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-					//TODO: Switch threads.
 			    	offlineQueue.addToQueue(qItem);
 			    }
 			});
@@ -90,12 +87,7 @@ public class ESDataManager implements DataManager {
 	}
 	
 	public List<Question> getQuestions() throws UnsupportedEncodingException {
-		return getQuestions(DOMAIN, INDEXNAME, TYPENAME);
-	}
-	
-	public List<Question> getQuestions(String domain, String indexName, String typeName) throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
-		AsyncHttpClient client = new AsyncHttpClient();
 		String requestBody = "{" +
 			    "\"query\": {\"match_all\": {}}," +
 			    "\"sort\": [" +
@@ -103,12 +95,17 @@ public class ESDataManager implements DataManager {
 			    	"\"date\": {" +
 			    		"\"order\": \"desc\"" + 
 			    	"}"+
-	       		"}" + "]" + "}";
-		StringEntity stringEntityBody;
-		stringEntityBody = new StringEntity(requestBody);
+			    	"}]}";
+		String endPoint = "_search";
+		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
+	}
+	
+	public List<Question> getQuestions(String domain, String indexName, String typeName, String requestBody, String endPoint) throws UnsupportedEncodingException {
+		AsyncHttpClient client = new AsyncHttpClient();
+		StringEntity stringEntityBody = new StringEntity(requestBody);
 		final List<Question> questionList = new ArrayList<Question>();
 		client.post(Agora.getContext(), domain + indexName + typeName + 
-						"_search", 
+						endPoint, 
 						stringEntityBody,
 						"application/json",
 						new AsyncHttpResponseHandler() {
@@ -144,54 +141,35 @@ public class ESDataManager implements DataManager {
 	}
 	
 	
-	public List<Question> searchQuestions(String query) throws UnsupportedEncodingException {
-		return searchQuestions(DOMAIN, INDEXNAME, TYPENAME, query);
+	public List<Question> searchQuestions(String query) throws UnsupportedEncodingException {	
+		String requestBody = "{" +
+			    "\"query\": {" +
+			        "\"multi_match\": {" +
+			           "\"query\":" + 
+			           query +
+			           "\"type\": \"most_fields\"," +
+			           "\"fields\": [" +
+			           "\"title\", \"body\"" +
+			           "]}}}";
+		String endPoint = "_search";
+		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
 	}
 	
-	public List<Question> searchQuestions(String domain, String indexName, String typeName, String query) throws UnsupportedEncodingException{
-		AsyncHttpClient client = new AsyncHttpClient();
-		String requestBody = "{\"query\":{\"match_all\":{}}}";
-		StringEntity stringEntityBody = new StringEntity(requestBody);
-		List<Question> questionList = new ArrayList<Question>();
-		client.post(Agora.getContext(), domain + indexName + typeName  + "_search", 
-								stringEntityBody, "application/json", new JsonHttpResponseHandler() {
-
-		    @Override
-		    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-		    	String questionResponseList = null;
-				try {
-					// response should be array of question objects
-					questionResponseList = (String) ((JSONObject) response.get("hits")).get("hits");
-				} catch (JSONException e) {
-					e.printStackTrace();
-				}
-		    	List<Question> questionList = new ArrayList<Question>();
-				Gson gson = new Gson();
-		    	List<Question> q = gson.fromJson(questionResponseList, new TypeToken<List<Question>>(){}.getType());
-		    	CacheDataManager.getInstance().questionCache = (TreeMap<Long, Question>) q;
-		    }
-		    
-		    
-		    @Override
-		    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-		        Log.w("Question Preview Load Failure", "onFailure(int, Header[], Throwable, JSONObject) was not overriden, but callback was received", throwable);
-		    }
-		    
-		});
-		return null;
-	}
-
-
-
 	public Answer getAnswerById(Long answerID) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public Question getQuestionById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Question getQuestionById(Long id) throws UnsupportedEncodingException {
+		// assuming the question view by default sorts by date
+		String requestBody = "{" +
+			    "\"query\": {" +
+	        	"\"match\": {" +
+	           		"\"_id\":" + id.toString() +
+	        	"}}}";
+		String endPoint = "_search";
+		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint).get(0);
 	}
 	
 	@Override	
