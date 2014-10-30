@@ -91,38 +91,54 @@ public class ESDataManager implements DataManager {
 	public List<Question> getQuestions() throws UnsupportedEncodingException{
 		// assuming the question view by default sorts by date
 		AsyncHttpClient client = new AsyncHttpClient();
-		// default sort by date
-		String requestBody = "{\"query\":{\"match_all\":{}}," +
-			     			 "\"sort\": \"[{ \"date\" :{\"order\":\"desc\"}}]}";
-		StringEntity stringEntityBody = new StringEntity(requestBody);
-		List<Question> questionList = new ArrayList<Question>();
-		client.post(Agora.getContext(), DOMAIN + INDEXNAME + TYPENAME + "_search", 
-								stringEntityBody, "application/json", new JsonHttpResponseHandler() {
+		String requestBody = "{" +
+			    "\"query\": {\"match_all\": {}}," +
+			    "\"sort\": [" +
+			    	"{" +
+			    	"\"date\": {" +
+			    		"\"order\": \"desc\"" + 
+			    	"}"+
+	       		"}" + "]" + "}";
+		StringEntity stringEntityBody;
+		stringEntityBody = new StringEntity(requestBody);
+		final List<Question> questionList = new ArrayList<Question>();
+		client.post(Agora.getContext(), DOMAIN + INDEXNAME + TYPENAME + 
+						"_search", 
+						stringEntityBody,
+						"application/json",
+						new AsyncHttpResponseHandler() {
 
-		    @Override
-		    public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-		    	String questionResponseList = null;
+			@Override
+			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+			}
+
+			@Override
+			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
 				try {
-					// response should be array of question objects
-					questionResponseList = (String) ((JSONObject) response.get("hits")).get("hits");
+					String responseBody = new String(arg2);
+					JSONObject jsonRes = new JSONObject(responseBody);
+					jsonRes = jsonRes.getJSONObject("hits");
+				    JSONArray jsonArray = jsonRes.getJSONArray("hits");
+				    Gson gson = new Gson();
+				    for (int i = 0; i < jsonArray.length(); i++) {
+				    	// get each object in the response, convert to object
+				    	// and add to list.
+				    	JSONObject q = jsonArray.getJSONObject(i);  
+						q = q.getJSONObject("_source");
+						Question qObject = gson.fromJson(q.toString(), Question.class);
+						questionList.add(qObject);
+				    	}
+			        
+				    //QuestionController.getInstance().updateQuestionList(questionList);
 				} catch (JSONException e) {
 					e.printStackTrace();
-				}
-		    	List<Question> questionList = new ArrayList<Question>();
-				Gson gson = new Gson();
-		    	List<Question> q = gson.fromJson(questionResponseList, new TypeToken<List<Question>>(){}.getType());
-		    	// TODO: place result into cache  		
-		    }
-		    
-		    
-		    @Override
-		    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-		        Log.w("Question Preview Load Failure", "onFailure(int, Header[], Throwable, JSONObject) was not overriden, but callback was received", throwable);
-		    }
-		    
-		});	
+				}	
+			}
+        });
 		return null;
 	}
+	
+	
 	public List<Question> searchQuestions(String query) throws UnsupportedEncodingException{
 		AsyncHttpClient client = new AsyncHttpClient();
 		String requestBody = "{\"query\":{\"match_all\":{}}}";

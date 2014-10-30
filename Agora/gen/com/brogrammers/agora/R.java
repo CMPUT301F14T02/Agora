@@ -38,16 +38,16 @@ public final class R {
         public static final int AuthourDate=0x7f08001e;
         public static final int ELV=0x7f08000c;
         public static final int Space1=0x7f08000b;
-        public static final int action_addanswer=0x7f08002c;
-        public static final int action_favorite=0x7f08002d;
-        public static final int action_flag=0x7f08002e;
-        public static final int action_settings=0x7f080027;
-        public static final int addQuestionBQV=0x7f080028;
+        public static final int action_addanswer=0x7f080036;
+        public static final int action_favorite=0x7f080037;
+        public static final int action_flag=0x7f080038;
+        public static final int action_settings=0x7f080031;
+        public static final int addQuestionBQV=0x7f080032;
         public static final int answerBody=0x7f080010;
         public static final int answerExpand=0x7f08000e;
         public static final int answerRating=0x7f08000d;
         public static final int answerUpVote=0x7f08000f;
-        public static final int arrangebyTextDialoug=0x7f080023;
+        public static final int arrangebyTextDialoug=0x7f080027;
         public static final int authorAnswerAddAnswerButton=0x7f080001;
         public static final int authorAnswerAddPictureButton=0x7f080002;
         public static final int authorAnswerBodyTextView=0x7f080000;
@@ -57,15 +57,15 @@ public final class R {
         public static final int authorQuestionBodyTextView=0x7f080006;
         public static final int authorQuestionEditText=0x7f080005;
         public static final int authorQuestionTitleView=0x7f080004;
+        public static final int checkBox1=0x7f08002e;
+        public static final int checkBox2=0x7f080030;
         public static final int commentText=0x7f080011;
         public static final int editText1=0x7f080003;
-        public static final int filterbyTextDialoug=0x7f080025;
-        public static final int goto_question_answer=0x7f08002b;
+        public static final int filterbyTextDialoug=0x7f08002c;
+        public static final int goto_question_answer=0x7f080035;
         public static final int imageButton1=0x7f080021;
         public static final int imageView1=0x7f080020;
         public static final int listView1=0x7f08000a;
-        public static final int listView2=0x7f080024;
-        public static final int listView3=0x7f080026;
         public static final int pager=0x7f080018;
         public static final int qFavourite=0x7f08001c;
         public static final int qScore=0x7f08001d;
@@ -77,11 +77,21 @@ public final class R {
         public static final int questionRating=0x7f080015;
         public static final int questionTitle=0x7f080017;
         public static final int questionUpVote=0x7f080014;
-        public static final int searchBQV=0x7f080029;
+        public static final int radioButton2=0x7f080026;
+        public static final int radioButton4=0x7f080029;
+        public static final int radioButton5=0x7f08002b;
+        public static final int searchBQV=0x7f080033;
         public static final int section_label=0x7f080019;
-        public static final int sortBQV=0x7f08002a;
+        public static final int sortBQV=0x7f080034;
+        public static final int sortbyTextDate=0x7f080023;
         public static final int sortbyTextDialoug=0x7f080022;
+        public static final int sortradioButton1=0x7f080024;
         public static final int textView1=0x7f08001a;
+        public static final int textView2=0x7f080025;
+        public static final int textView4=0x7f080028;
+        public static final int textView5=0x7f08002a;
+        public static final int textView6=0x7f08002d;
+        public static final int textView7=0x7f08002f;
     }
     public static final class layout {
         public static final int activity_author_answer=0x7f030000;
@@ -111,6 +121,7 @@ public final class R {
         public static final int addQuestion=0x7f050003;
         public static final int app_name=0x7f050000;
         public static final int arrangeby=0x7f050015;
+        public static final int date=0x7f050017;
         public static final int enterbodytext=0x7f05000f;
         public static final int entertitletext=0x7f05000e;
         public static final int filterby=0x7f050016;
@@ -128,6 +139,7 @@ public final class R {
         public static final int title_activity_search=0x7f050008;
         public static final int titlebodytext=0x7f05000d;
         public static final int titletext=0x7f05000c;
+        public static final int upvote=0x7f050018;
     }
     public static final class style {
         /** 
