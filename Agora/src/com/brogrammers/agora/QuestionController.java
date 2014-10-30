@@ -51,13 +51,13 @@ public class QuestionController {
 		eSearch = eSearch_;
 	}
 	
-	public Long addQuestion(String title, String body, Bitmap image) throws UnsupportedEncodingException {
+	public Long addQuestion(String title, String body, Bitmap image) /*throws UnsupportedEncodingException*/ {
 		Question q = new Question(title, body, image, user);
 //		q.setImage(resizer.resizeTo64KB(image)); TODO: implement
 		q.setImage(null); // Images to be implemented in Part 4
 		
 		user.addAuthoredQuestionID(q.getID());
-		eSearch.pushQuestion(q);
+		//eSearch.pushQuestion(q);
 		
 		return q.getID(); // for testing
 	}
@@ -106,6 +106,16 @@ public class QuestionController {
 //			q.getAnswerByID(aID).upvote();
 			// TODO: generate query string and pass to webservice
 		}
+	}
+
+	public Question searchQuestions(String string) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Question getQuestionById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }
