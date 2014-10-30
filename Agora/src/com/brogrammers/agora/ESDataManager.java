@@ -64,7 +64,7 @@ public class ESDataManager implements DataManager {
 
 
 	private void updateServer(final QueryItem qItem){
-		if (connected){
+		if (connected) {
 			AsyncHttpClient client = new AsyncHttpClient();
 			// TODO: check for request type, don't assume post 
 			// qItem.requestType
@@ -89,7 +89,11 @@ public class ESDataManager implements DataManager {
 		
 	}
 	
-	public List<Question> getQuestions() throws UnsupportedEncodingException{
+	public List<Question> getQuestions() throws UnsupportedEncodingException {
+		return getQuestions(DOMAIN, INDEXNAME, TYPENAME);
+	}
+	
+	public List<Question> getQuestions(String domain, String indexName, String typeName) throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
 		AsyncHttpClient client = new AsyncHttpClient();
 		String requestBody = "{" +
@@ -103,7 +107,7 @@ public class ESDataManager implements DataManager {
 		StringEntity stringEntityBody;
 		stringEntityBody = new StringEntity(requestBody);
 		final List<Question> questionList = new ArrayList<Question>();
-		client.post(Agora.getContext(), DOMAIN + INDEXNAME + TYPENAME + 
+		client.post(Agora.getContext(), domain + indexName + typeName + 
 						"_search", 
 						stringEntityBody,
 						"application/json",
@@ -140,12 +144,16 @@ public class ESDataManager implements DataManager {
 	}
 	
 	
-	public List<Question> searchQuestions(String query) throws UnsupportedEncodingException{
+	public List<Question> searchQuestions(String query) throws UnsupportedEncodingException {
+		return searchQuestions(DOMAIN, INDEXNAME, TYPENAME, query);
+	}
+	
+	public List<Question> searchQuestions(String domain, String indexName, String typeName, String query) throws UnsupportedEncodingException{
 		AsyncHttpClient client = new AsyncHttpClient();
 		String requestBody = "{\"query\":{\"match_all\":{}}}";
 		StringEntity stringEntityBody = new StringEntity(requestBody);
 		List<Question> questionList = new ArrayList<Question>();
-		client.post(Agora.getContext(), DOMAIN + INDEXNAME + TYPENAME + "_search", 
+		client.post(Agora.getContext(), domain + indexName + typeName  + "_search", 
 								stringEntityBody, "application/json", new JsonHttpResponseHandler() {
 
 		    @Override
@@ -185,20 +193,29 @@ public class ESDataManager implements DataManager {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
+	
+	@Override	
 	public boolean pushQuestion(Question q) throws UnsupportedEncodingException {		
+		return pushQuestion(DOMAIN, INDEXNAME, TYPENAME, q);
+	}
+	
+	public boolean pushQuestion(String domain, String indexName, String typeName, Question q) throws UnsupportedEncodingException {		
 		Gson gson = new Gson();
 		String questionSerialized = gson.toJson(q);
 		StringEntity stringEntityBody = new StringEntity(questionSerialized);
-		String URI = DOMAIN + INDEXNAME + TYPENAME + Long.toString(q.getID());
+		String URI = domain + indexName+ typeName + Long.toString(q.getID());
 		QueryItem queryItem = new QueryItem(stringEntityBody, URI, RequestType.POST);
 		updateServer(queryItem);
 		return false;
 	}
 
-	@Override
-	public boolean pushAnswer(Answer a, Long qID) throws UnsupportedEncodingException {
+	
+	public boolean pushAnswer(Answer a, Long qID) throws UnsupportedEncodingException {		
+		return pushAnswer(DOMAIN, INDEXNAME, TYPENAME, a, qID);
+	}
+	
+
+	public boolean pushAnswer(String domain, String indexName, String typeName, Answer a, Long qID) throws UnsupportedEncodingException {
 		Question q = CacheDataManager.getInstance().questionCache.get(qID);
 		Gson gson = new Gson();
 		String answerSerialized = gson.toJson(q.getAnswers());
@@ -209,14 +226,17 @@ public class ESDataManager implements DataManager {
 				"}";
 		StringEntity stringEntityAnswer = new StringEntity(answerSerialized);
 		String test = stringEntityAnswer.toString();
-		String URI = DOMAIN + INDEXNAME + TYPENAME + Long.toString(qID) + "/" + "_update";
+		String URI = domain + indexName + typeName  + Long.toString(qID) + "/" + "_update";
 		QueryItem queryItem = new QueryItem(stringEntityAnswer, URI, RequestType.POST);
 		updateServer(queryItem);
 		return false;
 	}
 
-	@Override
 	public boolean pushComment(Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
+		return pushComment(DOMAIN, INDEXNAME, TYPENAME, c, qID, aID);
+	}
+
+	public boolean pushComment(String domain, String indexName, String typeName, Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
 		Question q = CacheDataManager.getInstance().questionCache.get(qID);
 		Gson gson = new Gson();
 		if (aID == null) {
@@ -227,7 +247,7 @@ public class ESDataManager implements DataManager {
 						"}" +
 					"}";
 			StringEntity stringEntityComments = new StringEntity(commentSerialized);
-			String URI = DOMAIN + INDEXNAME + TYPENAME + Long.toString(qID) + "/" + "_update";
+			String URI = domain + indexName+ typeName  + Long.toString(qID) + "/" + "_update";
 			String test = commentSerialized.toString();
 			QueryItem queryItem = new QueryItem(stringEntityComments, URI, RequestType.POST);
 			updateServer(queryItem);
@@ -241,7 +261,7 @@ public class ESDataManager implements DataManager {
 						"}" +
 					"}";
 			StringEntity stringEntityAnswer = new StringEntity(answerSerialized);
-			String URI = DOMAIN + INDEXNAME + TYPENAME + Long.toString(qID) + "/" + "_update";
+			String URI = domain + indexName+ typeName  + Long.toString(qID) + "/" + "_update";
 			QueryItem queryItem = new QueryItem(stringEntityAnswer, URI, RequestType.POST);
 			updateServer(queryItem);
 		}
