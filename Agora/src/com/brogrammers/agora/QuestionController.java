@@ -25,6 +25,7 @@ public class QuestionController {
 	private List<Question> allQuestionList;
 	private List<Question> searchQuestionResults;
 	private List<Answer> searchAnswerResults;
+	private List<Question> questionByIdList;
 	private Question questionById;
 	
 	
@@ -61,6 +62,7 @@ public class QuestionController {
 	}
 	
 	public void update() {
+		questionById = questionByIdList.get(0);
 		observer.update();
 	}
 	
@@ -90,8 +92,6 @@ public class QuestionController {
 			return null;
 		}
 	}
-
-
 	
 	public Long addQuestion(String title, String body, Bitmap image) /*throws UnsupportedEncodingException*/ {
 		Question q = new Question(title, body, image, user);
@@ -99,7 +99,12 @@ public class QuestionController {
 		q.setImage(null); // Images to be implemented in Part 4
 		
 		user.addAuthoredQuestionID(q.getID());
-		//eSearch.pushQuestion(q);
+		try {
+			eSearch.pushQuestion(q);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		return q.getID(); // for testing
 	}
@@ -107,17 +112,16 @@ public class QuestionController {
 	public Long addAnswer(String body, Bitmap image, Long qID) {
 		Answer a = new Answer(body, image, user);
 		a.setImage(resizer.resizeTo64KB(image));
-//		Question q = cache.getQuestionByID(qID);
-//		q.addAnswer(a);
 		
-		// TODO: generate query string and pass to webservice
-		Gson gson = new Gson();
-		String answer = gson.toJson(a);
-		String URI = ESDataManager.DOMAIN + ESDataManager.INDEXNAME + ESDataManager.TYPENAME + qID;
-		//QueryItem queryItem = new QueryItem(params, URI, RequestType.POST);
-		//eSearch.updateServer(queryItem);
+		// the cache operation MUST be called before the eSearch operation
+		Question q = cache.getQuestionById(qID);
+		q.addAnswer(a);
 		
-
+		try {
+			eSearch.pushAnswer(a, qID);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		
 		return a.getID();
 	}
@@ -125,17 +129,21 @@ public class QuestionController {
 	// if adding a comment to a question, pass null for aID
 	public void addComment(String body, Long qID, Long aID) {
 		Comment c = new Comment(body);
-//		Question q = cache.getQuestionByID(qID);
-//		if (aID == null) {
-//			q.addComment(c);
-//		} else {
-//			q.getAnswerByID(aID).addComment(c);
-//		}
-//		
-		// TODO: generate query string and pass to webservice
-
+		Question q = cache.getQuestionById(qID);
+		if (aID == null) {
+			q.addComment(c);
+		} else {
+			q.getAnswerByID(aID).addComment(c);
+		}
+		
+		try {
+			eSearch.pushComment(c, qID, aID);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 	}
 	
+	// TODO
 	public void upvote(Long qID, Long aID) {
 //		Question q = cache.getQuestionByID(qID);
 		if (aID == null) {
@@ -150,15 +158,17 @@ public class QuestionController {
 		}
 	}
 
-
-
 	public Question getQuestionById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public Observer getObserver() {
-		return observer;
+		if (eSearch.isConnected()) {
+			questionByIdList = eSearch.getQuestionById(id);
+			questionById = new Question(null);
+			return questionById;
+		} else {
+			return null;
+			// TODO: handle no network
+		}
+		
+		
 	}
 	
 	public void setObserver(Observer observer) {

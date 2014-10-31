@@ -32,6 +32,20 @@ public class Question implements Serializable, Comparable<Question>, Post {
 		answers = new ArrayList<Answer>();
 
 	}
+	
+	public Question(Object o) {
+		if (o == null) {
+			this.title = null;
+			this.body = null;
+			this.author = null;
+			this.image = null;
+			rating = 0;
+			date = null;
+			uniqueID = null;
+			comments = null;
+			answers = null;
+		}
+	}
 
 	public void setImage(Bitmap image) {
 		this.image = image;
