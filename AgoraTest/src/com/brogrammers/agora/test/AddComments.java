@@ -1,10 +1,13 @@
 /*package com.brogrammers.agora.test;
 
+import com.brogrammers.agora.DeviceUser;
+import com.brogrammers.agora.WebServiceModel;
+
 import junit.framework.TestCase;
 
 public class AddComments extends TestCase {
 	// These are singletons
-	User user = new User();
+	DeviceUser user = new DeviceUser();
 	WebServiceModel webServiceModel = new WebServiceModel;
 	LocalCacheModel localCacheModel = new LocalCacheModel;
 	QuestionController controller = new QuestionController();
