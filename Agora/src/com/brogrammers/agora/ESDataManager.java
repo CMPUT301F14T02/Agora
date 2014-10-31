@@ -52,6 +52,9 @@ public class ESDataManager implements DataManager {
 		return self;
 	}
 
+	public boolean isConnected(){
+		return this.connected;
+	}
 	
 	private ESDataManager() {
 		// get connection status
@@ -131,7 +134,7 @@ public class ESDataManager implements DataManager {
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
 				    	}
-				    //QuestionController.getInstance().updateQuestionList(questionList);
+				    //QuestionController.getInstance().update();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	
@@ -161,7 +164,7 @@ public class ESDataManager implements DataManager {
 	}
 	
 	@Override
-	public Question getQuestionById(Long id) throws UnsupportedEncodingException {
+	public List<Question> getQuestionById(Long id) throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
 		String requestBody = "{" +
 			    "\"query\": {" +
@@ -169,7 +172,13 @@ public class ESDataManager implements DataManager {
 	           		"\"_id\":" + id.toString() +
 	        	"}}}";
 		String endPoint = "_search";
-		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint).get(0);
+		List<Question> result = getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
+		if (result.size() == 0){
+			return null;
+		} else if (result.size() > 1){
+			Log.e("AGORA", "Returned array in getQuestionByID is > 1");
+		}
+		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
 	}
 	
 	@Override	
@@ -194,9 +203,9 @@ public class ESDataManager implements DataManager {
 	
 
 	public boolean pushAnswer(String domain, String indexName, String typeName, Answer a, Long qID) throws UnsupportedEncodingException {
-		Question q = CacheDataManager.getInstance().questionCache.get(qID);
+		List<Question> q = CacheDataManager.getInstance().getQuestionById(qID);
 		Gson gson = new Gson();
-		String answerSerialized = gson.toJson(q.getAnswers());
+		String answerSerialized = gson.toJson(q.get(0).getAnswers());
 		answerSerialized = "{" +
 				"\"doc\": { " +
 				"\"answers\":" + answerSerialized + 
