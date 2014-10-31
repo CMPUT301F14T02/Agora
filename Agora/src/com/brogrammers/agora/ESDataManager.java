@@ -202,9 +202,9 @@ public class ESDataManager implements DataManager {
 	
 
 	public boolean pushAnswer(String domain, String indexName, String typeName, Answer a, Long qID) throws UnsupportedEncodingException {
-		List<Question> q = CacheDataManager.getInstance().getQuestionById(qID);
+		Question q = CacheDataManager.getInstance().getQuestionById(qID);
 		Gson gson = new Gson();
-		String answerSerialized = gson.toJson(q.get(0).getAnswers());
+		String answerSerialized = gson.toJson(q.getAnswers());
 		answerSerialized = "{" +
 				"\"doc\": { " +
 				"\"answers\":" + answerSerialized + 
