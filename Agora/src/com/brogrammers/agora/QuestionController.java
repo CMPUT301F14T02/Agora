@@ -160,7 +160,11 @@ public class QuestionController {
 
 	public Question getQuestionById(Long id) {
 		if (eSearch.isConnected()) {
-			questionByIdList = eSearch.getQuestionById(id);
+			try {
+				questionByIdList = eSearch.getQuestionById(id);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
 			questionById = new Question(null);
 			return questionById;
 		} else {
