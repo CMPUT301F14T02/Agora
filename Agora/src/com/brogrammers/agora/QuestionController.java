@@ -1,6 +1,7 @@
 package com.brogrammers.agora;
 
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.http.entity.StringEntity;
@@ -21,6 +22,13 @@ public class QuestionController {
 	
 	static private QuestionController self = null;
 	
+	private List<Question> allQuestionList;
+	private List<Question> searchQuestionResults;
+	private List<Answer> searchAnswerResults;
+//	private Qu
+	
+	private Observer observer;
+
 	static public QuestionController getController() {
 		if (self == null) {
 			self = new QuestionController();
@@ -50,6 +58,29 @@ public class QuestionController {
 		cache = cache_;
 		eSearch = eSearch_;
 	}
+	
+	public void notifyQuestionsReceived() {
+		observer.update();
+	}
+	
+	public List<Question> getQuestions() {
+		if (eSearch.isConnected()) {
+//			try {
+//				questionList = eSearch.getQuestions(new Runnable() {
+//					public void run() {
+//						QuestionController.getController().notifyQuestionsReceived();
+//					}
+//				});
+//			} catch (UnsupportedEncodingException e) {
+//				e.printStackTrace();
+//			}
+//			return questionList;
+		} else {
+			return cache.getQuestions();
+		}
+		return null;
+	}
+
 	
 	public Long addQuestion(String title, String body, Bitmap image) /*throws UnsupportedEncodingException*/ {
 		Question q = new Question(title, body, image, user);
@@ -118,4 +149,12 @@ public class QuestionController {
 		return null;
 	}
 	
+	public Observer getObserver() {
+		return observer;
+	}
+	
+	public void setObserver(Observer observer) {
+		this.observer = observer;
+	}
+		
 }

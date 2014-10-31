@@ -41,7 +41,12 @@ public class ESDataManager implements DataManager {
 	private OfflineQueue offlineQueue;
 	
 	// TODO: Register a broadcast receiver for connectivity status.
+	private boolean isConnected = true;
 	
+	public boolean isConnected() {
+		return isConnected;
+	}
+
 	private static ESDataManager self;
 			
 	public static ESDataManager getInstance(){
@@ -129,15 +134,16 @@ public class ESDataManager implements DataManager {
 						q = q.getJSONObject("_source");
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
-				    	}
-			        
-				    //QuestionController.getInstance().updateQuestionList(questionList);
+
+				   }
+				    
+				
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	
 			}
         });
-		return null;
+		return questionList;
 	}
 	
 	
