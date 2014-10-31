@@ -90,9 +90,13 @@ public class ESDataManager implements DataManager {
 		}
 		
 	}
-	
+
 	public List<Question> getQuestions() throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
+
+		Log.e("ESDataManager", "getQuestions()");
+		AsyncHttpClient client = new AsyncHttpClient();
+
 		String requestBody = "{" +
 			    "\"query\": {\"match_all\": {}}," +
 			    "\"sort\": [" +
@@ -100,6 +104,7 @@ public class ESDataManager implements DataManager {
 			    	"\"date\": {" +
 			    		"\"order\": \"desc\"" + 
 			    	"}"+
+
 			    	"}]}";
 		String endPoint = "_search";
 		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
@@ -108,6 +113,11 @@ public class ESDataManager implements DataManager {
 	public List<Question> getQuestions(String domain, String indexName, String typeName, String requestBody, String endPoint) throws UnsupportedEncodingException {
 		AsyncHttpClient client = new AsyncHttpClient();
 		StringEntity stringEntityBody = new StringEntity(requestBody);
+
+	       		
+
+		stringEntityBody = new StringEntity(requestBody);
+
 		final List<Question> questionList = new ArrayList<Question>();
 		client.post(Agora.getContext(), domain + indexName + typeName + 
 						endPoint, 
@@ -117,6 +127,7 @@ public class ESDataManager implements DataManager {
 
 			@Override
 			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+				Log.e("ESDataManager", "onFailure");
 			}
 
 			@Override
@@ -127,6 +138,8 @@ public class ESDataManager implements DataManager {
 					jsonRes = jsonRes.getJSONObject("hits");
 				    JSONArray jsonArray = jsonRes.getJSONArray("hits");
 				    Gson gson = new Gson();
+				    
+				    Log.e("ESDataManager", "onSuccess Length = " + Integer.toString(jsonArray.length()));
 				    for (int i = 0; i < jsonArray.length(); i++) {
 				    	// get each object in the response, convert to object
 				    	// and add to list.
@@ -135,15 +148,22 @@ public class ESDataManager implements DataManager {
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
 
-				   }
-				    
-				
+				    	}
+				    Log.e("ESDataManager", "onSuccess questionList length = " + Integer.toString(questionList.size()));			        
+				    //QuestionController.getInstance().updateQuestionList(questionList);
+
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	
 			}
         });
+
+	
+
+		Log.e("ESDataManager", "questionList.size() == " + Integer.toString(questionList.size()));
 		return questionList;
+//		return null;
+
 	}
 	
 	

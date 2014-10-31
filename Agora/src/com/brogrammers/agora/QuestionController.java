@@ -25,7 +25,8 @@ public class QuestionController {
 	private List<Question> allQuestionList;
 	private List<Question> searchQuestionResults;
 	private List<Answer> searchAnswerResults;
-//	private Qu
+	private Question questionById;
+	
 	
 	private Observer observer;
 
