@@ -32,10 +32,6 @@ public class Question implements Serializable, Comparable<Question>, Post {
 		answers = new ArrayList<Answer>();
 
 	}
-	
-	public void setBody(String body) {
-		this.body = body;
-	}
 
 	public void setImage(Bitmap image) {
 		this.image = image;

@@ -1,8 +1,6 @@
 package com.brogrammers.agora;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -14,7 +12,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,27 +23,13 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    private List<Question> qList = new ArrayList<Question>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_answer);
-        Log.e("LOL", "LOLLERS");
-        ESDataManager es = ESDataManager.getInstance();
-
-        try {
-        	qList = es.getQuestions();
-        } catch (UnsupportedEncodingException e) {
-        	
-        }
-        Log.e("ESDataManager", "in mainActivity (1), qList length = "+Integer.toString(qList.size()));
-        try {
-			Thread.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        Log.e("ESDataManager", "in mainActivity (2), qList length = "+Integer.toString(qList.size()));
+        
+  
     } 
 
     @Override
@@ -76,15 +59,12 @@ public class MainActivity extends Activity {
         	openSortMenu();
         	return true;
         case R.id.goto_question_answer:
-        	Toast.makeText(Agora.getContext(), qList.get(0).getBody(), 0).show();
-//        	Intent intent = new Intent(Agora.getContext(), QuestionAnswerActivity.class);
-//        	startActivity(intent);
-        	return true;
+        	Intent intent = new Intent(Agora.getContext(), QuestionAnswerActivity.class);
+        	startActivity(intent);
+        	
         default:
-        	break;
-            
+            return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
         
     public void openAddQuestionView() {

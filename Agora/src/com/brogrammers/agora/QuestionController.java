@@ -60,27 +60,37 @@ public class QuestionController {
 		eSearch = eSearch_;
 	}
 	
-	public void notifyQuestionsReceived() {
+	public void update() {
 		observer.update();
 	}
 	
-	public List<Question> getQuestions() {
+	public List<Question> getAllQuestions() {
 		if (eSearch.isConnected()) {
-//			try {
-//				questionList = eSearch.getQuestions(new Runnable() {
-//					public void run() {
-//						QuestionController.getController().notifyQuestionsReceived();
-//					}
-//				});
-//			} catch (UnsupportedEncodingException e) {
-//				e.printStackTrace();
-//			}
-//			return questionList;
+			try {
+				allQuestionList = eSearch.getQuestions();
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			return allQuestionList;
 		} else {
 			return cache.getQuestions();
 		}
-		return null;
 	}
+	
+	public List<Question> searchQuestions(String query) {
+		if (eSearch.isConnected()) {
+			try {
+				searchQuestionResults = eSearch.searchQuestions(query);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
+			}
+			return searchQuestionResults;
+		} else {
+			// TODO: throw exception to notify view that network is out
+			return null;
+		}
+	}
+
 
 	
 	public Long addQuestion(String title, String body, Bitmap image) /*throws UnsupportedEncodingException*/ {
@@ -140,10 +150,7 @@ public class QuestionController {
 		}
 	}
 
-	public Question searchQuestions(String string) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	public Question getQuestionById(Long id) {
 		// TODO Auto-generated method stub
