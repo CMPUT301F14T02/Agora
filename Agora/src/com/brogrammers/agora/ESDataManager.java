@@ -163,7 +163,6 @@ public class ESDataManager implements DataManager {
 		return null;
 	}
 	
-	@Override
 	public List<Question> getQuestionById(Long id) throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
 		String requestBody = "{" +
@@ -224,7 +223,7 @@ public class ESDataManager implements DataManager {
 	}
 
 	public boolean pushComment(String domain, String indexName, String typeName, Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
-		Question q = CacheDataManager.getInstance().questionCache.get(qID);
+		Question q = CacheDataManager.getInstance().getQuestionById(qID);
 		Gson gson = new Gson();
 		if (aID == null) {
 			String commentSerialized = gson.toJson(q.getComments());
