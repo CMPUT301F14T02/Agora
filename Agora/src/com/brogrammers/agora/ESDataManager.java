@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.TreeMap;
+import java.util.concurrent.Callable;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -130,7 +131,6 @@ public class ESDataManager implements DataManager {
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
 				    	}
-			        
 				    //QuestionController.getInstance().updateQuestionList(questionList);
 				} catch (JSONException e) {
 					e.printStackTrace();
