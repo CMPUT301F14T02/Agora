@@ -38,9 +38,11 @@ public class CacheDataManager implements DataManager{
 	}
 	
 	// Warning: can return null
-	public Question getQuestionById(Long id) {
+	public List<Question> getQuestionById(Long id) {
 		Question q = questionCache.get(id);
-		return q;
+		ArrayList<Question> arrayListQuestion = new ArrayList<Question>();
+		arrayListQuestion.add(q);
+		return arrayListQuestion;
 	}
 	
 	public boolean pushQuestion(Question q) {
