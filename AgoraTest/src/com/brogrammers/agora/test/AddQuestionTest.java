@@ -8,6 +8,8 @@ import java.util.Observer;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.http.client.HttpClient;
+
 import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.Author;
 import com.brogrammers.agora.ESDataManager;
@@ -26,7 +28,7 @@ public class AddQuestionTest extends ActivityInstrumentationTestCase2<MainActivi
 	}
 
 	protected void setUp() throws Exception {
-		super.setUp();
+		
 	}
 
 	protected void tearDown() throws Exception {
@@ -45,13 +47,11 @@ public class AddQuestionTest extends ActivityInstrumentationTestCase2<MainActivi
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}	
-
-//				Log.e("TESTING", results.get(0).getBody());
 			}
 		});
 		assertTrue(results.get(0).size() == 0);
 		try {
-			signal.await(10, TimeUnit.SECONDS);
+			signal.await(3, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			assertTrue(false);
 		}
