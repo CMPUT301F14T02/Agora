@@ -1,34 +1,37 @@
-/*package com.brogrammers.agora.test;
+package com.brogrammers.agora.test;
 
 import com.brogrammers.agora.Answer;
-import com.brogrammers.agora.ElasticSearch;
+import com.brogrammers.agora.Question;
 import com.brogrammers.agora.QuestionController;
 
 import junit.framework.TestCase;
 
-
-public class UpvoteAnswerTest extends TestCase
-{
-	//assuming answers start with 0 upvotes
+public class UpvoteAnswerTest extends TestCase {
+	// Assuming questions start with 0 upvotes
 	QuestionController controller = QuestionController.getController();
-	ElasticSearch webModel = ElasticSearch.getInstance();
+	static long questionID;
+	static long answerID;
 
-	//retrieving and adding answer
-	long questionID = controller.addQuestion("Why won't my Pikachu evolve?", "He just slaps me.", null);
-	long answerID = controller.addAnswer("You should love Pikachu for who he is", null, questionID);
-	//upvoting
+	// upvoting once
+	void testQuestionUpvoted() {
+	questionID = controller.addQuestion("I can't get past this road.", "There is a snorlax blocking the path.", null);
+	answerID = controller.addAnswer("You should try the pokeflute.", null, questionID);
 	controller.upvote(null, answerID);
-	Answer testAnswer = webModel.getAnswerById(answerID);
-	void testAnswerUpVote() {
-		assertTrue("Answer is not upvoted.", testAnswer.getRating() == 1);
+	Question question = controller.getQuestionById(questionID);
+	Answer answer = question.getAnswerByID(answerID);
+	
+	assertTrue("Answer not upvoted.", answer.getRating() == 1);
 	}
 	
 	//upvoting 100 times
-	for (int i = 0; i < 99; i++){
-		controller.upvote(null, answerID);
-	}
-	void testUpvoteAnswerCount() {
-		assertTrue("Answer is not upvoted 100 times.", testAnswer.getRating() == 100);
+	void testQuestion100UpvoteCount() {
+		Question question = controller.getQuestionById(questionID);
+		Answer answer = question.getAnswerByID(answerID);
+		
+		for (int i = 0; i < 99; i++){
+			controller.upvote(null, answerID);
+		}
+		assertTrue("Answer is not upvoted 100 times.",
+				answer.getRating() == 100);
 	}
 }
-*/
