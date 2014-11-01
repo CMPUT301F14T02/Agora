@@ -1,14 +1,29 @@
 package com.brogrammers.agora.test;
 
+import android.test.ActivityInstrumentationTestCase2;
+
 import com.brogrammers.agora.Answer;
+import com.brogrammers.agora.MainActivity;
 import com.brogrammers.agora.Question;
 import com.brogrammers.agora.QuestionController;
 
-import junit.framework.TestCase;
 
-public class UpvoteAnswerTest extends TestCase {
+//Activity not made yet
+public class UpvoteAnswerTest extends ActivityInstrumentationTestCase2<MainActivity> {
+	
+	public UpvoteAnswerTest() {
+		super(MainActivity.class);
+	}
+
+	protected void setUp() throws Exception {
+		super.setUp();
+	}
+
+	protected void tearDown() throws Exception {
+		super.tearDown();
+	}
 	// Assuming questions start with 0 upvotes
-	QuestionController controller = QuestionController.getController();
+	static QuestionController controller = QuestionController.getController();
 	static long questionID;
 	static long answerID;
 
