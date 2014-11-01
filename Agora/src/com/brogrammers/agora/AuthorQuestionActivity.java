@@ -1,10 +1,13 @@
 package com.brogrammers.agora;
 
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class AuthorQuestionActivity extends Activity {
@@ -13,6 +16,14 @@ public class AuthorQuestionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_author_question);
+
+		Button addQuestion= (Button)findViewById(R.id.authorQuestionAddQuestionButton);
+		Button addPicture = (Button)findViewById(R.id.authorQuestionAddPictureButton);
+
+		addQuestion.setOnClickListener(questionhandler);
+		addPicture.setOnClickListener(picturehandler);
+
+		
 	}
 
 	@Override
@@ -33,11 +44,26 @@ public class AuthorQuestionActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	void addpicture(View view){
-		Toast.makeText(this, "Picture Added!", Toast.LENGTH_SHORT).show();
-	}
-	//submitting
-	void postquestion(View view){
-		Toast.makeText(this, "Question Posted!", Toast.LENGTH_SHORT).show();
-	}
+
+	View.OnClickListener questionhandler = new View.OnClickListener() {
+		public void onClick(View v) {
+			// add question
+			EditText titleText = (EditText)findViewById(R.id.authorQuestionEditText);
+			EditText bodyText = (EditText)findViewById(R.id.authorQuestionBodyEditText);
+    		Toast.makeText(Agora.getContext(), "Adding Question!", Toast.LENGTH_SHORT).show();
+    		String title = titleText.getText().toString();
+    		String body = bodyText.getText().toString();
+    		Toast.makeText(Agora.getContext(), "Title: "+title, Toast.LENGTH_SHORT).show();
+    		Toast.makeText(Agora.getContext(), "Body: "+body, Toast.LENGTH_SHORT).show();
+    		
+		}
+	};
+	View.OnClickListener picturehandler = new View.OnClickListener() {
+		public void onClick(View v) {
+			// add picture
+    		Toast.makeText(Agora.getContext(), "Adding Picture!", Toast.LENGTH_SHORT).show();
+
+		}
+	};
+
 }
