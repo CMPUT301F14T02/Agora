@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class AuthorAnswerActivity extends Activity {
 
@@ -11,6 +15,12 @@ public class AuthorAnswerActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_author_answer);
+		Button addAnswer = (Button)findViewById(R.id.authorAnswerAddAnswerButton);
+		Button addPicture = (Button)findViewById(R.id.authorQuestionAddPictureButton);
+
+		addAnswer.setOnClickListener(answerhandler);
+		addPicture.setOnClickListener(picturehandler);
+		
 	}
 
 	@Override
@@ -31,4 +41,22 @@ public class AuthorAnswerActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	View.OnClickListener answerhandler = new View.OnClickListener() {
+		public void onClick(View v) {
+			// add question
+			EditText bodyText = (EditText)findViewById(R.id.authorAnswerBodyTextView);
+    		Toast.makeText(Agora.getContext(), "Adding Question!", Toast.LENGTH_SHORT).show();
+    		String body = bodyText.getText().toString();
+    		Toast.makeText(Agora.getContext(), "Body: "+body, Toast.LENGTH_SHORT).show();
+    		
+		}
+	};
+	View.OnClickListener picturehandler = new View.OnClickListener() {
+		public void onClick(View v) {
+			// add picture
+    		Toast.makeText(Agora.getContext(), "Adding Picture!", Toast.LENGTH_SHORT).show();
+
+		}
+	};
 }
