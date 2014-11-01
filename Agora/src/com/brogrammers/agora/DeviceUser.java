@@ -10,10 +10,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class DeviceUser extends Author {
-	static final String favoritesPrefFileName = "FAVORITES";
-	static final String cachedPrefFileName = "CACHED";
-	static final String authoredPrefFileName = "AUTHORED";
-	static final String usernamePrefFileName = "USERNAME";
+	protected static String favoritesPrefFileName = "FAVORITES";
+	protected static String cachedPrefFileName = "CACHED";
+	protected static String authoredPrefFileName = "AUTHORED";
+	protected static String usernamePrefFileName = "USERNAME";
 	transient private SharedPreferences favoritesPrefFile;
 	transient private SharedPreferences cachedPrefFile;
 	transient private SharedPreferences authoredPrefFile;
@@ -33,7 +33,7 @@ public class DeviceUser extends Author {
 		return self;
 	}	
 	
-	private DeviceUser() {
+	protected DeviceUser() {
 		Context activity = Agora.getContext();
 		favoritesPrefFile = activity.getSharedPreferences(favoritesPrefFileName, Context.MODE_PRIVATE);
 		cachedPrefFile = activity.getSharedPreferences(cachedPrefFileName, Context.MODE_PRIVATE);

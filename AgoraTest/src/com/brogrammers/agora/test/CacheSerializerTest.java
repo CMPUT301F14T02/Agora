@@ -26,20 +26,20 @@ public class CacheSerializerTest extends ActivityInstrumentationTestCase2<MainAc
 	}
 
 	public void testSaveAndLoadQuestion() {
-		QuestionLoaderSaver qls = new QuestionLoaderSaver();
+		QuestionLoaderSaver qls = new QuestionLoaderSaver("UNIT_TESTING");
 		Agora.getContext().getSharedPreferences("UNIT_TESTING", Context.MODE_PRIVATE)
 			.edit()
 			.clear()
 			.commit();
 		// loading questions from empty file should return list of size 0
-		assertEquals(qls.loadQuestions("UNIT_TESTING").size(), 0);
+		assertEquals(qls.loadQuestions().size(), 0);
 		
 		Question q = new Question("How do I set the title of my pokemon team?", 
 				"I want to know how I do that and also does snorlax learn body slam?",
 				null, new Author("QuestionTesterDude99"));
-		qls.saveQuestion(q, "UNIT_TESTING");
+		qls.saveQuestion(q);
 		
-		List<Question> qList = qls.loadQuestions("UNIT_TESTING");
+		List<Question> qList = qls.loadQuestions();
 		
 		// now loading questions should return a list of size 1
 		assertEquals(qList.size(), 1);
@@ -50,6 +50,8 @@ public class CacheSerializerTest extends ActivityInstrumentationTestCase2<MainAc
 		assertEquals(q.getBody(), q2.getBody());
 		assertEquals(q.getTitle(), q2.getTitle());
 		assertEquals(q.getAuthor().getUsername(), q2.getAuthor().getUsername());
+		
+		
 	}
 	
 }

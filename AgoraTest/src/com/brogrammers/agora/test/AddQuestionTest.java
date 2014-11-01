@@ -1,26 +1,50 @@
 package com.brogrammers.agora.test;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
-import android.graphics.Bitmap;
-
+import com.brogrammers.agora.Agora;
+import com.brogrammers.agora.Author;
+import com.brogrammers.agora.ESDataManager;
+import com.brogrammers.agora.MainActivity;
 import com.brogrammers.agora.Question;
-import com.brogrammers.agora.QuestionController;
+import com.brogrammers.agora.QuestionLoaderSaver;
 
-import junit.framework.TestCase;
+import android.content.Context;
+import android.test.ActivityInstrumentationTestCase2;
 
-public class AddQuestionTest extends TestCase {
-	QuestionController controller = QuestionController.getController();
-	String questionTitle = String.valueOf(System.currentTimeMillis());
-	Bitmap img = null;
+public class AddQuestionTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	void testAddQuestion() {
-		Long id = controller.addQuestion(questionTitle, "Body Test", img);
-		Question addedQuestion = controller.getQuestionById(id);
-		assertTrue(addedQuestion.getTitle() == questionTitle);
-		assertTrue(addedQuestion.getBody() == "Body Test");
-		assertTrue(addedQuestion.getImage() == null);
+	public AddQuestionTest() {
+		super(MainActivity.class);
 	}
-}
+
+	protected void setUp() throws Exception {
+		super.setUp();
+	}
+
+	protected void tearDown() throws Exception {
+		super.tearDown();
+	}
+
+	public void testESGetQuestions() {
+//		ESDataManager es = ESDataManager.getInstance();
+//		
+//		final List<Question> results;
+//		synchronized (results) {
+//			results = es.getQuestions(new Observer() {
+//				void update() {
+//					results.notifyAll();
+//				}
+//
+//				@Override
+//				public void update(Observable arg0, Object arg1) {
+//					// TODO Auto-generated method stub
+//					
+//				}
+//			}
+		}
+	}
+		
+	

@@ -7,23 +7,32 @@ import java.util.TreeMap;
 
 import android.widget.Toast;
 
-public class CacheDataManager implements DataManager{
+public class CacheDataManager implements DataManager {
 
-	private ESDataManager eSearch;
 	static private CacheDataManager self;
 	
-	private TreeMap<Long, Question> questionCache; // for getQuestionByID()
-	private List<QuestionPreview> questionPreviewList; // for getQuestions()
+	protected TreeMap<Long, Question> questionCache; // for getQuestionByID()
+	protected List<QuestionPreview> questionPreviewList; // for getQuestions()
+	
+	QuestionLoaderSaver qls;
 
 	/* Constructors */
-	private CacheDataManager() {
+	protected CacheDataManager() {
 		questionCache = new TreeMap<Long, Question>();
 		// load saved questions from file
-		QuestionLoaderSaver qls = new QuestionLoaderSaver();
+		qls = new QuestionLoaderSaver();
 		for (Question q : qls.loadQuestions()) {
 			questionCache.put(q.getID(), q);
 		}
-		eSearch = ESDataManager.getInstance();
+	}
+	
+	protected CacheDataManager(String fileName) {
+		questionCache = new TreeMap<Long, Question>();
+		// load saved questions from file
+		qls = new QuestionLoaderSaver(fileName);
+		for (Question q : qls.loadQuestions()) {
+			questionCache.put(q.getID(), q);
+		}
 	}
 
 	static public CacheDataManager getInstance() {
@@ -45,7 +54,6 @@ public class CacheDataManager implements DataManager{
 	
 	public boolean pushQuestion(Question q) {
 		questionCache.put(q.getID(), q);
-		QuestionLoaderSaver qls = new QuestionLoaderSaver();
 		qls.saveQuestion(q);
 		return true;
 	} 

@@ -1,20 +1,69 @@
-/*package com.brogrammers.agora.test;
+package com.brogrammers.agora.test;
 
 import junit.framework.TestCase;
+import android.content.SharedPreferences;
+import android.test.ActivityInstrumentationTestCase2;
 
-public class DeviceRemembersQuestionsAskedTest extends TestCase {
-	public void testDeviceRemembersQuestionsAsked() {
-		QuestionController controller = QuestionController.getController();
-		DeviceUser user = DeviceUser.getUser();
-		Long qid1 = controller.addQuestion("Priority Moves",
-				"What are the moves that will always go first? #GottaGoFast",
-				null);
-		Long qid2 = controller.addQuestion("Best Moves",
-				"What are the moves that will good pokemon always have?",
-				null);
-		assertTrue("Authored questions are saved in DeviceUser.authoredQuestionIDs",
-				user.authoredQuestionIDs().contains(qid1) &&
-			    user.authoredQuestionIDs().contains(qid2) );
+import com.brogrammers.agora.CacheDataManager;
+import com.brogrammers.agora.DeviceUser;
+import com.brogrammers.agora.ESDataManager;
+import com.brogrammers.agora.MainActivity;
+import com.brogrammers.agora.QuestionController;
+
+public class DeviceRemembersQuestionsAskedTest extends ActivityInstrumentationTestCase2<MainActivity> {
+
+	public DeviceRemembersQuestionsAskedTest() {
+		super(MainActivity.class);
 	}
+
+	protected void setUp() throws Exception {
+		super.setUp();
+	}
+
+	protected void tearDown() throws Exception {
+		super.tearDown();
+	}
+
+	private class TestDeviceUser extends DeviceUser {
+		public TestDeviceUser() {
+			setUsername("TestBingsF");
+			favoritesPrefFileName = "TEST_FAVORITES";
+			cachedPrefFileName = "TEST_CACHED";
+			authoredPrefFileName = "TEST_AUTHORED";
+			usernamePrefFileName = "TEST_USERNAME";
+		}
+	}
+	
+	private class TestCacheManager extends CacheDataManager {
+		public TestCacheManager() {
+			super("TEST_CACHE");
+		}
+	}
+	
+	private class TestESManager extends ESDataManager {
+		public TestESManager() {
+//			super("DOMAIN", "INDEX", "TYPE");
+		}
+	}
+	
+	private class TestController extends QuestionController {
+		public TestController(DeviceUser user, CacheDataManager cache, ESDataManager es) {
+			super(user, cache, es);
+		}
+	}
+	
+
+	
+	public void testRemember() {
+		DeviceUser user = new TestDeviceUser();
+		CacheDataManager cache = new TestCacheManager();
+		ESDataManager es = new TestESManager();
+		QuestionController controller = new TestController(user, cache, es);
+		Long qid = controller.addQuestion("Test Title D", "Test Body D", null);
+		
+		assertTrue(user.getAuthoredQuestionIDs().size() == 1);
+		assertTrue(user.getAuthoredQuestionIDs().get(0) == qid);
+		
+	}
+	
 }
-*/

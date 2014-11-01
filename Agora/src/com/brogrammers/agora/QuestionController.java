@@ -47,14 +47,14 @@ public class QuestionController {
 		return self;
 	}
 	
-	private QuestionController() {
+	protected QuestionController() {
 		user = DeviceUser.getUser();
 		cache = CacheDataManager.getInstance();
 		eSearch = ESDataManager.getInstance();
 	}
 	
 //	Dependency injection, for testing.
-	private QuestionController(DeviceUser user_, 
+	protected QuestionController(DeviceUser user_, 
 			CacheDataManager cache_, ESDataManager eSearch_) {
 		user = user_;
 		cache = cache_;

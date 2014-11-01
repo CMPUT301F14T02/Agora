@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 
@@ -28,7 +29,7 @@ import android.widget.Toast;
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 
-public class ESDataManager implements DataManager {
+public class ESDataManager { // implements DataManager
 	// domain
 	public static final String DOMAIN = "http://cmput301.softwareprocess.es:8080/";
 	// name of the ES database/index
@@ -56,7 +57,7 @@ public class ESDataManager implements DataManager {
 		return this.connected;
 	}
 	
-	private ESDataManager() {
+	protected ESDataManager() {
 		// get connection status
 		// after creation connectivity status will be monitored by a
 		// broadcast receiver.
@@ -134,13 +135,13 @@ public class ESDataManager implements DataManager {
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
 				    	}
-				    //QuestionController.getInstance().update();
+				    QuestionController.getController().update();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	
 			}
         });
-		return null;
+		return questionList;
 	}
 	
 	
@@ -180,12 +181,12 @@ public class ESDataManager implements DataManager {
 		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
 	}
 	
-	@Override	
+		
 	public boolean pushQuestion(Question q) throws UnsupportedEncodingException {		
 		Gson gson = new Gson();
 		String questionSerialized = gson.toJson(q);
-		String endpoint = Long.toString(q.getID());
-		return push(DOMAIN, INDEXNAME, TYPENAME, questionSerialized, endpoint);
+		String endPoint = Long.toString(q.getID());
+		return push(DOMAIN, INDEXNAME, TYPENAME, questionSerialized, endPoint);
 	}
 	
 	public boolean pushAnswer(Answer a, Long qID) throws UnsupportedEncodingException {		
@@ -197,12 +198,12 @@ public class ESDataManager implements DataManager {
 				"\"answers\":" + answerSerialized + 
 					"}" +
 				"}";
-		String endpoint = Long.toString(qID) + "/" + "_update";
-		return push(DOMAIN, INDEXNAME, TYPENAME, answerSerialized, endpoint);
+		String endPoint = Long.toString(qID) + "/" + "_update";
+		return push(DOMAIN, INDEXNAME, TYPENAME, answerSerialized, endPoint);
 	}
 
 	public boolean pushComment(Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
-		String endpoint = Long.toString(qID) + "/" + "_update";
+		String endPoint = Long.toString(qID) + "/" + "_update";
 		Question q = CacheDataManager.getInstance().getQuestionById(qID);
 		Gson gson = new Gson();
 		if (aID == null) {
@@ -212,7 +213,7 @@ public class ESDataManager implements DataManager {
 					"\"comments\":" + commentSerialized + 
 						"}" +
 					"}";
-			return push(DOMAIN, INDEXNAME, TYPENAME, commentSerialized, endpoint);
+			return push(DOMAIN, INDEXNAME, TYPENAME, commentSerialized, endPoint);
 
 		} else {
 			// if qid is not null re-upload the answer array
@@ -222,7 +223,7 @@ public class ESDataManager implements DataManager {
 					"\"answers\":" + answerSerialized + 
 						"}" +
 					"}";
-			return push(DOMAIN, INDEXNAME, TYPENAME, answerSerialized, endpoint);	
+			return push(DOMAIN, INDEXNAME, TYPENAME, answerSerialized, endPoint);	
 		}
 	}
 	
@@ -234,14 +235,14 @@ public class ESDataManager implements DataManager {
 				"\"rating\":" + Integer.toString(upvotes) + 
 					"}" +
 				"}";
-		String endpoint = Long.toString(qID) + "/" + "_update";
-		return push(DOMAIN, INDEXNAME, TYPENAME, upVoteSerialized, endpoint);
+		String endPoint = Long.toString(qID) + "/" + "_update";
+		return push(DOMAIN, INDEXNAME, TYPENAME, upVoteSerialized, endPoint);
 	}
 	
 	
-	public boolean push(String domain, String indexName, String typeName, String body, String endpoint) throws UnsupportedEncodingException{
+	public boolean push(String domain, String indexName, String typeName, String body, String endPoint) throws UnsupportedEncodingException{
 		StringEntity stringEntityBody = new StringEntity(body);
-		String URI = domain + indexName + typeName  + endpoint;
+		String URI = domain + indexName + typeName  + endPoint;
 		QueryItem queryItem = new QueryItem(stringEntityBody, URI, RequestType.POST);
 		updateServer(queryItem);
 		return false;
