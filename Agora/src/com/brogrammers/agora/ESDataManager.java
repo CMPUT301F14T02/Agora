@@ -109,8 +109,8 @@ public class ESDataManager { // implements DataManager
 		AsyncHttpClient client = new AsyncHttpClient();
 		StringEntity stringEntityBody = new StringEntity(requestBody);
 		final List<Question> questionList = new ArrayList<Question>();
-		client.post(Agora.getContext(), domain + indexName + typeName + 
-						endPoint, 
+		String URI = domain + indexName + typeName + endPoint;
+		client.post(Agora.getContext(), URI,
 						stringEntityBody,
 						"application/json",
 						new AsyncHttpResponseHandler() {
@@ -135,7 +135,7 @@ public class ESDataManager { // implements DataManager
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
 				    	}
-				    QuestionController.getController().update();
+//				    QuestionController.getController().update();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	

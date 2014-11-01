@@ -1,8 +1,12 @@
 package com.brogrammers.agora.test;
 
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.Author;
@@ -13,6 +17,7 @@ import com.brogrammers.agora.QuestionLoaderSaver;
 
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 public class AddQuestionTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
@@ -28,23 +33,30 @@ public class AddQuestionTest extends ActivityInstrumentationTestCase2<MainActivi
 		super.tearDown();
 	}
 
-	public void testESGetQuestions() {
-//		ESDataManager es = ESDataManager.getInstance();
-//		
-//		final List<Question> results;
-//		synchronized (results) {
-//			results = es.getQuestions(new Observer() {
-//				void update() {
-//					results.notifyAll();
-//				}
-//
-//				@Override
-//				public void update(Observable arg0, Object arg1) {
-//					// TODO Auto-generated method stub
-//					
-//				}
-//			}
-		}
-	}
+	public void testESGetQuestions() throws Throwable {
+		final ESDataManager es = ESDataManager.getInstance();
+		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
+		final CountDownLatch signal = new CountDownLatch(1);
+		runTestOnUiThread(new Runnable() {
+			public void run() {
 		
+				try {
+					results.add((ArrayList<Question>)es.getQuestions());
+				} catch (UnsupportedEncodingException e) {
+					e.printStackTrace();
+				}	
+
+//				Log.e("TESTING", results.get(0).getBody());
+			}
+		});
+		assertTrue(results.get(0).size() == 0);
+		try {
+			signal.await(10, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			assertTrue(false);
+		}
+		assertTrue(results.get(0).size() > 0);
+	}
+}
+
 	

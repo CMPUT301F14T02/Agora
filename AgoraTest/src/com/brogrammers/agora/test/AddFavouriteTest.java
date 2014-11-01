@@ -10,9 +10,9 @@ import com.brogrammers.agora.ESDataManager;
 import com.brogrammers.agora.MainActivity;
 import com.brogrammers.agora.QuestionController;
 
-public class DeviceRemembersQuestionsAskedTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class AddFavouriteTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	public DeviceRemembersQuestionsAskedTest() {
+	public AddFavouriteTest() {
 		super(MainActivity.class);
 	}
 

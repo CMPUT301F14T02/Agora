@@ -1,6 +1,8 @@
 package com.brogrammers.agora;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.List;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -23,12 +25,20 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    private         List<Question> results = new ArrayList<Question>();
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_answer);
         
+        ESDataManager es = ESDataManager.getInstance();
+		try {
+			results = es.getQuestions();
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
   
     } 
 
@@ -59,9 +69,9 @@ public class MainActivity extends Activity {
         	openSortMenu();
         	return true;
         case R.id.goto_question_answer:
-        	Intent intent = new Intent(Agora.getContext(), QuestionAnswerActivity.class);
-        	startActivity(intent);
-        	
+//        	Intent intent = new Intent(Agora.getContext(), QuestionAnswerActivity.class);
+//        	startActivity(intent);
+        	Toast.makeText(Agora.getContext(), Integer.toString(results.size()), 0).show();
         default:
             return super.onOptionsItemSelected(item);
         }
