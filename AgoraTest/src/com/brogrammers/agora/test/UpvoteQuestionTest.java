@@ -1,35 +1,30 @@
-/*package com.brogrammers.agora.test;
+package com.brogrammers.agora.test;
 
-import com.brogrammers.agora.ElasticSearch;
 import com.brogrammers.agora.Question;
 import com.brogrammers.agora.QuestionController;
 
 import junit.framework.TestCase;
 
-
-public class UpvoteQuestionTest extends TestCase
-{
-//Assuming questions start with 0 upvotes
+public class UpvoteQuestionTest extends TestCase {
+	// Assuming questions start with 0 upvotes
 	QuestionController controller = QuestionController.getController();
-	ElasticSearch webModel = ElasticSearch.getInstance();
+	long questionID;
 
-	long questionID = controller.addQuestion("I can't get past this road.", "There is a snorlax blocking the path.", null);
-	Question testQuestion = webModel.getQuestionByID(questionID);
-	
-	//upvoting once
-	controller.upvote(questionID);
-	
+	// upvoting once
 	void testQuestionUpvoted() {
-		assertTrue("Question is upvoted.", testQuestion.getRating()== 1);
+	questionID = controller.addQuestion("I can't get past this road.", "There is a snorlax blocking the path.", null);
+	controller.upvote(questionID, null);
+	Question question = controller.getQuestionById(questionID);
+	assertTrue("Question not upvoted.", question.getRating() == 1);
 	}
 	
 	//upvoting 100 times
-	for (int i = 0; i < 99; i++){
-		controller.upvote(questionID);
-	}
-	
-	void testQuestionUpvoteCount() {
-		assertTrue("Question is not upvoted 100 times.", testQuestion.getRating() == 100);
+	void testQuestion100UpvoteCount() {
+		for (int i = 0; i < 99; i++){
+			controller.upvote(questionID, null);
+		}
+		Question question = controller.getQuestionById(questionID);
+		assertTrue("Question is not upvoted 100 times.",
+				question.getRating() == 100);
 	}
 }
-*/
