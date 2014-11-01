@@ -144,6 +144,13 @@ public class ESDataManager { // implements DataManager
 		return questionList;
 	}
 	
+//	public List<Answers> searchAnswers(String query) throws UnsupportedEncodingException {
+//		String requestBody = "";
+//		String endpoint = "_search";
+//		List<Question> getQuestions(DOMAIN, INDEX, TYPENAME, requestBody, endPoint);
+//		// sort through questions and extract answers
+//		return List<Answers>;
+//	}
 	
 	public List<Question> searchQuestions(String query) throws UnsupportedEncodingException {	
 		String requestBody = "{" +
@@ -159,10 +166,6 @@ public class ESDataManager { // implements DataManager
 		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
 	}
 	
-	public Answer getAnswerById(Long answerID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	public List<Question> getQuestionById(Long id) throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
