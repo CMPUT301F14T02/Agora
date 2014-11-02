@@ -138,7 +138,7 @@ public class ESDataManager { // implements DataManager
 			    "\"query\": {" +
 			        "\"multi_match\": {" +
 			           "\"query\":" + 
-			           query +
+			           "\"" + query + "\"" + "," +
 			           "\"type\": \"most_fields\"," +
 			           "\"fields\": [" +
 			           "\"title\", \"body\"" +
@@ -156,12 +156,6 @@ public class ESDataManager { // implements DataManager
 	           		"\"_id\":" + id.toString() +
 	        	"}}}";
 		String endPoint = "_search";
-		List<Question> result = getQuestions(requestBody, endPoint);
-		if (result.size() == 0){
-			return null;
-		} else if (result.size() > 1){
-			Log.e("AGORA", "Returned array in getQuestionByID is > 1");
-		}
 		return getQuestions(requestBody, endPoint);
 	}
 	

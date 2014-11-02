@@ -26,9 +26,9 @@ import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActivity> {
+public class GetQuestionByIDTestES extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	public AddQuestionTestES() {
+	public GetQuestionByIDTestES() {
 		super(MainActivity.class);
 	}
 
@@ -53,37 +53,37 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		}
 	}
 	
-	public void testESGetQuestions() throws Throwable {
+	
+	public void testGetQuestionsByID() throws Throwable {
 		// create a question object post it, and ensure we get back the same object.
-		Question q = new Question("Big Questions", "What do you think the meaning of life is?", null, new Author("Ted"));
-		Answer a = new Answer("Not really sure", null, new Author("Bill"));
-		a.addComment(new Comment("Yikes", new Author("Dr. Bob")));
-		q.addAnswer(a);
-		q.addAnswer(new Answer("I mean who really knows?", null, new Author("Bob")));
-		Answer b = new Answer("This post doesn't belong here.", null, new Author("Tim"));
-		b.addComment(new Comment("It's a secret", new Author("Dr. Joe")));
-		q.addAnswer(b);
-		q.addComment(new Comment("Wow", new Author("Eric")));
+		final Question q = new Question("Bad Questions", "What do you think the meaning of life is?", null, new Author("Tod"));
+		final Question q1 = new Question("Wow Questions", "What do you think the meaning of life is?", null, new Author("Tod"));
+		final Question q2= new Question("Wowee Questions", "What do you think the meaning of life is?", null, new Author("Tod"));
+		final Question q3 = new Question("Bigtime Questions", "What do you think the meaning of life is?", null, new Author("Tod"));
+
 		
-		// update the server with the new question
+		// update the server with the new questions
 		final ESDataManager es = new TestESManager();
 		final CountDownLatch postSignal = new CountDownLatch(1);
 		es.pushQuestion(q);
+		es.pushQuestion(q1);
+		es.pushQuestion(q2);
+		es.pushQuestion(q3);
 		postSignal.await(5, TimeUnit.SECONDS);
 		
-
+		// make the request
 		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
 			public void run() {
 				try {
-					results.add((ArrayList<Question>)es.getQuestions());
+					results.add((ArrayList<Question>)es.getQuestionById(q.getID()));
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}	
 			}
 		});
-		assertTrue(results.get(0).size() == 0);
+
 		try {
 			signal.await(3, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
@@ -91,12 +91,10 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		}
 		
 		// compare the local and received copies.
-		assertTrue(results.get(0).size() > 0);
+		assertTrue(results.get(0).size() == 1);
 		Gson gson = new Gson();
 		String jsonLocalQuestion = gson.toJson(q);
 		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
 		assertTrue(jsonLocalQuestion.equals(jsonReceivedQuestion));
 	}
 }
-
-	
