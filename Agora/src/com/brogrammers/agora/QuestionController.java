@@ -102,7 +102,6 @@ public class QuestionController {
 		try {
 			eSearch.pushQuestion(q);
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

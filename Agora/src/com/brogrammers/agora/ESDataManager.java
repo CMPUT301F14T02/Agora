@@ -30,14 +30,11 @@ import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 
 public class ESDataManager { // implements DataManager
-	// domain
-	public static final String DOMAIN = "http://cmput301.softwareprocess.es:8080/";
-	// name of the ES database/index
-	public static final String INDEXNAME = "testing/";
-	// name of the ES table/type 
-	public static final String TYPENAME = "question/";
-	// connected status
-	public boolean connected;
+	protected static String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
+	protected static String INDEXNAME = "testing/"; 	// name of the ES database/index
+	protected static String TYPENAME = "question/"; 	// name of the ES table/type 
+
+	public boolean connected; 	// connected status
 	// Queue of statements that need to be run on
 	// the server
 	private OfflineQueue offlineQueue;
@@ -46,7 +43,7 @@ public class ESDataManager { // implements DataManager
 	
 	private static ESDataManager self;
 			
-	public static ESDataManager getInstance(){
+	public static ESDataManager getInstance() {
 		if (self == null) {
 			self = new ESDataManager();
 		}
@@ -64,32 +61,16 @@ public class ESDataManager { // implements DataManager
 		ConnectivityManager cm = (ConnectivityManager) Agora.getContext().getSystemService(Context.CONNECTIVITY_SERVICE); 
 		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 		connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
-		
+	}
+	
+	protected ESDataManager(String domain, String indexName, String typeName) {
+		this();
+		DOMAIN = domain;
+		INDEXNAME = indexName;
+		TYPENAME = typeName;
 	}
 
 
-	private void updateServer(final QueryItem qItem){
-		if (connected) {
-			AsyncHttpClient client = new AsyncHttpClient();
-			client.post(Agora.getContext(), qItem.getURI(), qItem.getBody(), "application/json", new AsyncHttpResponseHandler() {
-				@Override
-			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
-			        // called when response HTTP status is "200 OK"
-					Log.i("SERVER UPDATED", "Update server method success.");
-			    }
-
-			    @Override
-			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
-			        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-			    	offlineQueue.addToQueue(qItem);
-			    }
-			});
-			
-		} else {
-			offlineQueue.addToQueue(qItem);
-		}
-		
-	}
 	
 	public List<Question> getQuestions() throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
@@ -102,14 +83,14 @@ public class ESDataManager { // implements DataManager
 			    	"}"+
 			    	"}]}";
 		String endPoint = "_search";
-		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
+		return getQuestions(requestBody, endPoint);
 	}
 	
-	public List<Question> getQuestions(String domain, String indexName, String typeName, String requestBody, String endPoint) throws UnsupportedEncodingException {
+	public List<Question> getQuestions(String requestBody, String endPoint) throws UnsupportedEncodingException {
 		AsyncHttpClient client = new AsyncHttpClient();
 		StringEntity stringEntityBody = new StringEntity(requestBody);
 		final List<Question> questionList = new ArrayList<Question>();
-		String URI = domain + indexName + typeName + endPoint;
+		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
 		client.post(Agora.getContext(), URI,
 						stringEntityBody,
 						"application/json",
@@ -144,25 +125,28 @@ public class ESDataManager { // implements DataManager
 		return questionList;
 	}
 	
+//	public List<Answers> searchAnswers(String query) throws UnsupportedEncodingException {
+//		String requestBody = "";
+//		String endpoint = "_search";
+//		List<Question> getQuestions(DOMAIN, INDEX, TYPENAME, requestBody, endPoint);
+//		// sort through questions and extract answers
+//		return List<Answers>;
+//	}
 	
 	public List<Question> searchQuestions(String query) throws UnsupportedEncodingException {	
 		String requestBody = "{" +
 			    "\"query\": {" +
 			        "\"multi_match\": {" +
 			           "\"query\":" + 
-			           query +
+			           "\"" + query + "\"" + "," +
 			           "\"type\": \"most_fields\"," +
 			           "\"fields\": [" +
 			           "\"title\", \"body\"" +
 			           "]}}}";
 		String endPoint = "_search";
-		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
+		return getQuestions(requestBody, endPoint);
 	}
 	
-	public Answer getAnswerById(Long answerID) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	public List<Question> getQuestionById(Long id) throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
@@ -172,13 +156,7 @@ public class ESDataManager { // implements DataManager
 	           		"\"_id\":" + id.toString() +
 	        	"}}}";
 		String endPoint = "_search";
-		List<Question> result = getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
-		if (result.size() == 0){
-			return null;
-		} else if (result.size() > 1){
-			Log.e("AGORA", "Returned array in getQuestionByID is > 1");
-		}
-		return getQuestions(DOMAIN, INDEXNAME, TYPENAME, requestBody, endPoint);
+		return getQuestions(requestBody, endPoint);
 	}
 	
 		
@@ -186,7 +164,7 @@ public class ESDataManager { // implements DataManager
 		Gson gson = new Gson();
 		String questionSerialized = gson.toJson(q);
 		String endPoint = Long.toString(q.getID());
-		return push(DOMAIN, INDEXNAME, TYPENAME, questionSerialized, endPoint);
+		return push(questionSerialized, endPoint);
 	}
 	
 	public boolean pushAnswer(Answer a, Long qID) throws UnsupportedEncodingException {		
@@ -199,7 +177,7 @@ public class ESDataManager { // implements DataManager
 					"}" +
 				"}";
 		String endPoint = Long.toString(qID) + "/" + "_update";
-		return push(DOMAIN, INDEXNAME, TYPENAME, answerSerialized, endPoint);
+		return push(answerSerialized, endPoint);
 	}
 
 	public boolean pushComment(Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
@@ -213,7 +191,7 @@ public class ESDataManager { // implements DataManager
 					"\"comments\":" + commentSerialized + 
 						"}" +
 					"}";
-			return push(DOMAIN, INDEXNAME, TYPENAME, commentSerialized, endPoint);
+			return push(commentSerialized, endPoint);
 
 		} else {
 			// if qid is not null re-upload the answer array
@@ -223,7 +201,7 @@ public class ESDataManager { // implements DataManager
 					"\"answers\":" + answerSerialized + 
 						"}" +
 					"}";
-			return push(DOMAIN, INDEXNAME, TYPENAME, answerSerialized, endPoint);	
+			return push(answerSerialized, endPoint);	
 		}
 	}
 	
@@ -236,16 +214,38 @@ public class ESDataManager { // implements DataManager
 					"}" +
 				"}";
 		String endPoint = Long.toString(qID) + "/" + "_update";
-		return push(DOMAIN, INDEXNAME, TYPENAME, upVoteSerialized, endPoint);
+		return push(upVoteSerialized, endPoint);
 	}
 	
 	
-	public boolean push(String domain, String indexName, String typeName, String body, String endPoint) throws UnsupportedEncodingException{
+	public boolean push(String body, String endPoint) throws UnsupportedEncodingException{
 		StringEntity stringEntityBody = new StringEntity(body);
-		String URI = domain + indexName + typeName  + endPoint;
+		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
 		QueryItem queryItem = new QueryItem(stringEntityBody, URI, RequestType.POST);
 		updateServer(queryItem);
 		return false;
 	}
-}
 
+	
+	private void updateServer(final QueryItem qItem){
+		if (connected) {
+			AsyncHttpClient client = new AsyncHttpClient();
+			client.post(Agora.getContext(), qItem.getURI(), qItem.getBody(), "application/json", new AsyncHttpResponseHandler() {
+				@Override
+			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
+			        // called when response HTTP status is "200 OK"
+					Log.i("SERVER UPDATED", "Update server method success.");
+			    }
+			    @Override
+			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
+			        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+			    	offlineQueue.addToQueue(qItem);
+			    }
+			});
+			
+		} else {
+			offlineQueue.addToQueue(qItem);
+		}
+		
+	}
+}

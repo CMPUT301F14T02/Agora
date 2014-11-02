@@ -1,0 +1,98 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.brogrammers.agora.QuestionActivity" >
+
+    <Button
+        android:id="@+id/QuestionAnswersButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_toLeftOf="@+id/button2"
+        android:text="Answers" />
+
+    <Button
+        android:id="@+id/QuestionCommentsButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/QuestionAnswersButton"
+        android:layout_alignBottom="@+id/QuestionAnswersButton"
+        android:layout_alignParentRight="true"
+        android:text="Comments" />
+
+    
+    <ImageButton
+        android:id="@+id/qUpvote"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/qFavourite"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/ic_action_upvote" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_action_flag" />
+
+    <ImageButton
+        android:id="@+id/qFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageButton1"
+        android:src="@drawable/ic_action_rating_favoritepink" />
+
+        <TextView
+            android:id="@+id/qTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/qUpvote"
+            android:hint="Question Title" />
+
+        <TextView
+            android:id="@+id/qBody"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/AuthourDate"
+            android:layout_below="@+id/qTitle"
+            android:layout_toLeftOf="@+id/imageButton1"
+            android:layout_toRightOf="@+id/qUpvote"
+            android:hint="Question Body" />
+
+        <TextView
+            android:id="@+id/qScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/qUpvote"
+            android:hint="Score" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/qScore"
+            android:src="@drawable/ic_action_flag" />
+
+        <TextView
+            android:id="@+id/AuthourDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/QuestionAnswersButton"
+            android:layout_alignLeft="@+id/qBody"
+            android:layout_alignParentRight="true"
+            android:hint="Author, Date"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+</RelativeLayout>
