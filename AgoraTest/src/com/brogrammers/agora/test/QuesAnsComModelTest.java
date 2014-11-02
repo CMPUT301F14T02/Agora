@@ -1,5 +1,6 @@
 package com.brogrammers.agora.test;
 
+import java.util.Date;
 import java.util.List;
 
 import com.brogrammers.agora.Answer;
@@ -90,6 +91,56 @@ public class QuesAnsComModelTest extends TestCase {
 		assertTrue("Question not upvoted 100 times",
 				testQuestion.getRating() == 100);
 	}
+	//---------------------------Answer Model Tests--------------------------
+	public void AnswerTest(){
+		String body = "The answer is 42.";
+		Author testUser = new Author("Randy");
+		Answer testAnswer = new Answer(body, null, testUser);
+		assertTrue("Answer author incorrect", testAnswer.getAuthor() == testUser);
+		assertTrue("Answer body not correct", testAnswer.getBody() == body);
+		assertTrue("Answer iamge is not null", testAnswer.getImage() == null);
+	}
 	
+	public void AnswerAddCommentTest(){
+		String body = "The answer is 42.";
+		Author testUser = new Author("Randy");
+		Answer testAnswer = new Answer(body, null, testUser);
+		List<Comment> comments = testAnswer.getComments();
+		assertTrue("Answer comment list not 0", comments.size() == 0);
+		assertTrue("Answer comment count not 0", testAnswer.countComments() == 0);
+		
+		Comment testComment1 = new Comment("Tru dat", new Author("Kyle"));
+		testAnswer.addComment(testComment1);
+		comments = testAnswer.getComments();
+		assertTrue("testAnswer comment list does not have 1 comment", comments.size() == 1);
+		assertTrue("Comment added to testAnswer is wrong comment", comments.get(0) == testComment1);
+		assertTrue("testAnswer count comment not 1", testAnswer.countComments() == 1 );
+	}
+	
+	public void AnswerUpvoteTest(){
+		String body = "The answer is 42.";
+		Author testUser = new Author("Randy");
+		Answer testAnswer = new Answer(body, null, testUser);
+		
+		testAnswer.upvote();
+		assertTrue("testAnswer not upvoted once", testAnswer.getRating() == 1);
+		
+		for(int i = 0; i<99; ++i){
+			testAnswer.upvote();
+		}		
+		assertTrue("testAnswer not upvoted hundred times", testAnswer.getRating() == 100);
 
+	}
+	
+	//--------------------------Comment model test-------------------------------
+	
+	public void CommentTest(){
+		String body = "I like this answer.";
+		Author testAuthor = new Author("Nurse Joy");
+		Comment testComment = new Comment(body, testAuthor);
+		
+		assertTrue("Comment has incorrect body", testComment.getBody()==body);
+		assertTrue("Comment has incorrect author", testComment.getAuthor() == testAuthor);
+	}
+	
 }
