@@ -116,7 +116,6 @@ public class ESDataManager { // implements DataManager
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
 				    	}
-//				    QuestionController.getController().update();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	
@@ -179,7 +178,8 @@ public class ESDataManager { // implements DataManager
 		String endPoint = Long.toString(qID) + "/" + "_update";
 		return push(answerSerialized, endPoint);
 	}
-
+	
+	// if comment is on an answer pass aID, if on question itself pass null
 	public boolean pushComment(Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
 		String endPoint = Long.toString(qID) + "/" + "_update";
 		Question q = CacheDataManager.getInstance().getQuestionById(qID);
