@@ -27,9 +27,9 @@ import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-public class AddCommentToQuestionTestES extends ActivityInstrumentationTestCase2<MainActivity> {
+public class AddCommentToanswerTestES extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	public AddCommentToQuestionTestES() {
+	public AddCommentToanswerTestES() {
 		super(MainActivity.class);
 	}
 
@@ -55,7 +55,7 @@ public class AddCommentToQuestionTestES extends ActivityInstrumentationTestCase2
 	}
 	
 	public void testESGetQuestions() throws Throwable {
-		// create a question object post it, add a comment locally.
+		// create a question object post it, add a comment locally to one of the answers.
 		Question q = new Question("Big Questions", "What do you think the meaning of life is?", null, new Author("Ted"));
 		Answer a = new Answer("Not really sure", null, new Author("Bill"));
 		a.addComment(new Comment("Yikes", new Author("Dr. Bob")));
@@ -73,14 +73,14 @@ public class AddCommentToQuestionTestES extends ActivityInstrumentationTestCase2
 		postSignal.await(2, TimeUnit.SECONDS);
 		
 		// add a comment to the question locally
-		Comment c = new Comment("Good Idea", new Author("Dr. Newhart"));
-		q.addComment(c);
+		Comment c = new Comment("Test Post. See this?", new Author("Dr. Winston"));
+		b.addComment(c);
 		
 		// cache the question
 		CacheDataManager.getInstance().pushQuestion(q);
 		
 		// push the new comment to the server.
-		es.pushComment(c, q.getID(), null);
+		es.pushComment(c, q.getID(), b.getID());
 		postSignal.await(2, TimeUnit.SECONDS);
 
 		// get the question from the server
