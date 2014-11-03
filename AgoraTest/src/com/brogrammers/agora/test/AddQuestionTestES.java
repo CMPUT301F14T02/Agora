@@ -65,12 +65,16 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		q.addAnswer(b);
 		q.addComment(new Comment("Wow", new Author("Eric")));
 		
-		// update the server with the new question
+		// add a second question
+		Question q2 = new Question("Big Questions", "What do you think the meaning of life is?", null, new Author("Ted"));
+		
+		// update the server with the new questions
 		final ESDataManager es = new TestESManager();
 		final CountDownLatch postSignal = new CountDownLatch(1);
 		es.pushQuestion(q);
 		postSignal.await(5, TimeUnit.SECONDS);
-		
+		es.pushQuestion(q2);
+		postSignal.await(5, TimeUnit.SECONDS);
 
 		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
 		final CountDownLatch signal = new CountDownLatch(1);
@@ -91,11 +95,16 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		}
 		
 		// compare the local and received copies.
-		assertTrue(results.get(0).size() > 0);
+		assertTrue(results.get(0).size() == 2);
 		Gson gson = new Gson();
 		String jsonLocalQuestion = gson.toJson(q);
+		String jsonLocalQuestion2 = gson.toJson(q2);
 		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
-		assertTrue(jsonLocalQuestion.equals(jsonReceivedQuestion));
+		String jsonReceivedQuestion2 = gson.toJson(results.get(0).get(1));
+		
+		// can't guarantee order here so make sure the questions match each other
+		assertTrue(jsonLocalQuestion.equals(jsonReceivedQuestion) || jsonLocalQuestion.equals(jsonReceivedQuestion2));
+		assertTrue(jsonLocalQuestion2.equals(jsonReceivedQuestion) || jsonLocalQuestion2.equals(jsonReceivedQuestion2));
 	}
 }
 
