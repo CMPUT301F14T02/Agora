@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question_answer);
+        setContentView(R.layout.activity_answer);
         
         ESDataManager es = ESDataManager.getInstance();
 		try {
