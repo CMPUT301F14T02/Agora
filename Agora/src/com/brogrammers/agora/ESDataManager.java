@@ -186,8 +186,8 @@ public class ESDataManager { // implements DataManager
 		return push(questionSerialized, endPoint);
 	}
 	
-	public boolean pushAnswer(Answer a, Long qID) throws UnsupportedEncodingException {		
-		Question q = CacheDataManager.getInstance().getQuestionById(qID);
+	public boolean pushAnswer(Answer a, Long qID, CacheDataManager cache) throws UnsupportedEncodingException {		
+		Question q = cache.getQuestionById(qID);
 		Gson gson = new Gson();
 		String answerSerialized = gson.toJson(q.getAnswers());
 		answerSerialized = "{" +
@@ -200,9 +200,9 @@ public class ESDataManager { // implements DataManager
 	}
 	
 	// if comment is on an answer pass aID, if on question itself pass null
-	public boolean pushComment(Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
+	public boolean pushComment(Comment c, Long qID, Long aID, CacheDataManager cache) throws UnsupportedEncodingException {
 		String endPoint = Long.toString(qID) + "/" + "_update";
-		Question q = CacheDataManager.getInstance().getQuestionById(qID);
+		Question q = cache.getQuestionById(qID);
 		Gson gson = new Gson();
 		if (aID == null) {
 			String commentSerialized = gson.toJson(q.getComments());

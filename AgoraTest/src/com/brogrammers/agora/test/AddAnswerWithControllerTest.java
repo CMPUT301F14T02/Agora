@@ -19,9 +19,9 @@ import com.brogrammers.agora.MainActivity;
 import com.brogrammers.agora.Question;
 import com.brogrammers.agora.QuestionController;
 
-public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
+public class AddAnswerWithControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	public AddQuestionWithControllerTest() {
+	public AddAnswerWithControllerTest() {
 		super(MainActivity.class);
 	}
 
@@ -77,7 +77,8 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 		QuestionController controller = new TestController(user, cache, es);
 		
 		// create a question
-		Long qid = controller.addQuestion("Test Title D", "Test Body D", null);
+		
+		Long qid = controller.addQuestion("Test Title E", "Test Body E", null);
 		
 		// wait for it to be uploaded
 		try {
@@ -86,9 +87,15 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 			assertTrue(false);
 		}
 		
-		// check that the question was saved in Authored Questions
-		assertTrue(user.getAuthoredQuestionIDs().size() == 1);
-		assertTrue(user.getAuthoredQuestionIDs().get(0) == qid);
+		assertTrue(cache.getQuestionById(qid) != null);
+		Long aid = controller.addAnswer("Answer Body E", null, qid);
+		
+		// wait for it to be uploaded
+		try {
+			signal.await(2, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			assertTrue(false);
+		}
 		
 		// check that the question was pushed to the ES server
 		runTestOnUiThread(new Runnable() { public void run() {
@@ -109,8 +116,12 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 		
 		List<Question> qList = results.get(0);
 		assertTrue("List is empty", qList.size() == 1);
-		assertTrue("Retrieved Question has wrong body", qList.get(0).getBody().equals("Test Body D"));
-		assertTrue("Retrieved Question has wrong ID", qList.get(0).getID().equals(qid));
+		Question q2 = qList.get(0);
+		assertTrue("Retrieved Question has wrong body", q2.getBody().equals("Test Body E"));
+		assertTrue("Retrieved Question has wrong ID", q2.getID().equals(qid));
+		assertTrue("Question does not have 1 answer", q2.countAnswers() == 1);
+		assertTrue("Contained answer does not match aid", q2.getAnswerByID(aid).getID().equals(aid));
+		assertTrue("Contained answer does not match body", q2.getAnswerByID(aid).getBody().equals("Answer Body E"));
 		
 		
 	}

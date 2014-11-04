@@ -28,7 +28,6 @@ public class QuestionController {
 	private List<Question> questionByIdList;
 	private Question questionById;
 	
-	
 	private Observer observer;
 
 	static public QuestionController getController() {
@@ -97,7 +96,7 @@ public class QuestionController {
 		Question q = new Question(title, body, image, user);
 //		q.setImage(resizer.resizeTo64KB(image)); TODO: implement
 		q.setImage(null); // Images to be implemented in Part 4
-		
+		cache.pushQuestion(q);
 		user.addAuthoredQuestionID(q.getID());
 		try {
 			eSearch.pushQuestion(q);
@@ -110,14 +109,15 @@ public class QuestionController {
 	
 	public Long addAnswer(String body, Bitmap image, Long qID) {
 		Answer a = new Answer(body, image, user);
-		a.setImage(resizer.resizeTo64KB(image));
+//		a.setImage(resizer.resizeTo64KB(image)); // TODO: implement
+		a.setImage(null);
 		
 		// the cache operation MUST be called before the eSearch operation
 		Question q = cache.getQuestionById(qID);
 		q.addAnswer(a);
 		
 		try {
-			eSearch.pushAnswer(a, qID);
+			eSearch.pushAnswer(a, qID, cache);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -136,7 +136,7 @@ public class QuestionController {
 		}
 		
 		try {
-			eSearch.pushComment(c, qID, aID);
+			eSearch.pushComment(c, qID, aID, cache);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -148,12 +148,10 @@ public class QuestionController {
 		if (aID == null) {
 			// upvoting question
 //			q.upvote();
-			// TODO: generate query string and pass to webservice
-			// 
+
 		} else {
 			// upvoting answer
-//			q.getAnswerByID(aID).upvote();
-			// TODO: generate query string and pass to webservice
+
 		}
 	}
 
