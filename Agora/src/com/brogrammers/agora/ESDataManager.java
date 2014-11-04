@@ -21,6 +21,8 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -39,8 +41,7 @@ public class ESDataManager { // implements DataManager
 	// the server
 	private OfflineQueue offlineQueue;
 	
-	// TODO: Register a broadcast receiver for connectivity status.
-	
+	private static ConnectionReceiver connectionReceiver;
 	private static ESDataManager self;
 			
 	public static ESDataManager getInstance() {
@@ -61,6 +62,9 @@ public class ESDataManager { // implements DataManager
 		ConnectivityManager cm = (ConnectivityManager) Agora.getContext().getSystemService(Context.CONNECTIVITY_SERVICE); 
 		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 		connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+		connectionReceiver = new ConnectionReceiver();
+		Agora.getContext().registerReceiver(connectionReceiver, 
+							new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 	}
 	
 	protected ESDataManager(String domain, String indexName, String typeName) {
@@ -70,7 +74,23 @@ public class ESDataManager { // implements DataManager
 		TYPENAME = typeName;
 	}
 
-
+	public class ConnectionReceiver extends BroadcastReceiver {
+		@Override
+		public void onReceive(Context context, Intent intent){
+			ConnectivityManager conManager = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+			NetworkInfo netInfo = conManager.getActiveNetworkInfo();
+			// code taken from http://stackoverflow.com/questions/15698790/broadcast-receiver-for-checking-internet-connection-in-android-app
+			// Author user1381827
+			// November 2, 2014
+			if (netInfo != null && netInfo.isConnected()){
+				connected = true;
+				Toast.makeText(Agora.getContext(), "Connected", Toast.LENGTH_SHORT).show();
+			} else {
+				connected = false;
+				Toast.makeText(Agora.getContext(), "Disconnected", Toast.LENGTH_SHORT).show();
+			}
+		}
+	}
 	
 	public List<Question> getQuestions() throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date

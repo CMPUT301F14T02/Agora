@@ -107,7 +107,7 @@ public class AddCommentToanswerTestES extends ActivityInstrumentationTestCase2<M
 		
 		// compare the local and received copies to ensure the server
 		// copy matches the local copy.
-		assertTrue(results.get(0).size() > 0);
+		assertTrue(results.get(0).size() == 1);
 		Gson gson = new Gson();
 		String jsonLocalQuestion = gson.toJson(q);
 		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
