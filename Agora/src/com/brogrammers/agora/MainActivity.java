@@ -25,13 +25,14 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    private         List<Question> results = new ArrayList<Question>();
+    private List<Question> results = new ArrayList<Question>();
     
-
+	private QuestionController qController = QuestionController.getController();
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_question_answer);
+        setContentView(R.layout.activity_main);
         
         ESDataManager es = ESDataManager.getInstance();
 		try {
@@ -40,13 +41,18 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
   
+		Question q = new Question("New Thunderwave", "Why is it OP?", null, new Author("Mudkip"));
+		Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
+		q.addAnswer(a);
+		
+		
     } 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-    	// Dan Global Search Manager?
+    		// Dan Global Search Manager?
         SearchManager searchManager = (SearchManager) getSystemService(Agora.getContext().SEARCH_SERVICE);
         return true;
     }
@@ -69,9 +75,9 @@ public class MainActivity extends Activity {
         	openSortMenu();
         	return true;
         case R.id.goto_question_answer:
-//        	Intent intent = new Intent(Agora.getContext(), QuestionAnswerActivity.class);
-//        	startActivity(intent);
-        	Toast.makeText(Agora.getContext(), Integer.toString(results.size()), 0).show();
+          	Intent intent = new Intent(Agora.getContext(), AnswerActivity.class);
+          	startActivity(intent);
+        	//Toast.makeText(Agora.getContext(), Integer.toString(results.size()), 0).show();
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -80,15 +86,15 @@ public class MainActivity extends Activity {
     
     public void openAddQuestionView() {
     	Intent intent = new Intent(Agora.getContext(), AuthorQuestionActivity.class);
-    	//Intent intent = new Intent(Agora.getContext(), QuestionActivity.class);
+    	//Intent intent = new Intent(Agora.getContext(), QuestionActivity.class); //for opening QuestionActivity
     	
     	startActivity(intent);
     	//Toast.makeText(Agora.getContext(), "Hook up Add a question here", Toast.LENGTH_SHORT).show();
     }
     
     public void openSearchBar(MenuItem item) {
-        SearchView searchView = (SearchView) item.getActionView();
-    		Toast.makeText(Agora.getContext(), "Add Dropdown Search", Toast.LENGTH_SHORT).show();
+        //SearchView searchView = (SearchView) item.getActionView();
+    		//Toast.makeText(Agora.getContext(), "Add Dropdown Search", Toast.LENGTH_SHORT).show();
     		Intent i = new Intent(this, SearchActivity.class);
         startActivity(i);
     }

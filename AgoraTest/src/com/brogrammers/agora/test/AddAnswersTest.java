@@ -19,7 +19,6 @@ public class AddAnswersTest extends TestCase{
 	Bitmap img = null;
 	
 	Long qID = controller.addQuestion(questionTitle1, "Body Test", img);
-
 	Question addedQuestion = controller.getQuestionById(qID);
 	
 	void testNoAnswers() {
@@ -33,15 +32,12 @@ public class AddAnswersTest extends TestCase{
 		assertTrue(addedQuestion.countAnswers() == 3);
 	}
 	
-	// add another question with answers and ensure each question
-	// only maintains references to its answers and not the other questions.
+	//Add a second question
 	String questionTitle2 = String.valueOf(System.currentTimeMillis());
 	Long qID2 = controller.addQuestion(questionTitle2, "Body Test", img);
 	Question addedQuestion2 = controller.getQuestionById(qID2	);
 	
-	// assumes the model returns the answer id
-	
-	// ensure the first question created does not have reference to the new answers.
+	//Ensure the first question created does not have reference to the new answers.
 	void testNoAnswerConflict() {
 		Long a = controller.addAnswer("Body Test", img, qID2);
 		Long b = controller.addAnswer("Body Test2", img, qID2);

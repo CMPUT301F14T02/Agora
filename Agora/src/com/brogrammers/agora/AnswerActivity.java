@@ -7,10 +7,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
-public class AnswerActivity extends Activity {
+public class AnswerActivity extends Activity implements Observer{
+	
+	private QuestionController qController = QuestionController.getController();
+	private AnswerAdapter aadapter;
 
+	ListView lv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,6 +25,25 @@ public class AnswerActivity extends Activity {
 		Button viewComment = (Button)findViewById(R.id.AnswerCommentsButton);
 		viewComment.setOnClickListener(opencommentview);	
 		
+
+		// For testing:
+		//Long qID = 0L; //TODO: get question ID out of Intent/Bundle
+		
+		//Question q = new Question("New Thunderwave", "Why is it OP?", null, new Author("Mudkip"));
+		//Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
+		//q.addAnswer(a);
+		qController.setObserver(this);
+		Question q = qController.getQuestionById(-6488159365839201000L);
+==
+	
+		lv = (ListView)findViewById(R.id.AnswerListView);
+		try {
+			aadapter = new AnswerAdapter(q);
+			lv.setAdapter(aadapter);
+		} catch (NullPointerException e) {
+			Toast.makeText(this, "Did not get question from server", 0);	
+		}
+	
 	}
 
 	@Override
@@ -54,6 +78,13 @@ public class AnswerActivity extends Activity {
 	//remove these later, made for button testing. actual function is implemented in controller.
 	public void upvote(){
 		Toast.makeText(this, "upvote", Toast.LENGTH_SHORT).show();
+	}
+
+	@Override
+	public void update() {
+		aadapter.notifyDataSetChanged();
+		Toast.makeText(this, "updating answer activity", 0);
+		
 	}
 
 

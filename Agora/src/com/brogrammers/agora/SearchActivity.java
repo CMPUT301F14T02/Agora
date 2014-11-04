@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 public class SearchActivity extends Activity implements ActionBar.TabListener {
@@ -90,7 +91,14 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 		if (id == R.id.action_settings) {
 			return true;
 		}
+		if (id == R.id.searchBQV) {
+			openSearchBar(item);
+		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void openSearchBar(MenuItem item) {
+		SearchView searchView = (SearchView) item.getActionView();
 	}
 
 	@Override

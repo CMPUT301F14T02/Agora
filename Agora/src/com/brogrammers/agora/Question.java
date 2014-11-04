@@ -52,11 +52,20 @@ public class Question implements Serializable, Comparable<Question>, Post {
 	}
 
 	public int countComments() {
-		return comments.size();
+		if (comments == null) {
+			return 0;
+		} else {
+			return comments.size();			
+		}
+
 	}
 	
 	public int countAnswers() {
-		return answers.size();
+		if (answers == null) {
+			return 0;
+		} else {
+			return answers.size();
+		}
 	}
 	
 	public void upvote() {
