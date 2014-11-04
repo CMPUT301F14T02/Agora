@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    private         List<Question> results = new ArrayList<Question>();
+    private List<Question> results = new ArrayList<Question>();
     
 
     @Override
