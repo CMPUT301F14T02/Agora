@@ -37,9 +37,9 @@ import org.apache.http.HttpRequest;
 import org.apache.http.entity.StringEntity;
 
 public class ESDataManager { // implements DataManager
-	protected static String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
-	protected static String INDEXNAME = "testing/"; 	// name of the ES database/index
-	protected static String TYPENAME = "question/"; 	// name of the ES table/type 
+	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
+	protected String INDEXNAME = "testing/"; 	// name of the ES database/index
+	protected String TYPENAME = "question/"; 	// name of the ES table/type 
 
 	public boolean connected; 	// connected status
 	// Queue of statements that need to be run on
