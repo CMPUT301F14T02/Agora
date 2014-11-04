@@ -13,7 +13,7 @@ import junit.framework.TestCase;
 public class QuesAnsComModelTest extends TestCase {
 	// -------------------------------------Question Model Tests--------------------------------------------
 	// testing constructor - getTitle,getBody, and getAuthor, upvote
-	public void QuestionConstructorTest() {
+	public void testQuestionConstructor() {
 		String title = "Where is the game corner?";
 		String body = "I want to redeem some points for a nugget. Is it in goldenrod city?";
 		Author author = new Author("Kevin");
@@ -21,12 +21,12 @@ public class QuesAnsComModelTest extends TestCase {
 		assertTrue("Title not correct",
 				testQuestion.getTitle() == "Where is the game corner?");
 		assertTrue("Body not correct",
-				testQuestion.getBody() == "Where is the game corner?");
+				testQuestion.getBody() == "I want to redeem some points for a nugget. Is it in goldenrod city?");
 		assertTrue("Author not correct", testQuestion.getAuthor() == author);
 		assertTrue("Image not correct", testQuestion.getImage() == null);
 	}
 	//testing add Answer to a question
-	public void QuestionAddAnswerTest() {
+	public void testQuestionAddAnswer() {
 		String title = "Where is the game corner?";
 		String body = "I want to redeem some points for a nugget. Is it in goldenrod city?";
 		Author author = new Author("Kevin");
@@ -54,7 +54,7 @@ public class QuesAnsComModelTest extends TestCase {
 
 	}
 	//testing add comments to a question
-	public void QuestionAddCommentTest(){
+	public void testQuestionAddComment(){
 		String title = "Where is the game corner?";
 		String body = "I want to redeem some points for a nugget. Is it in goldenrod city?";
 		Author author = new Author("Kevin");
@@ -78,7 +78,7 @@ public class QuesAnsComModelTest extends TestCase {
 	}
 	
 	//testing upvote question
-	public void QuestionUpvoteTest() {
+	public void testQuestionUpvote() {
 		String title = "Where is the game corner?";
 		String body = "I want to redeem some points for a nugget. Is it in goldenrod city?";
 		Author author = new Author("Kevin");
@@ -92,7 +92,7 @@ public class QuesAnsComModelTest extends TestCase {
 				testQuestion.getRating() == 100);
 	}
 	//---------------------------Answer Model Tests--------------------------
-	public void AnswerTest(){
+	public void testAnswer(){
 		String body = "The answer is 42.";
 		Author testUser = new Author("Randy");
 		Answer testAnswer = new Answer(body, null, testUser);
@@ -101,7 +101,7 @@ public class QuesAnsComModelTest extends TestCase {
 		assertTrue("Answer iamge is not null", testAnswer.getImage() == null);
 	}
 	
-	public void AnswerAddCommentTest(){
+	public void testAnswerAddComment(){
 		String body = "The answer is 42.";
 		Author testUser = new Author("Randy");
 		Answer testAnswer = new Answer(body, null, testUser);
@@ -117,7 +117,7 @@ public class QuesAnsComModelTest extends TestCase {
 		assertTrue("testAnswer count comment not 1", testAnswer.countComments() == 1 );
 	}
 	
-	public void AnswerUpvoteTest(){
+	public void testAnswerUpvote(){
 		String body = "The answer is 42.";
 		Author testUser = new Author("Randy");
 		Answer testAnswer = new Answer(body, null, testUser);
@@ -134,7 +134,7 @@ public class QuesAnsComModelTest extends TestCase {
 	
 	//--------------------------Comment model test-------------------------------
 	
-	public void CommentTest(){
+	public void testComment(){
 		String body = "I like this answer.";
 		Author testAuthor = new Author("Nurse Joy");
 		Comment testComment = new Comment(body, testAuthor);
