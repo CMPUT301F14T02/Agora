@@ -10,8 +10,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import junit.framework.TestCase;
-import android.content.SharedPreferences;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.brogrammers.agora.CacheDataManager;
@@ -78,10 +76,12 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 		final ESDataManager es = new TestESManager();
 		QuestionController controller = new TestController(user, cache, es);
 		
+		// create a question
 		Long qid = controller.addQuestion("Test Title D", "Test Body D", null);
 		
+		// wait for it to be uploaded
 		try {
-			signal.await(3, TimeUnit.SECONDS);
+			signal.await(2, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			assertTrue(false);
 		}
@@ -99,15 +99,18 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 				}	
 			}
 		});
+		
+		// wait for the response
 		try {
 			signal.await(2, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			assertTrue(false);
 		}
+		
 		List<Question> qList = results.get(0);
 		assertTrue("List is empty", qList.size() == 1);
-		assertTrue(qList.get(0).getBody().equals("Test Body D"));
-		assertTrue(qList.get(0).getID().equals(qid));
+		assertTrue("Retrieved Question has wrong body", qList.get(0).getBody().equals("Test Body D"));
+		assertTrue("Retrieved Question has wrong ID", qList.get(0).getID().equals(qid));
 		
 		
 	}

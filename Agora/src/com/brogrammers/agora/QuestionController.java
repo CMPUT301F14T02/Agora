@@ -28,7 +28,6 @@ public class QuestionController {
 	private List<Question> questionByIdList;
 	private Question questionById;
 	
-	
 	private Observer observer;
 
 	static public QuestionController getController() {
@@ -148,12 +147,10 @@ public class QuestionController {
 		if (aID == null) {
 			// upvoting question
 //			q.upvote();
-			// TODO: generate query string and pass to webservice
-			// 
+
 		} else {
 			// upvoting answer
-//			q.getAnswerByID(aID).upvote();
-			// TODO: generate query string and pass to webservice
+
 		}
 	}
 
