@@ -13,6 +13,7 @@ import com.loopj.android.http.RequestParams;
 
 import android.graphics.Bitmap;
 import android.renderscript.Type;
+import android.widget.Toast;
 
 public class QuestionController {
 	private static DeviceUser user;
@@ -60,11 +61,7 @@ public class QuestionController {
 		eSearch = eSearch_;
 	}
 	
-	public void update() {
-		questionById = questionByIdList.get(0);
-		observer.update();
-	}
-	
+
 	public List<Question> getAllQuestions() {
 		if (eSearch.isConnected()) {
 			try {
@@ -169,6 +166,13 @@ public class QuestionController {
 			// TODO: handle no network
 		}
 		
+		
+	}
+	
+	
+	public void update() {
+		questionById = questionByIdList.get(0);
+		observer.update();
 		
 	}
 	

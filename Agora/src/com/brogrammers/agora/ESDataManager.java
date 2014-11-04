@@ -32,9 +32,9 @@ import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
 
 public class ESDataManager { // implements DataManager
-	protected static String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
-	protected static String INDEXNAME = "testing/"; 	// name of the ES database/index
-	protected static String TYPENAME = "question/"; 	// name of the ES table/type 
+	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
+	protected String INDEXNAME = "testing/"; 	// name of the ES database/index
+	protected String TYPENAME = "question/"; 	// name of the ES table/type 
 
 	public boolean connected; 	// connected status
 	// Queue of statements that need to be run on
@@ -248,6 +248,7 @@ public class ESDataManager { // implements DataManager
 
 	
 	private void updateServer(final QueryItem qItem){
+		Log.e("SERVER UPDATED", "updateServer called");
 		if (connected) {
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.post(Agora.getContext(), qItem.getURI(), qItem.getBody(), "application/json", new AsyncHttpResponseHandler() {
@@ -259,6 +260,8 @@ public class ESDataManager { // implements DataManager
 			    @Override
 			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
 			        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
+			    	Log.e("SERVER UPDATED", "Update server method failure.");
+
 			    	offlineQueue.addToQueue(qItem);
 			    }
 			});

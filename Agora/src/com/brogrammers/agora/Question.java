@@ -68,6 +68,7 @@ public class Question implements Serializable, Comparable<Question>, Post {
 	}
 	
 	public void addAnswer(Answer a) {
+		
 		answers.add(a);
 	}
 	
