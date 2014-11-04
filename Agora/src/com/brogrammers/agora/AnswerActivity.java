@@ -31,7 +31,7 @@ public class AnswerActivity extends Activity {
 		q.addAnswer(a);
 		
 		lv = (ListView)findViewById(R.id.AnswerListView);
-		AnswerAdapter aadapter = new AnswerAdapter(this, q);
+		AnswerAdapter aadapter = new AnswerAdapter(q);
 		lv.setAdapter(aadapter);
 		
 	

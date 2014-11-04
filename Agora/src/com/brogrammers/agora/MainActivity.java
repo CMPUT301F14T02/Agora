@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_answer);
+        setContentView(R.layout.activity_main);
         
         ESDataManager es = ESDataManager.getInstance();
 		try {
@@ -69,9 +69,9 @@ public class MainActivity extends Activity {
         	openSortMenu();
         	return true;
         case R.id.goto_question_answer:
-//        	Intent intent = new Intent(Agora.getContext(), QuestionAnswerActivity.class);
-//        	startActivity(intent);
-        	Toast.makeText(Agora.getContext(), Integer.toString(results.size()), 0).show();
+          	Intent intent = new Intent(Agora.getContext(), AnswerActivity.class);
+          	startActivity(intent);
+        	//Toast.makeText(Agora.getContext(), Integer.toString(results.size()), 0).show();
         default:
             return super.onOptionsItemSelected(item);
         }

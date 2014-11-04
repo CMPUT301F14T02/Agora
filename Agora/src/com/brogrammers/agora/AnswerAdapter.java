@@ -13,13 +13,12 @@ import android.widget.TextView;
 public class AnswerAdapter extends BaseAdapter {
 	private Question question;
 	private LayoutInflater inflater;
-	private Activity activity;
+	private QuestionController qController;
 	
-	AnswerAdapter(Activity activity, Question q){
-		this.activity = activity;
+	
+	AnswerAdapter(Question q){
 		this.question = q;
-		this.inflater = (LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
+		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
 	}
 
 	@Override
@@ -44,12 +43,11 @@ public class AnswerAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		if(convertView == null){
-			convertView = inflater.inflate(R.layout.answer_object,parent,false);
+			convertView = inflater.inflate(R.layout.answer_object, null);
 		}
 		
 		//inflate each listview item with "answer_object"
 		// TODO: Look into this part
-		ArrayList<Answer> answers = (ArrayList<Answer>) this.question.getAnswers();
 		Answer answer = (Answer)getItem(position);
 		//set text on each TextView			
 		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
