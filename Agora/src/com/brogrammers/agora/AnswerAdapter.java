@@ -13,9 +13,7 @@ import android.widget.TextView;
 public class AnswerAdapter extends BaseAdapter {
 	private Question question;
 	private LayoutInflater inflater;
-	private QuestionController qController;
-	
-	
+
 	AnswerAdapter(Question q){
 		this.question = q;
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
@@ -47,7 +45,6 @@ public class AnswerAdapter extends BaseAdapter {
 		}
 		
 		//inflate each listview item with "answer_object"
-		// TODO: Look into this part
 		Answer answer = (Answer)getItem(position);
 		//set text on each TextView			
 		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());

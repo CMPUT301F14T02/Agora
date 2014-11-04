@@ -27,7 +27,8 @@ public class MainActivity extends Activity {
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     private List<Question> results = new ArrayList<Question>();
     
-
+	private QuestionController qController = QuestionController.getController();
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +41,11 @@ public class MainActivity extends Activity {
 			e.printStackTrace();
 		}
   
+		Question q = new Question("New Thunderwave", "Why is it OP?", null, new Author("Mudkip"));
+		Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
+		q.addAnswer(a);
+		
+		
     } 
 
     @Override
