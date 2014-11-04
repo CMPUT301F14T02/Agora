@@ -19,6 +19,11 @@
         android:id="@+id/sortbyTextDialoug"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false"
+        android:paddingLeft="10dp"
         android:text="@string/sortBy"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="#000000" />
@@ -27,51 +32,30 @@
         android:layout_width="283dp"
         android:layout_height="10dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbarAlwaysDrawVerticalTrack="false" >
-
-        <TextView
-            android:id="@+id/sortbyTextDate"
+	<RadioGroup
+	    android:id="@+id/sortbyRadioGroup"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
+        
+        <RadioButton
+            android:id="@id/sortbyTextDialoug"
             android:layout_width="wrap_content"
-            android:layout_height="33dp"
-            android:layout_gravity="center"
-            android:layout_weight="0.11"
-            android:clickable="false"
-            android:duplicateParentState="false"
-            android:fitsSystemWindows="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:longClickable="false"
-            android:scrollbarAlwaysDrawVerticalTrack="false"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
             android:text="@string/date"
             android:textColor="#000000" />
 
         <RadioButton
-            android:id="@+id/sortradioButton1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/sortupvoteradioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
             android:text="@string/upvote"
             android:textColor="#000000" />
 
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
+	</RadioGroup>
+	
+	
     <View
         android:layout_width="fill_parent"
         android:layout_height="10dp" />
@@ -89,53 +73,44 @@
         android:id="@+id/arrangebyTextDialoug"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingLeft="10dp"
         android:text="@string/arrangeby"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Ascending Order"
-            android:textColor="#000000" />
+
+	<RadioGroup
+	    android:id="@+id/arrangebyRadioGroup"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:clickable="false"
+	    android:focusable="false"
+	    android:focusableInTouchMode="false"
+	    android:longClickable="false"
+	    android:scrollbarAlwaysDrawVerticalTrack="false" >
+        
+    <RadioButton
+        android:id="@+id/arrangebyAscOrderRadio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:text="Ascending Order"
+        android:textColor="#000000" />
 
         <RadioButton
-            android:id="@+id/radioButton4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/descOrderRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
             android:text="Descending Order"
             android:textColor="#000000" />
 
-        <RadioButton
-            android:id="@+id/radioButton5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
+	</RadioGroup>
+	
     <View
         android:layout_width="fill_parent"
         android:layout_height="10dp" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </LinearLayout>
 
     <View
         android:layout_width="fill_parent"
@@ -150,41 +125,31 @@
         android:id="@+id/filterbyTextDialoug"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:paddingLeft="10dp"
         android:text="@string/filterby"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#000000" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+    <CheckBox
+        android:id="@+id/favouritecheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:text="Favourite"
+        android:textColor="#000000" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Favorite" />
+    <CheckBox
+        android:id="@+id/picturecheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:text="Picture"
+        android:textColor="#000000" />
 
-        <CheckBox
-            android:id="@+id/checkBox1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <TextView
-            android:id="@+id/textView7"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Picture" />
-
-        <CheckBox
-            android:id="@+id/checkBox2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-    </LinearLayout>
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp" />
 
 </LinearLayout>

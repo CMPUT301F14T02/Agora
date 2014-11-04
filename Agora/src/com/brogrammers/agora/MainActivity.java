@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    private         List<Question> results = new ArrayList<Question>();
+    private List<Question> results = new ArrayList<Question>();
     
 
     @Override
@@ -80,7 +80,7 @@ public class MainActivity extends Activity {
     
     public void openAddQuestionView() {
     	Intent intent = new Intent(Agora.getContext(), AuthorQuestionActivity.class);
-    	//Intent intent = new Intent(Agora.getContext(), QuestionActivity.class);
+    	//Intent intent = new Intent(Agora.getContext(), QuestionActivity.class); //for opening QuestionActivity
     	
     	startActivity(intent);
     	//Toast.makeText(Agora.getContext(), "Hook up Add a question here", Toast.LENGTH_SHORT).show();

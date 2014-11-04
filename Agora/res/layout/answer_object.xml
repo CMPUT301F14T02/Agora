@@ -41,8 +41,8 @@
         android:id="@+id/aBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/aAuthourDate"
-        android:layout_alignLeft="@+id/aAuthourDate"
+        android:layout_above="@+id/sortbyTextDialoug"
+        android:layout_alignLeft="@+id/sortbyTextDialoug"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:hint="Answer Body" />
