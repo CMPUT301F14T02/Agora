@@ -268,4 +268,37 @@ public class ESDataManager { // implements DataManager
 		}
 		
 	}
+	
+	private void setServerMapping() throws UnsupportedEncodingException{
+		String mapBody = "{" +
+	         "\"" +  TYPENAME  + "\": {" +
+	            "\"properties\": {" +
+	               "\"answers\": {" +
+	                  "\"type\": \"nested\"," +
+	                  "\"properties\": {" +
+	                     "\"author\": {" +
+	                        "\"type\": \"string\"" +
+	                     "}," +
+	                     "\"body\": {" +
+	                        "\"type\": \"string\"" +
+	                     "}" +
+	                  "}" +
+	               "}," +
+	               "\"author\": {" +
+	                  "\"type\": \"string\"" +
+	               "}," +
+	               "\"date\": {" +
+	                  "\"type\": \"string\"" +
+	               "}" +
+	            "}" +
+	         "}" +
+         "}" +
+     "}" +
+ "}";
+
+		String mapURI = DOMAIN + INDEXNAME + "mapping/" + TYPENAME;
+		StringEntity mapBodyStringEntity = new StringEntity(mapBody);
+		QueryItem queryItem = new QueryItem(mapBodyStringEntity, mapURI, RequestType.POST);
+		updateServer(queryItem);
+	}
 }
