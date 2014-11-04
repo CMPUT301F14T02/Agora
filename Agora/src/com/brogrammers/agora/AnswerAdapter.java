@@ -34,8 +34,12 @@ public class AnswerAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		if(convertView == null){
+			
+			//inflate each listview item with "answer_object"
 			convertView = inflater.inflate(R.layout.answer_object, parent, false);
 			Answer answer = (Answer)getItem(position);
+			
+			//set text on each TextView
 			((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
 			((TextView)convertView.findViewById(R.id.aScore)).setText(Integer.toString(answer.getRating()));
 			((TextView)convertView.findViewById(R.id.aAuthourDate)).setText(answer.getDate().toString());
