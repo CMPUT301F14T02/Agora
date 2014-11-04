@@ -1,5 +1,6 @@
 package com.brogrammers.agora;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -8,6 +9,9 @@ import java.util.Observable;
 import java.util.TreeMap;
 import java.util.concurrent.Callable;
 
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -29,6 +33,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.apache.http.Header;
+import org.apache.http.HttpRequest;
 import org.apache.http.entity.StringEntity;
 
 public class ESDataManager { // implements DataManager
@@ -269,9 +274,11 @@ public class ESDataManager { // implements DataManager
 		
 	}
 	
-	private void setServerMapping() throws UnsupportedEncodingException{
+	public void setServerMapping() throws ClientProtocolException, IOException{
+		// remove the forwardslash from the typename
+		String typeName = TYPENAME.substring(0, TYPENAME.length() - 1);
 		String mapBody = "{" +
-	         "\"" +  TYPENAME  + "\": {" +
+	         "\"" +  typeName  + "\": {" +
 	            "\"properties\": {" +
 	               "\"answers\": {" +
 	                  "\"type\": \"nested\"," +
@@ -295,8 +302,13 @@ public class ESDataManager { // implements DataManager
          "}" +
      "}" +
  "}";
+		// Delete the current mapping
+		HttpClient client = new DefaultHttpClient();
+        HttpDelete deleteRequest = new HttpDelete(DOMAIN + INDEXNAME + TYPENAME + "_mapping");
+        client.execute(deleteRequest);
 
-		String mapURI = DOMAIN + INDEXNAME + "mapping/" + TYPENAME;
+        // Set a new mapping
+		String mapURI = DOMAIN + INDEXNAME + "_mapping/" + TYPENAME;
 		StringEntity mapBodyStringEntity = new StringEntity(mapBody);
 		QueryItem queryItem = new QueryItem(mapBodyStringEntity, mapURI, RequestType.POST);
 		updateServer(queryItem);
