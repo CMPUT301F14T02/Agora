@@ -1,5 +1,6 @@
 package com.brogrammers.agora;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,13 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 public class AnswerAdapter extends BaseAdapter {
+	
+	AnswerAdapter(Question q){
+		this.question = q;
+		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		
+		
+	}
 	
 	private Question question;
 	private LayoutInflater inflater;
