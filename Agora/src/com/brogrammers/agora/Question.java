@@ -78,12 +78,12 @@ public class Question implements Serializable, Comparable<Question>, Post {
 	
 	public List<Answer> getAnswers() {
 		// don't modify the list directly!
-		return Collections.unmodifiableList(answers);
+		return answers;
 	}
 	
 	public Answer getAnswerByID(Long aID) {
 		for (Answer a : answers) {
-			if (a.getID() == aID) {
+			if (a.getID().equals(aID)) {
 				return a;
 			}
 		}

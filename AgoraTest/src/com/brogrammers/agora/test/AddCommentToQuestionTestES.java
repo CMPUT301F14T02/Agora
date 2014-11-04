@@ -54,6 +54,12 @@ public class AddCommentToQuestionTestES extends ActivityInstrumentationTestCase2
 		}
 	}
 	
+	private class TestCacheManager extends CacheDataManager {
+		public TestCacheManager() {
+			super("TEST_CACHE");
+		}
+	}
+	
 	public void testESGetQuestions() throws Throwable {
 		// create a question object post it, add a comment locally.
 		Question q = new Question("Big Questions", "What do you think the meaning of life is?", null, new Author("Ted"));
@@ -68,6 +74,7 @@ public class AddCommentToQuestionTestES extends ActivityInstrumentationTestCase2
 		
 		// update the server with the new question
 		final ESDataManager es = new TestESManager();
+		final CacheDataManager cache = new TestCacheManager();
 		final CountDownLatch postSignal = new CountDownLatch(1);
 		es.pushQuestion(q);
 		postSignal.await(2, TimeUnit.SECONDS);
@@ -77,10 +84,10 @@ public class AddCommentToQuestionTestES extends ActivityInstrumentationTestCase2
 		q.addComment(c);
 		
 		// cache the question
-		CacheDataManager.getInstance().pushQuestion(q);
+		cache.pushQuestion(q);
 		
 		// push the new comment to the server.
-		es.pushComment(c, q.getID(), null);
+		es.pushComment(c, q.getID(), null, cache);
 		postSignal.await(2, TimeUnit.SECONDS);
 
 		// get the question from the server
