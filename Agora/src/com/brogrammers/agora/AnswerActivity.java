@@ -7,10 +7,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class AnswerActivity extends Activity {
 
+	ListView lv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,6 +22,18 @@ public class AnswerActivity extends Activity {
 		Button viewComment = (Button)findViewById(R.id.AnswerCommentsButton);
 		viewComment.setOnClickListener(opencommentview);	
 		
+
+		// For testing:
+		//Long qID = 0L; //TODO: get question ID out of Intent/Bundle
+		
+		Question q = new Question("Thunderwave OP?", "Why is it OP?", null, new Author("Mudkip"));
+		Answer a = new Answer("Thunderwave OP",null,new Author("mudkip"));
+		q.addAnswer(a);
+		
+		lv = (ListView)findViewById(R.id.AnswerListView);
+		//lv.setAdapter(new AnswerAdapter(this,q));
+		
+	
 	}
 
 	@Override
