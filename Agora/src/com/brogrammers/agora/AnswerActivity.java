@@ -34,7 +34,7 @@ public class AnswerActivity extends Activity implements Observer{
 		//q.addAnswer(a);
 		qController.setObserver(this);
 		Question q = qController.getQuestionById(-6488159365839201000L);
-==
+
 	
 		lv = (ListView)findViewById(R.id.AnswerListView);
 		try {
