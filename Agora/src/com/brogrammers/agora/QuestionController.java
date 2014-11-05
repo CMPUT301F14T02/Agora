@@ -193,5 +193,15 @@ public class QuestionController {
 		this.observer = observer;
 		Toast.makeText(Agora.getContext(), "Setting Controller Observer", 0).show();
 	}
+
+	public void addCache(Long id) {
+		user = DeviceUser.getUser();
+		user.addCachedQuestionID(id);		
+	}
+
+	public void addFavorite(Long id) {
+		user = DeviceUser.getUser();
+		user.addFavoritedQuestionID(id);		
+	}
 		
 }
