@@ -45,7 +45,7 @@ public class AnswerAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		if(convertView == null){
-			convertView = inflater.inflate(R.layout.answer_object, null);
+			convertView = inflater.inflate(R.layout.answer_object, parent, false);
 		}
 		
 		//inflate each listview item with "answer_object"
@@ -54,23 +54,9 @@ public class AnswerAdapter extends BaseAdapter {
 		ImageButton upvote = (ImageButton) convertView.findViewById(R.id.aUpvote);
 		
 		
-		comment.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Intent intent = new Intent(Agora.getContext(), CommentActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				Agora.getContext().startActivity(intent);
-				//Toast.makeText(Agora.getContext(), "link to CommentView later" , Toast.LENGTH_SHORT).show();
-			}
-		});
+		comment.setOnClickListener(answercomments);
 		
-		upvote.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				Toast.makeText(Agora.getContext(), "call upvote" , Toast.LENGTH_SHORT).show();
-			}
-		});
+		upvote.setOnClickListener(answerupvote);
 		
 		//set text on each TextView			
 		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
@@ -80,4 +66,22 @@ public class AnswerAdapter extends BaseAdapter {
 		return convertView;
 	}
 
+	
+	View.OnClickListener answercomments  = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			Intent intent = new Intent(Agora.getContext(), CommentActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			Agora.getContext().startActivity(intent);
+		}
+	};
+	
+	View.OnClickListener answerupvote =  new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			// TODO Auto-generated method stub
+			Toast.makeText(Agora.getContext(), "call upvote" , Toast.LENGTH_SHORT).show();
+		}
+	};
+	
 }
