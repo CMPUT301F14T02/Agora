@@ -43,16 +43,16 @@ public class MainActivity extends Activity {
 		//} catch (UnsupportedEncodingException e) {
 		//	e.printStackTrace();
 		//}
-		final CountDownLatch signal = new CountDownLatch(1);
-        Long qid = controller.addQuestion("Test Title E", "Test Body E", null);
-		try {
-			signal.await(2, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-
-		}
-        Log.e("ID", qid.toString()); 
-        Long aid = controller.addAnswer("Answer Body E", null, qid);
-		
+//		final CountDownLatch signal = new CountDownLatch(1);
+//        Long qid = controller.addQuestion("Test Title E", "Test Body E", null);
+//		try {
+//			signal.await(2, TimeUnit.SECONDS);
+//		} catch (InterruptedException e) {
+//
+//		}
+//        Log.e("ID", qid.toString()); 
+//        Long aid = controller.addAnswer("Answer Body E", null, qid);
+//		
     } 
 
     @Override

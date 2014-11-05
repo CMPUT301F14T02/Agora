@@ -1,5 +1,8 @@
 package com.brogrammers.agora;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,7 +38,17 @@ public class AnswerActivity extends Activity implements Observer{
 		//q.addAnswer(a);
 		
 		qController.setObserver(this);
-		Question q = qController.getQuestionById(-6488159365839201000L);
+		Long qid = qController.addQuestion("AnswerActivity live test title", "AnswerActivity live test body", null);
+		Long aid = qController.addAnswer("AnswerActivity live answer title", null, qid);
+		final CountDownLatch signal = new CountDownLatch(1);
+		try {
+			signal.await(2, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+			
+		}
+		
+		
+		Question q = qController.getQuestionById(qid);
 
 	
 		lv = (ListView)findViewById(R.id.AnswerListView);
@@ -43,7 +56,7 @@ public class AnswerActivity extends Activity implements Observer{
 			aadapter = new AnswerAdapter(q);
 			lv.setAdapter(aadapter);
 		} catch (NullPointerException e) {
-			Toast.makeText(this, "Did not get question from server", 0).show();	
+			Toast.makeText(this, "AnswerActivity Nullptr in setting adapter", 0).show();	
 		}
 	
 	}
@@ -85,7 +98,7 @@ public class AnswerActivity extends Activity implements Observer{
 	@Override
 	public void update() {
 		aadapter.notifyDataSetChanged();
-		Toast.makeText(this, "updating answer activity", 0).show();
+		Toast.makeText(this, "AnswerActivity got update notification", 0).show();
 		
 	}
 
