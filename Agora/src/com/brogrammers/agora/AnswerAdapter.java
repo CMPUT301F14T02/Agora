@@ -25,25 +25,21 @@ public class AnswerAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
 		return question.countAnswers();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
 		return question.getAnswers().get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return question.getAnswers().get(position).getID();
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
 		if(convertView == null){
 			convertView = inflater.inflate(R.layout.answer_object, null);
 		}
@@ -58,9 +54,9 @@ public class AnswerAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				//Intent intent = new Intent(Agora.getContext(), CommentActivity.class);
-				//Agora.getContext().startActivity(intent);
-				Toast.makeText(Agora.getContext(), "link to CommentView later" , Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(Agora.getContext(), CommentActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				Agora.getContext().startActivity(intent);
+				//Toast.makeText(Agora.getContext(), "link to CommentView later" , Toast.LENGTH_SHORT).show();
 			}
 		});
 		
