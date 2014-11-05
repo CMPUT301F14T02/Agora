@@ -58,9 +58,9 @@ public class AnswerAdapter extends BaseAdapter {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				//Intent intent = new Intent(Agora.getContext(), CommentActivity.class);
-				//Agora.getContext().startActivity(intent);
-				Toast.makeText(Agora.getContext(), "link to CommentView later" , Toast.LENGTH_SHORT).show();
+				Intent intent = new Intent(Agora.getContext(), CommentActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				Agora.getContext().startActivity(intent);
+				//Toast.makeText(Agora.getContext(), "link to CommentView later" , Toast.LENGTH_SHORT).show();
 			}
 		});
 		
