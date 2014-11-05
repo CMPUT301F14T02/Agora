@@ -19,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -28,6 +29,7 @@ public class MainActivity extends Activity {
     private List<Question> results = new ArrayList<Question>();
     
 	private QuestionController qController = QuestionController.getController();
+	private QuestionAdapter qAdapter;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +43,11 @@ public class MainActivity extends Activity {
 		//	e.printStackTrace();
 		//}
   
-		Question q = new Question("New Thunderwave", "Why is it OP?", null, new Author("Mudkip"));
-		Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
-		q.addAnswer(a);
+		//qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
+		//ListView lv = (ListView)findViewById(R.id.listView1);
+		//qAdapter = new QuestionAdapter(qController);
+		//lv.setAdapter(qAdapter);
+
 		
 		
     } 
