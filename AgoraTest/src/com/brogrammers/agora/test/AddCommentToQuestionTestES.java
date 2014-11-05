@@ -37,7 +37,7 @@ public class AddCommentToQuestionTestES extends ActivityInstrumentationTestCase2
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/agora/_query?q=_type:agora");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/AddCommentToQuestionTest/_query?q=_type:AddCommentToQuestionTest");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,7 +50,7 @@ public class AddCommentToQuestionTestES extends ActivityInstrumentationTestCase2
 
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "testing/", "agora/");
+			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "AddCommentToQuestionTest/");
 		}
 	}
 	

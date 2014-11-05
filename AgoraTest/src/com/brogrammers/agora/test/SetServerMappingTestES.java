@@ -66,7 +66,7 @@ public class SetServerMappingTestES extends ActivityInstrumentationTestCase2<Mai
 		final CacheDataManager cache = new TestCacheManager();
 		final CountDownLatch postSignal = new CountDownLatch(1);
 		
-		es.setServerMapping();
+		// es.setServerMapping();
 	}
 }
 

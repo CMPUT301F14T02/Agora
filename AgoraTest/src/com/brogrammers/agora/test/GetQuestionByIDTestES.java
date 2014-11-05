@@ -36,7 +36,7 @@ public class GetQuestionByIDTestES extends ActivityInstrumentationTestCase2<Main
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/agora/_query?q=_type:agora");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/GetQuestionByIDTestES/_query?q=_type:GetQuestionByIDTestES");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class GetQuestionByIDTestES extends ActivityInstrumentationTestCase2<Main
 
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "testing/", "agora/");
+			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "GetQuestionByIDTestES/");
 		}
 	}
 	
