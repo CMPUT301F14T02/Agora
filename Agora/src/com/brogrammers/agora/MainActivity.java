@@ -3,6 +3,7 @@ package com.brogrammers.agora;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -22,16 +23,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Observer{
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     private List<Question> results = new ArrayList<Question>();
-    
-	private QuestionController controller = QuestionController.getController();
-    
+
+	private QuestionController qController = QuestionController.getController();
+	private QuestionAdapter qAdapter;
+   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +46,28 @@ public class MainActivity extends Activity {
 		//} catch (UnsupportedEncodingException e) {
 		//	e.printStackTrace();
 		//}
-//		final CountDownLatch signal = new CountDownLatch(1);
-//        Long qid = controller.addQuestion("Test Title E", "Test Body E", null);
-//		try {
-//			signal.await(2, TimeUnit.SECONDS);
-//		} catch (InterruptedException e) {
-//
-//		}
-//        Log.e("ID", qid.toString()); 
-//        Long aid = controller.addAnswer("Answer Body E", null, qid);
-//		
+
+
+        
+		//qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
+		//Toast.makeText(this, , duration)
+        
+        //qController.setObserver(this);
+	    ListView lv = (ListView)findViewById(R.id.listView1);
+		qAdapter = new QuestionAdapter(qController);
+		lv.setAdapter(qAdapter);
+
+		/*
+		final CountDownLatch signal = new CountDownLatch(1);
+        Long qid = qController.addQuestion("Test Title E", "Test Body E", null);
+		try {
+			signal.await(2, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+
+		}
+        Log.e("ID", qid.toString()); 
+        Long aid = qController.addAnswer("Answer Body E", null, qid);
+		 */
     } 
 
     @Override
@@ -130,6 +145,15 @@ public class MainActivity extends Activity {
         builder.show();
     		         	
     }
+
+	@Override
+	public void update() {
+		qAdapter.notifyDataSetChanged();
+		Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
+		
+	}
+
+
     
     
 }

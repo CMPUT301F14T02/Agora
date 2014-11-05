@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <ImageButton
+        android:id="@+id/qObjectFavourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:src="@drawable/ic_action_rating_favoritepink" />
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/qObjectFavourite"
+        android:src="@drawable/ic_action_flag" />
+
+    <TextView
+        android:id="@+id/qobjecttitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/qObjectFavourite"
+        android:layout_toRightOf="@+id/imageButton3"
+        android:hint="@string/titletext"
+        android:textColor="#000000" />
+
+    <TextView
+        android:id="@+id/qobjectbody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/imageButton1"
+        android:layout_alignLeft="@+id/qobjecttitle"
+        android:layout_alignRight="@+id/qobjecttitle"
+        android:layout_below="@+id/qobjecttitle"
+        android:hint="Question Body" />
+
+    <TextView
+        android:id="@+id/qObjectScore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/imageButton3"
+        android:layout_below="@+id/imageButton3"
+        android:hint="Score" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/imageButton1"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/ic_action_upvote" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageButton1"
+        android:layout_marginTop="20dp"
+        android:text="TextView" />
+
+</RelativeLayout>

@@ -27,13 +27,14 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 
 	protected void setUp() throws Exception {
 		super.setUp();
+		/*
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/agora/_query?q=_type:agora");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/agora/_query?q=_type:agora");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} 
+		} */
 	}
 
 	protected void tearDown() throws Exception {
@@ -76,8 +77,17 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 		final ESDataManager es = new TestESManager();
 		QuestionController controller = new TestController(user, cache, es);
 		
-		// create a question
+		//Add Question with no connection
 		Long qid = controller.addQuestion("Test Title D", "Test Body D", null);
+		
+		//Connect to server
+		HttpClient client = new DefaultHttpClient();
+		try {
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/agora/_query?q=_type:agora");
+			client.execute(deleteRequest);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		// wait for it to be uploaded
 		try {

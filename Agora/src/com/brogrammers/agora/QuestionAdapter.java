@@ -30,32 +30,33 @@ public class QuestionAdapter extends BaseAdapter{
 
 	@Override
 	public Object getItem(int position) {
-		return this.quest_controller.getQuestionById( (long) position);
+		return this.quest_controller.getAllQuestions().get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return this.quest_controller.getQuestionById( (long) position ).getID();
+		return this.quest_controller.getAllQuestions().get(position).getID();
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
-			convertView = inflater.inflate(R.layout.activity_question, null);
+			convertView = inflater.inflate(R.layout.question_object, null);
 		}
 		
 		Question question = (Question)getItem(position);
-		((TextView)convertView.findViewById(R.id.questionBody)).setText(question.getBody());
-		((TextView)convertView.findViewById(R.id.questionTitle)).setText(question.getTitle());
-		((TextView)convertView.findViewById(R.id.questionRating)).setText(Integer.toString(question.getRating()));
-		List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
+		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
+		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle());
+		((TextView)convertView.findViewById(R.id.qObjectScore)).setText(Integer.toString(question.getRating()));
+		/*List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
 		
 		if (favoritedQuestions.contains(question.getID())) {
-			((ImageButton)convertView.findViewById(R.id.questionFavorite)).setImageResource(R.drawable.ic_action_rating_favoritepink);	
+			((ImageButton)convertView.findViewById(R.id.qObjectFavourite)).setImageResource(R.drawable.ic_action_rating_favoritepink);	
 		} else {
 			// TODO: change to grey
-			((ImageButton)convertView.findViewById(R.id.questionFavorite)).setImageResource(R.drawable.ic_action_rating_favoritepink);	
+			((ImageButton)convertView.findViewById(R.id.qObjectFavourite)).setImageResource(R.drawable.ic_action_rating_favoritepink);	
 		}
+		*/
 		
 		return convertView;
 	}
