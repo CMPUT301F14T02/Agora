@@ -3,6 +3,8 @@ package com.brogrammers.agora;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -14,6 +16,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,24 +30,28 @@ public class MainActivity extends Activity {
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     private List<Question> results = new ArrayList<Question>();
     
-	private QuestionController qController = QuestionController.getController();
+	private QuestionController controller = QuestionController.getController();
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        ESDataManager es = ESDataManager.getInstance();
+        //ESDataManager es = ESDataManager.getInstance();
+		//try {
+		//	results = es.getQuestions();
+		//} catch (UnsupportedEncodingException e) {
+		//	e.printStackTrace();
+		//}
+		final CountDownLatch signal = new CountDownLatch(1);
+        Long qid = controller.addQuestion("Test Title E", "Test Body E", null);
 		try {
-			results = es.getQuestions();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			signal.await(2, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+
 		}
-  
-		Question q = new Question("New Thunderwave", "Why is it OP?", null, new Author("Mudkip"));
-		Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
-		q.addAnswer(a);
-		
+        Log.e("ID", qid.toString()); 
+        Long aid = controller.addAnswer("Answer Body E", null, qid);
 		
     } 
 
@@ -52,7 +59,7 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-    		// Dan Global Search Manager?
+    		// Dan Global Search Manager? 
         SearchManager searchManager = (SearchManager) getSystemService(Agora.getContext().SEARCH_SERVICE);
         return true;
     }

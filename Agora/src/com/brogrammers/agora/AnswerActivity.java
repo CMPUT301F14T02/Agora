@@ -41,7 +41,7 @@ public class AnswerActivity extends Activity implements Observer{
 			aadapter = new AnswerAdapter(q);
 			lv.setAdapter(aadapter);
 		} catch (NullPointerException e) {
-			Toast.makeText(this, "Did not get question from server", 0);	
+			Toast.makeText(this, "Did not get question from server", 0).show();	
 		}
 	
 	}
@@ -83,7 +83,7 @@ public class AnswerActivity extends Activity implements Observer{
 	@Override
 	public void update() {
 		aadapter.notifyDataSetChanged();
-		Toast.makeText(this, "updating answer activity", 0);
+		Toast.makeText(this, "updating answer activity", 0).show();
 		
 	}
 

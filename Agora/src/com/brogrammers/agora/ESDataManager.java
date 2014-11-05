@@ -39,7 +39,7 @@ import org.apache.http.entity.StringEntity;
 public class ESDataManager { // implements DataManager
 	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
 	protected String INDEXNAME = "testing/"; 	// name of the ES database/index
-	protected String TYPENAME = "question/"; 	// name of the ES table/type 
+	protected String TYPENAME = "agora/"; 	// name of the ES table/type 
 
 	public boolean connected; 	// connected status
 	// Queue of statements that need to be run on
@@ -116,6 +116,7 @@ public class ESDataManager { // implements DataManager
 		StringEntity stringEntityBody = new StringEntity(requestBody);
 		final List<Question> questionList = new ArrayList<Question>();
 		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
+		Log.e("SERVER GET URI", DOMAIN + INDEXNAME + TYPENAME);
 		client.post(Agora.getContext(), URI,
 						stringEntityBody,
 						"application/json",
@@ -123,11 +124,14 @@ public class ESDataManager { // implements DataManager
 
 			@Override
 			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-				
+				Log.e("SERVER", "getQuestion failure");
+				Toast.makeText(Agora.getContext(), "ES Get Question On Fail", 0).show();
 			}
 
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+				Log.e("SERVER", "Question posting success");
+				Log.e("SERVER ONSUCCESS", DOMAIN + INDEXNAME + TYPENAME);
 				try {
 					String responseBody = new String(arg2);
 					JSONObject jsonRes = new JSONObject(responseBody);
@@ -142,7 +146,8 @@ public class ESDataManager { // implements DataManager
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
 				    }
-				    QuestionController.getController().update();
+				    Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
+					QuestionController.getController().update();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	
@@ -262,14 +267,14 @@ public class ESDataManager { // implements DataManager
 				@Override
 			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
 			        // called when response HTTP status is "200 OK"
-					Log.i("SERVER UPDATED", "Update server method success.");
+					Log.e("SERVER UPDATED", "Update server method success.");
 			    }
 			    @Override
 			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
 			        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-			    	Log.e("SERVER UPDATED", "Update server method failure.");
-
-			    	offlineQueue.addToQueue(qItem);
+			    	Log.e("SERVER UPDATE", "updateServer method failure.");
+			    	Toast.makeText(Agora.getContext(), "Update server method failure.", 0).show();
+//			    	offlineQueue.addToQueue(qItem); 
 			    }
 			});
 			
