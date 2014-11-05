@@ -46,23 +46,24 @@ public class MainActivity extends Activity {
 		//	e.printStackTrace();
 		//}
 
-  
-		//qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
-		//ListView lv = (ListView)findViewById(R.id.listView1);
-		//qAdapter = new QuestionAdapter(qController);
-		//lv.setAdapter(qAdapter);
+        
+		qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
+		//Toast.makeText(this, , duration)
+	    ListView lv = (ListView)findViewById(R.id.listView1);
+		qAdapter = new QuestionAdapter(qController);
+		lv.setAdapter(qAdapter);
 
-		
+		/*
 		final CountDownLatch signal = new CountDownLatch(1);
-        Long qid = controller.addQuestion("Test Title E", "Test Body E", null);
+        Long qid = qController.addQuestion("Test Title E", "Test Body E", null);
 		try {
 			signal.await(2, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 
 		}
         Log.e("ID", qid.toString()); 
-        Long aid = controller.addAnswer("Answer Body E", null, qid);
-
+        Long aid = qController.addAnswer("Answer Body E", null, qid);
+		 */
     } 
 
     @Override
