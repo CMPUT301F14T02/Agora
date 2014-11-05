@@ -34,14 +34,14 @@ public class AnswerActivity extends Activity implements Observer{
 		//q.addAnswer(a);
 		qController.setObserver(this);
 		Question q = qController.getQuestionById(-6488159365839201000L);
-==
+
 	
 		lv = (ListView)findViewById(R.id.AnswerListView);
 		try {
 			aadapter = new AnswerAdapter(q);
 			lv.setAdapter(aadapter);
 		} catch (NullPointerException e) {
-			Toast.makeText(this, "Did not get question from server", 0);	
+			Toast.makeText(this, "Did not get question from server", 0).show();	
 		}
 	
 	}
@@ -83,7 +83,7 @@ public class AnswerActivity extends Activity implements Observer{
 	@Override
 	public void update() {
 		aadapter.notifyDataSetChanged();
-		Toast.makeText(this, "updating answer activity", 0);
+		Toast.makeText(this, "updating answer activity", 0).show();
 		
 	}
 

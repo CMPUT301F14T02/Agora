@@ -34,12 +34,12 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        ESDataManager es = ESDataManager.getInstance();
-		try {
-			results = es.getQuestions();
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+        //ESDataManager es = ESDataManager.getInstance();
+		//try {
+		//	results = es.getQuestions();
+		//} catch (UnsupportedEncodingException e) {
+		//	e.printStackTrace();
+		//}
   
 		Question q = new Question("New Thunderwave", "Why is it OP?", null, new Author("Mudkip"));
 		Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
-    		// Dan Global Search Manager?
+    		// Dan Global Search Manager? 
         SearchManager searchManager = (SearchManager) getSystemService(Agora.getContext().SEARCH_SERVICE);
         return true;
     }
