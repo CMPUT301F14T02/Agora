@@ -39,7 +39,7 @@ import org.apache.http.entity.StringEntity;
 public class ESDataManager { // implements DataManager
 	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
 	protected String INDEXNAME = "testing/"; 	// name of the ES database/index
-	protected String TYPENAME = "question/"; 	// name of the ES table/type 
+	protected String TYPENAME = "agora/"; 	// name of the ES table/type 
 
 	public boolean connected; 	// connected status
 	// Queue of statements that need to be run on
@@ -123,11 +123,14 @@ public class ESDataManager { // implements DataManager
 
 			@Override
 			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+				Log.i("SERVER", "Question posting failute");
 				Toast.makeText(Agora.getContext(), "ES Get Question On Fail", 0).show();
 			}
 
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+				Log.i("SERVER", "Question posting success");
+				Log.i("SERVER", DOMAIN + INDEXNAME + TYPENAME);
 				try {
 					String responseBody = new String(arg2);
 					JSONObject jsonRes = new JSONObject(responseBody);

@@ -74,6 +74,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		es.pushQuestion(q);
 		postSignal.await(5, TimeUnit.SECONDS);
 		es.pushQuestion(q2);
+		Log.i("SERVER", "Post second questions");
 		postSignal.await(5, TimeUnit.SECONDS);
 
 		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
@@ -94,6 +95,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 			assertTrue(false);
 		}
 		
+		Log.i("SERVER", "Before first assert");
 		// compare the local and received copies.
 		assertTrue(results.get(0).size() == 2);
 		Gson gson = new Gson();
