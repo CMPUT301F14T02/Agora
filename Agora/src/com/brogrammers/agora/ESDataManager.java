@@ -116,22 +116,24 @@ public class ESDataManager { // implements DataManager
 		StringEntity stringEntityBody = new StringEntity(requestBody);
 		final List<Question> questionList = new ArrayList<Question>();
 		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
-		Log.e("SERVER GET URI", DOMAIN + INDEXNAME + TYPENAME);
+		Log.e("SERVER GET URI", DOMAIN + INDEXNAME + TYPENAME + endPoint);
+		Log.e("SERVER GET BODY", requestBody);
 		client.post(Agora.getContext(), URI,
 						stringEntityBody,
 						"application/json",
 						new AsyncHttpResponseHandler() {
 
 			@Override
-			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
-				Log.e("SERVER", "getQuestion failure");
+			public void onFailure(int status, Header[] arg1, byte[] responseBody, Throwable arg3) {
+				
+				Log.e("SERVER", "getQuestion failure: "+Integer.toString(status));
+				Log.e("SERVER", "responsebody: "+new String(responseBody));
 				Toast.makeText(Agora.getContext(), "ES Get Question On Fail", 0).show();
 			}
 
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-				Log.e("SERVER", "Question posting success");
-				Log.e("SERVER ONSUCCESS", DOMAIN + INDEXNAME + TYPENAME);
+				Log.e("SERVER", "Question get success");
 				try {
 					String responseBody = new String(arg2);
 					JSONObject jsonRes = new JSONObject(responseBody);
@@ -145,6 +147,7 @@ public class ESDataManager { // implements DataManager
 						q = q.getJSONObject("_source");
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
+						Log.e("SERVER", qObject.getID().toString()+" "+qObject.getBody());
 				    }
 				    Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
 					QuestionController.getController().update();
