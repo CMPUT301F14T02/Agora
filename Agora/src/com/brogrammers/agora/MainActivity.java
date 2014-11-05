@@ -3,6 +3,7 @@ package com.brogrammers.agora;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -27,7 +28,7 @@ import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements Observer{
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     private List<Question> results = new ArrayList<Question>();
 
@@ -48,8 +49,10 @@ public class MainActivity extends Activity {
 
 
         
-		qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
+		//qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
 		//Toast.makeText(this, , duration)
+        
+        //qController.setObserver(this);
 	    ListView lv = (ListView)findViewById(R.id.listView1);
 		qAdapter = new QuestionAdapter(qController);
 		lv.setAdapter(qAdapter);
@@ -142,6 +145,15 @@ public class MainActivity extends Activity {
         builder.show();
     		         	
     }
+
+	@Override
+	public void update() {
+		qAdapter.notifyDataSetChanged();
+		Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
+		
+	}
+
+
     
     
 }

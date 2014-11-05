@@ -55,6 +55,7 @@ public class AnswerActivity extends Activity implements Observer{
 		try {
 			aadapter = new AnswerAdapter(q);
 			lv.setAdapter(aadapter);
+			Toast.makeText(this," Set Answer Adapter", 0).show();
 		} catch (NullPointerException e) {
 			Toast.makeText(this, "AnswerActivity Nullptr in setting adapter", 0).show();	
 		}

@@ -159,6 +159,7 @@ public class QuestionController {
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
+			// TODO: is this being set correctly
 			questionById = new Question(null);
 			return questionById;
 		} else {
@@ -169,10 +170,11 @@ public class QuestionController {
 		
 	}
 	
-	
 	public void update() {
 		if (questionByIdList == null) {
+			// TODO: Check the null set. It looks like the list is not being updated from eSearch.
 			Toast.makeText(Agora.getContext(), "Controller: questionByIdList is null!", 0).show();
+			allQuestionList = getAllQuestions();
 		} else if (questionByIdList.size() == 0) {
 			Toast.makeText(Agora.getContext(), "Controller: questionByIdList is empty!", 0).show();			
 		} else {
