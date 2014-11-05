@@ -49,7 +49,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "testing/", "agora/");
+			super("http://cmput301.softwareprocess.es:8080/", "testing/", "help/");
 		}
 	}
 	
