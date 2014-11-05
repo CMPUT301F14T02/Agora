@@ -34,7 +34,7 @@ public class AnswerActivity extends Activity implements Observer{
 		//Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
 		//q.addAnswer(a);
 		
-		sqController.setObserver(this);
+		qController.setObserver(this);
 		Question q = qController.getQuestionById(-6488159365839201000L);
 
 	
