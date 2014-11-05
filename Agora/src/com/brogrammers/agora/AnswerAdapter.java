@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,15 +51,24 @@ public class AnswerAdapter extends BaseAdapter {
 		//inflate each listview item with "answer_object"
 		Answer answer = (Answer)getItem(position);
 		Button comment = (Button) convertView.findViewById(R.id.aComment);
+		ImageButton upvote = (ImageButton) convertView.findViewById(R.id.aUpvote);
+		
 		
 		comment.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
 				//Intent intent = new Intent(Agora.getContext(), CommentActivity.class);
 				//Agora.getContext().startActivity(intent);
 				Toast.makeText(Agora.getContext(), "link to CommentView later" , Toast.LENGTH_SHORT).show();
+			}
+		});
+		
+		upvote.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Toast.makeText(Agora.getContext(), "call upvote" , Toast.LENGTH_SHORT).show();
 			}
 		});
 		
