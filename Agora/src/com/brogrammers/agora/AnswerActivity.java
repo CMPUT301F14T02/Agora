@@ -21,9 +21,10 @@ public class AnswerActivity extends Activity implements Observer{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_answer);
 		
+
 		//comment button
-		Button viewComment = (Button)findViewById(R.id.AnswerCommentsButton);
-		viewComment.setOnClickListener(opencommentview);	
+		//Button viewComment = (Button)findViewById(R.id.AnswerCommentsButton); // no longer used
+		//viewComment.setOnClickListener(opencommentview);	
 		
 
 		// For testing:
@@ -32,7 +33,8 @@ public class AnswerActivity extends Activity implements Observer{
 		//Question q = new Question("New Thunderwave", "Why is it OP?", null, new Author("Mudkip"));
 		//Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
 		//q.addAnswer(a);
-		qController.setObserver(this);
+		
+		sqController.setObserver(this);
 		Question q = qController.getQuestionById(-6488159365839201000L);
 
 	
