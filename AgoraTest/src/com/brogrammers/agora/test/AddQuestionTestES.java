@@ -36,7 +36,8 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/agora/_query?q=_type:agora");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/AQTTES");
+
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,7 +50,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "testing/", "agora/");
+			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "AQTTES/");
 		}
 	}
 	
@@ -72,9 +73,11 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		final ESDataManager es = new TestESManager();
 		final CountDownLatch postSignal = new CountDownLatch(1);
 		es.pushQuestion(q);
-		postSignal.await(5, TimeUnit.SECONDS);
+		Log.e("SERVER", "Posted first question");
+		postSignal.await(2, TimeUnit.SECONDS);
 		es.pushQuestion(q2);
-		postSignal.await(5, TimeUnit.SECONDS);
+		Log.e("SERVER", "Posted second question");
+		postSignal.await(3, TimeUnit.SECONDS);
 
 		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
 		final CountDownLatch signal = new CountDownLatch(1);
@@ -94,6 +97,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 			assertTrue(false);
 		}
 		
+		Log.i("SERVER", "Before first assert");
 		// compare the local and received copies.
 		assertTrue(results.get(0).size() == 2);
 		Gson gson = new Gson();

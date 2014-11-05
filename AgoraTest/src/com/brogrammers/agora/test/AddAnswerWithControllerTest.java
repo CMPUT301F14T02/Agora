@@ -11,6 +11,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 import com.brogrammers.agora.CacheDataManager;
 import com.brogrammers.agora.DeviceUser;
@@ -58,7 +59,7 @@ public class AddAnswerWithControllerTest extends ActivityInstrumentationTestCase
 	
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "testing/", "question/");
+			super("http://cmput301.softwareprocess.es:8080/", "testing/", "agora/");
 		}
 	}
 	
@@ -78,8 +79,8 @@ public class AddAnswerWithControllerTest extends ActivityInstrumentationTestCase
 		
 		// create a question
 		
-		Long qid = controller.addQuestion("Test Title E", "Test Body E", null);
-		
+		Long qid = controller.addQuestion("Test Title F", "Test Body G", null);
+		Log.e("TEST", qid.toString());
 		// wait for it to be uploaded
 		try {
 			signal.await(2, TimeUnit.SECONDS);
@@ -88,7 +89,7 @@ public class AddAnswerWithControllerTest extends ActivityInstrumentationTestCase
 		}
 		
 		assertTrue(cache.getQuestionById(qid) != null);
-		Long aid = controller.addAnswer("Answer Body E", null, qid);
+		Long aid = controller.addAnswer("Answer Body H", null, qid);
 		
 		// wait for it to be uploaded
 		try {
@@ -117,11 +118,11 @@ public class AddAnswerWithControllerTest extends ActivityInstrumentationTestCase
 		List<Question> qList = results.get(0);
 		assertTrue("List is empty", qList.size() == 1);
 		Question q2 = qList.get(0);
-		assertTrue("Retrieved Question has wrong body", q2.getBody().equals("Test Body E"));
+		assertTrue("Retrieved Question has wrong body", q2.getBody().equals("Test Body G"));
 		assertTrue("Retrieved Question has wrong ID", q2.getID().equals(qid));
 		assertTrue("Question does not have 1 answer", q2.countAnswers() == 1);
 		assertTrue("Contained answer does not match aid", q2.getAnswerByID(aid).getID().equals(aid));
-		assertTrue("Contained answer does not match body", q2.getAnswerByID(aid).getBody().equals("Answer Body E"));
+		assertTrue("Contained answer does not match body", q2.getAnswerByID(aid).getBody().equals("Answer Body H"));
 		
 		
 	}

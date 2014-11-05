@@ -37,7 +37,7 @@ public class SetServerMappingTestES extends ActivityInstrumentationTestCase2<Mai
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/agora/_query?q=_type:agora");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/agora/_mapping");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class SetServerMappingTestES extends ActivityInstrumentationTestCase2<Mai
 		final CacheDataManager cache = new TestCacheManager();
 		final CountDownLatch postSignal = new CountDownLatch(1);
 		
-		es.setServerMapping();
+		// es.setServerMapping();
 	}
 }
 

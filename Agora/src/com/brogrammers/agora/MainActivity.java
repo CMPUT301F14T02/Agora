@@ -3,6 +3,8 @@ package com.brogrammers.agora;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -14,6 +16,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -27,10 +30,10 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     private List<Question> results = new ArrayList<Question>();
-    
+
 	private QuestionController qController = QuestionController.getController();
 	private QuestionAdapter qAdapter;
-    
+   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +45,7 @@ public class MainActivity extends Activity {
 		//} catch (UnsupportedEncodingException e) {
 		//	e.printStackTrace();
 		//}
+
   
 		//qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
 		//ListView lv = (ListView)findViewById(R.id.listView1);
@@ -49,7 +53,16 @@ public class MainActivity extends Activity {
 		//lv.setAdapter(qAdapter);
 
 		
-		
+		final CountDownLatch signal = new CountDownLatch(1);
+        Long qid = controller.addQuestion("Test Title E", "Test Body E", null);
+		try {
+			signal.await(2, TimeUnit.SECONDS);
+		} catch (InterruptedException e) {
+
+		}
+        Log.e("ID", qid.toString()); 
+        Long aid = controller.addAnswer("Answer Body E", null, qid);
+
     } 
 
     @Override
