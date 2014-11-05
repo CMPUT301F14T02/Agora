@@ -46,6 +46,7 @@ public class MainActivity extends Activity {
 		//	e.printStackTrace();
 		//}
 
+
         
 		qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
 		//Toast.makeText(this, , duration)

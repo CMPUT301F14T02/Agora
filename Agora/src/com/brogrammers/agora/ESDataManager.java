@@ -38,7 +38,7 @@ import org.apache.http.entity.StringEntity;
 
 public class ESDataManager { // implements DataManager
 	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
-	protected String INDEXNAME = "testing/"; 	// name of the ES database/index
+	protected String INDEXNAME = "cmput301f14t02/"; 	// name of the ES database/index
 	protected String TYPENAME = "agora/"; 	// name of the ES table/type 
 
 	public boolean connected; 	// connected status
@@ -270,12 +270,12 @@ public class ESDataManager { // implements DataManager
 				@Override
 			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
 			        // called when response HTTP status is "200 OK"
-					Log.e("SERVER UPDATED", "Update server method success.");
+					Log.e("SERVER UPDATED", "updateServer method success.");
 			    }
 			    @Override
 			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
 			        // called when response HTTP status is "4XX" (eg. 401, 403, 404)
-			    	Log.e("SERVER UPDATE", "updateServer method failure.");
+			    	Log.e("SERVER UPDATE", "updateServer method failure: "+Integer.toString(statusCode));
 			    	Toast.makeText(Agora.getContext(), "Update server method failure.", 0).show();
 //			    	offlineQueue.addToQueue(qItem); 
 			    }

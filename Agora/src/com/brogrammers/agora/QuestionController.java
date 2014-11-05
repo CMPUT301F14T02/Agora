@@ -171,17 +171,27 @@ public class QuestionController {
 	
 	
 	public void update() {
-//		questionById = questionByIdList.get(0);
+		if (questionByIdList == null) {
+			Toast.makeText(Agora.getContext(), "Controller: questionByIdList is null!", 0).show();
+		} else if (questionByIdList.size() == 0) {
+			Toast.makeText(Agora.getContext(), "Controller: questionByIdList is empty!", 0).show();			
+		} else {
+			questionById = questionByIdList.get(0);
+		}
+		
 		if (observer != null) {
 			observer.update();
+			Toast.makeText(Agora.getContext(), "Updating Controller Observer", 0).show();
+		} else {
+			Toast.makeText(Agora.getContext(), "Controller: no observer registered!", 0).show();
 		}
-	    Toast.makeText(Agora.getContext(), "UpdatingController Obs", 0).show();
+	   
 		
 	}
 	
 	public void setObserver(Observer observer) {
 		this.observer = observer;
-		Toast.makeText(Agora.getContext(), "Setting Controller Obs", 0).show();
+		Toast.makeText(Agora.getContext(), "Setting Controller Observer", 0).show();
 	}
 		
 }
