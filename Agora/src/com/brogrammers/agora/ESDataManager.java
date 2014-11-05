@@ -123,6 +123,7 @@ public class ESDataManager { // implements DataManager
 
 			@Override
 			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+				Toast.makeText(Agora.getContext(), "ES Get Question On Fail", 0).show();
 			}
 
 			@Override
@@ -141,6 +142,8 @@ public class ESDataManager { // implements DataManager
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
 				    	}
+				    Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
+					QuestionController.getController().update();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	

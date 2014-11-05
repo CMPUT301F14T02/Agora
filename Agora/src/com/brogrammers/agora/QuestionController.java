@@ -172,12 +172,15 @@ public class QuestionController {
 	
 	public void update() {
 		questionById = questionByIdList.get(0);
+	
 		observer.update();
+	    Toast.makeText(Agora.getContext(), "UpdatingController Obs", 0).show();
 		
 	}
 	
 	public void setObserver(Observer observer) {
 		this.observer = observer;
+		Toast.makeText(Agora.getContext(), "Setting Controller Obs", 0).show();
 	}
 		
 }
