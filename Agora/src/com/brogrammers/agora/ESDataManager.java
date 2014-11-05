@@ -123,6 +123,7 @@ public class ESDataManager { // implements DataManager
 
 			@Override
 			public void onFailure(int arg0, Header[] arg1, byte[] arg2, Throwable arg3) {
+				
 			}
 
 			@Override
@@ -140,7 +141,8 @@ public class ESDataManager { // implements DataManager
 						q = q.getJSONObject("_source");
 						Question qObject = gson.fromJson(q.toString(), Question.class);
 						questionList.add(qObject);
-				    	}
+				    }
+				    QuestionController.getController().update();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	
