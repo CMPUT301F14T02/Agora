@@ -4,11 +4,14 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AnswerAdapter extends BaseAdapter {
 	private Question question;
@@ -46,6 +49,19 @@ public class AnswerAdapter extends BaseAdapter {
 		
 		//inflate each listview item with "answer_object"
 		Answer answer = (Answer)getItem(position);
+		Button comment = (Button) convertView.findViewById(R.id.aComment);
+		
+		comment.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				//Intent intent = new Intent(Agora.getContext(), CommentActivity.class);
+				//Agora.getContext().startActivity(intent);
+				Toast.makeText(Agora.getContext(), "link to CommentView later" , Toast.LENGTH_SHORT).show();
+			}
+		});
+		
 		//set text on each TextView			
 		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
 		((TextView)convertView.findViewById(R.id.aScore)).setText(Integer.toString(answer.getRating()));
