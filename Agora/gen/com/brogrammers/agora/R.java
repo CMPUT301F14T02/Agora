@@ -83,13 +83,13 @@ public final class R {
         public static final int filterbyTextDialoug=0x7f08003c;
         public static final int goto_question_answer=0x7f080044;
         public static final int imageView1=0x7f080030;
-        public static final int imageView2=0x7f080033;
-        public static final int imageView3=0x7f080034;
+        public static final int imageView2=0x7f080032;
+        public static final int imageView3=0x7f080033;
         public static final int linearLayout1=0x7f080014;
         public static final int listView1=0x7f08000e;
         public static final int pager=0x7f080025;
         public static final int picturecheck=0x7f08003e;
-        public static final int qAuthor=0x7f080032;
+        public static final int qAuthor=0x7f080034;
         public static final int qBody=0x7f080013;
         public static final int qObjectScore=0x7f080031;
         public static final int qScore=0x7f080016;
