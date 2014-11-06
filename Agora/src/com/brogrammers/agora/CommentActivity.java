@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 public class CommentActivity extends Activity implements Observer {
 	private long qid;
+	private long aid;
 	private List<Question> qList;
 	private List<Comment> cList;
 	private CommentAdapter cadapter;
@@ -35,6 +36,7 @@ public class CommentActivity extends Activity implements Observer {
 		// q.addComment(new Comment("adfsfsafsdfsdfsdfffffffffffffffffs"));
 
 		qid = getIntent().getLongExtra("qid", 0L);
+		aid = getIntent().getLongExtra("aid", 0L);
 		// Toast.makeText(Agora.getContext(), Long.toString(qid),
 		// Toast.LENGTH_SHORT).show();
 
@@ -61,20 +63,33 @@ public class CommentActivity extends Activity implements Observer {
 	@Override
 	public void update() {
 		if (qList.size() > 0) {
-			Question q = qList.get(0);
-			cadapter = new CommentAdapter(q);
-			try {
-				lv.setAdapter(cadapter);
-
-			} catch (NullPointerException e) {
-				Toast.makeText(this,
-						"CommentActivity Nullptr in setting adapter", 0).show();
+			if (aid == 0L) {
+		
+				Question q = qList.get(0);
+				cadapter = new CommentAdapter(q);
+				try {
+					lv.setAdapter(cadapter);
+				} catch (NullPointerException e) {
+					Toast.makeText(this,
+							"CommentActivity Nullptr in setting adapter", 0).show();
+				}
+			
+			} else { // we're in answer comments
+				Question q = qList.get(0);
+				Answer a = q.getAnswerByID(aid);
+				cadapter = new CommentAdapter(a);
+				try {
+					lv.setAdapter(cadapter);
+				} catch (NullPointerException e) {
+					Toast.makeText(this,
+							"CommentActivity Nullptr in setting adapter", 0).show();
+				}
 			}
 		} else {
 			Toast.makeText(this, "qList empty onUpdate", 0).show();
 		}
-		
-		
+			
+
 		//Toast.makeText(this, " Set Comment Adapter", 0).show();
 //		cadapter.notifyDataSetChanged();
 	}
@@ -105,13 +120,24 @@ public class CommentActivity extends Activity implements Observer {
     		String body = commentBody.getText().toString();
 
 			//Toast.makeText(Agora.getContext(), commentBody.getText().toString(), Toast.LENGTH_SHORT).show();
-			try {
-				controller.addComment(body, qid, null);
-				Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
-			} catch (NullPointerException e) {
-				Toast.makeText(Agora.getContext(),
-						"CommentActivity Nullptr in adding comment", 0).show();
+			if (aid == 0) {
+				try {
+					controller.addComment(body, qid, null);
+					Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
+				} catch (NullPointerException e) {
+					Toast.makeText(Agora.getContext(),
+							"CommentActivity Nullptr in adding comment", 0).show();
+				}
+			} else {
+				try {
+					controller.addComment(body, qid, aid);
+					Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
+				} catch (NullPointerException e) {
+					Toast.makeText(Agora.getContext(),
+							"CommentActivity Nullptr in adding comment", 0).show();
+				}
 			}
+    	 
 			finish();
 		}
 	};

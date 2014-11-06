@@ -124,6 +124,7 @@ public class AnswerAdapter extends BaseAdapter {
 			Long aid = getItemId(position);
 			Intent intent = new Intent(activity, CommentActivity.class);
 			intent.putExtra("aid", aid);
+			intent.putExtra("qid", question.getID());
 			activity.startActivity(intent);
 		}
 	}
