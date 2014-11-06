@@ -107,8 +107,10 @@ public class QuestionActivity extends Activity implements Observer {
 	private class upVoteQuestion implements OnClickListener {
 		public void onClick(View v) {
 			if(qList.size() != 0){
+				//increments votes in the view, but does not save.
+				QuestionController controller = QuestionController.getController(); 
 				Question q = qList.get(0);
-				q.upvote();
+				controller.upvote(q.getID(),null);
 				TextView qScore= (TextView)findViewById(R.id.qScore);
 				qScore.setText(Integer.toString(q.getRating()));
 			}
