@@ -57,6 +57,7 @@ public class AnswerActivity extends Activity implements Observer{
 //		qList = qController.getQuestionById(qid);
 //
 //	
+
 		lv = (ListView)findViewById(R.id.AnswerListView);
 		try {
 			aadapter = new AnswerAdapter(null);

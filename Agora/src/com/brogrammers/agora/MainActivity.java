@@ -39,16 +39,32 @@ public class MainActivity extends Activity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        //ESDataManager es = ESDataManager.getInstance();
+		//try {
+		//	results = es.getQuestions();
+		//} catch (UnsupportedEncodingException e) {
+		//	e.printStackTrace();
+		//}
       
-    } 
+    }
     
     protected void onResume() {
     	super.onResume();
+		final CountDownLatch signal = new CountDownLatch(1);
+
         qController.setObserver(this);
+		try {
+			signal.await(100, TimeUnit.MILLISECONDS);
+		} catch (InterruptedException e) {
+		
+		}
         List<Question> qList = qController.getAllQuestions();
 	    ListView lv = (ListView)findViewById(R.id.listView1);
 		qAdapter = new QuestionAdapter(qList, this);
+
 		lv.setAdapter(qAdapter);
+
     }
 
 

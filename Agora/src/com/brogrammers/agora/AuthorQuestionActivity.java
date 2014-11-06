@@ -62,7 +62,6 @@ public class AuthorQuestionActivity extends Activity {
     		
     		// replace null with image when images are implemented
     		QuestionController.getController().addQuestion(title, body, null); 
-    		
     		finish();
     		
 		}
