@@ -81,11 +81,11 @@ public final class R {
         public static final int filterbyTextDialoug=0x7f08003d;
         public static final int goto_question_answer=0x7f080045;
         public static final int imageButton1=0x7f080014;
-        public static final int imageButton3=0x7f080032;
         public static final int imageView1=0x7f080019;
         public static final int listView1=0x7f08000e;
         public static final int pager=0x7f080027;
         public static final int picturecheck=0x7f08003f;
+        public static final int qAuthor=0x7f080035;
         public static final int qBody=0x7f080016;
         public static final int qFavourite=0x7f080013;
         public static final int qObjectFavourite=0x7f080031;
@@ -93,6 +93,7 @@ public final class R {
         public static final int qScore=0x7f080018;
         public static final int qTitle=0x7f080015;
         public static final int qUpvote=0x7f080012;
+        public static final int qUpvoteButton=0x7f080032;
         public static final int qobjectbody=0x7f080033;
         public static final int qobjecttitle=0x7f080030;
         public static final int questionBody=0x7f080021;
@@ -108,7 +109,6 @@ public final class R {
         public static final int sortbyRadioGroup=0x7f080037;
         public static final int sortbyTextDialoug=0x7f080036;
         public static final int sortupvoteradioButton=0x7f080038;
-        public static final int textView3=0x7f080035;
     }
     public static final class layout {
         public static final int activity_answer=0x7f030000;

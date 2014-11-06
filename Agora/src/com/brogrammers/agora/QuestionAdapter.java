@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class QuestionAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
@@ -45,10 +46,27 @@ public class QuestionAdapter extends BaseAdapter {
 			convertView = inflater.inflate(R.layout.question_object, null);
 		}
 		
-		Question question = (Question)getItem(position);
+		final Question question = (Question)getItem(position);
+		
+		// Set the text fields for Question Object
 		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
 		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle());
 		((TextView)convertView.findViewById(R.id.qObjectScore)).setText(Integer.toString(question.getRating()));
+		
+		
+		// Set button for Question Object
+		ImageButton upvote = (ImageButton) convertView.findViewById(R.id.qUpvoteButton);
+		upvote.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//TODO: Implement upvote Button
+				Toast.makeText(Agora.getContext(), "PRESSBUTTON", 0).show();
+				question.upvote();
+			}
+		});
+		
+		
 		/*List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
 		
 		if (favoritedQuestions.contains(question.getID())) {
