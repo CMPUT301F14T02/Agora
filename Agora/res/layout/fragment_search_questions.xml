@@ -25,9 +25,12 @@
         android:id="@+id/qobjecttitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="53dp"
-        android:layout_toRightOf="@+id/section_label"
-        android:text="Questions go here" />
+        android:gravity="center"
+        android:text="Queried Questions Go Here"
+        android:textColor="#000000"
+        android:textSize="34sp" />
 
 </RelativeLayout>
