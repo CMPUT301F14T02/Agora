@@ -3,29 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ImageButton
-        android:id="@+id/qObjectFavourite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/ic_action_rating_favoritepink" />
-
-    <ImageButton
-        android:id="@+id/imageButton1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/qObjectFavourite"
-        android:src="@drawable/ic_action_flag" />
-
     <TextView
         android:id="@+id/qobjecttitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/RatingHLayout"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/qObjectFavourite"
         android:layout_toRightOf="@+id/RatingHLayout"
         android:gravity="left"
         android:hint="@string/titletext"
@@ -59,9 +42,31 @@
         android:id="@+id/qAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/qObjectFavourite"
+        android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/RatingHLayout"
         android:hint="Author, Date"
+        android:paddingTop="20px"
         android:textColor="#000000" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_rating_favoritepink" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_action_flag" />
+
+    </LinearLayout>
 
 </RelativeLayout>

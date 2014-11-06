@@ -11,6 +11,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class QuestionAdapter extends BaseAdapter {
@@ -51,7 +52,8 @@ public class QuestionAdapter extends BaseAdapter {
 		Question question = (Question)getItem(position);
 //		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
 		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle());
-		((TextView)convertView.findViewById(R.id.qObjectScore)).setText(Integer.toString(question.getRating()));
+		LinearLayout HLayout = (LinearLayout)convertView.findViewById(R.id.RatingHLayout);
+		((TextView)HLayout.findViewById(R.id.qObjectScore)).setText(Integer.toString(question.getRating()));
 		/*List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
 		
 		if (favoritedQuestions.contains(question.getID())) {
