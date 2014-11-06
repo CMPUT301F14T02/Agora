@@ -19,7 +19,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Date;
-
+/**
+ * Adapter required to format answers from a question to the answerActivity of the question.
+ * @author tkevin
+ *
+ */
 public class AnswerAdapter extends BaseAdapter {
 	private Question question;
 	private LayoutInflater inflater;

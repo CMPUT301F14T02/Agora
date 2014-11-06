@@ -7,7 +7,12 @@ import java.util.Collections;
 import java.util.List;
 
 import android.graphics.Bitmap;
-
+/**
+ * Answer model data class. Contains information about Answer, including upvotes, comments, body, author.
+ * 
+ * @author tkevin
+ *
+ */
 public class Answer implements Serializable {
 	private static final long serialVersionUID = 1340865626156695502L;
 
@@ -49,11 +54,17 @@ public class Answer implements Serializable {
 //		return Collections.unmodifiableList(comments);
 		return comments;
 	}
-	
+	/**
+	 * Add comment to an answer.
+	 * @param c
+	 */
 	public void addComment(Comment c) {
 		comments.add(c);
 	}
-	
+	/**
+	 * Increment upvote once.
+	 * @param c
+	 */
 	public void upvote() {
 		rating++;
 	}
