@@ -112,9 +112,13 @@ public class ESDataManager { // implements DataManager
 	}
 	
 	public List<Question> getQuestions(String requestBody, String endPoint) throws UnsupportedEncodingException {
+		final List<Question> questionList = new ArrayList<Question>();
+		if (!connected){
+			Log.e("SERVER", "No internet connection");
+			return questionList;
+		}
 		AsyncHttpClient client = new AsyncHttpClient();
 		StringEntity stringEntityBody = new StringEntity(requestBody);
-		final List<Question> questionList = new ArrayList<Question>();
 		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
 		Log.e("SERVER GET URI", DOMAIN + INDEXNAME + TYPENAME + endPoint);
 		Log.e("SERVER GET BODY", requestBody);
