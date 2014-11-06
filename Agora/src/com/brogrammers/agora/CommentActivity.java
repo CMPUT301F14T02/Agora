@@ -31,32 +31,13 @@ public class CommentActivity extends Activity implements Observer {
 		Button postComment = (Button) findViewById(R.id.CommentPostButton);
 		postComment.setOnClickListener(postcomment);
 
-		// Question q = new Question("New Thunderwave Answer",null,null, new
-		// Author("mudkip"));
-		// q.addComment(new Comment("adfsfsafsdfsdfsdfffffffffffffffffs"));
-
 		qid = getIntent().getLongExtra("qid", 0L);
 		aid = getIntent().getLongExtra("aid", 0L);
-		// Toast.makeText(Agora.getContext(), Long.toString(qid),
-		// Toast.LENGTH_SHORT).show();
 
 		controller = QuestionController.getController();
 		controller.setObserver(this);
 		qList = controller.getQuestionById(qid);
-//
 		lv = (ListView) findViewById(R.id.CommentListView);
-//		if (qList.size() > 0) {
-//			try {
-//				cadapter = new CommentAdapter(qList.get(0));
-//				lv.setAdapter(cadapter);
-//				//Toast.makeText(this, " Set Comment Adapter", 0).show();
-//			} catch (NullPointerException e) {
-//				Toast.makeText(this,
-//						"CommentActivity Nullptr in setting adapter", 0).show();
-//			}
-//		} else {
-//			Toast.makeText(this, "qList empty onCreate", 0).show();
-//		}
 
 	}
 
@@ -90,8 +71,6 @@ public class CommentActivity extends Activity implements Observer {
 		}
 			
 
-		//Toast.makeText(this, " Set Comment Adapter", 0).show();
-//		cadapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -119,8 +98,8 @@ public class CommentActivity extends Activity implements Observer {
 			EditText commentBody = (EditText) findViewById(R.id.CommentEditText);
     		String body = commentBody.getText().toString();
 
-			//Toast.makeText(Agora.getContext(), commentBody.getText().toString(), Toast.LENGTH_SHORT).show();
-			if (aid == 0) {
+			//
+			if (aid == 0) { // adding comment to question 
 				try {
 					controller.addComment(body, qid, null);
 					Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
@@ -128,7 +107,7 @@ public class CommentActivity extends Activity implements Observer {
 					Toast.makeText(Agora.getContext(),
 							"CommentActivity Nullptr in adding comment", 0).show();
 				}
-			} else {
+			} else { // adding comment to answer
 				try {
 					controller.addComment(body, qid, aid);
 					Toast.makeText(Agora.getContext(), "Comment added!", 0).show();

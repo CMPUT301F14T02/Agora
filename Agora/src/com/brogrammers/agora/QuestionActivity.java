@@ -1,5 +1,7 @@
 package com.brogrammers.agora;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
@@ -34,21 +37,32 @@ public class QuestionActivity extends Activity implements Observer {
 
 		Button viewComment = (Button)findViewById(R.id.QuestionCommentsButton);
 		Button viewAnswer = (Button)findViewById(R.id.QuestionAnswersButton);
-		ImageButton upVoteQuestion= (ImageButton)findViewById(R.id.QuestionUpVoteButton);
+		ImageView upVoteQuestion= (ImageView)findViewById(R.id.QuestionUpVoteButton);
 		
 		
 		viewComment.setOnClickListener(new openCommentsView());
 		viewAnswer.setOnClickListener(new openAnswerView());
 		upVoteQuestion.setOnClickListener (new upVoteQuestion());
 	}
-	
+	public String datetostring(long milliseconds){
+	    Date date = new Date(); 
+	    date.setTime(milliseconds);
+	    String newDate=new SimpleDateFormat("MMM d yyyy").format(date);
+	    return newDate;
+	}
 	@Override
 	public void update() {
 		TextView qTitle = (TextView)findViewById(R.id.qTitle);
 		TextView qBody = (TextView)findViewById(R.id.qBody);
 		TextView qScore= (TextView)findViewById(R.id.qScore);
+		TextView authordate = (TextView)findViewById(R.id.AuthourDate);
+		String authorline = "Submitted by: ";
+
+		
 		if (qList.size() > 0) {
 			Question q = qList.get(0);
+			authorline += q.getAuthor().getUsername()+", "+ datetostring(q.getDate());
+			authordate.setText(authorline);
 			qTitle.setText(q.getTitle());
 			qBody.setText(q.getBody());
 			qScore.setText(Integer.toString(q.getRating()));

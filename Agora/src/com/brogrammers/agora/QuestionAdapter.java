@@ -1,5 +1,7 @@
 package com.brogrammers.agora;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -11,6 +13,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,27 +52,17 @@ public class QuestionAdapter extends BaseAdapter {
 			convertView = inflater.inflate(R.layout.question_object, null);
 		}
 		
-		final Question question = (Question)getItem(position);
-		
-		// Set the text fields for Question Object
-		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
+
+		Question question = (Question)getItem(position);
+//		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
 		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle());
-		((TextView)convertView.findViewById(R.id.qObjectScore)).setText(Integer.toString(question.getRating()));
-		
-		
-		// Set button for Question Object
-		ImageButton upvote = (ImageButton) convertView.findViewById(R.id.qUpvoteButton);
-		upvote.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				//TODO: Implement upvote Button
-				Toast.makeText(Agora.getContext(), "PRESSBUTTON", 0).show();
-				question.upvote();
-			}
-		});
-		
-		
+
+		((TextView)convertView.findViewById(R.id.qAuthor)).setText("Submitted by: " +question.getAuthor().getUsername()+", "+ datetostring(question.getDate()));
+
+		LinearLayout HLayout = (LinearLayout)convertView.findViewById(R.id.RatingHLayout);
+		((TextView)HLayout.findViewById(R.id.qObjectScore)).setText(Integer.toString(question.getRating()));
+
+
 		/*List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
 		
 		if (favoritedQuestions.contains(question.getID())) {
@@ -84,7 +77,12 @@ public class QuestionAdapter extends BaseAdapter {
 		
 		return convertView;
 	}
-	
+	public String datetostring(long milliseconds){
+	    Date date = new Date(); 
+	    date.setTime(milliseconds);
+	    String newDate=new SimpleDateFormat("MMM d yyyy").format(date);
+	    return newDate;
+	}
 	private class QuestionOnClickListener implements OnClickListener {
 		private int position;
 		QuestionOnClickListener(int position) {

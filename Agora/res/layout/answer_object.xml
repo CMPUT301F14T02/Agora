@@ -24,8 +24,9 @@
         android:id="@+id/aComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/aAuthourDate"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/aBody"
+        android:layout_alignParentTop="true"
         android:text="Comments" />
 
     <TextView
@@ -41,10 +42,12 @@
         android:id="@+id/aAuthourDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/aComment"
+        android:layout_alignLeft="@+id/aBody"
+        android:layout_below="@+id/aUpvote"
         android:layout_toLeftOf="@+id/aComment"
-        android:layout_toRightOf="@+id/aUpvote"
         android:hint="Author, Date"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
 
 </RelativeLayout>
