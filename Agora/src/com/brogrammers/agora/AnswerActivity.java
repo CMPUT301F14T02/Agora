@@ -88,7 +88,7 @@ public class AnswerActivity extends Activity implements Observer{
 		} else {
 			aadapter.setQuestion(qList.get(0));
 //		aadapter.notifyDataSetChanged();
-			Toast.makeText(this, "AnswerActivity got update notification", 0).show();
+//			Toast.makeText(this, "AnswerActivity got update notification", 0).show();
 		}
 		
 	}

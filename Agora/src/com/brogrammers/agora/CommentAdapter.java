@@ -1,6 +1,8 @@
 package com.brogrammers.agora;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
@@ -65,9 +67,16 @@ public class CommentAdapter extends BaseAdapter {
 		Comment comment = (Comment)getItem(position);
 		//set text on each TextView			
 		((TextView)convertView.findViewById(R.id.cBody)).setText(comment.getBody());
-		((TextView)convertView.findViewById(R.id.cAuthourDate)).setText(comment.getDate().toString());
+		((TextView)convertView.findViewById(R.id.cAuthourDate)).setText("Submitted by: " +comment.getAuthor().getUsername()+", "+ datetostring(comment.getDate()));
+
+
 		
 		return convertView;
 	}
-
+	public String datetostring(long milliseconds){
+	    Date date = new Date(); 
+	    date.setTime(milliseconds);
+	    String newDate=new SimpleDateFormat("MMM d yyyy").format(date);
+	    return newDate;
+	}
 }

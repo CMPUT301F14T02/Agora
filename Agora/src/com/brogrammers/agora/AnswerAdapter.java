@@ -16,6 +16,8 @@ import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Date;
@@ -78,41 +80,42 @@ public class AnswerAdapter extends BaseAdapter {
 		//inflate each listview item with "answer_object"
 		Answer answer = (Answer)getItem(position);
 		Button comment = (Button) convertView.findViewById(R.id.aComment);
-		ImageButton upvote = (ImageButton) convertView.findViewById(R.id.aUpvote);
+		ImageView upvote = (ImageView) convertView.findViewById(R.id.aUpvote);
+//		LinearLayout upvote = (LinearLayout)convertView.findViewById(R.id.AnswerScoreHLayout);
 		
+		//set text on each TextView			
+		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
+		TextView aScore = (TextView)convertView.findViewById(R.id.aScore);
+		aScore.setText(Integer.toString(answer.getRating()));
+		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText("Submitted by: " +answer.getAuthor().getUsername()+", "+ datetostring(answer.getDate()));
 		
 		//comment.setOnClickListener(answercomments);
 		comment.setOnClickListener(new CommentOnClickListener(position));
 		
 		//upvote.setOnClickListener(answerupvote);
-		upvote.setOnClickListener(new UpVoteOnClickListener(position));
+		upvote.setOnClickListener(new UpVoteOnClickListener(position, aScore));
 		
-		
-		//set text on each TextView			
-		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
-		((TextView)convertView.findViewById(R.id.aScore)).setText(Integer.toString(answer.getRating()));
-		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText("Submitted by: " +answer.getAuthor().getUsername()+", "+ datetostring(answer.getDate()));
 		
 		return convertView;
 	}
 
 	
-	View.OnClickListener answercomments  = new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			Intent intent = new Intent(Agora.getContext(), CommentActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			Agora.getContext().startActivity(intent);
-		}
-	};
-	
-	View.OnClickListener answerupvote =  new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			Toast.makeText(Agora.getContext(), "call upvote" , Toast.LENGTH_SHORT).show();
-		}
-	};
+//	View.OnClickListener answercomments  = new View.OnClickListener() {
+//		@Override
+//		public void onClick(View v) {
+//			// TODO Auto-generated method stub
+//			Intent intent = new Intent(Agora.getContext(), CommentActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//			Agora.getContext().startActivity(intent);
+//		}
+//	};
+//	
+//	View.OnClickListener answerupvote =  new View.OnClickListener() {
+//		@Override
+//		public void onClick(View v) {
+//			// TODO Auto-generated method stub
+//			Toast.makeText(Agora.getContext(), "call upvote" , Toast.LENGTH_SHORT).show();
+//		}
+//	};
 	
 	public void setQuestion(Question q) {
 		this.question = q;
@@ -136,13 +139,21 @@ public class AnswerAdapter extends BaseAdapter {
 	
 	private class UpVoteOnClickListener implements OnClickListener {
 		private int position;
-		UpVoteOnClickListener(int position) {
+		private View aScoreTextView;
+		UpVoteOnClickListener(int position, View aScoreTextView) {
+			this.aScoreTextView = aScoreTextView;
 			this.position = position;
 		}
 		public void onClick(View view) {
 			Long aid = getItemId(position);
-			question.getAnswerByID(aid).upvote();
-			Toast.makeText(Agora.getContext(), Integer.toString(question.getAnswerByID(aid).getRating()), Toast.LENGTH_SHORT).show();
+//			question.getAnswerByID(aid).upvote();
+			
+			QuestionController.getController().upvote(question.getID(), getItemId(position)); 
+			Answer a = (Answer)getItem(position);
+			a.upvote();
+			((TextView)aScoreTextView).setText(Integer.toString(a.getRating()));
+
+			
 			//update the rating textview afterwards
 		}
 	}

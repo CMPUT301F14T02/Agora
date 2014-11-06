@@ -3,28 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <ImageButton
-        android:id="@+id/aUpvote"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:src="@drawable/ic_action_upvote" />
 
-    <TextView
-        android:id="@+id/aScore"
+    
+      <LinearLayout
+        android:id="@+id/AnswerScoreHLayout"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/aUpvote"
-        android:layout_toLeftOf="@+id/aBody"
-        android:hint="Score" />
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/aUpvote"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/ic_action_upvote" />
+
+        <TextView
+            android:id="@+id/aScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="R"
+            android:paddingRight="15dp"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+    
 
     <Button
         android:id="@+id/aComment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/aAuthourDate"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:text="Comments" />
@@ -34,20 +41,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/aUpvote"
-        android:hint="Answer Body"
+        android:layout_toLeftOf="@+id/aComment"
+        android:layout_toRightOf="@+id/AnswerScoreHLayout"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:hint="Loading..."
         android:textColor="#000000" />
 
     <TextView
         android:id="@+id/aAuthourDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/aBody"
-        android:layout_below="@+id/aUpvote"
-        android:layout_toLeftOf="@+id/aComment"
-        android:hint="Author, Date"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/AnswerScoreHLayout"
+        android:hint="Loading..."
         android:textAppearance="?android:attr/textAppearanceSmall" />
-
-
 
 </RelativeLayout>

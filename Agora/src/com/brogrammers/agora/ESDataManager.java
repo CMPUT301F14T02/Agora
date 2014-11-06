@@ -157,7 +157,7 @@ public class ESDataManager { // implements DataManager
 				    }
 				    
 					QuestionController.getController().update();
-					Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
+//					Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	
