@@ -19,6 +19,7 @@
         android:id="@+id/RatingHLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/qAuthor"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" >
 
@@ -67,7 +68,7 @@
         android:layout_toLeftOf="@+id/linearLayout1"
         android:layout_toRightOf="@+id/RatingHLayout"
         android:hint="Author, Date"
-        android:paddingTop="20px"
+        android:paddingTop="5px"
         android:textColor="#444444" />
 
 </RelativeLayout>
