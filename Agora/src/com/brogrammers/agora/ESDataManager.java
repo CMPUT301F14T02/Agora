@@ -112,9 +112,13 @@ public class ESDataManager { // implements DataManager
 	}
 	
 	public List<Question> getQuestions(String requestBody, String endPoint) throws UnsupportedEncodingException {
+		final List<Question> questionList = new ArrayList<Question>();
+		if (!connected){
+			Log.e("SERVER", "No internet connection");
+			return questionList;
+		}
 		AsyncHttpClient client = new AsyncHttpClient();
 		StringEntity stringEntityBody = new StringEntity(requestBody);
-		final List<Question> questionList = new ArrayList<Question>();
 		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
 		Log.e("SERVER GET URI", DOMAIN + INDEXNAME + TYPENAME + endPoint);
 		Log.e("SERVER GET BODY", requestBody);
@@ -127,7 +131,9 @@ public class ESDataManager { // implements DataManager
 			public void onFailure(int status, Header[] arg1, byte[] responseBody, Throwable arg3) {
 				
 				Log.e("SERVER", "getQuestion failure: "+Integer.toString(status));
-				Log.e("SERVER", "responsebody: "+new String(responseBody));
+				try {
+					Log.e("SERVER", "responsebody: "+new String(responseBody));
+				} catch (NullPointerException e) { }
 				Toast.makeText(Agora.getContext(), "ES Get Question On Fail", 0).show();
 			}
 
@@ -273,6 +279,7 @@ public class ESDataManager { // implements DataManager
 			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
 			        // called when response HTTP status is "200 OK"
 					Log.e("SERVER UPDATED", "updateServer method success.");
+					QuestionController.getController().update();
 			    }
 			    @Override
 			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {

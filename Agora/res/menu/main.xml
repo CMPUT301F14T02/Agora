@@ -1,18 +1,25 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brogrammers.agora.MainActivity" >
-
+    
+    <item android:id="@+id/refreshMain" 
+        android:title="Refresh" 
+        android:icon="@drawable/ic_action_refresh" 
+        android:titleCondensed="Refresh" 
+        android:showAsAction="always">
+    </item>
+    
     <item android:id="@+id/addQuestionBQV" 
         android:title="@string/addQuestion" 
         android:icon="@drawable/ic_action_new" 
         android:titleCondensed="@string/add" 
-        android:showAsAction="ifRoom">
+        android:showAsAction="always">
     </item>
     
     <item android:id="@+id/searchBQV"
         android:title="@string/search"
         android:icon='@drawable/ic_action_search' 			
-        android:showAsAction="ifRoom|withText|collapseActionView">
+        android:showAsAction="always">
 
     </item>
     

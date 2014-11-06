@@ -28,13 +28,13 @@ public class AddAnswerWithControllerTest extends ActivityInstrumentationTestCase
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		HttpClient client = new DefaultHttpClient();
-		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/agora/_query?q=_type:agora");
-			client.execute(deleteRequest);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+//		HttpClient client = new DefaultHttpClient();
+//		try {
+//			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/agora/_query?q=_type:agora");
+//			client.execute(deleteRequest);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		} 
 	}
 
 	protected void tearDown() throws Exception {
@@ -79,7 +79,7 @@ public class AddAnswerWithControllerTest extends ActivityInstrumentationTestCase
 		
 		// create a question
 		
-		Long qid = controller.addQuestion("Test Title F", "Test Body G", null);
+		Long qid = controller.addQuestion("Thunderwave?", "OMG you guys, Mega Thunder Wave just got released! But only Mega Pikachu can learn it :(", null);
 		Log.e("TEST", qid.toString());
 		// wait for it to be uploaded
 		try {
@@ -89,7 +89,7 @@ public class AddAnswerWithControllerTest extends ActivityInstrumentationTestCase
 		}
 		
 		assertTrue(cache.getQuestionById(qid) != null);
-		Long aid = controller.addAnswer("Answer Body H", null, qid);
+		Long aid = controller.addAnswer("Answer Body TW OP", null, qid);
 		
 		// wait for it to be uploaded
 		try {
@@ -116,7 +116,8 @@ public class AddAnswerWithControllerTest extends ActivityInstrumentationTestCase
 		}
 		
 		List<Question> qList = results.get(0);
-		assertTrue("List is empty", qList.size() == 1);
+		assertTrue("List is empty", qList.size() > 0);
+		assertTrue("List has more than one item", qList.size() < 2);
 		Question q2 = qList.get(0);
 		assertTrue("Retrieved Question has wrong body", q2.getBody().equals("Test Body G"));
 		assertTrue("Retrieved Question has wrong ID", q2.getID().equals(qid));

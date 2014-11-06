@@ -27,12 +27,13 @@ public final class R {
         public static final int ic_action_flag=0x7f020002;
         public static final int ic_action_new=0x7f020003;
         public static final int ic_action_rating_favoritepink=0x7f020004;
-        public static final int ic_action_search=0x7f020005;
-        public static final int ic_action_settings=0x7f020006;
-        public static final int ic_action_unfavorite=0x7f020007;
-        public static final int ic_action_upvote=0x7f020008;
-        public static final int ic_action_view_as_list=0x7f020009;
-        public static final int ic_launcher=0x7f02000a;
+        public static final int ic_action_refresh=0x7f020005;
+        public static final int ic_action_search=0x7f020006;
+        public static final int ic_action_settings=0x7f020007;
+        public static final int ic_action_unfavorite=0x7f020008;
+        public static final int ic_action_upvote=0x7f020009;
+        public static final int ic_action_view_as_list=0x7f02000a;
+        public static final int ic_launcher=0x7f02000b;
     }
     public static final class id {
         public static final int AnswerListView=0x7f080000;
@@ -49,11 +50,11 @@ public final class R {
         public static final int aComment=0x7f08002b;
         public static final int aScore=0x7f080029;
         public static final int aUpvote=0x7f080028;
-        public static final int action_addanswer=0x7f080045;
-        public static final int action_favorite=0x7f080046;
-        public static final int action_flag=0x7f080047;
+        public static final int action_addanswer=0x7f080046;
+        public static final int action_favorite=0x7f080047;
+        public static final int action_flag=0x7f080048;
         public static final int action_settings=0x7f080040;
-        public static final int addQuestionBQV=0x7f080041;
+        public static final int addQuestionBQV=0x7f080042;
         public static final int answerBody=0x7f08001f;
         public static final int answerExpand=0x7f08001d;
         public static final int answerRating=0x7f08001c;
@@ -78,7 +79,7 @@ public final class R {
         public static final int editText1=0x7f080004;
         public static final int favouritecheck=0x7f08003e;
         public static final int filterbyTextDialoug=0x7f08003d;
-        public static final int goto_question_answer=0x7f080044;
+        public static final int goto_question_answer=0x7f080045;
         public static final int imageButton1=0x7f080014;
         public static final int imageButton3=0x7f080032;
         public static final int imageView1=0x7f080019;
@@ -100,9 +101,10 @@ public final class R {
         public static final int questionRating=0x7f080024;
         public static final int questionTitle=0x7f080026;
         public static final int questionUpVote=0x7f080023;
-        public static final int searchBQV=0x7f080042;
+        public static final int refreshMain=0x7f080041;
+        public static final int searchBQV=0x7f080043;
         public static final int section_label=0x7f08002f;
-        public static final int sortBQV=0x7f080043;
+        public static final int sortBQV=0x7f080044;
         public static final int sortbyRadioGroup=0x7f080037;
         public static final int sortbyTextDialoug=0x7f080036;
         public static final int sortupvoteradioButton=0x7f080038;

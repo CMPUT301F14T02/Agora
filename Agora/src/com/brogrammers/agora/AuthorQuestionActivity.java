@@ -1,6 +1,9 @@
 package com.brogrammers.agora;
 
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -51,17 +54,22 @@ public class AuthorQuestionActivity extends Activity {
 			EditText titleText = (EditText)findViewById(R.id.authorQuestionEditText);
 			EditText bodyText = (EditText)findViewById(R.id.authorQuestionBodyEditText);
     		Toast.makeText(Agora.getContext(), "Adding Question!", Toast.LENGTH_SHORT).show();
+			
     		String title = titleText.getText().toString();
     		String body = bodyText.getText().toString();
-    		Toast.makeText(Agora.getContext(), "Title: "+title, Toast.LENGTH_SHORT).show();
-    		Toast.makeText(Agora.getContext(), "Body: "+body, Toast.LENGTH_SHORT).show();
+//    		Toast.makeText(Agora.getContext(), "Title: "+title, Toast.LENGTH_SHORT).show();
+//    		Toast.makeText(Agora.getContext(), "Body: "+body, Toast.LENGTH_SHORT).show();
+    		
+    		// replace null with image when images are implemented
+    		QuestionController.getController().addQuestion(title, body, null); 
+    		finish();
     		
 		}
 	};
 	View.OnClickListener picturehandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add picture
-    		Toast.makeText(Agora.getContext(), "Adding Picture!", Toast.LENGTH_SHORT).show();
+    		Toast.makeText(Agora.getContext(), "Adding Picture! (Not Yet Implemented)", Toast.LENGTH_SHORT).show();
 
 		}
 	};

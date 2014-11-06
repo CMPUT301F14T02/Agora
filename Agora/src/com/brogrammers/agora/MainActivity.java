@@ -46,32 +46,27 @@ public class MainActivity extends Activity implements Observer {
 		//} catch (UnsupportedEncodingException e) {
 		//	e.printStackTrace();
 		//}
+      
+    }
+    
+    protected void onResume() {
+    	super.onResume();
+		final CountDownLatch signal = new CountDownLatch(1);
 
-
-        
-		//qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
-		//Toast.makeText(this, , duration)
-        
-        Question q = new Question("New Thunderwave", "Why is it OP?", null, new Author("Mudkip"));
-        //qController.setObserver(this);
         qController.setObserver(this);
+		try {
+			signal.await(100, TimeUnit.MILLISECONDS);
+		} catch (InterruptedException e) {
+		
+		}
         List<Question> qList = qController.getAllQuestions();
 	    ListView lv = (ListView)findViewById(R.id.listView1);
 		qAdapter = new QuestionAdapter(qList);
+
 		lv.setAdapter(qAdapter);
 
-		/*
-		final CountDownLatch signal = new CountDownLatch(1);
-        Long qid = qController.addQuestion("Test Title E", "Test Body E", null);
-		try {
-			signal.await(2, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
+    }
 
-		}
-        Log.e("ID", qid.toString()); 
-        Long aid = qController.addAnswer("Answer Body E", null, qid);
-		 */
-    } 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -103,6 +98,8 @@ public class MainActivity extends Activity implements Observer {
           	Intent intent = new Intent(Agora.getContext(), AnswerActivity.class);
           	startActivity(intent);
         	//Toast.makeText(Agora.getContext(), Integer.toString(results.size()), 0).show();
+        case R.id.refreshMain:
+        	onResume();
         default:
             return super.onOptionsItemSelected(item);
         }

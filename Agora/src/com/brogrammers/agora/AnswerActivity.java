@@ -39,20 +39,21 @@ public class AnswerActivity extends Activity implements Observer{
 		//Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
 		//q.addAnswer(a);
 		
-		qController.setObserver(this);
-		//Long qid = qController.addQuestion("AnswerActivity live test title", "AnswerActivity live test body", null);
-		//Long aid = qController.addAnswer("AnswerActivity live answer title", null, qid);
-		final CountDownLatch signal = new CountDownLatch(1);
-		try {
-			signal.await(2, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			
-		}
-		
-		
-		//qList = qController.getQuestionById(qid);
+//		qController.setObserver(this);
+//		Long qid = qController.addQuestion("AnswerActivity live test title", "AnswerActivity live test body", null);
+//		Long aid = qController.addAnswer("AnswerActivity live answer title", null, qid);
+//		final CountDownLatch signal = new CountDownLatch(1);
+//		try {
+//			signal.await(2, TimeUnit.SECONDS);
+//		} catch (InterruptedException e) {
+//			
+//		}
+//		
+//		
+//		qList = qController.getQuestionById(qid);
+//
+//	
 
-	
 		lv = (ListView)findViewById(R.id.AnswerListView);
 		try {
 			aadapter = new AnswerAdapter(null);
