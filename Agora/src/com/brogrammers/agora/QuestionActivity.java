@@ -1,5 +1,7 @@
 package com.brogrammers.agora;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -41,14 +43,25 @@ public class QuestionActivity extends Activity implements Observer {
 		viewAnswer.setOnClickListener(new openAnswerView());
 		upVoteQuestion.setOnClickListener (new upVoteQuestion());
 	}
-	
+	public String datetostring(long milliseconds){
+	    Date date = new Date(); 
+	    date.setTime(milliseconds);
+	    String newDate=new SimpleDateFormat("MMM d yyyy").format(date);
+	    return newDate;
+	}
 	@Override
 	public void update() {
 		TextView qTitle = (TextView)findViewById(R.id.qTitle);
 		TextView qBody = (TextView)findViewById(R.id.qBody);
 		TextView qScore= (TextView)findViewById(R.id.qScore);
+		TextView authordate = (TextView)findViewById(R.id.AuthourDate);
+		String authorline = "";
+
+		
 		if (qList.size() > 0) {
 			Question q = qList.get(0);
+			authorline += q.getAuthor().getUsername()+", "+ datetostring(q.getDate());
+			authordate.setText(authorline);
 			qTitle.setText(q.getTitle());
 			qBody.setText(q.getBody());
 			qScore.setText(Integer.toString(q.getRating()));
