@@ -155,7 +155,6 @@ public class ESDataManager { // implements DataManager
 						questionList.add(qObject);
 						Log.e("SERVER", qObject.getID().toString()+" "+qObject.getBody());
 				    }
-				    // TODO: Check this is being passed to controller properly.
 				    
 					QuestionController.getController().update();
 					Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
