@@ -13,7 +13,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
-
+/**
+ * Answer Activity which displays the list of answers corresponding to a question.
+ * Todo: Upvote, favourite, cache functionality.
+ * @author tkevin
+ *
+ */
 public class AnswerActivity extends Activity implements Observer{
 	
 	private QuestionController qController = QuestionController.getController();
