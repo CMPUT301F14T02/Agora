@@ -49,6 +49,7 @@ public class QuestionActivity extends Activity implements Observer {
 			qTitle.setText(q.getTitle());
 			qBody.setText(q.getBody());
 			qScore.setText(Integer.toString(q.getRating()));
+			CacheDataManager.getInstance().pushQuestion(q);
 		} else {
 			Toast.makeText(this, "QuestionActivity recieved empty list on update", 0).show();
 		}
@@ -77,7 +78,7 @@ public class QuestionActivity extends Activity implements Observer {
 //			flag();
 			return true;
 		case R.id.action_addanswer:
-//			openAddAnswerView();
+			openAddAnswerView();
 			return true;	
 		default:
 			return super.onOptionsItemSelected(item);
@@ -112,11 +113,12 @@ public class QuestionActivity extends Activity implements Observer {
 //		}
 //	};
 //	
-//	public void openAddAnswerView() {
-//		Intent intent = new Intent(Agora.getContext(), AuthorAnswerActivity.class);
-//		startActivity(intent);
-//		//Toast.makeText(Agora.getContext(), "Hook up Add a question here", Toast.LENGTH_SHORT).show();
-//	}
+	public void openAddAnswerView() {
+		Intent intent = new Intent(Agora.getContext(), AuthorAnswerActivity.class);
+		intent.putExtra("qid", qid);
+		startActivity(intent);
+		//Toast.makeText(Agora.getContext(), "Hook up Add a question here", Toast.LENGTH_SHORT).show();
+	}
 
 
 }

@@ -41,20 +41,20 @@ public class CommentActivity extends Activity implements Observer {
 		controller = QuestionController.getController();
 		controller.setObserver(this);
 		qList = controller.getQuestionById(qid);
-
-		lv = (ListView) findViewById(R.id.CommentListView);
-		if (qList.size() > 0) {
-			try {
-				cadapter = new CommentAdapter(qList.get(0));
-				lv.setAdapter(cadapter);
-				//Toast.makeText(this, " Set Comment Adapter", 0).show();
-			} catch (NullPointerException e) {
-				Toast.makeText(this,
-						"CommentActivity Nullptr in setting adapter", 0).show();
-			}
-		} else {
-			Toast.makeText(this, "qList empty onCreate", 0).show();
-		}
+//
+//		lv = (ListView) findViewById(R.id.CommentListView);
+//		if (qList.size() > 0) {
+//			try {
+//				cadapter = new CommentAdapter(qList.get(0));
+//				lv.setAdapter(cadapter);
+//				//Toast.makeText(this, " Set Comment Adapter", 0).show();
+//			} catch (NullPointerException e) {
+//				Toast.makeText(this,
+//						"CommentActivity Nullptr in setting adapter", 0).show();
+//			}
+//		} else {
+//			Toast.makeText(this, "qList empty onCreate", 0).show();
+//		}
 
 	}
 
