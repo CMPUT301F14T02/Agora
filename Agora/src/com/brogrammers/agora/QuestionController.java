@@ -114,11 +114,7 @@ public class QuestionController {
 //		q.addAnswer(a);
 		cache.pushAnswer(a, qID);
 		
-		try {
-			eSearch.pushAnswer(a, qID, cache);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		eSearch.pushAnswer(a, qID, cache);
 		
 		return a.getID();
 	}
@@ -140,16 +136,17 @@ public class QuestionController {
 		}
 	}
 	
-	// TODO
 	public void upvote(Long qID, Long aID) {
-//		Question q = cache.getQuestionByID(qID);
-		if (aID == null) {
-			// upvoting question
-//			q.upvote();
-
-		} else {
-			// upvoting answer
-
+		Question q = cache.getQuestionById(qID);
+		if (aID == null) {			// upvoting question
+			q.upvote();
+			cache.pushQuestion(q);
+			eSearch.pushUpvote(qID, cache);
+		} else {                    // upvoting answer
+			Answer a = q.getAnswerByID(aID); 
+			a.upvote();
+			cache.pushQuestion(q);
+			eSearch.pushAnswer(a, qID, cache);
 		}
 	}
 
@@ -173,7 +170,7 @@ public class QuestionController {
 
 		if (observer != null) {
 			observer.update();
-			Toast.makeText(Agora.getContext(), "Updating Controller Observer", 0).show();
+//			Toast.makeText(Agora.getContext(), "Updating Controller Observer", 0).show();
 		} else {
 			Toast.makeText(Agora.getContext(), "Controller: no observer registered!", 0).show();
 		}

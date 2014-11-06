@@ -143,7 +143,7 @@ public class MainActivity extends Activity implements Observer {
 	@Override
 	public void update() {
 		qAdapter.notifyDataSetChanged();
-		Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
+//		Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
 	}
 
 

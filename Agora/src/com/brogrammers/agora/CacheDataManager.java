@@ -53,7 +53,6 @@ public class CacheDataManager implements DataManager {
 	}
 	
 	public boolean pushQuestion(Question q) {
-		questionCache.remove(q.getID());
 		questionCache.put(q.getID(), q);
 		qls.saveQuestion(q);
 		return true;

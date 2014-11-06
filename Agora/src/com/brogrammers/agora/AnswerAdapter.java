@@ -34,7 +34,7 @@ public class AnswerAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		if (question != null) {
-			Toast.makeText(Agora.getContext(), "AnswerAdapter getCount returning "+Integer.toString(question.countAnswers()), 0).show();
+//			Toast.makeText(Agora.getContext(), "AnswerAdapter getCount returning "+Integer.toString(question.countAnswers()), 0).show();
 			return question.countAnswers();
 		} else {
 			return 0;

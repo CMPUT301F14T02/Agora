@@ -32,32 +32,7 @@ public class AnswerActivity extends Activity implements Observer{
 		
 		qController.setObserver(this);
 		qList = qController.getQuestionById(qid);
-		//comment button
-		//Button viewComment = (Button)findViewById(R.id.AnswerCommentsButton); // no longer used
-		//viewComment.setOnClickListener(opencommentview);	
-		
 
-		// For testing:
-		//Long qID = 0L; //TODO: get question ID out of Intent/Bundle
-		
-		//Question q = new Question("New Thunderwave", "Why is it OP?", null, new Author("Mudkip"));
-		//Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
-		//q.addAnswer(a);
-		
-//		qController.setObserver(this);
-//		Long qid = qController.addQuestion("AnswerActivity live test title", "AnswerActivity live test body", null);
-//		Long aid = qController.addAnswer("AnswerActivity live answer title", null, qid);
-//		final CountDownLatch signal = new CountDownLatch(1);
-//		try {
-//			signal.await(2, TimeUnit.SECONDS);
-//		} catch (InterruptedException e) {
-//			
-//		}
-//		
-//		
-//		qList = qController.getQuestionById(qid);
-//
-//	
 
 		lv = (ListView)findViewById(R.id.AnswerListView);
 		try {

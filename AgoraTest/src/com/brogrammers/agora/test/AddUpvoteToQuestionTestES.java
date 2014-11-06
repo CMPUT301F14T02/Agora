@@ -54,6 +54,13 @@ public class AddUpvoteToQuestionTestES extends ActivityInstrumentationTestCase2<
 		}
 	}
 	
+	private class TestCacheManager extends CacheDataManager {
+		public TestCacheManager() {
+			super("TEST_CACHE");
+		}
+	}
+		
+	
 	public void testESGetQuestions() throws Throwable {
 		// create a question object post it, add a comment locally to one of the answers.
 		Question q = new Question("Big Questions", "What do you think the meaning of life is?", null, new Author("Ted"));
@@ -75,11 +82,13 @@ public class AddUpvoteToQuestionTestES extends ActivityInstrumentationTestCase2<
 		// add an upvote to the question locally
 		q.upvote();
 		
+		CacheDataManager cache = new TestCacheManager();
+		
 		// cache the question
-		CacheDataManager.getInstance().pushQuestion(q);
+		cache.pushQuestion(q);
 		
 		// push the upvote to the server.
-		es.pushUpvote(q.getID());
+		es.pushUpvote(q.getID(), cache);
 		postSignal.await(2, TimeUnit.SECONDS);
 
 		// get the question from the server
