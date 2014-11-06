@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Base64;
+import android.util.Log;
 
 public class QuestionLoaderSaver {
 	private String questionPrefsFileName;
@@ -28,6 +29,7 @@ public class QuestionLoaderSaver {
 	}
 
 	public void saveQuestion(Question q) {
+		Log.e("QLS", "saveQuestion answerCount = "+Integer.toString(q.countAnswers()));
 		String jsonQuestion = (new Gson()).toJson(q);
 		SharedPreferences prefsFile = 
 			Agora.getContext().getSharedPreferences(questionPrefsFileName, Context.MODE_PRIVATE);
@@ -44,6 +46,8 @@ public class QuestionLoaderSaver {
 		
 		for (String jsonQuestion : prefsMap.values()) {
 			Question q = (new Gson()).fromJson(jsonQuestion, new TypeToken<Question>(){}.getType());
+			Log.e("QLS", "loadQuestions answerCount = "+Integer.toString(q.countAnswers()));
+
 			qList.add(q);
 		}
 		

@@ -12,7 +12,7 @@ public class CacheDataManager implements DataManager {
 	static private CacheDataManager self;
 	
 	protected TreeMap<Long, Question> questionCache; // for getQuestionByID()
-	protected List<QuestionPreview> questionPreviewList; // for getQuestions()
+//	protected List<QuestionPreview> questionPreviewList; // for getQuestions()
 	
 	QuestionLoaderSaver qls;
 
