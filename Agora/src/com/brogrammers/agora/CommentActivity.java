@@ -42,7 +42,7 @@ public class CommentActivity extends Activity implements Observer {
 		controller.setObserver(this);
 		qList = controller.getQuestionById(qid);
 //
-//		lv = (ListView) findViewById(R.id.CommentListView);
+		lv = (ListView) findViewById(R.id.CommentListView);
 //		if (qList.size() > 0) {
 //			try {
 //				cadapter = new CommentAdapter(qList.get(0));
@@ -61,11 +61,11 @@ public class CommentActivity extends Activity implements Observer {
 	@Override
 	public void update() {
 		if (qList.size() > 0) {
+			Question q = qList.get(0);
+			cadapter = new CommentAdapter(q);
 			try {
-				cadapter = new CommentAdapter(qList.get(0));
 				lv.setAdapter(cadapter);
-				//Toast.makeText(this, " Set Comment Adapter", 0).show();
-				cadapter.notifyDataSetChanged();
+
 			} catch (NullPointerException e) {
 				Toast.makeText(this,
 						"CommentActivity Nullptr in setting adapter", 0).show();
@@ -73,7 +73,10 @@ public class CommentActivity extends Activity implements Observer {
 		} else {
 			Toast.makeText(this, "qList empty onUpdate", 0).show();
 		}
-
+		
+		
+		//Toast.makeText(this, " Set Comment Adapter", 0).show();
+//		cadapter.notifyDataSetChanged();
 	}
 
 	@Override
@@ -104,10 +107,12 @@ public class CommentActivity extends Activity implements Observer {
 			//Toast.makeText(Agora.getContext(), commentBody.getText().toString(), Toast.LENGTH_SHORT).show();
 			try {
 				controller.addComment(body, qid, null);
+				Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
 			} catch (NullPointerException e) {
 				Toast.makeText(Agora.getContext(),
 						"CommentActivity Nullptr in adding comment", 0).show();
 			}
+			finish();
 		}
 	};
 
