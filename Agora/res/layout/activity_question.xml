@@ -26,73 +26,56 @@
         android:layout_alignParentRight="true"
         android:text="Comments" />
 
-        <TextView
-            android:id="@+id/AuthourDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/QuestionAnswersButton"
-            android:layout_alignLeft="@+id/qBody"
-            android:layout_alignParentRight="true"
-            android:hint="Author, Date"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:id="@+id/AuthourDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/QuestionAnswersButton"
+        android:layout_alignLeft="@+id/qBody"
+        android:layout_alignParentRight="true"
+        android:hint="Author, Date"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
-        <ImageButton
-            android:id="@+id/QuestionFlagButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/ic_action_flag" />
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
 
-        <TextView
-            android:id="@+id/qTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignRight="@+id/qBody"
-            android:layout_alignTop="@+id/QuestionUpVoteButton"
-            android:layout_toRightOf="@+id/QuestionUpVoteButton"
-            android:hint="Question Title" />
-
-        <ImageButton
+        <ImageView
             android:id="@+id/QuestionUpVoteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
+            android:clickable="true"
             android:src="@drawable/ic_action_upvote" />
 
         <TextView
             android:id="@+id/qScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/QuestionUpVoteButton"
-            android:layout_below="@+id/QuestionUpVoteButton"
-            android:hint="Score" />
+            android:hint="Score"
+            android:textSize="20dp" />
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/qScore"
-            android:layout_below="@+id/qScore"
-            android:src="@drawable/ic_action_flag" />
+    </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/qFavourite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/imageView1"
-            android:layout_alignLeft="@+id/QuestionFlagButton"
-            android:src="@drawable/ic_action_rating_favoritepink" />
+    <TextView
+        android:id="@+id/qTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/qBody"
+        android:layout_alignTop="@+id/linearLayout1"
+        android:layout_toRightOf="@+id/QuestionAnswersButton"
+        android:hint="Question Title"
+        android:textSize="22dp" />
 
-        <TextView
-            android:id="@+id/qBody"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_above="@+id/AuthourDate"
-            android:layout_below="@+id/qTitle"
-            android:layout_toLeftOf="@+id/QuestionFlagButton"
-            android:layout_toRightOf="@+id/QuestionUpVoteButton"
-            android:hint="Question Body" />
-    
+    <TextView
+        android:id="@+id/qBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/AuthourDate"
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:layout_alignRight="@+id/QuestionCommentsButton"
+        android:layout_below="@+id/linearLayout1"
+        android:hint="Question Body"
+        android:textSize="18dp" />
+
 </RelativeLayout>

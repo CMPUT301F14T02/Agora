@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
@@ -36,7 +37,7 @@ public class QuestionActivity extends Activity implements Observer {
 
 		Button viewComment = (Button)findViewById(R.id.QuestionCommentsButton);
 		Button viewAnswer = (Button)findViewById(R.id.QuestionAnswersButton);
-		ImageButton upVoteQuestion= (ImageButton)findViewById(R.id.QuestionUpVoteButton);
+		ImageView upVoteQuestion= (ImageView)findViewById(R.id.QuestionUpVoteButton);
 		
 		
 		viewComment.setOnClickListener(new openCommentsView());
