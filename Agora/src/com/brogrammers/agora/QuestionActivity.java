@@ -56,7 +56,7 @@ public class QuestionActivity extends Activity implements Observer {
 		TextView qBody = (TextView)findViewById(R.id.qBody);
 		TextView qScore= (TextView)findViewById(R.id.qScore);
 		TextView authordate = (TextView)findViewById(R.id.AuthourDate);
-		String authorline = "";
+		String authorline = "Submitted by: ";
 
 		
 		if (qList.size() > 0) {

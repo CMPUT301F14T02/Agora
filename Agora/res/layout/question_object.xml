@@ -38,17 +38,8 @@
             android:textSize="20dp" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/qAuthor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/RatingHLayout"
-        android:hint="Author, Date"
-        android:paddingTop="20px"
-        android:textColor="#000000" />
-
     <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -66,7 +57,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_flag" />
-
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/qAuthor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/linearLayout1"
+        android:layout_toLeftOf="@+id/linearLayout1"
+        android:layout_toRightOf="@+id/RatingHLayout"
+        android:hint="Author, Date"
+        android:paddingTop="20px"
+        android:textColor="#444444" />
 
 </RelativeLayout>
