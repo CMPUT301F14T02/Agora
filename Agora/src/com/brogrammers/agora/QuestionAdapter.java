@@ -4,8 +4,10 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
@@ -16,13 +18,14 @@ public class QuestionAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private QuestionController controller;
 	private List<Question> qList;
+	private Activity activity;
 	
-	public QuestionAdapter(List<Question> qList) {
+	public QuestionAdapter(List<Question> qList, Activity activity) {
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		// Need to pull from the controller the list of questions for the adapter
 //		this.controller = QuestionController.getController();
 		this.qList = qList;
-
+		this.activity = activity;
 	}
 
 	@Override
@@ -77,8 +80,27 @@ public class QuestionAdapter extends BaseAdapter {
 		}
 		*/
 		
+		convertView.setOnClickListener(new QuestionOnClickListener(position));
+		
 		return convertView;
 	}
 	
-
+	private class QuestionOnClickListener implements OnClickListener {
+		private int position;
+		QuestionOnClickListener(int position) {
+			this.position = position;
+		}
+		public void onClick(View view) {
+			Long qid = getItemId(position);
+			Intent intent = new Intent(activity, QuestionActivity.class);
+			intent.putExtra("qid", qid);
+			activity.startActivity(intent);
+		}
+	}
 }
+
+
+
+
+
+

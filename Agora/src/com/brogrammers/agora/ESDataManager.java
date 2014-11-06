@@ -134,7 +134,7 @@ public class ESDataManager { // implements DataManager
 				try {
 					Log.e("SERVER", "responsebody: "+new String(responseBody));
 				} catch (NullPointerException e) { }
-				Toast.makeText(Agora.getContext(), "ES Get Question On Fail", 0).show();
+				Toast.makeText(Agora.getContext(), "ES getQuestions Failed; server empty?", 0).show();
 			}
 
 			@Override
