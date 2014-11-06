@@ -8,10 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 public class CommentActivity extends Activity {
 
+	
+	ListView lv;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,6 +22,19 @@ public class CommentActivity extends Activity {
 		
 		Button postComment = (Button)findViewById(R.id.CommentPostButton);
 		postComment.setOnClickListener(postcomment);
+		
+		Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
+		a.addComment(new Comment("adfsfsafs"));
+		
+		lv = (ListView)findViewById(R.id.CommentListView);
+		try {
+			CommentAdapter cadapter = new CommentAdapter(a);
+			lv.setAdapter(cadapter);
+			Toast.makeText(this," Set Comment Adapter", 0).show();
+		} catch (NullPointerException e) {
+			Toast.makeText(this, "CommentActivity Nullptr in setting adapter", 0).show();	
+		}
+		
 		
 	}
 

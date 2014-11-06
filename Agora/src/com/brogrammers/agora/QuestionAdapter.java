@@ -11,31 +11,32 @@ import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class QuestionAdapter extends BaseAdapter{
+public class QuestionAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
-	private QuestionController quest_controller;
+	private QuestionController controller;
+	private List<Question> qList;
 	
-	public QuestionAdapter(QuestionController qcontroller) {
+	public QuestionAdapter(List<Question> qList) {
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		
 		// Need to pull from the controller the list of questions for the adapter
-		this.quest_controller = qcontroller;
+//		this.controller = QuestionController.getController();
+		this.qList = qList;
 
 	}
 
 	@Override
 	public int getCount() {
-		return this.quest_controller.getAllQuestions().size();
+		return qList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return this.quest_controller.getAllQuestions().get(position);
+		return qList.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return this.quest_controller.getAllQuestions().get(position).getID();
+		return qList.get(position).getID();
 	}
 
 	@Override

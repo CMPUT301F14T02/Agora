@@ -27,7 +27,6 @@ public class QuestionController {
 	private List<Question> searchQuestionResults;
 	private List<Answer> searchAnswerResults;
 	private List<Question> questionByIdList;
-	private Question questionById;
 	
 	private Observer observer;
 
@@ -71,6 +70,7 @@ public class QuestionController {
 			}
 			return allQuestionList;
 		} else {
+			Toast.makeText(Agora.getContext(), "Controller: not connected, getAllQuestions from cache", 0).show();
 			return cache.getQuestions();
 		}
 	}
@@ -152,16 +152,14 @@ public class QuestionController {
 		}
 	}
 
-	public Question getQuestionById(Long id) {
+	public List<Question> getQuestionById(Long id) {
 		if (eSearch.isConnected()) {
 			try {
 				questionByIdList = eSearch.getQuestionById(id);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
-			// TODO: is this being set correctly
-			questionById = new Question(null);
-			return questionById;
+			return questionByIdList;
 		} else {
 			return null;
 			// TODO: handle no network
@@ -174,13 +172,13 @@ public class QuestionController {
 		if (questionByIdList == null) {
 			// TODO: Check the null set. It looks like the list is not being updated from eSearch.
 			Toast.makeText(Agora.getContext(), "Controller: questionByIdList is null!", 0).show();
-			allQuestionList = getAllQuestions();
 			
 		} else if (questionByIdList.size() == 0) {
 			Toast.makeText(Agora.getContext(), "Controller: questionByIdList is empty!", 0).show();			
 		} else {
-			questionById = questionByIdList.get(0);
+			questionByIdList.get(0);
 		}
+
 		
 		if (observer != null) {
 			observer.update();
@@ -195,6 +193,16 @@ public class QuestionController {
 	public void setObserver(Observer observer) {
 		this.observer = observer;
 		Toast.makeText(Agora.getContext(), "Setting Controller Observer", 0).show();
+	}
+
+	public void addCache(Long id) {
+		user = DeviceUser.getUser();
+		user.addCachedQuestionID(id);		
+	}
+
+	public void addFavorite(Long id) {
+		user = DeviceUser.getUser();
+		user.addFavoritedQuestionID(id);		
 	}
 		
 }
