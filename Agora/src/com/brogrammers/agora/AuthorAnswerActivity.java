@@ -23,9 +23,7 @@ public class AuthorAnswerActivity extends Activity {
 
 		Intent intent = getIntent();
 		qid = intent.getLongExtra("qid", 0L);
-		if (qid.equals(0L)) { Toast.makeText(this, "Didn't recieve a qid in intent", 0).show(); finish(); }
-
-		
+		if (qid.equals(0L)) { Toast.makeText(this, "Didn't recieve a qid in intent", 0).show(); finish(); }		
 		addAnswer.setOnClickListener(answerhandler);
 		addPicture.setOnClickListener(picturehandler);
 		

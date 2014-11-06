@@ -124,6 +124,7 @@ public class QuestionController {
 	
 	// if adding a comment to a question, pass null for aID
 	public void addComment(String body, Long qID, Long aID) {
+
 		Comment c = new Comment(body);
 		Question q = cache.getQuestionById(qID);
 		if (aID == null) {
