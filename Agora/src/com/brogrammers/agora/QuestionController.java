@@ -110,8 +110,9 @@ public class QuestionController {
 		a.setImage(null);
 		
 		// the cache operation MUST be called before the eSearch operation
-		Question q = cache.getQuestionById(qID);
-		q.addAnswer(a);
+//		Question q = cache.getQuestionById(qID);
+//		q.addAnswer(a);
+		cache.pushAnswer(a, qID);
 		
 		try {
 			eSearch.pushAnswer(a, qID, cache);

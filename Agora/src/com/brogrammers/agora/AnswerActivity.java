@@ -30,6 +30,7 @@ public class AnswerActivity extends Activity implements Observer{
 		Long qid = intent.getLongExtra("qid", 0L);
 		if (qid.equals(0L)) { Toast.makeText(this, "Didn't recieve a qid in intent", 0).show(); finish(); }
 		
+		qController.setObserver(this);
 		qList = qController.getQuestionById(qid);
 		//comment button
 		//Button viewComment = (Button)findViewById(R.id.AnswerCommentsButton); // no longer used
