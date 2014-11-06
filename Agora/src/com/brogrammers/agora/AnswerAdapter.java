@@ -63,7 +63,12 @@ public class AnswerAdapter extends BaseAdapter {
 			return 0;
 		}
 	}
-
+	public String datetostring(long milliseconds){
+	    Date date = new Date(); 
+	    date.setTime(milliseconds);
+	    String newDate=new SimpleDateFormat("MMM d yyyy").format(date);
+	    return newDate;
+	}
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if(convertView == null){
@@ -86,7 +91,7 @@ public class AnswerAdapter extends BaseAdapter {
 		//set text on each TextView			
 		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
 		((TextView)convertView.findViewById(R.id.aScore)).setText(Integer.toString(answer.getRating()));
-		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText(df.format(answer.getDate()).toString());
+		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText("Submitted by: " +answer.getAuthor().getUsername()+", "+ datetostring(answer.getDate()));
 		
 		return convertView;
 	}

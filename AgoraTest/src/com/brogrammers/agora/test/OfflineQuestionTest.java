@@ -1,4 +1,4 @@
-
+/*
 package com.brogrammers.agora.test;
 
 import java.io.IOException;
@@ -27,7 +27,7 @@ import junit.framework.TestCase;
 public class OfflineQuestionTest extends ActivityInstrumentationTestCase2<MainActivity>{
 	 /*Test if questions can be added if network is down
 	 * and tests if the question will be pushed when network comes back
-	 */
+	 *
 	 
 	
 	public OfflineQuestionTest() {
@@ -136,4 +136,4 @@ public class OfflineQuestionTest extends ActivityInstrumentationTestCase2<MainAc
 		assertTrue("Retrieved Question has wrong body", qList.get(0).getBody().equals("Test Body D"));
 		assertTrue("Retrieved Question has wrong ID", qList.get(0).getID().equals(qid));	
 	}
-}
+}*/

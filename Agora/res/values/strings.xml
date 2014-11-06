@@ -13,15 +13,15 @@
     <string name="searchtab_questions">Questions</string>
     <string name="searchtab_answers">Answers</string>
     <string name="title_activity_author_question">Submit a Question</string>
-    <string name="titletext">Title</string>
-    <string name="titlebodytext">Text</string>
+    <string name="titletext">Title:</string>
+    <string name="titlebodytext">Quesiton Body:</string>
     <string name="entertitletext">Enter a title</string>
     <string name="enterbodytext">Write your description here</string>
     <string name="addPictureButton">Select Picture</string>
     <string name="submitQuestionButton">Submit Question</string>
     <string name="submitAnswerButton">Submit Answer</string>
-    <string name="title_activity_author_answer">submit an answer</string>
-    <string name="title_activity_question_answer">QuestionAnswerActivity</string>
+    <string name="title_activity_author_answer">Submit an Answer</string>
+    <string name="title_activity_question_answer">Questions Answers:</string>
     <string name="arrangeby">Arrange By</string>
     <string name="filterby">Filter By</string>
     <string name="date">Date</string>
@@ -29,5 +29,6 @@
     <string name="title_activity_question">QuestionActivity</string>
     <string name="title_activity_answer">AnswerActivity</string>
     <string name="title_activity_comment">CommentActivity</string>
+    <string name="answer">Answer</string>
 
 </resources>

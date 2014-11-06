@@ -77,18 +77,9 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 		final ESDataManager es = new TestESManager();
 		QuestionController controller = new TestController(user, cache, es);
 		
-		// Add Question with no connection
+
 		Long qid = controller.addQuestion("Test Title D", "Test Body D", null);
-		
-		// Connect to server
-		HttpClient client = new DefaultHttpClient();
-		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/agora/_query?q=_type:agora");
-			client.execute(deleteRequest);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+
 		// wait for it to be uploaded
 		try {
 			signal.await(1, TimeUnit.SECONDS);

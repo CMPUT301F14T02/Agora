@@ -49,7 +49,7 @@ public class MainActivity extends Activity implements Observer {
 
         qController.setObserver(this);
 		try {
-			signal.await(100, TimeUnit.MILLISECONDS);
+			signal.await(200, TimeUnit.MILLISECONDS);
 		} catch (InterruptedException e) {
 		
 		}
