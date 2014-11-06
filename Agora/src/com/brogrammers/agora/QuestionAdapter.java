@@ -74,7 +74,7 @@ public class QuestionAdapter extends BaseAdapter {
 		}
 		public void onClick(View view) {
 			Long qid = getItemId(position);
-			Intent intent = new Intent(activity, AnswerActivity.class);
+			Intent intent = new Intent(activity, QuestionActivity.class);
 			intent.putExtra("qid", qid);
 			activity.startActivity(intent);
 		}

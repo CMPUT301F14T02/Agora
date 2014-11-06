@@ -169,17 +169,7 @@ public class QuestionController {
 	}
 	
 	public void update() {
-		if (questionByIdList == null) {
-			// TODO: Check the null set. It looks like the list is not being updated from eSearch.
-			Toast.makeText(Agora.getContext(), "Controller: questionByIdList is null!", 0).show();
-			
-		} else if (questionByIdList.size() == 0) {
-			Toast.makeText(Agora.getContext(), "Controller: questionByIdList is empty!", 0).show();			
-		} else {
-			questionByIdList.get(0);
-		}
 
-		
 		if (observer != null) {
 			observer.update();
 			Toast.makeText(Agora.getContext(), "Updating Controller Observer", 0).show();
@@ -192,7 +182,7 @@ public class QuestionController {
 	
 	public void setObserver(Observer observer) {
 		this.observer = observer;
-		Toast.makeText(Agora.getContext(), "Setting Controller Observer", 0).show();
+//		Toast.makeText(Agora.getContext(), "Setting Controller Observer", 0).show();
 	}
 
 	public void addCache(Long id) {
