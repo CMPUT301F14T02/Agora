@@ -40,13 +40,7 @@ public class MainActivity extends Activity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        //ESDataManager es = ESDataManager.getInstance();
-		//try {
-		//	results = es.getQuestions();
-		//} catch (UnsupportedEncodingException e) {
-		//	e.printStackTrace();
-		//}
-      
+
     }
     
     protected void onResume() {
@@ -149,7 +143,7 @@ public class MainActivity extends Activity implements Observer {
 	@Override
 	public void update() {
 		qAdapter.notifyDataSetChanged();
-		Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
+//		Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
 	}
 
 

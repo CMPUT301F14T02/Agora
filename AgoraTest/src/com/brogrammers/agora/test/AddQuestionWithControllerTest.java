@@ -27,14 +27,14 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 
 	protected void setUp() throws Exception {
 		super.setUp();
-		/*
+
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/agora/_query?q=_type:agora");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/testing/_query?q=_type:testing");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
-		} */
+		} 
 	}
 
 	protected void tearDown() throws Exception {
@@ -59,7 +59,7 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 	
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "agora/");
+			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "testing/");
 		}
 	}
 	
@@ -69,7 +69,7 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 		}
 	}
 	
-	public void testRemember() throws Throwable {
+	public void testAddQuestion() throws Throwable {
 		final CountDownLatch signal = new CountDownLatch(1);
 		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
 		DeviceUser user = new TestDeviceUser();
@@ -91,7 +91,7 @@ public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCa
 		
 		// wait for it to be uploaded
 		try {
-			signal.await(2, TimeUnit.SECONDS);
+			signal.await(1, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			assertTrue(false);
 		}

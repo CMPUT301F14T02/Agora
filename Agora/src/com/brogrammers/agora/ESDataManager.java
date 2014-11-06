@@ -155,7 +155,6 @@ public class ESDataManager { // implements DataManager
 						questionList.add(qObject);
 						Log.e("SERVER", qObject.getID().toString()+" "+qObject.getBody());
 				    }
-				    // TODO: Check this is being passed to controller properly.
 				    
 					QuestionController.getController().update();
 					Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
@@ -209,7 +208,7 @@ public class ESDataManager { // implements DataManager
 		return push(questionSerialized, endPoint);
 	}
 	
-	public boolean pushAnswer(Answer a, Long qID, CacheDataManager cache) throws UnsupportedEncodingException {		
+	public boolean pushAnswer(Answer a, Long qID, CacheDataManager cache) {		
 		Question q = cache.getQuestionById(qID);
 		Gson gson = new Gson();
 		String answerSerialized = gson.toJson(q.getAnswers());
@@ -219,7 +218,12 @@ public class ESDataManager { // implements DataManager
 					"}" +
 				"}";
 		String endPoint = Long.toString(qID) + "/" + "_update";
-		return push(answerSerialized, endPoint);
+		try {
+			return push(answerSerialized, endPoint);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	// if comment is on an answer pass aID, if on question itself pass null
@@ -248,8 +252,8 @@ public class ESDataManager { // implements DataManager
 		}
 	}
 	
-	public boolean pushUpvote(Long qID) throws UnsupportedEncodingException {
-		Question q = CacheDataManager.getInstance().getQuestionById(qID);
+	public boolean pushUpvote(Long qID, CacheDataManager cache) {
+		Question q = cache.getQuestionById(qID);
 		int upvotes = q.getRating();
 		String upVoteSerialized = "{" +
 				"\"doc\": { " +
@@ -257,7 +261,12 @@ public class ESDataManager { // implements DataManager
 					"}" +
 				"}";
 		String endPoint = Long.toString(qID) + "/" + "_update";
-		return push(upVoteSerialized, endPoint);
+		try {
+			return push(upVoteSerialized, endPoint);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	

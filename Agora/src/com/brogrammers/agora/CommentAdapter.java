@@ -23,7 +23,7 @@ public class CommentAdapter extends BaseAdapter {
 	
 	CommentAdapter(Question q){
 		this.answer = null;
-		this.question = null;
+		this.question = q;
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
 	}
 	
@@ -44,7 +44,7 @@ public class CommentAdapter extends BaseAdapter {
 		if(question == null){
 			return answer.getComments().get(position);
 		} else {
-			return answer.getComments().get(position);
+			return question.getComments().get(position);
 		}
 	}
 
