@@ -1,5 +1,6 @@
 package com.brogrammers.agora;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -16,6 +17,7 @@ import android.widget.Toast;
 public class AnswerActivity extends Activity implements Observer{
 	
 	private QuestionController qController = QuestionController.getController();
+	private List<Question> qList;
 	private AnswerAdapter aadapter;
 
 	ListView lv;
@@ -48,14 +50,14 @@ public class AnswerActivity extends Activity implements Observer{
 		}
 		
 		
-		Question q = qController.getQuestionById(qid);
+		qList = qController.getQuestionById(qid);
 
 	
 		lv = (ListView)findViewById(R.id.AnswerListView);
 		try {
-			aadapter = new AnswerAdapter(q);
+			aadapter = new AnswerAdapter(null);
 			lv.setAdapter(aadapter);
-			Toast.makeText(this," Set Answer Adapter", 0).show();
+//			Toast.makeText(this," Set Answer Adapter", 0).show();
 		} catch (NullPointerException e) {
 			Toast.makeText(this, "AnswerActivity Nullptr in setting adapter", 0).show();	
 		}
@@ -98,8 +100,13 @@ public class AnswerActivity extends Activity implements Observer{
 
 	@Override
 	public void update() {
-		aadapter.notifyDataSetChanged();
-		Toast.makeText(this, "AnswerActivity got update notification", 0).show();
+		if (qList.size() == 0) {
+			Toast.makeText(this, "AnswerActivity update() called, but qList is empty", 0);
+		} else {
+			aadapter.setQuestion(qList.get(0));
+//		aadapter.notifyDataSetChanged();
+			Toast.makeText(this, "AnswerActivity got update notification", 0).show();
+		}
 		
 	}
 

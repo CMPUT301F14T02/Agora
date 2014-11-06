@@ -28,7 +28,7 @@ import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements Observer{
+public class MainActivity extends Activity implements Observer {
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     private List<Question> results = new ArrayList<Question>();
 
@@ -53,8 +53,10 @@ public class MainActivity extends Activity implements Observer{
 		//Toast.makeText(this, , duration)
         
         //qController.setObserver(this);
+        qController.setObserver(this);
+        List<Question> qList = qController.getAllQuestions();
 	    ListView lv = (ListView)findViewById(R.id.listView1);
-		qAdapter = new QuestionAdapter(qController);
+		qAdapter = new QuestionAdapter(qList);
 		lv.setAdapter(qAdapter);
 
 		/*
@@ -150,7 +152,6 @@ public class MainActivity extends Activity implements Observer{
 	public void update() {
 		qAdapter.notifyDataSetChanged();
 		Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
-		
 	}
 
 
