@@ -143,6 +143,7 @@ public final class R {
         public static final int add=0x7f050004;
         public static final int addPictureButton=0x7f050010;
         public static final int addQuestion=0x7f050003;
+        public static final int answer=0x7f05001c;
         public static final int app_name=0x7f050000;
         public static final int arrangeby=0x7f050015;
         public static final int date=0x7f050017;
