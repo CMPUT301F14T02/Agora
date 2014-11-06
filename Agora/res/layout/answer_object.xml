@@ -46,6 +46,7 @@
         android:clickable="false"
         android:focusable="false"
         android:focusableInTouchMode="false"
+        android:gravity="top"
         android:hint="Loading..."
         android:textColor="#000000" />
 
@@ -53,8 +54,9 @@
         android:id="@+id/aAuthourDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/aBody"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/AnswerScoreHLayout"
         android:hint="Loading..."
         android:textAppearance="?android:attr/textAppearanceSmall" />
 

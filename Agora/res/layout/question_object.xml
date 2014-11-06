@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/RatingHLayout"
         android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/qAuthor"
         android:layout_toRightOf="@+id/RatingHLayout"
         android:gravity="left"
         android:hint="@string/titletext"

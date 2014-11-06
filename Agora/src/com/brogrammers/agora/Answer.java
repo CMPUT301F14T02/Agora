@@ -26,6 +26,10 @@ public class Answer implements Serializable {
 	private int version;
 	private boolean posted;
 	
+	/**
+	 * Description
+	 * @return
+	 */
 	public boolean isPosted() {
 		return posted;
 	}
