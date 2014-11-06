@@ -61,7 +61,7 @@ public class AnswerActivity extends Activity implements Observer{
 
 		lv = (ListView)findViewById(R.id.AnswerListView);
 		try {
-			aadapter = new AnswerAdapter(null);
+			aadapter = new AnswerAdapter(null,this);
 			lv.setAdapter(aadapter);
 //			Toast.makeText(this," Set Answer Adapter", 0).show();
 		} catch (NullPointerException e) {

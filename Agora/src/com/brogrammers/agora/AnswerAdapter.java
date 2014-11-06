@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,9 +20,11 @@ public class AnswerAdapter extends BaseAdapter {
 	private Question question;
 	private LayoutInflater inflater;
 	private List<Question> qList;
-
-	AnswerAdapter(Question q){
+	private Activity activity;
+	
+	AnswerAdapter(Question q, Activity a){
 		this.question = q;
+		this.activity = a;
 //		if (q.size() > 0) {
 //			this.question = q.get(0);
 //		}
@@ -68,9 +71,12 @@ public class AnswerAdapter extends BaseAdapter {
 		ImageButton upvote = (ImageButton) convertView.findViewById(R.id.aUpvote);
 		
 		
-		comment.setOnClickListener(answercomments);
+		//comment.setOnClickListener(answercomments);
+		comment.setOnClickListener(new CommentOnClickListener(position));
 		
-		upvote.setOnClickListener(answerupvote);
+		//upvote.setOnClickListener(answerupvote);
+		upvote.setOnClickListener(new UpVoteOnClickListener(position));
+		
 		
 		//set text on each TextView			
 		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
@@ -102,5 +108,37 @@ public class AnswerAdapter extends BaseAdapter {
 		this.question = q;
 		notifyDataSetChanged();
 	}
+
+
+	private class CommentOnClickListener implements OnClickListener {
+		private int position;
+		CommentOnClickListener(int position) {
+			this.position = position;
+		}
+		public void onClick(View view) {
+			Long aid = getItemId(position);
+			Intent intent = new Intent(activity, CommentActivity.class);
+			intent.putExtra("aid", aid);
+			activity.startActivity(intent);
+		}
+	}
+	
+	private class UpVoteOnClickListener implements OnClickListener {
+		private int position;
+		UpVoteOnClickListener(int position) {
+			this.position = position;
+		}
+		public void onClick(View view) {
+			Long aid = getItemId(position);
+			question.getAnswerByID(aid).upvote();
+			Toast.makeText(Agora.getContext(), Integer.toString(question.getAnswerByID(aid).getRating()), Toast.LENGTH_SHORT).show();
+			//update the rating textview afterwards
+		}
+	}
 	
 }
+
+	
+
+
+
