@@ -47,7 +47,7 @@ public class MainActivity extends Activity implements Observer {
         qController.setObserver(this);
         List<Question> qList = qController.getAllQuestions();
 	    ListView lv = (ListView)findViewById(R.id.listView1);
-		qAdapter = new QuestionAdapter(qList);
+		qAdapter = new QuestionAdapter(qList, this);
 		lv.setAdapter(qAdapter);
     }
 
