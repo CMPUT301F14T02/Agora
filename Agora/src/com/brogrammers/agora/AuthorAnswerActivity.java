@@ -1,23 +1,31 @@
 package com.brogrammers.agora;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class AuthorAnswerActivity extends Activity {
-
+	private Long qid;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_author_answer);
 		Button addAnswer = (Button)findViewById(R.id.authorAnswerAddAnswerButton);
-		Button addPicture = (Button)findViewById(R.id.authorQuestionAddPictureButton);
+		Button addPicture = (Button)findViewById(R.id.authorAnswerAddPictureButton);
 
+		Intent intent = getIntent();
+		qid = intent.getLongExtra("qid", 0L);
+		if (qid.equals(0L)) { Toast.makeText(this, "Didn't recieve a qid in intent", 0).show(); finish(); }
+
+		
 		addAnswer.setOnClickListener(answerhandler);
 		addPicture.setOnClickListener(picturehandler);
 		
@@ -45,17 +53,19 @@ public class AuthorAnswerActivity extends Activity {
 	View.OnClickListener answerhandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add question
-			EditText bodyText = (EditText)findViewById(R.id.authorAnswerBodyTextView);
-    		Toast.makeText(Agora.getContext(), "Adding Question!", Toast.LENGTH_SHORT).show();
+			EditText bodyText = (EditText)findViewById(R.id.authorAnswerBodyEditText);
+    		Toast.makeText(Agora.getContext(), "Adding Answer!", Toast.LENGTH_SHORT).show();
     		String body = bodyText.getText().toString();
-    		Toast.makeText(Agora.getContext(), "Body: "+body, Toast.LENGTH_SHORT).show();
+//    		Toast.makeText(Agora.getContext(), "Body: "+body, Toast.LENGTH_SHORT).show();
+    		QuestionController.getController().addAnswer(body, null, qid);
+    		finish();
     		
 		}
 	};
 	View.OnClickListener picturehandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add picture
-    		Toast.makeText(Agora.getContext(), "Adding Picture!", Toast.LENGTH_SHORT).show();
+    		Toast.makeText(Agora.getContext(), "Adding Picture! (Not Yet Implemented)", Toast.LENGTH_SHORT).show();
 
 		}
 	};

@@ -64,6 +64,7 @@ public final class R {
         public static final int arrangebyTextDialoug=0x7f080039;
         public static final int authorAnswerAddAnswerButton=0x7f080002;
         public static final int authorAnswerAddPictureButton=0x7f080003;
+        public static final int authorAnswerBodyEditText=0x7f080004;
         public static final int authorAnswerBodyTextView=0x7f080001;
         public static final int authorQuestionAddPictureButton=0x7f080009;
         public static final int authorQuestionAddQuestionButton=0x7f08000a;
@@ -76,7 +77,6 @@ public final class R {
         public static final int cBody=0x7f08002d;
         public static final int commentText=0x7f080020;
         public static final int descOrderRadioButton=0x7f08003c;
-        public static final int editText1=0x7f080004;
         public static final int favouritecheck=0x7f08003e;
         public static final int filterbyTextDialoug=0x7f08003d;
         public static final int goto_question_answer=0x7f080045;

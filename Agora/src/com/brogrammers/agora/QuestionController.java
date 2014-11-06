@@ -105,7 +105,7 @@ public class QuestionController {
 	}
 	
 	public Long addAnswer(String body, Bitmap image, Long qID) {
-		Answer a = new Answer(body, image, user);
+		Answer a = new Answer(body, image, user); 
 //		a.setImage(resizer.resizeTo64KB(image)); // TODO: implement
 		a.setImage(null);
 		

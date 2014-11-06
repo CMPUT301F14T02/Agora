@@ -77,11 +77,17 @@ public class QuestionActivity extends Activity implements Observer {
 //			flag();
 			return true;
 		case R.id.action_addanswer:
-//			openAddAnswerView();
+			openAddAnswerView();
 			return true;	
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	private void openAddAnswerView() {
+		Intent intent = new Intent(QuestionActivity.this, AuthorAnswerActivity.class);
+		intent.putExtra("qid", qid);
+		startActivity(intent);
 	}
 	
 	private class openAnswerView implements OnClickListener {
