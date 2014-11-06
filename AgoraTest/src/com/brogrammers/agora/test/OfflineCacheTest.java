@@ -1,3 +1,4 @@
+/*
 package com.brogrammers.agora.test;
 
 import java.io.UnsupportedEncodingException;
@@ -33,7 +34,7 @@ public class OfflineCacheTest extends ActivityInstrumentationTestCase2<MainActiv
 	 * 
 	 * Tests if cached and favorite questions are still there when network
 	 * connection is down.
-	 */
+	 *
 	 
 	public OfflineCacheTest() {
 		super(MainActivity.class);
@@ -144,4 +145,4 @@ public class OfflineCacheTest extends ActivityInstrumentationTestCase2<MainActiv
 //		assertTrue("Retrieved Cache Question has wrong body", cacheQuestion.getBody().equals("Test Body D"));
 //		assertTrue("Retrieved Cache Question has wrong ID", cacheQuestion.getID().equals(qid));		
 	}
-}
+}*/

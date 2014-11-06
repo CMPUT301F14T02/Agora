@@ -3,6 +3,7 @@ package com.brogrammers.agora;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import android.graphics.Bitmap;
@@ -134,4 +135,7 @@ public class Question implements Serializable, Comparable<Question> {
 		return uniqueID.compareTo(other.uniqueID);
 	}
 
+	public void setDate(Long date) {
+		this.date = date;	
+	}
 }
