@@ -14,7 +14,7 @@
     <string name="searchtab_answers">Answers</string>
     <string name="title_activity_author_question">Submit a Question</string>
     <string name="titletext">Title:</string>
-    <string name="titlebodytext">Quesiton Body:</string>
+    <string name="titlebodytext">Question Body:</string>
     <string name="entertitletext">Enter a title</string>
     <string name="enterbodytext">Write your description here</string>
     <string name="addPictureButton">Select Picture</string>
