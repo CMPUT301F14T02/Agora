@@ -52,6 +52,7 @@ public class MainActivity extends Activity implements Observer{
 		//qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
 		//Toast.makeText(this, , duration)
         
+        Question q = new Question("New Thunderwave", "Why is it OP?", null, new Author("Mudkip"));
         //qController.setObserver(this);
 	    ListView lv = (ListView)findViewById(R.id.listView1);
 		qAdapter = new QuestionAdapter(qController);
