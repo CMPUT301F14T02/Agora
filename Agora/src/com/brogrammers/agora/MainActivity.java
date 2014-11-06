@@ -39,38 +39,18 @@ public class MainActivity extends Activity implements Observer {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
-        //ESDataManager es = ESDataManager.getInstance();
-		//try {
-		//	results = es.getQuestions();
-		//} catch (UnsupportedEncodingException e) {
-		//	e.printStackTrace();
-		//}
-
-
-        
-		//qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
-		//Toast.makeText(this, , duration)
-        
-        //qController.setObserver(this);
+      
+    } 
+    
+    protected void onResume() {
+    	super.onResume();
         qController.setObserver(this);
         List<Question> qList = qController.getAllQuestions();
 	    ListView lv = (ListView)findViewById(R.id.listView1);
 		qAdapter = new QuestionAdapter(qList);
 		lv.setAdapter(qAdapter);
+    }
 
-		/*
-		final CountDownLatch signal = new CountDownLatch(1);
-        Long qid = qController.addQuestion("Test Title E", "Test Body E", null);
-		try {
-			signal.await(2, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-
-		}
-        Log.e("ID", qid.toString()); 
-        Long aid = qController.addAnswer("Answer Body E", null, qid);
-		 */
-    } 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -102,6 +82,8 @@ public class MainActivity extends Activity implements Observer {
           	Intent intent = new Intent(Agora.getContext(), AnswerActivity.class);
           	startActivity(intent);
         	//Toast.makeText(Agora.getContext(), Integer.toString(results.size()), 0).show();
+        case R.id.refreshMain:
+        	onResume();
         default:
             return super.onOptionsItemSelected(item);
         }

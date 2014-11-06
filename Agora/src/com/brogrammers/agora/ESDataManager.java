@@ -131,7 +131,9 @@ public class ESDataManager { // implements DataManager
 			public void onFailure(int status, Header[] arg1, byte[] responseBody, Throwable arg3) {
 				
 				Log.e("SERVER", "getQuestion failure: "+Integer.toString(status));
-				Log.e("SERVER", "responsebody: "+new String(responseBody));
+				try {
+					Log.e("SERVER", "responsebody: "+new String(responseBody));
+				} catch (NullPointerException e) { }
 				Toast.makeText(Agora.getContext(), "ES Get Question On Fail", 0).show();
 			}
 
@@ -277,6 +279,7 @@ public class ESDataManager { // implements DataManager
 			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
 			        // called when response HTTP status is "200 OK"
 					Log.e("SERVER UPDATED", "updateServer method success.");
+					QuestionController.getController().update();
 			    }
 			    @Override
 			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {

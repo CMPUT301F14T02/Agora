@@ -7,7 +7,7 @@ import java.util.List;
 
 import android.graphics.Bitmap;
 
-public class Question implements Serializable, Comparable<Question>, Post {
+public class Question implements Serializable, Comparable<Question> {
 	private static final long serialVersionUID = -4895951515889586534L;
 
 	private String title;

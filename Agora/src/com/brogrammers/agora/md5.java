@@ -4,7 +4,6 @@ import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-// TODO: make sure this works?
 public class md5 {
 	static public Long hash(String s) {
 		try {

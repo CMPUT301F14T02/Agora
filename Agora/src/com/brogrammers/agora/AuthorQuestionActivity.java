@@ -1,6 +1,9 @@
 package com.brogrammers.agora;
 
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -59,6 +62,7 @@ public class AuthorQuestionActivity extends Activity {
     		
     		// replace null with image when images are implemented
     		QuestionController.getController().addQuestion(title, body, null); 
+    		
     		finish();
     		
 		}
