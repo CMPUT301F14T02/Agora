@@ -15,13 +15,13 @@ public class CommentAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private Question question;
 	
-	CommentAdapter(Answer a){
+	public CommentAdapter(Answer a){
 		this.answer = a;
 		this.question = null;
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
 	}
 	
-	CommentAdapter(Question q){
+	public CommentAdapter(Question q){
 		this.answer = null;
 		this.question = q;
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
@@ -51,7 +51,7 @@ public class CommentAdapter extends BaseAdapter {
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
-		return (Long) null;
+		return 0;
 	}
 
 	@Override

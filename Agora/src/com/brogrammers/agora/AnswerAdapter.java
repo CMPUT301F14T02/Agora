@@ -1,7 +1,10 @@
 package com.brogrammers.agora;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,12 +18,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+import java.util.Date;
 
 public class AnswerAdapter extends BaseAdapter {
 	private Question question;
 	private LayoutInflater inflater;
 	private List<Question> qList;
 	private Activity activity;
+	private DateFormat df = new SimpleDateFormat ("dd/MM/yy HH:mm:ss",Locale.getDefault());
 	
 	AnswerAdapter(Question q, Activity a){
 		this.question = q;
@@ -81,7 +86,7 @@ public class AnswerAdapter extends BaseAdapter {
 		//set text on each TextView			
 		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
 		((TextView)convertView.findViewById(R.id.aScore)).setText(Integer.toString(answer.getRating()));
-		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText(answer.getDate().toString());
+		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText(df.format(answer.getDate()).toString());
 		
 		return convertView;
 	}
@@ -119,6 +124,7 @@ public class AnswerAdapter extends BaseAdapter {
 			Long aid = getItemId(position);
 			Intent intent = new Intent(activity, CommentActivity.class);
 			intent.putExtra("aid", aid);
+			intent.putExtra("qid", question.getID());
 			activity.startActivity(intent);
 		}
 	}

@@ -64,16 +64,18 @@ public class AnswerActivity extends Activity implements Observer{
 		return super.onOptionsItemSelected(item);
 	}
 
-	//open comment view
-	View.OnClickListener opencommentview = new View.OnClickListener() {	
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			Intent intent = new Intent(Agora.getContext(), CommentActivity.class);
-			startActivity(intent);
-		}
-	};
-		
+	/* This goes in the AnswerAdapter */
+//	//open comment view
+//	View.OnClickListener opencommentview = new View.OnClickListener() {	
+//		@Override
+//		public void onClick(View v) {
+//			// TODO Auto-generated method stub
+//			Intent intent = new Intent(Agora.getContext(), CommentActivity.class);
+//			
+//			startActivity(intent);
+//		}
+//	};
+//		
 	//remove these later, made for button testing. actual function is implemented in controller.
 	public void upvote(){
 		Toast.makeText(this, "upvote", Toast.LENGTH_SHORT).show();
