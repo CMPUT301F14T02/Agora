@@ -1,5 +1,7 @@
 package com.brogrammers.agora;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
@@ -52,6 +54,8 @@ public class QuestionAdapter extends BaseAdapter {
 //		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
 		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle());
 		((TextView)convertView.findViewById(R.id.qObjectScore)).setText(Integer.toString(question.getRating()));
+		((TextView)convertView.findViewById(R.id.qAuthor)).setText("Submitted by: " +question.getAuthor().getUsername()+", "+ datetostring(question.getDate()));
+
 		/*List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
 		
 		if (favoritedQuestions.contains(question.getID())) {
@@ -66,7 +70,12 @@ public class QuestionAdapter extends BaseAdapter {
 		
 		return convertView;
 	}
-	
+	public String datetostring(long milliseconds){
+	    Date date = new Date(); 
+	    date.setTime(milliseconds);
+	    String newDate=new SimpleDateFormat("MMM d yyyy").format(date);
+	    return newDate;
+	}
 	private class QuestionOnClickListener implements OnClickListener {
 		private int position;
 		QuestionOnClickListener(int position) {

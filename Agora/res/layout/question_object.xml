@@ -59,9 +59,10 @@
         android:id="@+id/qAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/qObjectFavourite"
+        android:layout_alignBottom="@+id/imageButton1"
+        android:layout_alignRight="@+id/qobjecttitle"
         android:layout_toRightOf="@+id/RatingHLayout"
         android:hint="Author, Date"
-        android:textColor="#000000" />
+        android:textColor="#444444" />
 
 </RelativeLayout>
