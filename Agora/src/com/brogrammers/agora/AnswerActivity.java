@@ -40,8 +40,8 @@ public class AnswerActivity extends Activity implements Observer{
 		//q.addAnswer(a);
 		
 		qController.setObserver(this);
-		Long qid = qController.addQuestion("AnswerActivity live test title", "AnswerActivity live test body", null);
-		Long aid = qController.addAnswer("AnswerActivity live answer title", null, qid);
+		//Long qid = qController.addQuestion("AnswerActivity live test title", "AnswerActivity live test body", null);
+		//Long aid = qController.addAnswer("AnswerActivity live answer title", null, qid);
 		final CountDownLatch signal = new CountDownLatch(1);
 		try {
 			signal.await(2, TimeUnit.SECONDS);
@@ -50,7 +50,7 @@ public class AnswerActivity extends Activity implements Observer{
 		}
 		
 		
-		qList = qController.getQuestionById(qid);
+		//qList = qController.getQuestionById(qid);
 
 	
 		lv = (ListView)findViewById(R.id.AnswerListView);

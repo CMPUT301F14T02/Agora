@@ -37,7 +37,8 @@
         android:layout_alignLeft="@+id/qobjecttitle"
         android:layout_alignRight="@+id/qobjecttitle"
         android:layout_below="@+id/qobjecttitle"
-        android:hint="Question Body" />
+        android:hint="Question Body"
+        android:textColor="#000000" />
 
     <TextView
         android:id="@+id/qObjectScore"
@@ -46,24 +47,28 @@
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/imageButton3"
         android:layout_below="@+id/imageButton3"
-        android:hint="Score" />
+        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="false"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:hint="Score"
+        android:textColor="#000000" />
 
     <ImageButton
         android:id="@+id/imageButton3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/imageButton1"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
         android:src="@drawable/ic_action_upvote" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/qAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_below="@+id/imageButton1"
-        android:layout_marginTop="20dp"
-        android:text="TextView" />
+        android:hint="Author, Date"
+        android:textColor="#000000" />
 
 </RelativeLayout>
