@@ -27,20 +27,20 @@ public class UpvoteQuestionTest extends ActivityInstrumentationTestCase2<MainAct
 	static long questionID;
 
 	// upvoting once
-	public void testQuestionUpvoted() {
-	questionID = controller.addQuestion("I can't get past this road.", "There is a snorlax blocking the path.", null);
-	controller.upvote(questionID, null);
-	Question question = controller.getQuestionById(questionID);
-	assertTrue("Question not upvoted.", question.getRating() == 1);
-	}
-	
-	//upvoting 100 times
-	public void testQuestion100UpvoteCount() {
-		for (int i = 0; i < 99; i++){
-			controller.upvote(questionID, null);
-		}
-		Question question = controller.getQuestionById(questionID);
-		assertTrue("Question is not upvoted 100 times.",
-				question.getRating() == 100);
-	}
+//	public void testQuestionUpvoted() {
+//	questionID = controller.addQuestion("I can't get past this road.", "There is a snorlax blocking the path.", null);
+//	controller.upvote(questionID, null);
+//	Question question = controller.getQuestionById(questionID);
+//	assertTrue("Question not upvoted.", question.getRating() == 1);
+//	}
+//	
+//	//upvoting 100 times
+//	public void testQuestion100UpvoteCount() {
+//		for (int i = 0; i < 99; i++){
+//			controller.upvote(questionID, null);
+//		}
+//		Question question = controller.getQuestionById(questionID);
+//		assertTrue("Question is not upvoted 100 times.",
+//				question.getRating() == 100);
+//	}
 }
