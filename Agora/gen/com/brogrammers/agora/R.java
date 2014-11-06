@@ -37,13 +37,16 @@ public final class R {
     }
     public static final class id {
         public static final int AnswerListView=0x7f080000;
-        public static final int AuthourDate=0x7f080017;
+        public static final int AuthourDate=0x7f080012;
         public static final int CommentEditText=0x7f08000c;
         public static final int CommentListView=0x7f08000b;
         public static final int CommentPostButton=0x7f08000d;
         public static final int ELV=0x7f08001b;
         public static final int QuestionAnswersButton=0x7f08000f;
         public static final int QuestionCommentsButton=0x7f080011;
+        public static final int QuestionFlagButton=0x7f080014;
+        public static final int QuestionUpVoteButton=0x7f080016;
+        public static final int RatingHLayout=0x7f080033;
         public static final int Space1=0x7f08001a;
         public static final int aAuthourDate=0x7f08002c;
         public static final int aBody=0x7f08002a;
@@ -80,21 +83,18 @@ public final class R {
         public static final int favouritecheck=0x7f08003e;
         public static final int filterbyTextDialoug=0x7f08003d;
         public static final int goto_question_answer=0x7f080045;
-        public static final int imageButton1=0x7f080014;
-        public static final int imageButton3=0x7f080032;
-        public static final int imageView1=0x7f080019;
+        public static final int imageButton1=0x7f080032;
+        public static final int imageView1=0x7f080018;
         public static final int listView1=0x7f08000e;
         public static final int pager=0x7f080027;
         public static final int picturecheck=0x7f08003f;
         public static final int qAuthor=0x7f080035;
-        public static final int qBody=0x7f080016;
-        public static final int qFavourite=0x7f080013;
+        public static final int qBody=0x7f080013;
+        public static final int qFavourite=0x7f080019;
         public static final int qObjectFavourite=0x7f080031;
         public static final int qObjectScore=0x7f080034;
-        public static final int qScore=0x7f080018;
+        public static final int qScore=0x7f080017;
         public static final int qTitle=0x7f080015;
-        public static final int qUpvote=0x7f080012;
-        public static final int qobjectbody=0x7f080033;
         public static final int qobjecttitle=0x7f080030;
         public static final int questionBody=0x7f080021;
         public static final int questionExpand=0x7f080022;

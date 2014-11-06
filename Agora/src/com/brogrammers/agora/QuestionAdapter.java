@@ -49,7 +49,7 @@ public class QuestionAdapter extends BaseAdapter {
 		}
 		
 		Question question = (Question)getItem(position);
-		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
+//		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
 		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle());
 		((TextView)convertView.findViewById(R.id.qObjectScore)).setText(Integer.toString(question.getRating()));
 		/*List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
