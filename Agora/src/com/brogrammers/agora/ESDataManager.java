@@ -1,6 +1,7 @@
 package com.brogrammers.agora;
 
 import java.io.IOException;
+
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -36,6 +37,12 @@ import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.entity.StringEntity;
 
+/**
+ * Elastic search networking module. Handles all server data uploads and downloads required by the app.
+ * 
+ * @author Group 02
+ *
+ */
 public class ESDataManager { // implements DataManager
 	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
 	protected String INDEXNAME = "cmput301f14t02/"; 	// name of the ES database/index
