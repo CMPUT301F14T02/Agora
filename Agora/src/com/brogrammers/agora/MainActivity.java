@@ -27,7 +27,13 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.SearchView;
 import android.widget.Toast;
-
+/**
+ * Main view of the Agora app. Retrieves list of question from 
+ * controller and creates a listview.
+ * Todo: Add number of answers to questions, implement search/sort.
+ * @author Group02
+ *
+ */
 public class MainActivity extends Activity implements Observer {
     private LayoutInflater inflater = (LayoutInflater) Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     private List<Question> results = new ArrayList<Question>();
@@ -42,7 +48,9 @@ public class MainActivity extends Activity implements Observer {
         
 
     }
-    
+    /**
+     * When resuming mainactivity, retrieve new list of questions and update listview.
+     */
     protected void onResume() {
     	super.onResume();
 		final CountDownLatch signal = new CountDownLatch(1);
@@ -70,7 +78,7 @@ public class MainActivity extends Activity implements Observer {
         SearchManager searchManager = (SearchManager) getSystemService(Agora.getContext().SEARCH_SERVICE);
         return true;
     }
-
+    
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -95,7 +103,10 @@ public class MainActivity extends Activity implements Observer {
         }
     }
       
-    
+    /**
+     * Opens author question view so that user can author question.
+     * 
+     */
     public void openAddQuestionView() {
     	Intent intent = new Intent(Agora.getContext(), AuthorQuestionActivity.class);
     	//Intent intent = new Intent(Agora.getContext(), QuestionActivity.class); //for opening QuestionActivity
@@ -103,14 +114,20 @@ public class MainActivity extends Activity implements Observer {
     	startActivity(intent);
     	//Toast.makeText(Agora.getContext(), "Hook up Add a question here", Toast.LENGTH_SHORT).show();
     }
-    
+    /**
+     * Sends user to search activity, 
+     * @param item 
+     */
     public void openSearchBar(MenuItem item) {
         //SearchView searchView = (SearchView) item.getActionView();
     		//Toast.makeText(Agora.getContext(), "Add Dropdown Search", Toast.LENGTH_SHORT).show();
     		Intent i = new Intent(this, SearchActivity.class);
         startActivity(i);
     }
-    
+    /**
+     * Opens sort dialog where user can filter/sort mainActivity.
+     * Currently does not work. Need to implement.
+     */
     public void openSortMenu() {
         // Create Dialog Menu for the Sorting Menu
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
