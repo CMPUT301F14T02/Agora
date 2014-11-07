@@ -3,6 +3,13 @@ package com.brogrammers.agora;
 import android.app.Application;
 import android.content.Context;
 
+/**
+ * Android Application class, extended to provide global access to application
+ * context
+ * 
+ * @author Team02
+ * 
+ */
 public class Agora extends Application {
 	private static Context context;
 

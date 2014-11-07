@@ -7,11 +7,14 @@ import java.util.Collections;
 import java.util.List;
 
 import android.graphics.Bitmap;
+
 /**
- * Answer model data class. Contains information about Answer, including upvotes, comments, body, author.
+ * Answer model data class. Contains information about Answer, including
+ * upvotes, comments, body, author. All answers should be contained by one
+ * Question.
  * 
  * @author Team 02
- *
+ * 
  */
 public class Answer implements Serializable {
 	private static final long serialVersionUID = 1340865626156695502L;
@@ -25,7 +28,6 @@ public class Answer implements Serializable {
 	private ArrayList<Comment> comments;
 	private int version;
 	private boolean posted;
-	
 
 	public boolean isPosted() {
 		return posted;
@@ -37,9 +39,12 @@ public class Answer implements Serializable {
 
 	/**
 	 * Answer constructor
-	 * @param body text body of the answer
-	 * @param image 
-	 * @param author username of the author posting the answer
+	 * 
+	 * @param body
+	 *            text body of the answer
+	 * @param image
+	 * @param author
+	 *            username of the author posting the answer
 	 */
 	public Answer(String body, Bitmap image, Author author) {
 		this.body = body;
@@ -47,25 +52,28 @@ public class Answer implements Serializable {
 		this.author = author;
 		rating = 0;
 		date = System.currentTimeMillis();
-		uniqueID = md5.hash(date.toString()+author.getUsername()+body);
+		uniqueID = md5.hash(date.toString() + author.getUsername() + body);
 		comments = new ArrayList<Comment>();
 	}
+
 	/**
-	 * Returns number of comments 
+	 * Returns number of comments
 	 * 
 	 */
 	public int countComments() {
 		return comments.size();
 	}
+
 	/**
 	 * returns list of comments attributed to the answer
 	 * 
 	 */
 	public List<Comment> getComments() {
 		// don't modify the list directly!
-//		return Collections.unmodifiableList(comments);
+		// return Collections.unmodifiableList(comments);
 		return comments;
 	}
+
 	/**
 	 * Add comment to an answer.
 	 * 
@@ -73,9 +81,10 @@ public class Answer implements Serializable {
 	public void addComment(Comment c) {
 		comments.add(c);
 	}
+
 	/**
 	 * Increment upvote once.
-	 *
+	 * 
 	 */
 	public void upvote() {
 		rating++;
@@ -108,6 +117,5 @@ public class Answer implements Serializable {
 	public void setImage(Bitmap image) {
 		this.image = image;
 	}
-	
-	
+
 }

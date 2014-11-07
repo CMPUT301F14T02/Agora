@@ -10,7 +10,6 @@ public class md5 {
 			// make hash
 			MessageDigest digest = MessageDigest.getInstance("MD5");
 			digest.update(s.getBytes());
-			//byte messageDigest[] = digest.digest();
 			
 			return ByteBuffer.wrap(digest.digest()).getLong();
 			

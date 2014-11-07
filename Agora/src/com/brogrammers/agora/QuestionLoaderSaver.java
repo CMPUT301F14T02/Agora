@@ -18,39 +18,73 @@ import android.content.SharedPreferences;
 import android.util.Base64;
 import android.util.Log;
 
+/**
+ * This is a helper class, responsible for the serialization of cached Question
+ * objects. Questions are serialized as JSON strings saved in a
+ * SharedPreferences file. The CacheDataManager uses it to persist its cache.
+ * 
+ * @author Team02
+ * 
+ */
 public class QuestionLoaderSaver {
 	private String questionPrefsFileName;
-	
-	public QuestionLoaderSaver() { 
+
+	/**
+	 * Uses default SharedPreferences file
+	 */
+	public QuestionLoaderSaver() {
 		questionPrefsFileName = "QUESTION";
 	}
+
+	/**
+	 * Uses a specified SharedPreferences file.
+	 * 
+	 * @param the
+	 *            name of the SharedPreferences file to use
+	 */
 	public QuestionLoaderSaver(String file) {
 		questionPrefsFileName = file;
 	}
 
+	/**
+	 * Saves a question
+	 * 
+	 * @param q
+	 *            the Question to be serialized to the SharedPreferences file
+	 */
 	public void saveQuestion(Question q) {
-		Log.e("QLS", "saveQuestion answerCount = "+Integer.toString(q.countAnswers()));
+		Log.e("QLS",
+				"saveQuestion answerCount = "
+						+ Integer.toString(q.countAnswers()));
 		String jsonQuestion = (new Gson()).toJson(q);
-		SharedPreferences prefsFile = 
-			Agora.getContext().getSharedPreferences(questionPrefsFileName, Context.MODE_PRIVATE);
-    	SharedPreferences.Editor editor = prefsFile.edit();
+		SharedPreferences prefsFile = Agora.getContext().getSharedPreferences(
+				questionPrefsFileName, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefsFile.edit();
 		editor.putString(q.getID().toString(), jsonQuestion);
 		editor.commit();
 	}
-	
+
+	/**
+	 * Loads all questions stored in the SharedPreferences file
+	 * @return a List of the questions
+	 */
 	public List<Question> loadQuestions() {
 		List<Question> qList = new ArrayList<Question>();
-		SharedPreferences prefsFile = 
-			Agora.getContext().getSharedPreferences(questionPrefsFileName, Context.MODE_PRIVATE);
+		SharedPreferences prefsFile = Agora.getContext().getSharedPreferences(
+				questionPrefsFileName, Context.MODE_PRIVATE);
 		Map<String, String> prefsMap = (Map<String, String>) prefsFile.getAll();
-		
+
 		for (String jsonQuestion : prefsMap.values()) {
-			Question q = (new Gson()).fromJson(jsonQuestion, new TypeToken<Question>(){}.getType());
-			Log.e("QLS", "loadQuestions answerCount = "+Integer.toString(q.countAnswers()));
+			Question q = (new Gson()).fromJson(jsonQuestion,
+					new TypeToken<Question>() {
+					}.getType());
+			Log.e("QLS",
+					"loadQuestions answerCount = "
+							+ Integer.toString(q.countAnswers()));
 
 			qList.add(q);
 		}
-		
+
 		return qList;
 	}
 
