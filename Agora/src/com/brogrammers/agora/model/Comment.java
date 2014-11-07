@@ -26,8 +26,8 @@ public class Comment implements Serializable {
 	}
 
 	/**
-	 * Comment constructor from a string.
-	 * @param text
+	 * Comment constructor from a string. 
+	 * @param text Text will be set as the body.
 	 */
 	public Comment(String text) {
 		body = text;
@@ -36,6 +36,11 @@ public class Comment implements Serializable {
 	}
 	
 	// for testing: add different author
+	/**
+	 * Test method for testing different authors.
+	 * @param text Text will be set as the body.
+	 * @param author Text will be set as the author's username.
+	 */
 	public Comment(String text, Author author) {
 		body = text;
 		this.author = author;  

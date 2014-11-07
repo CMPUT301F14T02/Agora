@@ -81,7 +81,9 @@ public class MainActivity extends Activity implements Observer {
         SearchManager searchManager = (SearchManager) getSystemService(Agora.getContext().SEARCH_SERVICE);
         return true;
     }
-    
+    /**
+     * Action bar containing: adding a question, search, sort, and a refresh button.
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -129,7 +131,7 @@ public class MainActivity extends Activity implements Observer {
     }
 
     /**
-     * Opens sort dialog where user can filter/sort mainActivity.
+     * Opens sort dialog where user can filter/sort mainActivity. By favourites, score, and by picture.
      * Currently does not work. Need to implement.
      */
     public void openSortMenu() {

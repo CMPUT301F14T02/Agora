@@ -31,10 +31,10 @@ public class Question implements Serializable, Comparable<Question> {
 	private ArrayList<Answer> answers;
 	/**
 	 * Question constructor. Date is created at time of creation.
-	 * @param title
-	 * @param body
-	 * @param image
-	 * @param author
+	 * @param title String will be set as title/
+	 * @param body String will be set as body.
+	 * @param image Image to be set in the body of the image. Not yet implemented. Null.
+	 * @param author Username of the author will be set as author of the question.
 	 */
 	public Question(String title, String body, Bitmap image, Author author) {
 		this.title = title;

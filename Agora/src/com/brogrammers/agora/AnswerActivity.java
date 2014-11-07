@@ -92,10 +92,10 @@ public class AnswerActivity extends Activity implements Observer{
 		Toast.makeText(this, "upvote", Toast.LENGTH_SHORT).show();
 	}
 
-	@Override
 	/**
 	 * Update when new answer is added.
 	 */
+	@Override
 	public void update() {
 		if (qList.size() == 0) {
 			Toast.makeText(this, "AnswerActivity update() called, but qList is empty", 0);

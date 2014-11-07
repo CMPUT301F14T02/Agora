@@ -53,7 +53,7 @@ public class CommentActivity extends Activity implements Observer {
 
 	}
 	/**
-	 * When updated, return answer/question and retrieve new set of comments.
+	 * Called when question/answer list is populated. retrieves new set of comments from question/answer.
 	 */
 	@Override
 	public void update() {

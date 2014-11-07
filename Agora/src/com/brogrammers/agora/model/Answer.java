@@ -42,11 +42,9 @@ public class Answer implements Serializable {
 	/**
 	 * Answer constructor
 	 * 
-	 * @param body
-	 *            text body of the answer
-	 * @param image
-	 * @param author
-	 *            username of the author posting the answer
+	 * @param body text body of the answer
+	 * @param image Image will be set in body of the answer. To be implemented, null.
+	 * @param author username of the author posting the answer
 	 */
 	public Answer(String body, Bitmap image, Author author) {
 		this.body = body;

@@ -69,7 +69,7 @@ public class QuestionActivity extends Activity implements Observer {
 	    return newDate;
 	}
 	/**
-	 * When updated, check questionlist for question retrieved via id, and set the textviews accordingly.
+	 * Called when question list is changed. check questionlist for question retrieved via id, and set the textviews accordingly.
 	 */
 	@Override
 	public void update() {
@@ -99,7 +99,9 @@ public class QuestionActivity extends Activity implements Observer {
 		getMenuInflater().inflate(R.menu.question, menu);
 		return true;
 	}
-
+	/**
+	 * Action bar that contains button for settings, favouriting, flagging, and adding an answer.
+	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	// Handle action bar item clicks here. The action bar will

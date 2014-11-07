@@ -75,7 +75,7 @@ public class AnswerAdapter extends BaseAdapter {
 		}
 	}
 	/**
-	 * helper method to convert milliseconds into a date
+	 * Helper method to convert milliseconds into a date
 	 * @param milliseconds
 	 * @return
 	 */
@@ -159,7 +159,7 @@ public class AnswerAdapter extends BaseAdapter {
 	}
 	
 	/**
-	 * onClick listener for clicking on upvotes.
+	 * onClick listener for notifying when the upvote button is clicked.
 	 * @author Team 2
 	 *
 	 */

@@ -15,7 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 /**
- * Activity for posting a question to the app.
+ * Activity for posting a question to the app. Displays two text boxes for title and body input.
+ * 
  * Todo: implement picturehandler to post pictures to a question.
  * @author Group02
  *

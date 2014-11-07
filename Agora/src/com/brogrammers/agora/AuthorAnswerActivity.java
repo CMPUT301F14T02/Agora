@@ -15,7 +15,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 /**
- * Activity screen when posting an answer to a question.
+ * Activity screen when posting an answer to a question. Contains a textbox for the body of an answer.
  * Todo: implement picturehandler to post pictures.
  * @author Group02
  *
@@ -62,9 +62,7 @@ public class AuthorAnswerActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	/**
-	 * Retrieves text from answer body to display.
-	 */
+
 	View.OnClickListener answerhandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add question
