@@ -69,12 +69,20 @@ public class AnswerAdapter extends BaseAdapter {
 			return 0;
 		}
 	}
+	/**
+	 * helper method to convert milliseconds into a date
+	 * @param milliseconds
+	 * @return
+	 */
 	public String datetostring(long milliseconds){
 	    Date date = new Date(); 
 	    date.setTime(milliseconds);
 	    String newDate=new SimpleDateFormat("MMM d yyyy").format(date);
 	    return newDate;
 	}
+	/**
+	 * sets view for author, score, date, body.
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if(convertView == null){
@@ -126,7 +134,11 @@ public class AnswerAdapter extends BaseAdapter {
 		notifyDataSetChanged();
 	}
 
-
+	/**
+	 * onclick listener when clicking on comment button. Passes question answerID/questionID to commentActivity
+	 * @author Kevin
+	 *
+	 */
 	private class CommentOnClickListener implements OnClickListener {
 		private int position;
 		CommentOnClickListener(int position) {
@@ -140,7 +152,11 @@ public class AnswerAdapter extends BaseAdapter {
 			activity.startActivity(intent);
 		}
 	}
-	
+	/**
+	 * onclick listener for clicking on upvotes.
+	 * @author Kevin
+	 *
+	 */
 	private class UpVoteOnClickListener implements OnClickListener {
 		private int position;
 		private View aScoreTextView;
