@@ -15,6 +15,7 @@ import android.graphics.Bitmap;
 import android.renderscript.Type;
 import android.widget.Toast;
 
+
 public class QuestionController {
 	private static DeviceUser user;
 	private static CacheDataManager cache;
