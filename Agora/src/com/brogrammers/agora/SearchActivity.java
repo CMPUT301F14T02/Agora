@@ -18,6 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
 import android.widget.TextView;
+/**
+ * Activity(View) to display search results
+ * Contains two fragments: one to show answers and one the show answers
+ */
 
 public class SearchActivity extends Activity implements ActionBar.TabListener {
 
@@ -145,7 +149,7 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 
 		@Override
 		public int getCount() {
-			// Show 3 total pages.
+			// Show 2 total pages.
 			return 2;
 		}
 
@@ -163,7 +167,7 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 	}
 
 	/**
-	 * A fragment containing a simple view.
+	 * A fragment containing a list of Questions from the search results
 	 */
 	 public static class QuestionsFragment extends Fragment {
 		/**
@@ -196,7 +200,7 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 	}
 	 
 	 	/**
-		 * A fragment containing a simple view.
+		 * A fragment containing a list of Questions from the search results
 		 */
 		 public static class AnswersFragment extends Fragment {
 			/**
