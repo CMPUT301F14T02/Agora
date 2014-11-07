@@ -36,8 +36,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/AQTTES");
-
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/AQTTES/_query?q=_type:AQTTES");	
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,11 +72,10 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		final ESDataManager es = new TestESManager();
 		final CountDownLatch postSignal = new CountDownLatch(1);
 		es.pushQuestion(q);
-		Log.e("SERVER", "Posted first question");
-		postSignal.await(2, TimeUnit.SECONDS);
+		postSignal.await(1, TimeUnit.SECONDS);
 		es.pushQuestion(q2);
-		Log.e("SERVER", "Posted second question");
-		postSignal.await(3, TimeUnit.SECONDS);
+		Log.i("SERVER", "Post second questions");
+		postSignal.await(1, TimeUnit.SECONDS);
 
 		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
 		final CountDownLatch signal = new CountDownLatch(1);
@@ -92,7 +90,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		});
 		assertTrue(results.get(0).size() == 0);
 		try {
-			signal.await(3, TimeUnit.SECONDS);
+			signal.await(2, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
 			assertTrue(false);
 		}

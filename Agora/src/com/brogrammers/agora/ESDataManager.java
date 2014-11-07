@@ -108,14 +108,16 @@ public class ESDataManager implements DataManager {
 			    	"}"+
 			    	"}]}";
 		String endPoint = "_search";
-		return getQuestions(requestBody, endPoint);
+		return getQuestions(Question.class, requestBody, endPoint, null);
 	}
 	
-	public List<Question> getQuestions(String requestBody, String endPoint) throws UnsupportedEncodingException {
+	public <T> ArrayList<T> getQuestions(Class<T> returnType, String requestBody, String endPoint, final String answerQuery) throws UnsupportedEncodingException {
 		final List<Question> questionList = new ArrayList<Question>();
+        final List<Answer> answerList = new ArrayList<Answer>();
+		// TODO figure out a better 
 		if (!connected){
 			Log.e("SERVER", "No internet connection");
-			return questionList;
+			return (ArrayList<T>) questionList;
 		}
 		AsyncHttpClient client = new AsyncHttpClient();
 		StringEntity stringEntityBody = new StringEntity(requestBody);
@@ -156,6 +158,25 @@ public class ESDataManager implements DataManager {
 						Log.e("SERVER", qObject.getID().toString()+" "+qObject.getBody());
 				    }
 				    
+				    // if this is an answer search remove any answers that don't 
+				    // contain the search term.
+				    if(answerQuery != null){
+				    	for (Question question: questionList){
+				    		List<Answer> answers = ((Question) question).getAnswers();
+				    		for (int i = 0; i < answers.size(); i++){
+				    			if (answers.get(i).getBody().toLowerCase().contains(answerQuery.toLowerCase())){
+				    				answerList.add(answers.get(i));
+				    			}
+				    		}
+				    	}
+				    }
+//				    	for (T question: questionList){
+//				    		List<Answer> answers = ((Question) question).getAnswers();
+//				    		for (int i = 0; i < answers.size(); i++){
+//				    			if (!answers.get(i).getBody().toLowerCase().contains(answerQuery.toLowerCase())){
+//				    				answers.remove(i);
+//                                }
+//				    	    }
 					QuestionController.getController().update();
 //					Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
 				} catch (JSONException e) {
@@ -163,16 +184,41 @@ public class ESDataManager implements DataManager {
 				}	
 			}
         });
-		return questionList;
+		if (answerQuery != null) {
+			return (ArrayList<T>) answerList;
+		} else {
+            return (ArrayList<T>) questionList;
+		}
 	}
 	
-//	public List<Answers> searchAnswers(String query) throws UnsupportedEncodingException {
-//		String requestBody = "";
-//		String endpoint = "_search";
-//		List<Question> getQuestions(DOMAIN, INDEX, TYPENAME, requestBody, endPoint);
-//		// sort through questions and extract answers
-//		return List<Answers>;
-//	}
+	public List<Answer> searchAnswers(String query) throws UnsupportedEncodingException {
+//		String requestBody = "{" +
+//		    "\"query\" : {" +
+//		        "\"bool\" : {" +
+//		            "\"must\" : [" +
+//		                "{" +
+//		                    "\"nested\" : {" +
+//		                        "\"path\" : \"answers\"," +
+//		                        "\"query\" : {" +
+//		                            "\"bool\" : {" +
+//		                                "\"must\" : [" +
+//		                                    "{ \"match\" : {\"answers.body\" : \"" + query + "\"}}" +
+//		                                "]}}}}]}}}";
+		String requestBody = "{" +
+				   "\"query\": {" +
+		      "\"filtered\": {" +
+		         "\"query\": {" +
+		            "\"match_all\": {}" +
+		         "}," +
+		         "\"filter\": {" +
+		            "\"term\": {" +
+		               "\"answers.body\": \"" + query + "\"" +
+		            "}}}}}";
+		String endpoint = "_search";
+		List<Answer> list = getQuestions(Answer.class, requestBody, endpoint, query);
+		// sort through questions and extract answers
+		return list;
+	}
 	
 	public List<Question> searchQuestions(String query) throws UnsupportedEncodingException {	
 		String requestBody = "{" +
@@ -185,7 +231,7 @@ public class ESDataManager implements DataManager {
 			           "\"title\", \"body\"" +
 			           "]}}}";
 		String endPoint = "_search";
-		return getQuestions(requestBody, endPoint);
+		return getQuestions(Question.class, requestBody, endPoint, null);
 	}
 	
 	
@@ -197,7 +243,7 @@ public class ESDataManager implements DataManager {
 	           		"\"_id\":" + id.toString() +
 	        	"}}}";
 		String endPoint = "_search";
-		return getQuestions(requestBody, endPoint);
+		return getQuestions(Question.class, requestBody, endPoint, null);
 	}
 	
 		
@@ -313,43 +359,43 @@ public class ESDataManager implements DataManager {
 		
 	}
 	
-	public void setServerMapping() throws ClientProtocolException, IOException{
-		// remove the forwardslash from the typename
-		String typeName = TYPENAME.substring(0, TYPENAME.length() - 1);
-		String mapBody = "{" +
-	         "\"" +  typeName  + "\": {" +
-	            "\"properties\": {" +
-	               "\"answers\": {" +
-	                  "\"type\": \"nested\"," +
-	                  "\"properties\": {" +
-	                     "\"author\": {" +
-	                        "\"type\": \"string\"" +
-	                     "}," +
-	                     "\"body\": {" +
-	                        "\"type\": \"string\"" +
-	                     "}" +
-	                  "}" +
-	               "}," +
-	               "\"author\": {" +
-	                  "\"type\": \"string\"" +
-	               "}," +
-	               "\"date\": {" +
-	                  "\"type\": \"string\"" +
-	               "}" +
-	            "}" +
-	         "}" +
-         "}" +
-     "}" +
- "}";
-		// Delete the current mapping
-		HttpClient client = new DefaultHttpClient();
-        HttpDelete deleteRequest = new HttpDelete(DOMAIN + INDEXNAME + TYPENAME + "_mapping");
-        client.execute(deleteRequest);
-
-        // Set a new mapping
-		String mapURI = DOMAIN + INDEXNAME + "_mapping/" + TYPENAME;
-		StringEntity mapBodyStringEntity = new StringEntity(mapBody);
-		QueryItem queryItem = new QueryItem(mapBodyStringEntity, mapURI, RequestType.POST);
-		updateServer(queryItem);
-	}
+//	public void setServerMapping() throws ClientProtocolException, IOException{
+//		// remove the forwardslash from the typename
+//		String typeName = TYPENAME.substring(0, TYPENAME.length() - 1);
+//		String mapBody = "{" +
+//	         "\"" +  typeName  + "\": {" +
+//	            "\"properties\": {" +
+//	               "\"answers\": {" +
+//	                  "\"type\": \"nested\"," +
+//	                  "\"properties\": {" +
+//	                     "\"author\": {" +
+//	                        "\"type\": \"string\"" +
+//	                     "}," +
+//	                     "\"body\": {" +
+//	                        "\"type\": \"string\"" +
+//	                     "}" +
+//	                  "}" +
+//	               "}," +
+//	               "\"author\": {" +
+//	                  "\"type\": \"string\"" +
+//	               "}," +
+//	               "\"date\": {" +
+//	                  "\"type\": \"string\"" +
+//	               "}" +
+//	            "}" +
+//	         "}" +
+//         "}" +
+//     "}" +
+// "}";
+//		// Delete the current mapping
+//		HttpClient client = new DefaultHttpClient();
+//        HttpDelete deleteRequest = new HttpDelete(DOMAIN + INDEXNAME + TYPENAME + "_mapping");
+//        client.execute(deleteRequest);
+//
+//        // Set a new mapping
+//		String mapURI = DOMAIN + INDEXNAME + "_mapping/" + TYPENAME;
+//		StringEntity mapBodyStringEntity = new StringEntity(mapBody);
+//		QueryItem queryItem = new QueryItem(mapBodyStringEntity, mapURI, RequestType.POST);
+//		// updateServer(queryItem);
+//	}
 }
