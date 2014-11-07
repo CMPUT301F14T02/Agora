@@ -155,7 +155,7 @@ public class AnswerAdapter extends BaseAdapter {
 	}
 	
 	/**
-	 * onclick listener for clicking on upvotes.
+	 * onClick listener for clicking on upvotes.
 	 * @author Team 2
 	 *
 	 */

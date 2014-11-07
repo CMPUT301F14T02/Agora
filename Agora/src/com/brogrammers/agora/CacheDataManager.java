@@ -85,10 +85,9 @@ public class CacheDataManager implements DataManager {
 	 * object to file 
 	 */
 	
-	public boolean pushQuestion(Question q) {
+	public void pushQuestion(Question q) {
 		questionCache.put(q.getID(), q);
 		qls.saveQuestion(q);
-		return true;
 	} 
 	
 	/**
@@ -96,14 +95,12 @@ public class CacheDataManager implements DataManager {
 	 * 
 	 * @param Answer 	the answer object we are adding to the cache
 	 * @param Long 		the unique question id where the answer is added to
-	 * @return true 
 	 */
 	
-	public boolean pushAnswer(Answer a, Long qID) {
+	public void pushAnswer(Answer a, Long qID) {
 		Question q = questionCache.get(qID);
 		q.addAnswer(a);
 		pushQuestion(q);
-		return true;
 	}
 	
 	/**
@@ -114,10 +111,9 @@ public class CacheDataManager implements DataManager {
 	 * @param Comment 	the comment object we are adding to the cache
 	 * @param Long 		the unique question id if we are commenting on the question, or null if commenting answer
 	 * @param Long 		the unique answer id if we are commenting the answer, or null if commenting question
-	 * @return true
 	 */
 	
-	public boolean pushComment (Comment c, Long qID, Long aID) {
+	public void pushComment (Comment c, Long qID, Long aID) {
 		Question q = questionCache.get(qID);
 		if (aID != null) {
 			Answer a = q.getAnswerByID(aID);
@@ -126,7 +122,6 @@ public class CacheDataManager implements DataManager {
 			q.addComment(c);
 		}
 		pushQuestion(q);
-		return true;
 	}
 
 }
