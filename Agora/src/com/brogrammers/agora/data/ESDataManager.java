@@ -151,7 +151,7 @@ public class ESDataManager { // implements DataManager
 	 * <p>
 	 * Creates a generic match all search and returns all questions available.
 	 * 
-	 * @return List<Question> returns a List of all questions on the server
+	 * @return a List of all questions on the server
 	 */
 	public List<Question> getQuestions() throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
@@ -279,7 +279,7 @@ public class ESDataManager { // implements DataManager
 	 * 
 	 * @param query
 	 *            The search terms.
-	 * @return List<Answer> A list of answers meeting the specified search
+	 * @return A list of answers meeting the specified search
 	 *         criteria.
 	 */
 	public List<Answer> searchAnswers(String query)
@@ -303,7 +303,7 @@ public class ESDataManager { // implements DataManager
 	 * 
 	 * @param query
 	 *            The search terms.
-	 * @return List<Question> A list of questions meeting the specified search
+	 * @return  A list of questions meeting the specified search
 	 *         criteria.
 	 */
 	public List<Question> searchQuestions(String query)
@@ -322,7 +322,7 @@ public class ESDataManager { // implements DataManager
 	 * 
 	 * @param id
 	 *            The questions unique ID value.
-	 * @return List<Question> A list containing the single question object from
+	 * @return  A list containing the single question object from
 	 *         the server.
 	 */
 	public List<Question> getQuestionById(Long id)

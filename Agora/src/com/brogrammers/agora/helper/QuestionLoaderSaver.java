@@ -25,7 +25,7 @@ import android.util.Log;
  * objects. Questions are serialized as JSON strings saved in a
  * SharedPreferences file. The CacheDataManager uses it to persist its cache.
  * 
- * @author Team02
+ * @author Group02
  * 
  */
 public class QuestionLoaderSaver {
@@ -41,8 +41,7 @@ public class QuestionLoaderSaver {
 	/**
 	 * Uses a specified SharedPreferences file.
 	 * 
-	 * @param the
-	 *            name of the SharedPreferences file to use
+	 * @param file the name of the SharedPreferences file to use
 	 */
 	public QuestionLoaderSaver(String file) {
 		questionPrefsFileName = file;

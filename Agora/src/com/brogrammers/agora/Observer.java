@@ -6,7 +6,7 @@ package com.brogrammers.agora;
  * our object that uses observers. E.g. update the controller when it 
  * fetches data from ES server
  *  
- * @author Team 02
+ * @author Group02
  *
  */
 

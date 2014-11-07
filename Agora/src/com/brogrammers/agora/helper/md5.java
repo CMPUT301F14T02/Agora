@@ -8,7 +8,7 @@ import java.security.NoSuchAlgorithmException;
  * to retrieve the correct question/answer. This can be applied to any other data object.
  *  
  * More info about md5 hashing can be found here: (http://en.wikipedia.org/wiki/MD5)
- * @author Team 02
+ * @author Group02
  *
  */
 public class md5 {

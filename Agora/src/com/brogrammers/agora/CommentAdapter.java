@@ -100,8 +100,8 @@ public class CommentAdapter extends BaseAdapter {
 
 	/**
 	 * Converts time passed from Epoch time into a formatted date string.
-	 * @param milliseconds
-	 * @return
+	 * @param milliseconds		Input the java built in time as milliseconds
+	 * @return newDate 				Output a date format that interprets time from milliseconds
 	 */
 	public String datetostring(long milliseconds){
 	    Date date = new Date(); 

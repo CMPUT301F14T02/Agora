@@ -15,7 +15,7 @@ import android.graphics.Bitmap;
  * upvotes, comments, body, author. All answers should be contained by one
  * Question.
  * 
- * @author Team 02
+ * @author Group02
  * 
  */
 public class Answer implements Serializable {

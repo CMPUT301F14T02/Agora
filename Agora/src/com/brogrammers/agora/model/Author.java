@@ -5,7 +5,7 @@ import java.io.Serializable;
  * Author data model. Contains information on user - the name as well as implementing 
  * a unique serial ID for the author.
  * 
- * @author Team 02
+ * @author Group02
  *
  */
 public class Author implements Serializable {

@@ -11,7 +11,7 @@ import com.brogrammers.agora.model.Question;
  *  and add questions, add answers, and add comments to the list of question objects.
  *  All classes that implements the DataManager all require these set of functionalities.
  * 
- * @author Team 02
+ * @author Group02
  *
  */
 
@@ -19,7 +19,7 @@ import com.brogrammers.agora.model.Question;
 public interface DataManager {
 	/**
 	 * This gets the list of all the question objects in our app.
-	 * @return List<Question> 		a list of questions
+	 * @return a list of all questions
 	 * @throws UnsupportedEncodingException
 	 */
 	List<Question> getQuestions() throws UnsupportedEncodingException;

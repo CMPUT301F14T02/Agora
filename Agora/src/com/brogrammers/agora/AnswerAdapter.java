@@ -76,8 +76,8 @@ public class AnswerAdapter extends BaseAdapter {
 	}
 	/**
 	 * Helper method to convert milliseconds into a date
-	 * @param milliseconds
-	 * @return
+	*	@param milliseconds	Input the java built in time as milliseconds
+	 * @return newDate 	Output a date format that interprets time from milliseconds
 	 */
 	public String datetostring(long milliseconds){
 	    Date date = new Date(); 

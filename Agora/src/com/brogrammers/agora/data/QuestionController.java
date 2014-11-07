@@ -23,7 +23,7 @@ import android.widget.Toast;
 /**
  * Controller class for directing data to and from the views and data managers.
  * 
- * @author Team 02
+ * @author Group02
  * 
  */
 public class QuestionController {

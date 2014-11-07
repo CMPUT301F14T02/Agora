@@ -7,7 +7,7 @@ import android.content.Context;
  * Android Application class, extended to provide global access to application
  * context
  * 
- * @author Team02
+ * @author Group02
  * 
  */
 public class Agora extends Application {

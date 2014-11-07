@@ -18,7 +18,7 @@ import android.content.SharedPreferences;
  * settings. All new Questions, Answers, and Comments will use the DeviceUser's
  * name as the author.
  * 
- * @author Team02
+ * @author Group02
  * 
  */
 public class DeviceUser extends Author {
