@@ -20,4 +20,4 @@ Image Assets
 Code Reuse
 ====
 1. Abrahm Hindle's Student Picker app used as a guideline for MVC, singletons, and storyboarding.
-2. loopj library used for asynchronous HTTP requests to elasticsearch and our server
+2. [loopj library](http://loopj.com/android-async-http/) used for asynchronous HTTP requests to ElasticSearch and our server
