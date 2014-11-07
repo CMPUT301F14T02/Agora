@@ -36,7 +36,7 @@ import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.entity.StringEntity;
 
-public class ESDataManager { // implements DataManager
+public class ESDataManager implements DataManager {
 	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
 	protected String INDEXNAME = "cmput301f14t02/"; 	// name of the ES database/index
 	protected String TYPENAME = "agora/"; 	// name of the ES table/type 
@@ -208,6 +208,10 @@ public class ESDataManager { // implements DataManager
 		return push(questionSerialized, endPoint);
 	}
 	
+	public boolean pushAnswer(Answer a, Long qID) {
+		return pushAnswer(a, qID, CacheDataManager.getInstance());
+	}
+	
 	public boolean pushAnswer(Answer a, Long qID, CacheDataManager cache) {		
 		Question q = cache.getQuestionById(qID);
 		Gson gson = new Gson();
@@ -224,6 +228,10 @@ public class ESDataManager { // implements DataManager
 			e.printStackTrace();
 			return false;
 		}
+	}
+	
+	public boolean pushComment(Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
+		return pushComment(c, qID, aID, CacheDataManager.getInstance());
 	}
 	
 	// if comment is on an answer pass aID, if on question itself pass null
