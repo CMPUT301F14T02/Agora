@@ -11,25 +11,37 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+/**
+ * Adapter for populating and formatting comments onto commentview 
+ * @author Group02s
+ *
+ */
 
 public class CommentAdapter extends BaseAdapter {
 	private Answer answer;
 	private LayoutInflater inflater;
 	private Question question;
 	
+	/**
+	 * Constructor for the adapter, there separate constructors for Answers and Questions as both can have comments
+	 * @param a
+	 */
 	public CommentAdapter(Answer a){
 		this.answer = a;
 		this.question = null;
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
 	}
-	
 	public CommentAdapter(Question q){
 		this.answer = null;
 		this.question = q;
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
 	}
 	
-
+	
+	
+	/**
+	 * method that returns the number of comments for answer/question
+	 */
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
@@ -39,7 +51,10 @@ public class CommentAdapter extends BaseAdapter {
 			return question.countComments();
 		}
 	}
-
+	
+	/**
+	 * method that given the position/index of the comment in the answer/question it returns the comment in that position.
+	 */
 	@Override
 	public Object getItem(int position) {
 		// TODO Auto-generated method stub
@@ -49,13 +64,20 @@ public class CommentAdapter extends BaseAdapter {
 			return question.getComments().get(position);
 		}
 	}
-
+	
+	/**
+	 * return ID of the comment, return 0 as comments do not have unique IDs
+	 */
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
+	/**
+	 * method of getting the view that will populate each item on the listview with comment_object
+	 * 
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
@@ -68,11 +90,15 @@ public class CommentAdapter extends BaseAdapter {
 		//set text on each TextView			
 		((TextView)convertView.findViewById(R.id.cBody)).setText(comment.getBody());
 		((TextView)convertView.findViewById(R.id.cAuthourDate)).setText("Submitted by: " +comment.getAuthor().getUsername()+", "+ datetostring(comment.getDate()));
-
-
-		
+	
 		return convertView;
 	}
+
+	/**
+	 * converts time passed from Epoch time into a formatted date string.
+	 * @param milliseconds
+	 * @return
+	 */
 	public String datetostring(long milliseconds){
 	    Date date = new Date(); 
 	    date.setTime(milliseconds);

@@ -1,70 +1,69 @@
-/*package com.brogrammers.agora.test;
+package com.brogrammers.agora.test;
 
+import java.net.URL;
+import java.util.ArrayList;
+
+import com.brogrammers.agora.DeviceUser;
+import com.brogrammers.agora.Question;
+import com.brogrammers.agora.test.SortLocalTest.TestDeviceUser;
+
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import junit.framework.TestCase;
 
 
 public class FilterPictureTest extends TestCase {
+	
+	
 	//contains both images and no image posts
-	Question<List> imagelist;
+	ArrayList<Question> imagelist;
 	//contains no images posts
-	Question<List> plainlist;
+	ArrayList<Question> plainlist;
+	
+	Resources res;
+	Bitmap picture = BitmapFactory.decodeResource(res, R.drawable.ic_launcher);
 
-
-	// assuming enum 0 = IMAGE, 1 = NOIMAGE
-	Question image1 = new Question("How do I beat rain teams?", "They are too fast. Thunder is too accurate in the rain.", null);
-	Question image2 = new Question ("How do I beat sand teams?", "Tyranitar is a broken mon.", null );
-	Question image3 = new Question ("How do I beat sun teams?", "Sunflora is too good.", null );
-	Question noimage1 = new Question ("How many apricots do I need for a masterball", "I want one to catch a magikarp.", null );
-	Question noimage2 = new Question ("My pokemon won't listen to me.", "My friend traded me his lv100 Oddish and it won't listen to me. Please help!", null );
-	Question noimage3 = new Question ("What should I wear today?", "I heard shorts are comfy.", null );
-
-	//images
-	Image img1 = null;
-	try {
-		URL url = new URL("http://cdn.bulbagarden.net/upload/2/25/Bulbapedia_logo.png");
-		img1 = ImageIO.read(url);
-	} catch (IOException e) {
-	}
-	Image img2 = null;
-	try {
-		URL url = new URL("http://cdn.bulbagarden.net/upload/thumb/0/0d/025Pikachu.png/600px-025Pikachu.png");
-		img2 = ImageIO.read(url);
-	} catch (IOException e) {
-	}
-	Image img3 = null;
-	try {
-		URL url = new URL("http://cdn.bulbagarden.net/upload/thumb/9/98/192Sunflora.png/600px-192Sunflora.png");
-		img3 = ImageIO.read(url);
-	} catch (IOException e) {
+	private class TestDeviceUser extends DeviceUser {
+		public TestDeviceUser() {
+			setUsername("TestBingsF");
+			favoritesPrefFileName = "TEST_FAVORITES";
+			cachedPrefFileName = "TEST_CACHED";
+			authoredPrefFileName = "TEST_AUTHORED";
+			usernamePrefFileName = "TEST_USERNAME";
+		}
 	}
 
-	image1.setImage(img2);
-	image2.setImage(img1);
-	image3.setImage(img3);
+	public void testListHasImages() {
+		
+		DeviceUser user = new TestDeviceUser();
+		
+		Question image1 = new Question("How do I beat rain teams?", "They are too fast. Thunder is too accurate in the rain.", null, user);
+		Question image2 = new Question ("How do I beat sand teams?", "Tyranitar is a broken mon.", null, user);
+		Question noimage1 = new Question ("How many apricots do I need for a masterball", "I want one to catch a magikarp.", null, user);
+		Question noimage2 = new Question ("My pokemon won't listen to me.", "My friend traded me his lv100 Oddish and it won't listen to me. Please help!", null, user);
 
-	//filter by having an image
-	imagelist.add(image1);
-	imagelist.add(image2);
-	imagelist.add(noimage1);
-	imagelist.add(noimage2);
-	imagelist.add(noimage3);
+		image1.setImage(picture);
+		image2.setImage(picture);
 
-	imagelist.filterBy(1);
+		//filter by having an image
+		imagelist.add(image1);
+		imagelist.add(image2);
+		imagelist.add(noimage1);
+		imagelist.add(noimage2);
 
-	void testListHasImages() {
+		imagelist.filterOutImages(1);
+		
 		assertTrue("List has no images.", imagelist.size() == 2);
 
 		//filter by not having images
 	
 		plainlist.add(image1);
 		plainlist.add(image2);
-		plainlist.add(image3);
 	
-		plainlist.filterBy(0);
+		plainlist.filterOutNoImages(0);
 	
 		assertTrue("List not filtered by not having image.", plainlist.size() == 0);
 	}
-
-
 }
-*/

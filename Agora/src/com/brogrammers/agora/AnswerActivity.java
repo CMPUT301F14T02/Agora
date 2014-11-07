@@ -28,6 +28,7 @@ public class AnswerActivity extends Activity implements Observer{
 	ListView lv;
 	/**
 	 * onCreate method. Gets question id of corresponding question through an intent. Then calls answeradapter to display answers.
+	 * Create listview from answer activity layout.
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

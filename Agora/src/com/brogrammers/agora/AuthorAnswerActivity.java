@@ -14,15 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 /**
  * Activity screen when posting an answer to a question.
- * @author Team 02
+ * Todo: implement picturehandler to post pictures.
+ * @author Group02
  *
  */
 public class AuthorAnswerActivity extends Activity {
 	private Long qid;
 	/**
-	 * Retrieves question ID from intent to retrieve the list of answers.
-	 * As well sets up the handler and buttons for the view
 	 * Todo: implement picturehandler to post pictures.
+	 * 
+	 * Retrieves question id from intent. 
+	 * Retrieves button layouts and activity layout.
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

@@ -3,7 +3,11 @@ package com.brogrammers.agora;
 import java.io.Serializable;
 import java.util.Date;
 import com.brogrammers.agora.DeviceUser;
-
+/**
+ * Comment data model class. Contains information on comment body, author and date.
+ * @author Group02
+ *
+ */
 public class Comment implements Serializable {
 	
 	private static final long serialVersionUID = 5525876100406087372L;
@@ -20,7 +24,10 @@ public class Comment implements Serializable {
 		this.posted = posted;
 	}
 
-	
+	/**
+	 * Comment constructor from a string.
+	 * @param text
+	 */
 	public Comment(String text) {
 		body = text;
 		author = DeviceUser.getUser();
