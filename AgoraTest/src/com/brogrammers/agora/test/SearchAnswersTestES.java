@@ -95,7 +95,7 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 				}	
 			}
 		});
-		assertTrue(results.get(0).size() == 0);
+		assertTrue("Received result before one was expected.", results.get(0).size() == 0);
 		try {
 			signal.await(1, TimeUnit.SECONDS);
 		} catch (InterruptedException f) {
@@ -113,9 +113,9 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 		String recAnswer3 = gson.toJson(results.get(0).get(2));
 		
 		// can't guarantee order here so make sure the questions match each other
-		assertTrue(locAnswer1.equals(recAnswer1) || locAnswer1.equals(recAnswer2) || locAnswer1.equals(recAnswer3));
-		assertTrue(locAnswer2.equals(recAnswer1) || locAnswer2.equals(recAnswer2) || locAnswer2.equals(recAnswer3));
-		assertTrue(locAnswer3.equals(recAnswer1) || locAnswer3.equals(recAnswer2) || locAnswer3.equals(recAnswer3));
+		assertTrue("Local answer did not match server counterpart.", locAnswer1.equals(recAnswer1) || locAnswer1.equals(recAnswer2) || locAnswer1.equals(recAnswer3));
+		assertTrue("Local answer did not match server counterpart.", locAnswer2.equals(recAnswer1) || locAnswer2.equals(recAnswer2) || locAnswer2.equals(recAnswer3));
+		assertTrue("Local answer did not match server counterpart.", locAnswer3.equals(recAnswer1) || locAnswer3.equals(recAnswer2) || locAnswer3.equals(recAnswer3));
 	}
 }
 

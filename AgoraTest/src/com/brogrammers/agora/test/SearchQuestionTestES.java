@@ -91,11 +91,11 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		}
 		
 		// compare the local and received copies.
-		assertTrue(results.get(0).size() == 1);
+		assertTrue("Received result before one was expected.", results.get(0).size() == 1);
 		Gson gson = new Gson();
 		String jsonLocalQuestion = gson.toJson(q);
 		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
-		assertTrue(jsonLocalQuestion.equals(jsonReceivedQuestion));
+		assertTrue("Local question did not match the question on the server.", jsonLocalQuestion.equals(jsonReceivedQuestion));
 		
 		
 		// Search for a word not present in the posts ensure we get no results
@@ -117,7 +117,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		}
 		
 		// check that we get no results back.
-		assertTrue(resultsEmpty.get(0).size() == 0);
+		assertTrue("Received result before one was expected.", resultsEmpty.get(0).size() == 0);
 		
 		
 		// Search for a word not present in all 4 posts and make sure we get all 4 back
@@ -139,6 +139,6 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		}
 		
 		// check that we get 4 results back.
-		assertTrue(results4.get(0).size() == 4);
+		assertTrue("Expected 4 questions matching search but did not receive 4.", results4.get(0).size() == 4);
 	}
 }
