@@ -15,11 +15,14 @@ import android.widget.Toast;
 /**
  * Activity for posting a question to the app.
  * Todo: implement picturehandler to post pictures to a question.
- * @author Kevin
+ * @author Group02
  *
  */
 public class AuthorQuestionActivity extends Activity {
 
+	/**
+	 * Retrieves button layouts and activity author question layout.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

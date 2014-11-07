@@ -14,14 +14,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 /**
  * Activity screen when posting an answer to a question.
- * @author Kevin
+ * Todo: implement picturehandler to post pictures.
+ * @author Group02
  *
  */
 public class AuthorAnswerActivity extends Activity {
 	private Long qid;
 	/**
-	 * Retrieves question id from intent. 
 	 * Todo: implement picturehandler to post pictures.
+	 * 
+	 * Retrieves question id from intent. 
+	 * Retrieves button layouts and activity layout.
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +61,7 @@ public class AuthorAnswerActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	/**
-	 * retrieves text from answer body.
+	 * Retrieves text from answer body to display.
 	 */
 	View.OnClickListener answerhandler = new View.OnClickListener() {
 		public void onClick(View v) {
@@ -77,6 +80,7 @@ public class AuthorAnswerActivity extends Activity {
     		
 		}
 	};
+
 	View.OnClickListener picturehandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add picture

@@ -12,7 +12,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
-
+/**
+ * Comment activity for displaying a list of comments corresponding to a question/answer.
+ * @author Group02
+ *
+ */
 public class CommentActivity extends Activity implements Observer {
 	private long qid;
 	private long aid;
@@ -22,7 +26,10 @@ public class CommentActivity extends Activity implements Observer {
 	private QuestionController controller;
 
 	ListView lv;
-
+	/**
+	 * Retrieves question id or answer id from intent. 
+	 * Then creates post comment button layout and the listview.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -40,7 +47,9 @@ public class CommentActivity extends Activity implements Observer {
 		lv = (ListView) findViewById(R.id.CommentListView);
 
 	}
-
+	/**
+	 * When updated, return answer/question and retrieve new set of comments.
+	 */
 	@Override
 	public void update() {
 		if (qList.size() > 0) {
@@ -91,7 +100,9 @@ public class CommentActivity extends Activity implements Observer {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+	/**
+	 * When postcomment button clicked on. Posts comment to via corresponding question/answer id.
+	 */
 	View.OnClickListener postcomment = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
