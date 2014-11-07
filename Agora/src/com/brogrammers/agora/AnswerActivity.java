@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 /**
- * Answer Activity which displays the list of answers corresponding to a question.
+ * Answer Activity which displays the view of answers corresponding to a question.
  * Todo: Upvote, favourite, cache functionality.
  * @author Group02
  *

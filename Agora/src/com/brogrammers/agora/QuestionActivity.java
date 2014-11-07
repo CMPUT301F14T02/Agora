@@ -18,11 +18,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
-
+/**
+ * Question activity displaying view of a single question.
+ * Todo: implement answer count
+ * @author Group 02
+ *
+ */
 public class QuestionActivity extends Activity implements Observer {
 	private List<Question> qList;
 	private Long qid;
-	
+	/**
+	 * When activity is created, retrieve question id via intent from main activity.
+	 * Sets buttons, and onclick listeners for comments/answers.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) { 
 		super.onCreate(savedInstanceState);
@@ -45,12 +53,20 @@ public class QuestionActivity extends Activity implements Observer {
 		viewAnswer.setOnClickListener(new openAnswerView());
 		upVoteQuestion.setOnClickListener (new upVoteQuestion());
 	}
+	/**
+	 * helper function to convert date in ms to a date format MMM d yyyy
+	 * @param milliseconds date in milliseconds
+	 * @return string of formatted date
+	 */
 	public String datetostring(long milliseconds){
 	    Date date = new Date(); 
 	    date.setTime(milliseconds);
 	    String newDate=new SimpleDateFormat("MMM d yyyy").format(date);
 	    return newDate;
 	}
+	/**
+	 * When updated, check questionlist for question retrieved via id, and set the textviews accordingly.
+	 */
 	@Override
 	public void update() {
 		TextView qTitle = (TextView)findViewById(R.id.qTitle);
@@ -102,7 +118,11 @@ public class QuestionActivity extends Activity implements Observer {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
+	/**
+	 * Opens activity for the answers corresponding to the question
+	 * @author group02
+	 *
+	 */
 	private class openAnswerView implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(QuestionActivity.this, AnswerActivity.class);
@@ -110,7 +130,11 @@ public class QuestionActivity extends Activity implements Observer {
 			startActivity(intent);
 		}
 	}
-	
+	/**
+	 * Opens activity for the comments corresponding to the question
+	 * @author group02
+	 *
+	 */
 	private class openCommentsView implements OnClickListener {
 		public void onClick(View v) {
 			Intent intent = new Intent(QuestionActivity.this, CommentActivity.class);
@@ -118,7 +142,11 @@ public class QuestionActivity extends Activity implements Observer {
 			startActivity(intent);
 		}
 	}
-	
+	/**
+	 * upvote question when upvote button is clicked on.
+	 * @author Kevin
+	 *
+	 */
 	private class upVoteQuestion implements OnClickListener {
 		public void onClick(View v) {
 			if(qList.size() != 0){

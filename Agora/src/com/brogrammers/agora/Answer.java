@@ -37,9 +37,9 @@ public class Answer implements Serializable {
 
 	/**
 	 * Answer constructor
-	 * @param body
-	 * @param image
-	 * @param author
+	 * @param body text body of the answer
+	 * @param image 
+	 * @param author username of the author posting the answer
 	 */
 	public Answer(String body, Bitmap image, Author author) {
 		this.body = body;
@@ -52,14 +52,14 @@ public class Answer implements Serializable {
 	}
 	/**
 	 * Returns number of comments 
-	 * @return
+	 * 
 	 */
 	public int countComments() {
 		return comments.size();
 	}
 	/**
 	 * returns list of comments attributed to the answer
-	 * @return
+	 * 
 	 */
 	public List<Comment> getComments() {
 		// don't modify the list directly!
@@ -68,14 +68,14 @@ public class Answer implements Serializable {
 	}
 	/**
 	 * Add comment to an answer.
-	 * @param c
+	 * 
 	 */
 	public void addComment(Comment c) {
 		comments.add(c);
 	}
 	/**
 	 * Increment upvote once.
-	 * @param c
+	 *
 	 */
 	public void upvote() {
 		rating++;

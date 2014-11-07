@@ -7,7 +7,13 @@ import java.util.Date;
 import java.util.List;
 
 import android.graphics.Bitmap;
-
+/**
+ * Question model data class. Contains information on the question, including
+ * title, body, rating, image, author, answers, and comments.
+ * 
+ * @author Group02
+ *
+ */
 public class Question implements Serializable, Comparable<Question> {
 	private static final long serialVersionUID = -4895951515889586534L;
 
@@ -20,7 +26,13 @@ public class Question implements Serializable, Comparable<Question> {
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
 	private ArrayList<Answer> answers;
-
+	/**
+	 * Question constructor. Date is created at time of creation.
+	 * @param title
+	 * @param body
+	 * @param image
+	 * @param author
+	 */
 	public Question(String title, String body, Bitmap image, Author author) {
 		this.title = title;
 		this.body = body;
@@ -51,7 +63,10 @@ public class Question implements Serializable, Comparable<Question> {
 	public void setImage(Bitmap image) {
 		this.image = image;
 	}
-
+	/**
+	 * Returns size of comments list.
+	 * @return
+	 */
 	public int countComments() {
 		if (comments == null) {
 			return 0;
@@ -60,7 +75,10 @@ public class Question implements Serializable, Comparable<Question> {
 		}
 
 	}
-	
+	/**
+	 * returns size of answers list.
+	 * @return
+	 */
 	public int countAnswers() {
 		if (answers == null) {
 			return 0;
