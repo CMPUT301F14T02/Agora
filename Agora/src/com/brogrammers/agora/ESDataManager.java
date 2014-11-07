@@ -36,7 +36,7 @@ import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.entity.StringEntity;
 
-public class ESDataManager implements DataManager {
+public class ESDataManager { // implements DataManager
 	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
 	protected String INDEXNAME = "cmput301f14t02/"; 	// name of the ES database/index
 	protected String TYPENAME = "agora/"; 	// name of the ES table/type 
@@ -48,7 +48,10 @@ public class ESDataManager implements DataManager {
 	
 	private static ConnectionReceiver connectionReceiver;
 	private static ESDataManager self;
-			
+	
+	/**
+	 * Generates singleton of the class
+	 */
 	public static ESDataManager getInstance() {
 		if (self == null) {
 			self = new ESDataManager();
@@ -56,14 +59,23 @@ public class ESDataManager implements DataManager {
 		return self;
 	}
 
+	/**
+	 * Gets connected status of the phone.
+	 */
 	public boolean isConnected(){
 		return this.connected;
 	}
 	
+	/**
+	 * Constructor
+	 * <p>
+	 * Initiates an instance of the ES class which manages all networking with the 
+	 * ES server.
+	 * <p>
+	 * Gets the connection status and instantiates a broadcast receiver to monitor
+	 * changes.
+	 */
 	protected ESDataManager() {
-		// get connection status
-		// after creation connectivity status will be monitored by a
-		// broadcast receiver.
 		ConnectivityManager cm = (ConnectivityManager) Agora.getContext().getSystemService(Context.CONNECTIVITY_SERVICE); 
 		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 		connected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
@@ -72,13 +84,27 @@ public class ESDataManager implements DataManager {
 							new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 	}
 	
+	/**
+	 * Protective constructor for dependency injection during testing.
+	 * <p>
+	 * Allows tests to pass in specific addresses on the server to test in isolation.
+	 * <p>
+	 * @param  domain The site domain
+	 * @param  indexName The index name
+	 * @return typeName The ES type on the server
+	 */
 	protected ESDataManager(String domain, String indexName, String typeName) {
 		this();
 		DOMAIN = domain;
 		INDEXNAME = indexName;
 		TYPENAME = typeName;
 	}
-
+	
+	/**
+	 * Broadcast receiver used for updating connections status.
+	 * <p>
+	 * Provides the application with updates on connection status.
+	 */
 	public class ConnectionReceiver extends BroadcastReceiver {
 		@Override
 		public void onReceive(Context context, Intent intent){
@@ -97,6 +123,13 @@ public class ESDataManager implements DataManager {
 		}
 	}
 	
+	/**
+	 * Gets all questions on the ES server.
+	 * <p>
+	 * Creates a generic match all search and returns all questions available.
+	 *
+	 * @return List<Question> returns a List of all questions on the server
+	 */
 	public List<Question> getQuestions() throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
 		String requestBody = "{" +
@@ -111,6 +144,22 @@ public class ESDataManager implements DataManager {
 		return getQuestions(Question.class, requestBody, endPoint, null);
 	}
 	
+	/**
+	 * Provides Async search facility for the ES server
+	 * <p>
+	 * Based on parameters generates appropriate server requests and then
+	 * sends the requests asynchronously.
+	 * <p>
+	 * Initially a pointer to an empty result list is passed to the caller.
+	 * Once the async call returns it populates the list and notifies the controller
+	 * of the update.
+	 * 
+	 * @param returnType Provides the type that the returned list will be composed of.
+	 * @param requestBody The body of the request usually containing ES DSL queries.
+	 * @param endPoint Post fix to indicate what type of query is being done on the server.
+	 * @param answerQuery When searching answers provides the answer search terms.
+	 * @return ArrayList<T> Returns a list of generic type. Either Answer or Question objects.
+	 */
 	public <T> ArrayList<T> getQuestions(Class<T> returnType, String requestBody, String endPoint, final String answerQuery) throws UnsupportedEncodingException {
 		final List<Question> questionList = new ArrayList<Question>();
         final List<Answer> answerList = new ArrayList<Answer>();
@@ -133,10 +182,8 @@ public class ESDataManager implements DataManager {
 			public void onFailure(int status, Header[] arg1, byte[] responseBody, Throwable arg3) {
 				
 				Log.e("SERVER", "getQuestion failure: "+Integer.toString(status));
-				try {
-					Log.e("SERVER", "responsebody: "+new String(responseBody));
-				} catch (NullPointerException e) { }
-				Toast.makeText(Agora.getContext(), "ES getQuestions Failed; server empty?", 0).show();
+				Log.e("SERVER", "responsebody: "+new String(responseBody));
+				Toast.makeText(Agora.getContext(), "ES Get Question On Fail", 0).show();
 			}
 
 			@Override
@@ -157,7 +204,6 @@ public class ESDataManager implements DataManager {
 						questionList.add(qObject);
 						Log.e("SERVER", qObject.getID().toString()+" "+qObject.getBody());
 				    }
-				    
 				    // if this is an answer search remove any answers that don't 
 				    // contain the search term.
 				    if(answerQuery != null){
@@ -170,15 +216,8 @@ public class ESDataManager implements DataManager {
 				    		}
 				    	}
 				    }
-//				    	for (T question: questionList){
-//				    		List<Answer> answers = ((Question) question).getAnswers();
-//				    		for (int i = 0; i < answers.size(); i++){
-//				    			if (!answers.get(i).getBody().toLowerCase().contains(answerQuery.toLowerCase())){
-//				    				answers.remove(i);
-//                                }
-//				    	    }
 					QuestionController.getController().update();
-//					Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
+					Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	
@@ -190,20 +229,17 @@ public class ESDataManager implements DataManager {
             return (ArrayList<T>) questionList;
 		}
 	}
-	
+
+	/**
+	 * Generates a search for answers based on passed in string of terms.
+	 * <p>
+	 * Builds the body of the request based on the search term.
+	 * And creates a server request based on the terms and appropriate endpoint.
+	 * 
+	 * @param  query The search terms.
+	 * @return List<Answer> A list of answers meeting the specified search criteria.
+	 */
 	public List<Answer> searchAnswers(String query) throws UnsupportedEncodingException {
-//		String requestBody = "{" +
-//		    "\"query\" : {" +
-//		        "\"bool\" : {" +
-//		            "\"must\" : [" +
-//		                "{" +
-//		                    "\"nested\" : {" +
-//		                        "\"path\" : \"answers\"," +
-//		                        "\"query\" : {" +
-//		                            "\"bool\" : {" +
-//		                                "\"must\" : [" +
-//		                                    "{ \"match\" : {\"answers.body\" : \"" + query + "\"}}" +
-//		                                "]}}}}]}}}";
 		String requestBody = "{" +
 				   "\"query\": {" +
 		      "\"filtered\": {" +
@@ -219,7 +255,16 @@ public class ESDataManager implements DataManager {
 		// sort through questions and extract answers
 		return list;
 	}
-	
+
+    /**
+	 * Generates a search for questions based passed in string of terms.
+	 * <p>
+	 * Builds the body of the request based on the search term.
+	 * And creates a server request based on the terms and appropriate endpoint.
+	 * 
+	 * @param  query The search terms.
+	 * @return List<Question> A list of questions meeting the specified search criteria.
+	 */
 	public List<Question> searchQuestions(String query) throws UnsupportedEncodingException {	
 		String requestBody = "{" +
 			    "\"query\": {" +
@@ -235,6 +280,13 @@ public class ESDataManager implements DataManager {
 	}
 	
 	
+	/**
+	 * Gets a question by its unique id value.
+	 * <p>
+	 *
+	 * @param  id The questions unique ID value.
+	 * @return List<Question> A list containing the single question object from the server.
+	 */
 	public List<Question> getQuestionById(Long id) throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
 		String requestBody = "{" +
@@ -246,19 +298,30 @@ public class ESDataManager implements DataManager {
 		return getQuestions(Question.class, requestBody, endPoint, null);
 	}
 	
-		
-	public boolean pushQuestion(Question q) throws UnsupportedEncodingException {		
+	/**
+	 * Sends a locally cretaed question object to the server.
+	 * <p>
+	 * Converts to json, generates the appropriate endpoint and makes a server request.
+	 *
+	 * @param q The question object to send to the server. 
+	 */	
+	public void pushQuestion(Question q) throws UnsupportedEncodingException {		
 		Gson gson = new Gson();
 		String questionSerialized = gson.toJson(q);
 		String endPoint = Long.toString(q.getID());
-		return push(questionSerialized, endPoint);
+		push(questionSerialized, endPoint);
 	}
-	
-	public boolean pushAnswer(Answer a, Long qID) {
-		return pushAnswer(a, qID, CacheDataManager.getInstance());
-	}
-	
-	public boolean pushAnswer(Answer a, Long qID, CacheDataManager cache) {		
+
+	/**
+	 * Sends a locally cretaed answer object to the server.
+	 * <p>
+	 * Converts to json, generates the appropriate endpoint and makes a server request.
+	 *
+	 * @param  a The answer object to push to the server.
+	 * @param  qID The id of the question that the answer to be pushed belongs to.
+	 * @param  cache Synthetic cache for testing purposes.
+	 */	
+	public void pushAnswer(Answer a, Long qID, CacheDataManager cache) throws UnsupportedEncodingException {		
 		Question q = cache.getQuestionById(qID);
 		Gson gson = new Gson();
 		String answerSerialized = gson.toJson(q.getAnswers());
@@ -268,20 +331,21 @@ public class ESDataManager implements DataManager {
 					"}" +
 				"}";
 		String endPoint = Long.toString(qID) + "/" + "_update";
-		try {
-			return push(answerSerialized, endPoint);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return false;
-		}
+		push(answerSerialized, endPoint);
 	}
 	
-	public boolean pushComment(Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
-		return pushComment(c, qID, aID, CacheDataManager.getInstance());
-	}
-	
-	// if comment is on an answer pass aID, if on question itself pass null
-	public boolean pushComment(Comment c, Long qID, Long aID, CacheDataManager cache) throws UnsupportedEncodingException {
+	/**
+	 * Sends a locally cretaed comment object to the server.
+	 * <p>
+	 * Converts to json, generates the appropriate endpoint and makes a server request.
+	 *
+	 * @param  c The comment object to push to the server.
+	 * @param  qID The id of the question that the comment to be pushed belongs to.
+	 * @param  aID The id of the answer that the comment to be pushed belongs to.
+	 * @param  cache Synthetic cache for testing purposes.
+	 */	
+	public void pushComment(Comment c, Long qID, Long aID, CacheDataManager cache) throws UnsupportedEncodingException {
+        // if comment is on an answer pass aID, if on question itself pass null
 		String endPoint = Long.toString(qID) + "/" + "_update";
 		Question q = cache.getQuestionById(qID);
 		Gson gson = new Gson();
@@ -292,7 +356,7 @@ public class ESDataManager implements DataManager {
 					"\"comments\":" + commentSerialized + 
 						"}" +
 					"}";
-			return push(commentSerialized, endPoint);
+			push(commentSerialized, endPoint);
 
 		} else {
 			// if qid is not null re-upload the answer array
@@ -302,11 +366,18 @@ public class ESDataManager implements DataManager {
 					"\"answers\":" + answerSerialized + 
 						"}" +
 					"}";
-			return push(answerSerialized, endPoint);	
+			push(answerSerialized, endPoint);	
 		}
 	}
-	
-	public boolean pushUpvote(Long qID, CacheDataManager cache) {
+
+	/**
+	 * Sends a locally cretaed upvote to the server.
+	 * <p>
+	 * Converts to json, generates the appropriate endpoint and makes a server request.
+	 *
+	 * @param  qID The id of the question that the upvote to be pushed belongs to.
+	 */	
+	public void pushUpvote(Long qID, CacheDataManager cache) throws UnsupportedEncodingException {
 		Question q = cache.getQuestionById(qID);
 		int upvotes = q.getRating();
 		String upVoteSerialized = "{" +
@@ -315,24 +386,34 @@ public class ESDataManager implements DataManager {
 					"}" +
 				"}";
 		String endPoint = Long.toString(qID) + "/" + "_update";
-		try {
-			return push(upVoteSerialized, endPoint);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-			return false;
-		}
+		push(upVoteSerialized, endPoint);
 	}
 	
-	
-	public boolean push(String body, String endPoint) throws UnsupportedEncodingException{
+	/**
+	 * Pushes queryItem objects to the server asynchronously.
+	 * <p>
+	 * Builds a queryItem object based on the ES server address, the body
+	 * of the request to be sent, and the endpoint.
+	 *
+	 * @param  body The body of the request to be send to the server.
+	 * @param  endPoint Specifies the endpoint of the server request.
+	 */
+	public void push(String body, String endPoint) throws UnsupportedEncodingException{
 		StringEntity stringEntityBody = new StringEntity(body);
 		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
 		QueryItem queryItem = new QueryItem(stringEntityBody, URI, RequestType.POST);
 		updateServer(queryItem);
-		return false;
 	}
 
-	
+	/**
+	 * Accepts query item objects and attempts to send them to the server.
+	 * <p>
+	 * Uses the QueryItem object to determine the address to send the request to, and the
+	 * body of the request. If the server is offline the requests are cached for processing
+	 * once connectivity returns.
+	 *
+	 * @param  qItem A query object containing all information to create the server request.
+	 */	
 	private void updateServer(final QueryItem qItem){
 		Log.e("SERVER UPDATED", "updateServer called");
 		if (connected) {
@@ -342,7 +423,6 @@ public class ESDataManager implements DataManager {
 			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
 			        // called when response HTTP status is "200 OK"
 					Log.e("SERVER UPDATED", "updateServer method success.");
-					QuestionController.getController().update();
 			    }
 			    @Override
 			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {
@@ -358,44 +438,4 @@ public class ESDataManager implements DataManager {
 		}
 		
 	}
-	
-//	public void setServerMapping() throws ClientProtocolException, IOException{
-//		// remove the forwardslash from the typename
-//		String typeName = TYPENAME.substring(0, TYPENAME.length() - 1);
-//		String mapBody = "{" +
-//	         "\"" +  typeName  + "\": {" +
-//	            "\"properties\": {" +
-//	               "\"answers\": {" +
-//	                  "\"type\": \"nested\"," +
-//	                  "\"properties\": {" +
-//	                     "\"author\": {" +
-//	                        "\"type\": \"string\"" +
-//	                     "}," +
-//	                     "\"body\": {" +
-//	                        "\"type\": \"string\"" +
-//	                     "}" +
-//	                  "}" +
-//	               "}," +
-//	               "\"author\": {" +
-//	                  "\"type\": \"string\"" +
-//	               "}," +
-//	               "\"date\": {" +
-//	                  "\"type\": \"string\"" +
-//	               "}" +
-//	            "}" +
-//	         "}" +
-//         "}" +
-//     "}" +
-// "}";
-//		// Delete the current mapping
-//		HttpClient client = new DefaultHttpClient();
-//        HttpDelete deleteRequest = new HttpDelete(DOMAIN + INDEXNAME + TYPENAME + "_mapping");
-//        client.execute(deleteRequest);
-//
-//        // Set a new mapping
-//		String mapURI = DOMAIN + INDEXNAME + "_mapping/" + TYPENAME;
-//		StringEntity mapBodyStringEntity = new StringEntity(mapBody);
-//		QueryItem queryItem = new QueryItem(mapBodyStringEntity, mapURI, RequestType.POST);
-//		// updateServer(queryItem);
-//	}
 }
