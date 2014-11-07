@@ -111,6 +111,9 @@ public class MainActivity extends Activity implements Observer {
         startActivity(i);
     }
     
+    /**
+     * 
+     */
     public void openSortMenu() {
         // Create Dialog Menu for the Sorting Menu
     	AlertDialog.Builder builder = new AlertDialog.Builder(this);
