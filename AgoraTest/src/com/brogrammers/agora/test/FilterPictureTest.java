@@ -4,8 +4,8 @@ import java.net.URL;
 import java.util.ArrayList;
 
 import com.brogrammers.agora.DeviceUser;
+import com.brogrammers.agora.FilterSorterHelper;
 import com.brogrammers.agora.Question;
-import com.brogrammers.agora.test.SortLocalTest.TestDeviceUser;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -53,7 +53,8 @@ public class FilterPictureTest extends TestCase {
 		imagelist.add(noimage1);
 		imagelist.add(noimage2);
 
-		imagelist.filterOutImages(1);
+		FilterSorterHelper fshelper = new FilterSorterHelper();
+		imagelist = fshelper.filterOutImages(imagelist);
 		
 		assertTrue("List has no images.", imagelist.size() == 2);
 
@@ -62,7 +63,7 @@ public class FilterPictureTest extends TestCase {
 		plainlist.add(image1);
 		plainlist.add(image2);
 	
-		plainlist.filterOutNoImages(0);
+		plainlist = fshelper.filterOutNoImages(plainlist);
 	
 		assertTrue("List not filtered by not having image.", plainlist.size() == 0);
 	}

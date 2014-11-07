@@ -8,7 +8,7 @@ import com.brogrammers.agora.Question;
 import com.brogrammers.agora.QuestionController;
 
 
-//Activity not made yet
+
 public class UpvoteAnswerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	
 	public UpvoteAnswerTest() {
