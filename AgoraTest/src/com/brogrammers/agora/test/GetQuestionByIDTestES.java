@@ -91,10 +91,10 @@ public class GetQuestionByIDTestES extends ActivityInstrumentationTestCase2<Main
 		}
 		
 		// compare the local and received copies.
-		assertTrue(results.get(0).size() == 1);
+		assertTrue("Received a result before one was expected.", results.get(0).size() == 1);
 		Gson gson = new Gson();
 		String jsonLocalQuestion = gson.toJson(q);
 		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
-		assertTrue(jsonLocalQuestion.equals(jsonReceivedQuestion));
+		assertTrue("Local question did not match the server copy.", jsonLocalQuestion.equals(jsonReceivedQuestion));
 	}
 }

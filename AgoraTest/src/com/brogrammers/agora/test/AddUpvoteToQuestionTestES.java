@@ -106,7 +106,7 @@ public class AddUpvoteToQuestionTestES extends ActivityInstrumentationTestCase2<
 		});
 		
 		// ensure is empty before receiving any response
-		assertTrue(results.get(0).size() == 0);
+		assertTrue("Got a result before one was expected.", results.get(0).size() == 0);
 		try {
 			signal.await(3, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
@@ -115,11 +115,11 @@ public class AddUpvoteToQuestionTestES extends ActivityInstrumentationTestCase2<
 		
 		// compare the local and received copies to ensure the server
 		// copy matches the local copy.
-		assertTrue(results.get(0).size() > 0);
+		assertTrue("No results could be found on the server.", results.get(0).size() > 0);
 		Gson gson = new Gson();
 		String jsonLocalQuestion = gson.toJson(q);
 		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
-		assertTrue(jsonLocalQuestion.equals(jsonReceivedQuestion));
+		assertTrue("Local question does not match its server copy.", jsonLocalQuestion.equals(jsonReceivedQuestion));
 	}
 }
 

@@ -105,7 +105,7 @@ public class AddCommentToanswerTestES extends ActivityInstrumentationTestCase2<M
 		});
 		
 		// ensure is empty before receiving any response
-		assertTrue(results.get(0).size() == 0);
+		assertTrue("Received a result before one was expected", results.get(0).size() == 0);
 		try {
 			signal.await(3, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
@@ -114,11 +114,11 @@ public class AddCommentToanswerTestES extends ActivityInstrumentationTestCase2<M
 		
 		// compare the local and received copies to ensure the server
 		// copy matches the local copy.
-		assertTrue(results.get(0).size() == 1);
+		assertTrue("Did not get exactly 1 comment", results.get(0).size() == 1);
 		Gson gson = new Gson();
 		String jsonLocalQuestion = gson.toJson(q);
 		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
-		assertTrue(jsonLocalQuestion.equals(jsonReceivedQuestion));
+		assertTrue("Commented question does not match local copy", jsonLocalQuestion.equals(jsonReceivedQuestion));
 	}
 }
 

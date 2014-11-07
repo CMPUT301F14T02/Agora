@@ -24,7 +24,11 @@ import android.widget.Toast;
 import java.util.Date;
 /**
  * Adapter required to format answers from a question to the answerActivity of the question.
+<<<<<<< HEAD
+ * @author Group02
+=======
  * @author Team 02
+>>>>>>> fe7be30d0671f74b45c71ee82c6ae608a0f7a23a
  *
  */
 public class AnswerAdapter extends BaseAdapter {

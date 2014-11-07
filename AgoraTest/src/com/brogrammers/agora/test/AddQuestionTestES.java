@@ -88,7 +88,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 				}	
 			}
 		});
-		assertTrue(results.get(0).size() == 0);
+		assertTrue("Got result before one was expected", results.get(0).size() == 0);
 		try {
 			signal.await(2, TimeUnit.SECONDS);
 		} catch (InterruptedException e) {
@@ -97,7 +97,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		
 		Log.i("SERVER", "Before first assert");
 		// compare the local and received copies.
-		assertTrue(results.get(0).size() == 2);
+		assertTrue("Did not receive exactly 2 questions after pushing 2.", results.get(0).size() == 2);
 		Gson gson = new Gson();
 		String jsonLocalQuestion = gson.toJson(q);
 		String jsonLocalQuestion2 = gson.toJson(q2);
@@ -105,8 +105,8 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		String jsonReceivedQuestion2 = gson.toJson(results.get(0).get(1));
 		
 		// can't guarantee order here so make sure the questions match each other
-		assertTrue(jsonLocalQuestion.equals(jsonReceivedQuestion) || jsonLocalQuestion.equals(jsonReceivedQuestion2));
-		assertTrue(jsonLocalQuestion2.equals(jsonReceivedQuestion) || jsonLocalQuestion2.equals(jsonReceivedQuestion2));
+		assertTrue("Local question did not match server copy.", jsonLocalQuestion.equals(jsonReceivedQuestion) || jsonLocalQuestion.equals(jsonReceivedQuestion2));
+		assertTrue("Local question did not match server copy.", jsonLocalQuestion2.equals(jsonReceivedQuestion) || jsonLocalQuestion2.equals(jsonReceivedQuestion2));
 	}
 }
 
