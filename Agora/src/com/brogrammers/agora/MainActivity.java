@@ -124,6 +124,7 @@ public class MainActivity extends Activity implements Observer {
     		Intent i = new Intent(this, SearchActivity.class);
         startActivity(i);
     }
+
     /**
      * Opens sort dialog where user can filter/sort mainActivity.
      * Currently does not work. Need to implement.

@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 /**
- * Adapter for populating and formatting comments onto commentview 
- * @author Group02s
+ * Adapter for populating and formatting comments onto comment view 
+ * @author Group02
  *
  */
 
@@ -75,7 +75,7 @@ public class CommentAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * method of getting the view that will populate each item on the listview with comment_object
+	 * Method of getting the view that will populate each item on the listview with comment_object
 	 * 
 	 */
 	@Override
@@ -95,7 +95,7 @@ public class CommentAdapter extends BaseAdapter {
 	}
 
 	/**
-	 * converts time passed from Epoch time into a formatted date string.
+	 * Converts time passed from Epoch time into a formatted date string.
 	 * @param milliseconds
 	 * @return
 	 */

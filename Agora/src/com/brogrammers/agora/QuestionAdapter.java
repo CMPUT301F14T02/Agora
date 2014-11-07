@@ -17,12 +17,20 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Question adapter is required to assemble the question object 
+ * for the UI implementation. This is used to update list views
+ * in order to browse questions (US 1)
+ * 
+ * @author Group02
+ */
 public class QuestionAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private QuestionController controller;
 	private List<Question> qList;
 	private Activity activity;
 	
+	// Adapter Constructor
 	public QuestionAdapter(List<Question> qList, Activity activity) {
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		// Need to pull from the controller the list of questions for the adapter
@@ -46,13 +54,16 @@ public class QuestionAdapter extends BaseAdapter {
 		return qList.get(position).getID();
 	}
 
+	
+	/**
+	 * Sets the view with our assembled question object to display in our browse question activity.
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null) {
 			convertView = inflater.inflate(R.layout.question_object, null);
 		}
-		
-
+	
 		Question question = (Question)getItem(position);
 //		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
 		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle());
@@ -77,12 +88,22 @@ public class QuestionAdapter extends BaseAdapter {
 		
 		return convertView;
 	}
+	
+	
+	/**
+	 * This converts the date from milliseconds to a date format that the user can interprete.
+	 * 
+	 * @param long milliseconds		Input the java built in time as milliseconds
+	 * @return newdate 				Output a date format that interprets time from milliseconds
+	 */
 	public String datetostring(long milliseconds){
 	    Date date = new Date(); 
 	    date.setTime(milliseconds);
 	    String newDate=new SimpleDateFormat("MMM d yyyy").format(date);
 	    return newDate;
 	}
+	
+	
 	private class QuestionOnClickListener implements OnClickListener {
 		private int position;
 		QuestionOnClickListener(int position) {
