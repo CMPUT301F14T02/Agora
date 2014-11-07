@@ -3,7 +3,7 @@ package com.brogrammers.agora;
 import java.io.Serializable;
 /**
  * Author data model. Contains information on user - the name.
- * @author Kevin
+ * @author Group02
  *
  */
 public class Author implements Serializable {
