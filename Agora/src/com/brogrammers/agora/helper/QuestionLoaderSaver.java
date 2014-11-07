@@ -1,4 +1,4 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.helper;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
+import com.brogrammers.agora.Agora;
+import com.brogrammers.agora.model.Question;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

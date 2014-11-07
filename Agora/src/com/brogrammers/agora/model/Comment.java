@@ -1,8 +1,9 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import com.brogrammers.agora.DeviceUser;
+
+import com.brogrammers.agora.data.DeviceUser;
 /**
  * Comment data model class. Contains information on comment body, author and date.
  * @author Group02

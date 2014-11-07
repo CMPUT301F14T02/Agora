@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import com.brogrammers.agora.DeviceUser;
-import com.brogrammers.agora.FilterSorterHelper;
-import com.brogrammers.agora.Question;
+import com.brogrammers.agora.data.DeviceUser;
+import com.brogrammers.agora.helper.FilterSorterHelper;
+import com.brogrammers.agora.model.Question;
 
 import junit.framework.TestCase;
 

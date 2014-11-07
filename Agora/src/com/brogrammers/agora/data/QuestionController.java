@@ -1,4 +1,4 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.data;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -6,10 +6,15 @@ import java.util.Map;
 
 import org.apache.http.entity.StringEntity;
 
-import com.brogrammers.agora.QueryItem.RequestType;
+import com.brogrammers.agora.Agora;
+import com.brogrammers.agora.Observer;
+import com.brogrammers.agora.helper.ImageResizer;
+import com.brogrammers.agora.model.Answer;
+import com.brogrammers.agora.model.Comment;
+import com.brogrammers.agora.model.Question;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.loopj.android.http.RequestParams;
+import com.loopj.android.http.*;
 
 import android.graphics.Bitmap;
 import android.renderscript.Type;

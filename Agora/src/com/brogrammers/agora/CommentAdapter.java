@@ -4,6 +4,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.brogrammers.agora.model.Answer;
+import com.brogrammers.agora.model.Comment;
+import com.brogrammers.agora.model.Question;
+
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;

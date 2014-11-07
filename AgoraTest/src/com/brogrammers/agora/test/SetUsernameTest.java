@@ -3,8 +3,8 @@ package com.brogrammers.agora.test;
 import junit.framework.TestCase;
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.brogrammers.agora.DeviceUser;
 import com.brogrammers.agora.MainActivity;
+import com.brogrammers.agora.data.DeviceUser;
 
 public class SetUsernameTest extends ActivityInstrumentationTestCase2<MainActivity> {
 

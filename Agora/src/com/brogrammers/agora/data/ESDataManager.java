@@ -1,4 +1,4 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.data;
 
 import java.io.IOException;
 
@@ -16,7 +16,11 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-import com.brogrammers.agora.QueryItem.RequestType;
+import com.brogrammers.agora.Agora;
+import com.brogrammers.agora.data.QueryItem.RequestType;
+import com.brogrammers.agora.model.Answer;
+import com.brogrammers.agora.model.Comment;
+import com.brogrammers.agora.model.Question;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.*;

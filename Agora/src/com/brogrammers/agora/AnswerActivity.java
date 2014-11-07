@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import com.brogrammers.agora.data.QuestionController;
+import com.brogrammers.agora.model.Question;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

@@ -7,6 +7,9 @@ import java.util.Observable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import com.brogrammers.agora.data.QuestionController;
+import com.brogrammers.agora.model.Question;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;

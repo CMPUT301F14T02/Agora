@@ -1,4 +1,4 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.model;
 
 import java.io.Serializable;
 /**

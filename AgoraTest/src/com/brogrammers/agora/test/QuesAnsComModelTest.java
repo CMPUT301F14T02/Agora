@@ -3,10 +3,10 @@ package com.brogrammers.agora.test;
 import java.util.Date;
 import java.util.List;
 
-import com.brogrammers.agora.Answer;
-import com.brogrammers.agora.Author;
-import com.brogrammers.agora.Comment;
-import com.brogrammers.agora.Question;
+import com.brogrammers.agora.model.Answer;
+import com.brogrammers.agora.model.Author;
+import com.brogrammers.agora.model.Comment;
+import com.brogrammers.agora.model.Question;
 
 import junit.framework.TestCase;
 

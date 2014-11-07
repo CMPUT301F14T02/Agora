@@ -1,10 +1,12 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+
+import com.brogrammers.agora.helper.md5;
 
 
 import android.graphics.Bitmap;

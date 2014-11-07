@@ -12,12 +12,12 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.brogrammers.agora.CacheDataManager;
-import com.brogrammers.agora.DeviceUser;
-import com.brogrammers.agora.ESDataManager;
 import com.brogrammers.agora.MainActivity;
-import com.brogrammers.agora.Question;
-import com.brogrammers.agora.QuestionController;
+import com.brogrammers.agora.data.CacheDataManager;
+import com.brogrammers.agora.data.DeviceUser;
+import com.brogrammers.agora.data.ESDataManager;
+import com.brogrammers.agora.data.QuestionController;
+import com.brogrammers.agora.model.Question;
 
 public class AddQuestionWithControllerTest extends ActivityInstrumentationTestCase2<MainActivity> {
 

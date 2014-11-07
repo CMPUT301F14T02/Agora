@@ -3,10 +3,10 @@ package com.brogrammers.agora.test;
 import java.util.List;
 
 import com.brogrammers.agora.Agora;
-import com.brogrammers.agora.Author;
 import com.brogrammers.agora.MainActivity;
-import com.brogrammers.agora.Question;
-import com.brogrammers.agora.QuestionLoaderSaver;
+import com.brogrammers.agora.helper.QuestionLoaderSaver;
+import com.brogrammers.agora.model.Author;
+import com.brogrammers.agora.model.Question;
 
 import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;

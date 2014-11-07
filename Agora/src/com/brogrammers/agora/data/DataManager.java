@@ -1,7 +1,11 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.data;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import com.brogrammers.agora.model.Answer;
+import com.brogrammers.agora.model.Comment;
+import com.brogrammers.agora.model.Question;
 
 /** Implements the basic data functions required to work on a list of questions
  *  and add questions, add answers, and add comments to the list of question objects.

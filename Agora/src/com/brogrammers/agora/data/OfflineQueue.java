@@ -1,11 +1,12 @@
 
-package com.brogrammers.agora;
+package com.brogrammers.agora.data;
 
 import java.util.List;
 import java.util.Queue;
 
 import android.content.SharedPreferences;
 
+import com.brogrammers.agora.Agora;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

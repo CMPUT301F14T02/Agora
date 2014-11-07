@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-import com.brogrammers.agora.Answer;
-import com.brogrammers.agora.DeviceUser;
-import com.brogrammers.agora.Question;
+import com.brogrammers.agora.data.DeviceUser;
+import com.brogrammers.agora.model.Answer;
+import com.brogrammers.agora.model.Question;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;

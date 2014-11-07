@@ -1,4 +1,4 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.data;
 
 import org.apache.http.entity.StringEntity;
 

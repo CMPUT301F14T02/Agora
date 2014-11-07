@@ -22,6 +22,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Date;
+
+import com.brogrammers.agora.data.QuestionController;
+import com.brogrammers.agora.model.Answer;
+import com.brogrammers.agora.model.Question;
 /**
  * Adapter required to format answers from a question to the answerActivity of the question.
  * @author Group02

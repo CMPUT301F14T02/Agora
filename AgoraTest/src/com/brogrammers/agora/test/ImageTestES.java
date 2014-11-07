@@ -15,12 +15,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.brogrammers.agora.CacheDataManager;
-import com.brogrammers.agora.DeviceUser;
-import com.brogrammers.agora.ESDataManager;
 import com.brogrammers.agora.MainActivity;
-import com.brogrammers.agora.Question;
-import com.brogrammers.agora.QuestionController;
+import com.brogrammers.agora.data.CacheDataManager;
+import com.brogrammers.agora.data.DeviceUser;
+import com.brogrammers.agora.data.ESDataManager;
+import com.brogrammers.agora.data.QuestionController;
+import com.brogrammers.agora.model.Question;
 /**
  * Tests images on server
  * @author Group2

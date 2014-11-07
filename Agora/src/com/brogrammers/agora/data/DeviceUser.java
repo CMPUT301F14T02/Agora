@@ -1,9 +1,12 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.brogrammers.agora.Agora;
+import com.brogrammers.agora.model.Author;
 
 import android.app.Activity;
 import android.content.Context;

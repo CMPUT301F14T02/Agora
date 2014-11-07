@@ -3,9 +3,9 @@ package com.brogrammers.agora.test;
 import java.net.URL;
 import java.util.ArrayList;
 
-import com.brogrammers.agora.DeviceUser;
-import com.brogrammers.agora.FilterSorterHelper;
-import com.brogrammers.agora.Question;
+import com.brogrammers.agora.data.DeviceUser;
+import com.brogrammers.agora.helper.FilterSorterHelper;
+import com.brogrammers.agora.model.Question;
 
 import android.content.res.Resources;
 import android.graphics.Bitmap;

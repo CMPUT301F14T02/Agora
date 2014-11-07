@@ -1,9 +1,11 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.helper;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+
+import com.brogrammers.agora.model.Question;
 /**
  * A helper class to help the views in sorting and filtering question lists
  * 

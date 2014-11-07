@@ -1,4 +1,4 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.helper;
 
 import android.graphics.Bitmap;
 
