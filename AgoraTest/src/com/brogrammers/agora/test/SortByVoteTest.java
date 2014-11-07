@@ -18,6 +18,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import com.brogrammers.agora.CacheDataManager;
 import com.brogrammers.agora.DeviceUser;
 import com.brogrammers.agora.ESDataManager;
+import com.brogrammers.agora.FilterSorterHelper;
 import com.brogrammers.agora.MainActivity;
 import com.brogrammers.agora.Question;
 import com.brogrammers.agora.QuestionController;
@@ -110,22 +111,19 @@ public class SortByVoteTest extends ActivityInstrumentationTestCase2<MainActivit
 		Long id2 = questions.get(2).getID();
 		
 
-		for(int i = 0; i>500; i++) {
-			questions.get(2).upvote();
+		for(int i = 0; i>10; i++) {
+			questions.get(0).upvote();
 		}
 		for(int i = 0; i>100; i++) {
 			questions.get(1).upvote();
 		}
-		for(int i = 0; i>10; i++) {
-			questions.get(0).upvote();
+		for(int i = 0; i>500; i++) {
+			questions.get(2).upvote();
 		}
 
-		Collections.sort(questions, new Comparator<Question>() {
-		    public int compare(Question m1, Question m2) {
-		        return ((Integer) m1.getRating()).compareTo(m2.getRating());
-		    }
-		});
-		
+		FilterSorterHelper fshelper = new FilterSorterHelper();
+		questions = fshelper.sortByUpvote(questions);
+
 		//order should now be { firstDate, secondDate, thirdDate, fourthDate}
 		assertTrue("Correct count", questions.size() == 3);
 		assertTrue("500 Votes not first", questions.get(0).getID() == id2);

@@ -119,7 +119,7 @@ public class QuestionActivity extends Activity implements Observer {
 		}
 	}
 	/**
-	 * Opens activity for the answers corresponding to the question
+	 * Opens activity for the answers corresponding to the question and puts question id in intent
 	 * @author group02
 	 *
 	 */
@@ -131,7 +131,7 @@ public class QuestionActivity extends Activity implements Observer {
 		}
 	}
 	/**
-	 * Opens activity for the comments corresponding to the question
+	 * Opens activity for the comments corresponding to the question and puts question id in intent
 	 * @author group02
 	 *
 	 */
@@ -177,6 +177,9 @@ public class QuestionActivity extends Activity implements Observer {
 //		}
 //	};
 //	
+	/**
+	 * Opens AuthorAnswer activity to post an answer to the question. Sends question id via intent.
+	 */
 	public void openAddAnswerView() {
 		Intent intent = new Intent(Agora.getContext(), AuthorAnswerActivity.class);
 		intent.putExtra("qid", qid);
