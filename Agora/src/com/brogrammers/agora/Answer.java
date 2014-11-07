@@ -10,7 +10,7 @@ import android.graphics.Bitmap;
 /**
  * Answer model data class. Contains information about Answer, including upvotes, comments, body, author.
  * 
- * @author Group02
+ * @author Team 02
  *
  */
 public class Answer implements Serializable {

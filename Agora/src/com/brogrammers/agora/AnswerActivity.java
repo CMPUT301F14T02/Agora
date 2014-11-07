@@ -17,7 +17,6 @@ import android.widget.Toast;
  * Answer Activity which displays the view of answers corresponding to a question.
  * Todo: Upvote, favourite, cache functionality.
  * @author Group02
- *
  */
 public class AnswerActivity extends Activity implements Observer{
 	

@@ -21,6 +21,8 @@ import android.widget.Toast;
 public class AuthorAnswerActivity extends Activity {
 	private Long qid;
 	/**
+	 * Todo: implement picturehandler to post pictures.
+	 * 
 	 * Retrieves question id from intent. 
 	 * Retrieves button layouts and activity layout.
 	 */
@@ -59,7 +61,7 @@ public class AuthorAnswerActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	/**
-	 * retrieves text from answer body.
+	 * Retrieves text from answer body to display.
 	 */
 	View.OnClickListener answerhandler = new View.OnClickListener() {
 		public void onClick(View v) {
@@ -78,6 +80,7 @@ public class AuthorAnswerActivity extends Activity {
     		
 		}
 	};
+
 	View.OnClickListener picturehandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add picture
