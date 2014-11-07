@@ -1,5 +1,6 @@
 package com.brogrammers.agora;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -124,7 +125,12 @@ public class QuestionActivity extends Activity implements Observer {
 				//increments votes in the view, but does not save.
 				QuestionController controller = QuestionController.getController(); 
 				Question q = qList.get(0);
-				controller.upvote(q.getID(),null);
+				try {
+					controller.upvote(q.getID(),null);
+				} catch (UnsupportedEncodingException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				TextView qScore= (TextView)findViewById(R.id.qScore);
 				qScore.setText(Integer.toString(q.getRating()));
 			}

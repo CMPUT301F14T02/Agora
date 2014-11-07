@@ -26,9 +26,9 @@ import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActivity> {
+public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	public AddQuestionTestES() {
+	public SearchAnswersTestES() {
 		super(MainActivity.class);
 	}
 
@@ -36,7 +36,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/AQTTES/_query?q=_type:AQTTES");	
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/SearchAnswersTest/_query?q=_type:SearchAnswersTest");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,40 +49,47 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "AQTTES/");
+			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "SearchAnswersTest/");
 		}
 	}
 	
 	public void testESGetQuestions() throws Throwable {
 		// create a question object post it, and ensure we get back the same object.
 		Question q = new Question("Big Questions", "What do you think the meaning of life is?", null, new Author("Ted"));
-		Answer a = new Answer("Not really sure", null, new Author("Bill"));
+		Answer a = new Answer("It's all about perspective", null, new Author("Bill"));
 		a.addComment(new Comment("Yikes", new Author("Dr. Bob")));
 		q.addAnswer(a);
 		q.addAnswer(new Answer("I mean who really knows?", null, new Author("Bob")));
 		Answer b = new Answer("This post doesn't belong here.", null, new Author("Tim"));
 		b.addComment(new Comment("It's a secret", new Author("Dr. Joe")));
 		q.addAnswer(b);
+		Answer c = new Answer("Who cares about perspective when you can't see.", null, new Author("Tim"));
+		q.addAnswer(c);
 		q.addComment(new Comment("Wow", new Author("Eric")));
 		
 		// add a second question
 		Question q2 = new Question("Big Questions", "What do you think the meaning of life is?", null, new Author("Ted"));
-		
+		Answer d = new Answer("It's all about perspective", null, new Author("Bill"));
+		q2.addAnswer(d);
+		Question q3 = new Question("Small ideas", "Chocolate or vanilla is better?", null, new Author("Ted"));
+		Answer e = new Answer("Who cares about vision when you can't see.", null, new Author("Tim"));
 		// update the server with the new questions
 		final ESDataManager es = new TestESManager();
+		//es.setServerMapping();
 		final CountDownLatch postSignal = new CountDownLatch(1);
 		es.pushQuestion(q);
 		postSignal.await(1, TimeUnit.SECONDS);
 		es.pushQuestion(q2);
-		Log.i("SERVER", "Post second questions");
+		postSignal.await(1, TimeUnit.SECONDS);
+		es.pushQuestion(q3);
 		postSignal.await(1, TimeUnit.SECONDS);
 
-		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
+		final List<ArrayList<Answer>> results = new ArrayList<ArrayList<Answer>>();
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
 			public void run() {
 				try {
-					results.add((ArrayList<Question>)es.getQuestions());
+					results.add((ArrayList<Answer>)es.searchAnswers("perspective"));
 				} catch (UnsupportedEncodingException e) {
 					e.printStackTrace();
 				}	
@@ -90,23 +97,25 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		});
 		assertTrue(results.get(0).size() == 0);
 		try {
-			signal.await(2, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
+			signal.await(1, TimeUnit.SECONDS);
+		} catch (InterruptedException f) {
 			assertTrue(false);
 		}
 		
-		Log.i("SERVER", "Before first assert");
 		// compare the local and received copies.
-		assertTrue(results.get(0).size() == 2);
+		assertTrue(results.get(0).size() == 3);
 		Gson gson = new Gson();
-		String jsonLocalQuestion = gson.toJson(q);
-		String jsonLocalQuestion2 = gson.toJson(q2);
-		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
-		String jsonReceivedQuestion2 = gson.toJson(results.get(0).get(1));
+		String locAnswer1 = gson.toJson(a);
+		String locAnswer2 = gson.toJson(c);
+		String locAnswer3 = gson.toJson(d);
+		String recAnswer1 = gson.toJson(results.get(0).get(0));
+		String recAnswer2 = gson.toJson(results.get(0).get(1));
+		String recAnswer3 = gson.toJson(results.get(0).get(2));
 		
 		// can't guarantee order here so make sure the questions match each other
-		assertTrue(jsonLocalQuestion.equals(jsonReceivedQuestion) || jsonLocalQuestion.equals(jsonReceivedQuestion2));
-		assertTrue(jsonLocalQuestion2.equals(jsonReceivedQuestion) || jsonLocalQuestion2.equals(jsonReceivedQuestion2));
+		assertTrue(locAnswer1.equals(recAnswer1) || locAnswer1.equals(recAnswer2) || locAnswer1.equals(recAnswer3));
+		assertTrue(locAnswer2.equals(recAnswer1) || locAnswer2.equals(recAnswer2) || locAnswer2.equals(recAnswer3));
+		assertTrue(locAnswer3.equals(recAnswer1) || locAnswer3.equals(recAnswer2) || locAnswer3.equals(recAnswer3));
 	}
 }
 

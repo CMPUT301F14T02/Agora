@@ -24,8 +24,11 @@ public class AnswerActivity extends Activity implements Observer{
 	private QuestionController qController = QuestionController.getController();
 	private List<Question> qList;
 	private AnswerAdapter aadapter;
-
+	
 	ListView lv;
+	/**
+	 * onCreate method. Gets question id of corresponding question through an intent. Then calls answeradapter to display answers.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,6 +90,9 @@ public class AnswerActivity extends Activity implements Observer{
 	}
 
 	@Override
+	/**
+	 * Update when new answer is added.
+	 */
 	public void update() {
 		if (qList.size() == 0) {
 			Toast.makeText(this, "AnswerActivity update() called, but qList is empty", 0);

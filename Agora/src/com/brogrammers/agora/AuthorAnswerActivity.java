@@ -1,5 +1,7 @@
 package com.brogrammers.agora;
 
+import java.io.UnsupportedEncodingException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,10 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Activity screen when posting an answer to a question.
+ * @author Kevin
+ *
+ */
 public class AuthorAnswerActivity extends Activity {
 	private Long qid;
-	
+	/**
+	 * Retrieves question id from intent. 
+	 * Todo: implement picturehandler to post pictures.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,7 +57,9 @@ public class AuthorAnswerActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+	/**
+	 * retrieves text from answer body.
+	 */
 	View.OnClickListener answerhandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add question
@@ -56,7 +67,12 @@ public class AuthorAnswerActivity extends Activity {
     		Toast.makeText(Agora.getContext(), "Adding Answer!", Toast.LENGTH_SHORT).show();
     		String body = bodyText.getText().toString();
 //    		Toast.makeText(Agora.getContext(), "Body: "+body, Toast.LENGTH_SHORT).show();
-    		QuestionController.getController().addAnswer(body, null, qid);
+    		try {
+				QuestionController.getController().addAnswer(body, null, qid);
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		finish();
     		
 		}
