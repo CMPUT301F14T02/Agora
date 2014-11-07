@@ -12,7 +12,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+/**
+ * Activity for posting a question to the app.
+ * Todo: implement picturehandler to post pictures to a question.
+ * @author Kevin
+ *
+ */
 public class AuthorQuestionActivity extends Activity {
 
 	@Override
@@ -47,7 +52,9 @@ public class AuthorQuestionActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-
+	/**
+	 * Retrieves text from title and body editTexts and adds question via controller.
+	 */
 	View.OnClickListener questionhandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add question

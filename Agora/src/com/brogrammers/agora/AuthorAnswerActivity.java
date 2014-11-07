@@ -12,10 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
+/**
+ * Activity screen when posting an answer to a question.
+ * @author Kevin
+ *
+ */
 public class AuthorAnswerActivity extends Activity {
 	private Long qid;
-	
+	/**
+	 * Retrieves question id from intent. 
+	 * Todo: implement picturehandler to post pictures.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -50,7 +57,9 @@ public class AuthorAnswerActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+	/**
+	 * retrieves text from answer body.
+	 */
 	View.OnClickListener answerhandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add question
