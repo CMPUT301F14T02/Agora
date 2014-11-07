@@ -104,7 +104,7 @@ public class QuestionController {
 		return q.getID(); // for testing
 	}
 	
-	public Long addAnswer(String body, Bitmap image, Long qID) {
+	public Long addAnswer(String body, Bitmap image, Long qID) throws UnsupportedEncodingException {
 		Answer a = new Answer(body, image, user); 
 //		a.setImage(resizer.resizeTo64KB(image)); // TODO: implement
 		a.setImage(null);
@@ -137,7 +137,7 @@ public class QuestionController {
 		}
 	}
 	
-	public void upvote(Long qID, Long aID) {
+	public void upvote(Long qID, Long aID) throws UnsupportedEncodingException {
 		Question q = cache.getQuestionById(qID);
 		if (aID == null) {			// upvoting question
 			q.upvote();

@@ -1,5 +1,7 @@
 package com.brogrammers.agora;
 
+import java.io.UnsupportedEncodingException;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -56,7 +58,12 @@ public class AuthorAnswerActivity extends Activity {
     		Toast.makeText(Agora.getContext(), "Adding Answer!", Toast.LENGTH_SHORT).show();
     		String body = bodyText.getText().toString();
 //    		Toast.makeText(Agora.getContext(), "Body: "+body, Toast.LENGTH_SHORT).show();
-    		QuestionController.getController().addAnswer(body, null, qid);
+    		try {
+				QuestionController.getController().addAnswer(body, null, qid);
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     		finish();
     		
 		}
