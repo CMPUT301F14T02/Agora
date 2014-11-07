@@ -36,7 +36,7 @@ import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.entity.StringEntity;
 
-public class ESDataManager { // implements DataManager
+public class ESDataManager implements DataManager {
 	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
 	protected String INDEXNAME = "cmput301f14t02/"; 	// name of the ES database/index
 	protected String TYPENAME = "agora/"; 	// name of the ES table/type 
@@ -133,8 +133,10 @@ public class ESDataManager { // implements DataManager
 			public void onFailure(int status, Header[] arg1, byte[] responseBody, Throwable arg3) {
 				
 				Log.e("SERVER", "getQuestion failure: "+Integer.toString(status));
-				Log.e("SERVER", "responsebody: "+new String(responseBody));
-				Toast.makeText(Agora.getContext(), "ES Get Question On Fail", 0).show();
+				try {
+					Log.e("SERVER", "responsebody: "+new String(responseBody));
+				} catch (NullPointerException e) { }
+				Toast.makeText(Agora.getContext(), "ES getQuestions Failed; server empty?", 0).show();
 			}
 
 			@Override
@@ -155,7 +157,7 @@ public class ESDataManager { // implements DataManager
 						questionList.add(qObject);
 						Log.e("SERVER", qObject.getID().toString()+" "+qObject.getBody());
 				    }
-				    // TODO: Check this is being passed to controller properly.
+				    
 				    // if this is an answer search remove any answers that don't 
 				    // contain the search term.
 				    if(answerQuery != null){
@@ -176,7 +178,7 @@ public class ESDataManager { // implements DataManager
 //                                }
 //				    	    }
 					QuestionController.getController().update();
-					Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
+//					Toast.makeText(Agora.getContext(), "ES Get Question Sucess", 0).show();
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}	
@@ -252,7 +254,11 @@ public class ESDataManager { // implements DataManager
 		return push(questionSerialized, endPoint);
 	}
 	
-	public boolean pushAnswer(Answer a, Long qID, CacheDataManager cache) throws UnsupportedEncodingException {		
+	public boolean pushAnswer(Answer a, Long qID) {
+		return pushAnswer(a, qID, CacheDataManager.getInstance());
+	}
+	
+	public boolean pushAnswer(Answer a, Long qID, CacheDataManager cache) {		
 		Question q = cache.getQuestionById(qID);
 		Gson gson = new Gson();
 		String answerSerialized = gson.toJson(q.getAnswers());
@@ -262,7 +268,16 @@ public class ESDataManager { // implements DataManager
 					"}" +
 				"}";
 		String endPoint = Long.toString(qID) + "/" + "_update";
-		return push(answerSerialized, endPoint);
+		try {
+			return push(answerSerialized, endPoint);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public boolean pushComment(Comment c, Long qID, Long aID) throws UnsupportedEncodingException {
+		return pushComment(c, qID, aID, CacheDataManager.getInstance());
 	}
 	
 	// if comment is on an answer pass aID, if on question itself pass null
@@ -291,8 +306,8 @@ public class ESDataManager { // implements DataManager
 		}
 	}
 	
-	public boolean pushUpvote(Long qID) throws UnsupportedEncodingException {
-		Question q = CacheDataManager.getInstance().getQuestionById(qID);
+	public boolean pushUpvote(Long qID, CacheDataManager cache) {
+		Question q = cache.getQuestionById(qID);
 		int upvotes = q.getRating();
 		String upVoteSerialized = "{" +
 				"\"doc\": { " +
@@ -300,7 +315,12 @@ public class ESDataManager { // implements DataManager
 					"}" +
 				"}";
 		String endPoint = Long.toString(qID) + "/" + "_update";
-		return push(upVoteSerialized, endPoint);
+		try {
+			return push(upVoteSerialized, endPoint);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 	
 	
@@ -322,6 +342,7 @@ public class ESDataManager { // implements DataManager
 			    public void onSuccess(int statusCode, Header[] headers, byte[] response) {
 			        // called when response HTTP status is "200 OK"
 					Log.e("SERVER UPDATED", "updateServer method success.");
+					QuestionController.getController().update();
 			    }
 			    @Override
 			    public void onFailure(int statusCode, Header[] headers, byte[] errorResponse, Throwable e) {

@@ -7,8 +7,13 @@ import java.util.Collections;
 import java.util.List;
 
 import android.graphics.Bitmap;
-
-public class Answer implements Serializable, Post {
+/**
+ * Answer model data class. Contains information about Answer, including upvotes, comments, body, author.
+ * 
+ * @author tkevin
+ *
+ */
+public class Answer implements Serializable {
 	private static final long serialVersionUID = 1340865626156695502L;
 
 	private String body;
@@ -21,6 +26,10 @@ public class Answer implements Serializable, Post {
 	private int version;
 	private boolean posted;
 	
+	/**
+	 * Description
+	 * @return
+	 */
 	public boolean isPosted() {
 		return posted;
 	}
@@ -49,11 +58,17 @@ public class Answer implements Serializable, Post {
 //		return Collections.unmodifiableList(comments);
 		return comments;
 	}
-	
+	/**
+	 * Add comment to an answer.
+	 * @param c
+	 */
 	public void addComment(Comment c) {
 		comments.add(c);
 	}
-	
+	/**
+	 * Increment upvote once.
+	 * @param c
+	 */
 	public void upvote() {
 		rating++;
 	}

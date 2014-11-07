@@ -105,25 +105,23 @@ public class QuestionController {
 	}
 	
 	public Long addAnswer(String body, Bitmap image, Long qID) {
-		Answer a = new Answer(body, image, user);
+		Answer a = new Answer(body, image, user); 
 //		a.setImage(resizer.resizeTo64KB(image)); // TODO: implement
 		a.setImage(null);
 		
 		// the cache operation MUST be called before the eSearch operation
-		Question q = cache.getQuestionById(qID);
-		q.addAnswer(a);
+//		Question q = cache.getQuestionById(qID);
+//		q.addAnswer(a);
+		cache.pushAnswer(a, qID);
 		
-		try {
-			eSearch.pushAnswer(a, qID, cache);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		eSearch.pushAnswer(a, qID, cache);
 		
 		return a.getID();
 	}
 	
 	// if adding a comment to a question, pass null for aID
 	public void addComment(String body, Long qID, Long aID) {
+
 		Comment c = new Comment(body);
 		Question q = cache.getQuestionById(qID);
 		if (aID == null) {
@@ -139,16 +137,17 @@ public class QuestionController {
 		}
 	}
 	
-	// TODO
 	public void upvote(Long qID, Long aID) {
-//		Question q = cache.getQuestionByID(qID);
-		if (aID == null) {
-			// upvoting question
-//			q.upvote();
-
-		} else {
-			// upvoting answer
-
+		Question q = cache.getQuestionById(qID);
+		if (aID == null) {			// upvoting question
+			q.upvote();
+			cache.pushQuestion(q);
+			eSearch.pushUpvote(qID, cache);
+		} else {                    // upvoting answer
+			Answer a = q.getAnswerByID(aID); 
+			a.upvote();
+			cache.pushQuestion(q);
+			eSearch.pushAnswer(a, qID, cache);
 		}
 	}
 
@@ -170,10 +169,9 @@ public class QuestionController {
 	
 	public void update() {
 
-		
 		if (observer != null) {
 			observer.update();
-			Toast.makeText(Agora.getContext(), "Updating Controller Observer", 0).show();
+//			Toast.makeText(Agora.getContext(), "Updating Controller Observer", 0).show();
 		} else {
 			Toast.makeText(Agora.getContext(), "Controller: no observer registered!", 0).show();
 		}
@@ -183,7 +181,7 @@ public class QuestionController {
 	
 	public void setObserver(Observer observer) {
 		this.observer = observer;
-		Toast.makeText(Agora.getContext(), "Setting Controller Observer", 0).show();
+//		Toast.makeText(Agora.getContext(), "Setting Controller Observer", 0).show();
 	}
 
 	public void addCache(Long id) {

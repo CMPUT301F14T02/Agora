@@ -1,6 +1,8 @@
 package com.brogrammers.agora;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,15 +17,15 @@ public class CommentAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private Question question;
 	
-	CommentAdapter(Answer a){
+	public CommentAdapter(Answer a){
 		this.answer = a;
 		this.question = null;
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
 	}
 	
-	CommentAdapter(Question q){
+	public CommentAdapter(Question q){
 		this.answer = null;
-		this.question = null;
+		this.question = q;
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
 	}
 	
@@ -44,14 +46,14 @@ public class CommentAdapter extends BaseAdapter {
 		if(question == null){
 			return answer.getComments().get(position);
 		} else {
-			return answer.getComments().get(position);
+			return question.getComments().get(position);
 		}
 	}
 
 	@Override
 	public long getItemId(int position) {
 		// TODO Auto-generated method stub
-		return (Long) null;
+		return 0;
 	}
 
 	@Override
@@ -65,9 +67,16 @@ public class CommentAdapter extends BaseAdapter {
 		Comment comment = (Comment)getItem(position);
 		//set text on each TextView			
 		((TextView)convertView.findViewById(R.id.cBody)).setText(comment.getBody());
-		((TextView)convertView.findViewById(R.id.cAuthourDate)).setText(comment.getDate().toString());
+		((TextView)convertView.findViewById(R.id.cAuthourDate)).setText("Submitted by: " +comment.getAuthor().getUsername()+", "+ datetostring(comment.getDate()));
+
+
 		
 		return convertView;
 	}
-
+	public String datetostring(long milliseconds){
+	    Date date = new Date(); 
+	    date.setTime(milliseconds);
+	    String newDate=new SimpleDateFormat("MMM d yyyy").format(date);
+	    return newDate;
+	}
 }

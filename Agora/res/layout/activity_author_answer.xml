@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="@string/titlebodytext"
+        android:text="@string/answer"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
@@ -36,7 +36,7 @@
         android:text="@string/addPictureButton" />
 
     <EditText
-        android:id="@+id/editText1"
+        android:id="@+id/authorAnswerBodyEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/authorAnswerAddPictureButton"
@@ -45,7 +45,7 @@
         android:layout_below="@+id/authorAnswerBodyTextView"
         android:ems="10"
         android:gravity="top|left"
-        android:hint="Enter Description Here."
+        android:hint="Enter Answer Here."
         android:inputType="textMultiLine" >
 
         <requestFocus />

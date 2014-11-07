@@ -1,5 +1,7 @@
 package com.brogrammers.agora;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,31 +13,64 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class CommentActivity extends Activity {
+public class CommentActivity extends Activity implements Observer {
+	private long qid;
+	private long aid;
+	private List<Question> qList;
+	private List<Comment> cList;
+	private CommentAdapter cadapter;
+	private QuestionController controller;
 
-	
 	ListView lv;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_comment);
-		
-		Button postComment = (Button)findViewById(R.id.CommentPostButton);
+
+		Button postComment = (Button) findViewById(R.id.CommentPostButton);
 		postComment.setOnClickListener(postcomment);
+
+		qid = getIntent().getLongExtra("qid", 0L);
+		aid = getIntent().getLongExtra("aid", 0L);
+
+		controller = QuestionController.getController();
+		controller.setObserver(this);
+		qList = controller.getQuestionById(qid);
+		lv = (ListView) findViewById(R.id.CommentListView);
+
+	}
+
+	@Override
+	public void update() {
+		if (qList.size() > 0) {
+			if (aid == 0L) {
 		
-		Answer a = new Answer("New Thunderwave Answer",null,new Author("mudkip"));
-		a.addComment(new Comment("adfsfsafs"));
-		
-		lv = (ListView)findViewById(R.id.CommentListView);
-		try {
-			CommentAdapter cadapter = new CommentAdapter(a);
-			lv.setAdapter(cadapter);
-			Toast.makeText(this," Set Comment Adapter", 0).show();
-		} catch (NullPointerException e) {
-			Toast.makeText(this, "CommentActivity Nullptr in setting adapter", 0).show();	
+				Question q = qList.get(0);
+				cadapter = new CommentAdapter(q);
+				try {
+					lv.setAdapter(cadapter);
+				} catch (NullPointerException e) {
+					Toast.makeText(this,
+							"CommentActivity Nullptr in setting adapter", 0).show();
+				}
+			
+			} else { // we're in answer comments
+				Question q = qList.get(0);
+				Answer a = q.getAnswerByID(aid);
+				cadapter = new CommentAdapter(a);
+				try {
+					lv.setAdapter(cadapter);
+				} catch (NullPointerException e) {
+					Toast.makeText(this,
+							"CommentActivity Nullptr in setting adapter", 0).show();
+				}
+			}
+		} else {
+			Toast.makeText(this, "qList empty onUpdate", 0).show();
 		}
-		
-		
+			
+
 	}
 
 	@Override
@@ -56,12 +91,34 @@ public class CommentActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	View.OnClickListener postcomment = new View.OnClickListener() {	
+
+	View.OnClickListener postcomment = new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-			EditText commentBody = (EditText)findViewById(R.id.CommentEditText);
-			Toast.makeText(Agora.getContext(), commentBody.getText().toString(), Toast.LENGTH_SHORT).show();
+			EditText commentBody = (EditText) findViewById(R.id.CommentEditText);
+    		String body = commentBody.getText().toString();
+
+			//
+			if (aid == 0) { // adding comment to question 
+				try {
+					controller.addComment(body, qid, null);
+					Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
+				} catch (NullPointerException e) {
+					Toast.makeText(Agora.getContext(),
+							"CommentActivity Nullptr in adding comment", 0).show();
+				}
+			} else { // adding comment to answer
+				try {
+					controller.addComment(body, qid, aid);
+					Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
+				} catch (NullPointerException e) {
+					Toast.makeText(Agora.getContext(),
+							"CommentActivity Nullptr in adding comment", 0).show();
+				}
+			}
+    	 
+			finish();
 		}
 	};
+
 }

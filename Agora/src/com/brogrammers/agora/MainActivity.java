@@ -40,37 +40,27 @@ public class MainActivity extends Activity implements Observer {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        //ESDataManager es = ESDataManager.getInstance();
-		//try {
-		//	results = es.getQuestions();
-		//} catch (UnsupportedEncodingException e) {
-		//	e.printStackTrace();
-		//}
 
+    }
+    
+    protected void onResume() {
+    	super.onResume();
+		final CountDownLatch signal = new CountDownLatch(1);
 
-        
-		//qController.addQuestion("TITLE BODY END", "BODYBODYBODY", null);
-		//Toast.makeText(this, , duration)
-        
-        //qController.setObserver(this);
         qController.setObserver(this);
+		try {
+			signal.await(200, TimeUnit.MILLISECONDS);
+		} catch (InterruptedException e) {
+		
+		}
         List<Question> qList = qController.getAllQuestions();
 	    ListView lv = (ListView)findViewById(R.id.listView1);
-		qAdapter = new QuestionAdapter(qList);
+		qAdapter = new QuestionAdapter(qList, this);
+
 		lv.setAdapter(qAdapter);
 
-		/*
-		final CountDownLatch signal = new CountDownLatch(1);
-        Long qid = qController.addQuestion("Test Title E", "Test Body E", null);
-		try {
-			signal.await(2, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
+    }
 
-		}
-        Log.e("ID", qid.toString()); 
-        Long aid = qController.addAnswer("Answer Body E", null, qid);
-		 */
-    } 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -98,10 +88,8 @@ public class MainActivity extends Activity implements Observer {
         case R.id.sortBQV:
         	openSortMenu();
         	return true;
-        case R.id.goto_question_answer:
-          	Intent intent = new Intent(Agora.getContext(), AnswerActivity.class);
-          	startActivity(intent);
-        	//Toast.makeText(Agora.getContext(), Integer.toString(results.size()), 0).show();
+        case R.id.refreshMain:
+        	onResume();
         default:
             return super.onOptionsItemSelected(item);
         }
@@ -151,7 +139,7 @@ public class MainActivity extends Activity implements Observer {
 	@Override
 	public void update() {
 		qAdapter.notifyDataSetChanged();
-		Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
+//		Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
 	}
 
 
