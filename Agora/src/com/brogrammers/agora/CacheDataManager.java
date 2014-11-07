@@ -7,6 +7,20 @@ import java.util.TreeMap;
 
 import android.widget.Toast;
 
+/**
+ * A Cache Data Manager to push and pull question, answer, and comment
+ * objects to the device. This allows the device to retrieve these data objects
+ * while the device is offline.
+ *
+ * This class allows the user to:
+ * i. Store questions, answers and comments to be locally cached and viewed later (US 17)
+ * ii. Allow the user to view favourite questions/answers and their replies for view later (US 19) 
+ * iii. Author questions, replies, and answers offline (US 20)
+ * 
+ * @author Team02
+ *
+ */
+
 public class CacheDataManager implements DataManager {
 
 	static private CacheDataManager self;
@@ -42,9 +56,22 @@ public class CacheDataManager implements DataManager {
 		return self;
 	}
 	
+	/**
+	 * Gets the entire list of questions from the cache
+	 * 
+	 * @return List<Question> a list of questions retrieved from the cache
+	 */
+	
 	public List<Question> getQuestions() {
 		return Collections.unmodifiableList(new ArrayList<Question>(questionCache.values()));
 	}
+	
+	/**
+	 * Returns a question object from the cache by the question ID
+	 * 
+	 * @param Long 				the unique question id
+	 * @return Question 	the question object we retrieve
+	 */
 	
 	// Warning: can return null
 	public Question getQuestionById(Long id) {
@@ -52,11 +79,24 @@ public class CacheDataManager implements DataManager {
 		return q;
 	}
 	
+	/**
+	 * Adds a question to the cache and saves the question
+	 * object to file 
+	 */
+	
 	public boolean pushQuestion(Question q) {
 		questionCache.put(q.getID(), q);
 		qls.saveQuestion(q);
 		return true;
 	} 
+	
+	/**
+	 * Adds answer to an answer to a question in the cache 
+	 * 
+	 * @param Answer 	the answer object we are adding to the cache
+	 * @param Long 		the unique question id where the answer is added to
+	 * @return true 
+	 */
 	
 	public boolean pushAnswer(Answer a, Long qID) {
 		Question q = questionCache.get(qID);
@@ -64,6 +104,17 @@ public class CacheDataManager implements DataManager {
 		pushQuestion(q);
 		return true;
 	}
+	
+	/**
+	 * Allows you to add a comment to an answer or a question in the cache 
+	 * Passes in either a qID or an aID, and sets the other field to null
+	 * to know where the comment goes
+	 * 
+	 * @param Comment 	the comment object we are adding to the cache
+	 * @param Long 		the unique question id if we are commenting on the question, or null if commenting answer
+	 * @param Long 		the unique answer id if we are commenting the answer, or null if commenting question
+	 * @return true
+	 */
 	
 	public boolean pushComment (Comment c, Long qID, Long aID) {
 		Question q = questionCache.get(qID);

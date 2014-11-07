@@ -15,7 +15,7 @@ import android.widget.Toast;
 /**
  * Activity for posting a question to the app.
  * Todo: implement picturehandler to post pictures to a question.
- * @author Kevin
+ * @author Team 02
  *
  */
 public class AuthorQuestionActivity extends Activity {
