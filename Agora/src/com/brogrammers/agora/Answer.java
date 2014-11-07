@@ -26,10 +26,7 @@ public class Answer implements Serializable {
 	private int version;
 	private boolean posted;
 	
-	/**
-	 * Description
-	 * @return
-	 */
+
 	public boolean isPosted() {
 		return posted;
 	}
@@ -38,7 +35,12 @@ public class Answer implements Serializable {
 		this.posted = posted;
 	}
 
-	
+	/**
+	 * Answer constructor
+	 * @param body
+	 * @param image
+	 * @param author
+	 */
 	public Answer(String body, Bitmap image, Author author) {
 		this.body = body;
 		this.image = image;
@@ -48,11 +50,17 @@ public class Answer implements Serializable {
 		uniqueID = md5.hash(date.toString()+author.getUsername()+body);
 		comments = new ArrayList<Comment>();
 	}
-	
+	/**
+	 * Returns number of comments 
+	 * @return
+	 */
 	public int countComments() {
 		return comments.size();
 	}
-	
+	/**
+	 * returns list of comments attributed to the answer
+	 * @return
+	 */
 	public List<Comment> getComments() {
 		// don't modify the list directly!
 //		return Collections.unmodifiableList(comments);
