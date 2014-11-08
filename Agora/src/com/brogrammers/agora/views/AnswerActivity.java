@@ -1,9 +1,14 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.views;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import com.brogrammers.agora.Observer;
+import com.brogrammers.agora.R;
+import com.brogrammers.agora.R.id;
+import com.brogrammers.agora.R.layout;
+import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.model.Question;
 

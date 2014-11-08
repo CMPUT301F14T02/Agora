@@ -1,4 +1,4 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.views;
 
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
@@ -23,6 +23,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import java.util.Date;
 
+import com.brogrammers.agora.Agora;
+import com.brogrammers.agora.R;
+import com.brogrammers.agora.R.id;
+import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Question;

@@ -1,7 +1,13 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.views;
 
 import java.util.List;
 
+import com.brogrammers.agora.Agora;
+import com.brogrammers.agora.Observer;
+import com.brogrammers.agora.R;
+import com.brogrammers.agora.R.id;
+import com.brogrammers.agora.R.layout;
+import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Comment;

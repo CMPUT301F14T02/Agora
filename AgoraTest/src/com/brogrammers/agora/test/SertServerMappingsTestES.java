@@ -15,13 +15,13 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.brogrammers.agora.Agora;
-import com.brogrammers.agora.MainActivity;
 import com.brogrammers.agora.data.ESDataManager;
 import com.brogrammers.agora.helper.QuestionLoaderSaver;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Author;
 import com.brogrammers.agora.model.Comment;
 import com.brogrammers.agora.model.Question;
+import com.brogrammers.agora.views.MainActivity;
 import com.google.gson.Gson;
 
 import android.content.Context;

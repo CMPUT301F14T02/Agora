@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
+            android:name="com.brogrammers.agora.views.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,15 +27,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SearchActivity"
+            android:name="com.brogrammers.agora.views.SearchActivity"
             android:label="@string/title_activity_search" >
         </activity>
         <activity
-            android:name=".AuthorQuestionActivity"
+            android:name="com.brogrammers.agora.views.AuthorQuestionActivity"
             android:label="@string/title_activity_author_question" >
         </activity>
         <activity
-            android:name=".AuthorAnswerActivity"
+            android:name="com.brogrammers.agora.views.AuthorAnswerActivity"
             android:label="@string/title_activity_author_answer" >
         </activity>
         <activity
@@ -43,15 +43,15 @@
             android:label="@string/title_activity_question_answer" >
         </activity>
         <activity
-            android:name=".QuestionActivity"
+            android:name="com.brogrammers.agora.views.QuestionActivity"
             android:label="@string/title_activity_question" >
         </activity>
         <activity
-            android:name=".AnswerActivity"
+            android:name="com.brogrammers.agora.views.AnswerActivity"
             android:label="@string/title_activity_answer" >
         </activity>
         <activity
-            android:name=".CommentActivity"
+            android:name="com.brogrammers.agora.views.CommentActivity"
             android:label="@string/title_activity_comment" >
         </activity>
     </application>

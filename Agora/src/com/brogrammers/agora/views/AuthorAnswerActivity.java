@@ -1,7 +1,12 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.views;
 
 import java.io.UnsupportedEncodingException;
 
+import com.brogrammers.agora.Agora;
+import com.brogrammers.agora.R;
+import com.brogrammers.agora.R.id;
+import com.brogrammers.agora.R.layout;
+import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.data.QuestionController;
 
 import android.app.Activity;

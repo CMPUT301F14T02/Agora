@@ -1,6 +1,12 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.views;
 
 import java.util.Locale;
+
+import com.brogrammers.agora.R;
+import com.brogrammers.agora.R.id;
+import com.brogrammers.agora.R.layout;
+import com.brogrammers.agora.R.menu;
+import com.brogrammers.agora.R.string;
 
 import android.app.Activity;
 import android.app.ActionBar;

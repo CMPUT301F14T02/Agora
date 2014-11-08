@@ -15,13 +15,13 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.brogrammers.agora.MainActivity;
 import com.brogrammers.agora.data.CacheDataManager;
 import com.brogrammers.agora.data.DeviceUser;
 import com.brogrammers.agora.data.ESDataManager;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.helper.FilterSorterHelper;
 import com.brogrammers.agora.model.Question;
+import com.brogrammers.agora.views.MainActivity;
 
 import junit.framework.TestCase;
 

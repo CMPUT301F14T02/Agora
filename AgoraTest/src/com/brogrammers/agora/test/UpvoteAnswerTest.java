@@ -2,10 +2,10 @@ package com.brogrammers.agora.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 
-import com.brogrammers.agora.MainActivity;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Question;
+import com.brogrammers.agora.views.MainActivity;
 
 
 

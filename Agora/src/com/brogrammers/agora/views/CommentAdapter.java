@@ -1,9 +1,13 @@
-package com.brogrammers.agora;
+package com.brogrammers.agora.views;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.brogrammers.agora.Agora;
+import com.brogrammers.agora.R;
+import com.brogrammers.agora.R.id;
+import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Comment;
 import com.brogrammers.agora.model.Question;
