@@ -18,5 +18,5 @@ Image Assets
 
 Code Reuse
 ----------
-1. Abrahm Hindle's Student Picker videos used as a guideline for MVC, singletons, storyboarding, UML, and testing.
+1. [Abrahm Hindle's Student Picker](http://www.youtube.com/watch?v=5PPD0ncJU1g&list=UUTLkh9KmeYXQBR59wJxq1eg) videos used as a guideline for MVC, singletons, storyboarding, UML, and testing. 
 2. [loopj library](http://loopj.com/android-async-http/) used for asynchronous HTTP requests to ElasticSearch and our server
