@@ -104,11 +104,13 @@ public class AnswerAdapter extends BaseAdapter {
 		ImageView upvote = (ImageView) convertView.findViewById(R.id.aUpvote);
 //		LinearLayout upvote = (LinearLayout)convertView.findViewById(R.id.AnswerScoreHLayout);
 		
-		//set text on each TextView			
+		//set text on each TextView & Buttons\
+		comment.setText("Comments ("+Integer.toString(answer.getComments().size())+")");
 		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
 		TextView aScore = (TextView)convertView.findViewById(R.id.aScore);
 		aScore.setText(Integer.toString(answer.getRating()));
 		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText("Submitted by: " +answer.getAuthor().getUsername()+", "+ datetostring(answer.getDate()));
+		
 		
 		//comment.setOnClickListener(answercomments);
 		comment.setOnClickListener(new CommentOnClickListener(position));

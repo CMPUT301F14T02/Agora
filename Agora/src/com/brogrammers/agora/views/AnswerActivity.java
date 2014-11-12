@@ -60,6 +60,10 @@ public class AnswerActivity extends Activity implements Observer{
 		}
 	
 	}
+	
+	protected void onResume (){
+		super.onResume();
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
