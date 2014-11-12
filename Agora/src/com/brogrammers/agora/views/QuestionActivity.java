@@ -62,7 +62,20 @@ public class QuestionActivity extends Activity implements Observer {
 		viewComment.setOnClickListener(new openCommentsView());
 		viewAnswer.setOnClickListener(new openAnswerView());
 		upVoteQuestion.setOnClickListener (new upVoteQuestion());
+		
+		if (qList.size() > 0) {
+			Question q = qList.get(0);
+			viewAnswer.setText("Answers ("+Integer.toString(q.getAnswers().size())+")");
+			viewComment.setText("Answers ("+Integer.toString(q.getComments().size())+")");
+		}
 	}
+	
+	protected void onResume (){
+		super.onResume();
+		update();
+	}
+	
+
 	/**
 	 * helper function to convert date in ms to a date format MMM d yyyy
 	 * @param milliseconds date in milliseconds
@@ -88,12 +101,18 @@ public class QuestionActivity extends Activity implements Observer {
 		
 		if (qList.size() > 0) {
 			Question q = qList.get(0);
+
+			Button viewComment = (Button)findViewById(R.id.QuestionCommentsButton);
+			Button viewAnswer = (Button)findViewById(R.id.QuestionAnswersButton);
+			
 			authorline += q.getAuthor().getUsername()+", "+ datetostring(q.getDate());
 			authordate.setText(authorline);
 			qTitle.setText(q.getTitle());
 			qBody.setText(q.getBody());
 			qScore.setText(Integer.toString(q.getRating()));
 			CacheDataManager.getInstance().pushQuestion(q);
+			viewAnswer.setText("Answers ("+Integer.toString(q.getAnswers().size())+")");
+			viewComment.setText("Comments ("+Integer.toString(q.getComments().size())+")");
 		} else {
 			Toast.makeText(this, "QuestionActivity recieved empty list on update", 0).show();
 		}
