@@ -104,7 +104,6 @@ public class QuestionActivity extends Activity implements Observer {
 
 			Button viewComment = (Button)findViewById(R.id.QuestionCommentsButton);
 			Button viewAnswer = (Button)findViewById(R.id.QuestionAnswersButton);
-			ImageButton favorite = (ImageButton)findViewById(R.id.action_favorite);
 			
 			authorline += q.getAuthor().getUsername()+", "+ datetostring(q.getDate());
 			authordate.setText(authorline);
