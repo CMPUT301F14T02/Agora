@@ -104,6 +104,7 @@ public class QuestionActivity extends Activity implements Observer {
 
 			Button viewComment = (Button)findViewById(R.id.QuestionCommentsButton);
 			Button viewAnswer = (Button)findViewById(R.id.QuestionAnswersButton);
+			ImageButton favorite = (ImageButton)findViewById(R.id.action_favorite);
 			
 			authorline += q.getAuthor().getUsername()+", "+ datetostring(q.getDate());
 			authordate.setText(authorline);
@@ -137,10 +138,10 @@ public class QuestionActivity extends Activity implements Observer {
 		case R.id.action_settings:
 			return true;
 		case R.id.action_favorite:
-//			favorite();
+			favorite();
 			return true;
 		case R.id.action_flag:
-//			flag();
+			flag();
 			return true;
 		case R.id.action_addanswer:
 			openAddAnswerView();
@@ -173,6 +174,34 @@ public class QuestionActivity extends Activity implements Observer {
 			startActivity(intent);
 		}
 	}
+	
+	
+	//Placeholder functions, remove later
+	public void favorite(){
+		Toast.makeText(this, "favorite", Toast.LENGTH_SHORT).show();
+		if(qList.size() != 0){
+			//increments votes in the view, but does not save.
+			QuestionController controller = QuestionController.getController(); 
+			Question q = qList.get(0);
+			controller.addFavorite(q.getID());
+		}
+	}
+
+	public void flag(){
+		Toast.makeText(this, "flag", Toast.LENGTH_SHORT).show();
+		if(qList.size() != 0){
+			//increments votes in the view, but does not save.
+			QuestionController controller = QuestionController.getController(); 
+			Question q = qList.get(0);
+			controller.addCache(q.getID());
+		}
+	}
+
+	
+	
+	
+	
+	
 	/**
 	 * upvote question when upvote button is clicked on.
 	 * @author Kevin

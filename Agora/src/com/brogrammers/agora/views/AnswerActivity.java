@@ -63,6 +63,7 @@ public class AnswerActivity extends Activity implements Observer{
 	
 	protected void onResume (){
 		super.onResume();
+		update();
 	}
 
 	@Override
@@ -97,9 +98,11 @@ public class AnswerActivity extends Activity implements Observer{
 //	};
 //		
 	//remove these later, made for button testing. actual function is implemented in controller.
+	/*
 	public void upvote(){
 		Toast.makeText(this, "upvote", Toast.LENGTH_SHORT).show();
 	}
+	*/
 
 	/**
 	 * Update when new answer is added.
