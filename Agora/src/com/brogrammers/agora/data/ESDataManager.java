@@ -210,9 +210,9 @@ public class ESDataManager { // implements DataManager
 								"getQuestion failure: "
 										+ Integer.toString(status));
 						Log.e("SERVER", "responsebody: "
-								+ new String(responseBody));
+								/*+ new String(responseBody)*/);
 						Toast.makeText(Agora.getContext(),
-								"ES Get Question On Fail", 0).show();
+								"Failed to pull data from server", 0).show();
 					}
 
 					@Override
@@ -233,8 +233,8 @@ public class ESDataManager { // implements DataManager
 								Question qObject = gson.fromJson(q.toString(),
 										Question.class);
 								questionList.add(qObject);
-								Log.e("SERVER", qObject.getID().toString()
-										+ " " + qObject.getBody());
+//								Log.e("SERVER", qObject.getID().toString()
+//										+ " " + qObject.getBody());
 							}
 							// if this is an answer search remove any answers
 							// that don't
@@ -257,8 +257,8 @@ public class ESDataManager { // implements DataManager
 								}
 							}
 							QuestionController.getController().update();
-							Toast.makeText(Agora.getContext(),
-									"ES Get Question Sucess", 0).show();
+//							Toast.makeText(Agora.getContext(),
+//									"ES Get Question Sucess", 0).show();
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}

@@ -89,4 +89,11 @@ public class QuestionLoaderSaver {
 		return qList;
 	}
 
+	public void clearAll() {
+		SharedPreferences prefsFile = Agora.getContext().getSharedPreferences(
+				questionPrefsFileName, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = prefsFile.edit();
+		editor.clear();
+		editor.commit();
+	}
 }

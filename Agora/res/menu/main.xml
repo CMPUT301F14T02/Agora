@@ -38,6 +38,13 @@
         android:showAsAction="ifRoom">
     </item>
     
+    <item
+        android:id="@+id/clearCache"
+        android:orderInCategory="100"
+        android:title="Clear Cache" 
+        android:icon="@drawable/ic_action_settings" 
+        android:showAsAction="ifRoom">
+    </item>
 
     
 

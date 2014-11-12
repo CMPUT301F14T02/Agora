@@ -1,6 +1,7 @@
 package com.brogrammers.agora.data;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +19,7 @@ import com.loopj.android.http.*;
 
 import android.graphics.Bitmap;
 import android.renderscript.Type;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -34,10 +36,12 @@ public class QuestionController {
 
 	static private QuestionController self = null;
 
-	private List<Question> allQuestionList;
-	private List<Question> searchQuestionResults;
-	private List<Answer> searchAnswerResults;
-	private List<Question> questionByIdList;
+	private List<Question> allQuestionList = new ArrayList<Question>();
+	private List<Question> searchQuestionResults = new ArrayList<Question>();
+	private List<Answer> searchAnswerResults = new ArrayList<Answer>();
+	private List<Question> questionByIdList = new ArrayList<Question>();
+	private List<Question> tempRemoteAllQuestionList = new ArrayList<Question>();
+	private List<Question> 	tempRemoteQuestionByIdList = new ArrayList<Question>();
 
 	private Observer observer;
 
@@ -81,30 +85,6 @@ public class QuestionController {
 		user = user_;
 		cache = cache_;
 		eSearch = eSearch_;
-	}
-
-	/**
-	 * If there is an active network connection, this method returns an empty
-	 * list initially, which will then be populated asynchronously by the
-	 * ESDataManager. If there is no network connection, the list of questions
-	 * in the cache is returned.
-	 * 
-	 * @return The list of all questions on either the server or in the cache
-	 */
-	public List<Question> getAllQuestions() {
-		if (eSearch.isConnected()) {
-			try {
-				allQuestionList = eSearch.getQuestions();
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
-			return allQuestionList;
-		} else {
-			Toast.makeText(Agora.getContext(),
-					"Controller: not connected, getAllQuestions from cache", 0)
-					.show();
-			return cache.getQuestions();
-		}
 	}
 
 	/**
@@ -244,6 +224,34 @@ public class QuestionController {
 			eSearch.pushAnswer(a, qID, cache);
 		}
 	}
+	
+
+	/**
+	 * If there is an active network connection, this method returns an empty
+	 * list initially, which will then be populated asynchronously by the
+	 * ESDataManager. If there is no network connection, the list of questions
+	 * in the cache is returned.
+	 * 
+	 * @return The list of all questions on either the server or in the cache
+	 */
+	public List<Question> getAllQuestions() {
+		Log.e("CONTROLLER", "getAllQuestions");
+		tempRemoteAllQuestionList.clear();
+		allQuestionList = cache.getQuestions();
+		if (eSearch.isConnected()) {
+			try {
+				// when the remote server responds, eSearch will update this list	
+				tempRemoteAllQuestionList = eSearch.getQuestions();
+			} catch (UnsupportedEncodingException e) {e.printStackTrace();}
+		} else {
+			Toast.makeText(Agora.getContext(), 
+					"Controller: not connected, getAllQuestions from cache", 0)
+					.show();
+
+		}
+		return allQuestionList;
+	}
+
 
 	/**
 	 * If there is an active network connection, this method returns an empty
@@ -255,18 +263,22 @@ public class QuestionController {
 	 * @return a list which will contain the single question.
 	 */
 	public List<Question> getQuestionById(Long id) {
+		questionByIdList = new ArrayList<Question>();
+		Question q = cache.getQuestionById(id);
+		if (q != null) {
+			questionByIdList.add(q);
+		}
 		if (eSearch.isConnected()) {
 			try {
-				questionByIdList = eSearch.getQuestionById(id);
+				tempRemoteQuestionByIdList = eSearch.getQuestionById(id);
 			} catch (UnsupportedEncodingException e) {
 				e.printStackTrace();
 			}
 			return questionByIdList;
 		} else {
-			return null;
 			// TODO: handle no network
 		}
-
+		return questionByIdList;
 	}
 
 	/**
@@ -275,10 +287,21 @@ public class QuestionController {
 	 */
 	public void update() {
 		if (observer != null) {
+			if (tempRemoteAllQuestionList.size() > 0) {
+				allQuestionList.clear();
+				for (Question q : tempRemoteAllQuestionList) {
+					allQuestionList.add(q);
+				}
+				cache.rememberQuestions(tempRemoteAllQuestionList);
+			}
+			if (tempRemoteQuestionByIdList.size() > 0) {
+				questionByIdList.clear();
+				questionByIdList.add(tempRemoteQuestionByIdList.get(0));
+			}
 			observer.update();
 		} else {
 			Toast.makeText(Agora.getContext(),
-					"Controller: no observer registered!", 0).show();
+				"Controller: no observer registered!", 0).show();
 		}
 	}
 

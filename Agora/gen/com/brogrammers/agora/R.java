@@ -55,9 +55,9 @@ public final class R {
         public static final int aComment=0x7f08002a;
         public static final int aScore=0x7f080029;
         public static final int aUpvote=0x7f080028;
-        public static final int action_addanswer=0x7f080046;
-        public static final int action_favorite=0x7f080047;
-        public static final int action_flag=0x7f080048;
+        public static final int action_addanswer=0x7f080047;
+        public static final int action_favorite=0x7f080048;
+        public static final int action_flag=0x7f080049;
         public static final int action_settings=0x7f080041;
         public static final int addQuestionBQV=0x7f080043;
         public static final int answerBody=0x7f08001e;
@@ -79,6 +79,7 @@ public final class R {
         public static final int authorQuestionTitleView=0x7f080005;
         public static final int cAuthourDate=0x7f08002e;
         public static final int cBody=0x7f08002d;
+        public static final int clearCache=0x7f080046;
         public static final int commentText=0x7f08001f;
         public static final int descOrderRadioButton=0x7f08003d;
         public static final int favouritecheck=0x7f08003f;

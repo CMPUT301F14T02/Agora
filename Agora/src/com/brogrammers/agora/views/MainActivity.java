@@ -14,6 +14,7 @@ import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.R.string;
+import com.brogrammers.agora.data.CacheDataManager;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.model.Question;
 
@@ -65,12 +66,12 @@ public class MainActivity extends Activity implements Observer {
     	super.onResume();
 		final CountDownLatch signal = new CountDownLatch(1);
 
-        qController.setObserver(this);
-		try {
-			signal.await(200, TimeUnit.MILLISECONDS);
-		} catch (InterruptedException e) {
-		
-		}
+        qController.setObserver(this); 
+//		try {
+//			signal.await(200, TimeUnit.MILLISECONDS);
+//		} catch (InterruptedException e) {
+//		
+//		}
         List<Question> qList = qController.getAllQuestions();
 	    ListView lv = (ListView)findViewById(R.id.listView1);
 		qAdapter = new QuestionAdapter(qList, this);
@@ -110,6 +111,10 @@ public class MainActivity extends Activity implements Observer {
         	return true;
         case R.id.refreshMain:
         	onResume();
+        	return true;
+        case R.id.clearCache:
+        	CacheDataManager.getInstance().clearCache();
+        	return true; 
         default:
             return super.onOptionsItemSelected(item);
         }
