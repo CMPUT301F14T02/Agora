@@ -15,53 +15,61 @@ import com.brogrammers.agora.model.Question;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+
 /**
- * Answer Activity which displays the view of answers corresponding to a question.
- * Todo: Upvote, favourite, cache functionality.
+ * Answer Activity which displays the view of answers corresponding to a
+ * question. Todo: Upvote, favourite, cache functionality.
+ * 
  * @author Group02
  */
-public class AnswerActivity extends Activity implements Observer{
-	
+public class AnswerActivity extends Activity implements Observer {
+
 	private QuestionController qController = QuestionController.getController();
 	private List<Question> qList;
 	private AnswerAdapter aadapter;
-	
+
 	ListView lv;
+
 	/**
-	 * onCreate method. Gets question id of corresponding question through an intent. Then calls answeradapter to display answers.
-	 * Create listview from answer activity layout.
+	 * onCreate method. Gets question id of corresponding question through an
+	 * intent. Then calls answeradapter to display answers. Create listview from
+	 * answer activity layout.
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_answer);
-		
+
 		Intent intent = getIntent();
 		Long qid = intent.getLongExtra("qid", 0L);
-		if (qid.equals(0L)) { Toast.makeText(this, "Didn't recieve a qid in intent", 0).show(); finish(); }
-		
+		if (qid.equals(0L)) {
+			Toast.makeText(this, "Didn't recieve a qid in intent", 0).show();
+			finish();
+		}
+
 		qController.setObserver(this);
 		qList = qController.getQuestionById(qid);
 
+		lv = (ListView) findViewById(R.id.AnswerListView);
 
-		lv = (ListView)findViewById(R.id.AnswerListView);
-		try {
-			aadapter = new AnswerAdapter(null,this);
-			lv.setAdapter(aadapter);
-//			Toast.makeText(this," Set Answer Adapter", 0).show();
-		} catch (NullPointerException e) {
-			Toast.makeText(this, "AnswerActivity Nullptr in setting adapter", 0).show();	
-		}
-	
+		aadapter = new AnswerAdapter(null, this);
+		lv.setAdapter(aadapter);
+		
+		LayoutInflater inflater = getLayoutInflater();
+		View emptyView = inflater.inflate(R.layout.empty_answers, null);
+		lv.setEmptyView(emptyView);
+		((ViewGroup)lv.getParent()).addView(emptyView);
 	}
-	
-	protected void onResume (){
+
+	protected void onResume() {
 		super.onResume();
 		update();
 	}
@@ -86,23 +94,23 @@ public class AnswerActivity extends Activity implements Observer{
 	}
 
 	/* This goes in the AnswerAdapter */
-//	//open comment view
-//	View.OnClickListener opencommentview = new View.OnClickListener() {	
-//		@Override
-//		public void onClick(View v) {
-//			// TODO Auto-generated method stub
-//			Intent intent = new Intent(Agora.getContext(), CommentActivity.class);
-//			
-//			startActivity(intent);
-//		}
-//	};
-//		
-	//remove these later, made for button testing. actual function is implemented in controller.
+	// //open comment view
+	// View.OnClickListener opencommentview = new View.OnClickListener() {
+	// @Override
+	// public void onClick(View v) {
+	// // TODO Auto-generated method stub
+	// Intent intent = new Intent(Agora.getContext(), CommentActivity.class);
+	//
+	// startActivity(intent);
+	// }
+	// };
+	//
+	// remove these later, made for button testing. actual function is
+	// implemented in controller.
 	/*
-	public void upvote(){
-		Toast.makeText(this, "upvote", Toast.LENGTH_SHORT).show();
-	}
-	*/
+	 * public void upvote(){ Toast.makeText(this, "upvote",
+	 * Toast.LENGTH_SHORT).show(); }
+	 */
 
 	/**
 	 * Update when new answer is added.
@@ -110,14 +118,15 @@ public class AnswerActivity extends Activity implements Observer{
 	@Override
 	public void update() {
 		if (qList.size() == 0) {
-			Toast.makeText(this, "AnswerActivity update() called, but qList is empty", 0);
+			Toast.makeText(this,
+					"AnswerActivity update() called, but qList is empty", 0);
 		} else {
 			aadapter.setQuestion(qList.get(0));
-//		aadapter.notifyDataSetChanged();
-//			Toast.makeText(this, "AnswerActivity got update notification", 0).show();
+			// aadapter.notifyDataSetChanged();
+			// Toast.makeText(this, "AnswerActivity got update notification",
+			// 0).show();
 		}
-		
-	}
 
+	}
 
 }

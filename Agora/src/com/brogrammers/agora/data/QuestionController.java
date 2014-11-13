@@ -264,6 +264,7 @@ public class QuestionController {
 	 */
 	public List<Question> getQuestionById(Long id) {
 		questionByIdList = new ArrayList<Question>();
+		tempRemoteQuestionByIdList.clear();
 		Question q = cache.getQuestionById(id);
 		if (q != null) {
 			questionByIdList.add(q);
