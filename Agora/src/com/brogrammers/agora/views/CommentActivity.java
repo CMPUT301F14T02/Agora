@@ -55,7 +55,9 @@ public class CommentActivity extends Activity implements Observer {
 		controller = QuestionController.getController();
 		controller.setObserver(this);
 		qList = controller.getQuestionById(qid);
+		cadapter = new CommentAdapter(qList.get(0));
 		lv = (ListView) findViewById(R.id.CommentListView);
+		lv.setAdapter(cadapter);
 
 	}
 	/**
