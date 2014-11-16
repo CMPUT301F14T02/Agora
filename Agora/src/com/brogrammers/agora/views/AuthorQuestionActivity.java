@@ -1,6 +1,9 @@
 package com.brogrammers.agora.views;
 
-
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -10,23 +13,40 @@ import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.data.QuestionController;
+import com.brogrammers.agora.helper.ImageGetter;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.UserManager;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
 /**
- * Activity for posting a question to the app. Displays two text boxes for title and body input.
+ * Activity for posting a question to the app. Displays two text boxes for title
+ * and body input.
  * 
  * Todo: implement picturehandler to post pictures to a question.
+ * 
  * @author Group02
- *
+ * 
  */
 public class AuthorQuestionActivity extends Activity {
+
+	protected Uri imageUri = null;
+	protected Bitmap image = null;
 
 	/**
 	 * Retrieves button layouts and activity author question layout.
@@ -36,13 +56,12 @@ public class AuthorQuestionActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_author_question);
 
-		Button addQuestion= (Button)findViewById(R.id.authorQuestionAddQuestionButton);
-		Button addPicture = (Button)findViewById(R.id.authorQuestionAddPictureButton);
+		Button addQuestion = (Button) findViewById(R.id.authorQuestionAddQuestionButton);
+		Button addPicture = (Button) findViewById(R.id.authorQuestionAddPictureButton);
 
-		addQuestion.setOnClickListener(questionhandler);
-		addPicture.setOnClickListener(picturehandler);
+		addQuestion.setOnClickListener(questionHandler);
+		addPicture.setOnClickListener(pictureHandler);
 
-		
 	}
 
 	@Override
@@ -63,33 +82,94 @@ public class AuthorQuestionActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 	/**
-	 * Retrieves text from title and body editTexts and adds question via controller.
+	 * Retrieves text from title and body editTexts and adds question via
+	 * controller.
 	 */
-	View.OnClickListener questionhandler = new View.OnClickListener() {
+	View.OnClickListener questionHandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add question
-			EditText titleText = (EditText)findViewById(R.id.authorQuestionEditText);
-			EditText bodyText = (EditText)findViewById(R.id.authorQuestionBodyEditText);
-    		Toast.makeText(Agora.getContext(), "Adding Question!", Toast.LENGTH_SHORT).show();
-			
-    		String title = titleText.getText().toString();
-    		String body = bodyText.getText().toString();
-//    		Toast.makeText(Agora.getContext(), "Title: "+title, Toast.LENGTH_SHORT).show();
-//    		Toast.makeText(Agora.getContext(), "Body: "+body, Toast.LENGTH_SHORT).show();
-    		
-    		// replace null with image when images are implemented
-    		QuestionController.getController().addQuestion(title, body, null); 
-    		finish();
-    		
+			EditText titleText = (EditText) findViewById(R.id.authorQuestionEditText);
+			EditText bodyText = (EditText) findViewById(R.id.authorQuestionBodyEditText);
+			Toast.makeText(Agora.getContext(), "Adding Question!",
+					Toast.LENGTH_SHORT).show();
+
+			String title = titleText.getText().toString();
+			String body = bodyText.getText().toString();
+			// Toast.makeText(Agora.getContext(), "Title: "+title,
+			// Toast.LENGTH_SHORT).show();
+			// Toast.makeText(Agora.getContext(), "Body: "+body,
+			// Toast.LENGTH_SHORT).show();
+
+			QuestionController.getController().addQuestion(title, body, image);
+			finish();
+
 		}
 	};
-	View.OnClickListener picturehandler = new View.OnClickListener() {
+	View.OnClickListener pictureHandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			// add picture
-    		Toast.makeText(Agora.getContext(), "Adding Picture! (Not Yet Implemented)", Toast.LENGTH_SHORT).show();
-
+			Toast.makeText(Agora.getContext(),
+					"Adding Picture! (Implementation In Progress)",
+					Toast.LENGTH_SHORT).show();
+			ImageGetter imageGetter = new ImageGetter(
+					AuthorQuestionActivity.this);
+			imageUri = imageGetter.getUri();
+			imageGetter.getImage(imageUri);
 		}
 	};
 
+	// ImageGetter camera activity callback
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == ImageGetter.CAMERA_ACTIVITY_REQUEST_CODE
+				&& resultCode == RESULT_OK) {
+			ImageView iv = (ImageView) findViewById(R.id.AuthorQuestionImage);
+//			iv.setImageDrawable(Drawable.createFromPath(imageUri.getPath()));
+
+			// https://stackoverflow.com/questions/2577221/android-how-to-create-runtime-thumbnail
+			Bitmap ThumbImage = ThumbnailUtils.extractThumbnail(
+					BitmapFactory.decodeFile(imageUri.getPath()), 480, 360);
+			Toast.makeText(this, "ThumbImage size = "+Integer.toString(ThumbImage.getByteCount()), 0).show();
+			iv.setImageBitmap(ThumbImage);
+			
+			Bitmap fullImage = null;
+			try {
+				fullImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			Toast.makeText(this, "height="+fullImage.getHeight()
+					+" width="+fullImage.getWidth(), 0).show();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			int quality = 100;
+			do {
+				baos.reset();
+				fullImage.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+				quality -= 5;
+			} while (baos.size() > 64000); 
+			
+			byte[] imageBytes = baos.toByteArray();
+			Toast.makeText(this, "Compressed photo size = "+imageBytes.length/1000+"KB", 0).show();
+			ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
+			Bitmap jpegImage = BitmapFactory.decodeStream(bais);
+			
+//			iv.setImageBitmap(jpegImage);
+//			String s64 = Base64.encode(input, flags)(imageBytes, Base64.DEFAULT);
+//			Toast.makeText(this, "string size="+s64.length(), 0).show();
+			
+		} else {
+			Toast.makeText(this, "Error when adding image.", 0).show();
+		}
+	}
+
 }
+
+
+
+
+
+
+
+
+
