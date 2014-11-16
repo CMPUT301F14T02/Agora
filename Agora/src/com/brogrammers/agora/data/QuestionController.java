@@ -123,10 +123,9 @@ public class QuestionController {
 	 *            if no image provided)
 	 * @return the ID of the created question
 	 */
-	public Long addQuestion(String title, String body, Bitmap image) {
+	public Long addQuestion(String title, String body, byte[] image) {
 		Question q = new Question(title, body, image, user);
-		// q.setImage(resizer.resizeTo64KB(image)); TODO: implement
-		q.setImage(null); // Images to be implemented in Part 4
+//		q.setImage(null); // Images to be implemented in Part 4
 		cache.pushQuestion(q);
 		user.addAuthoredQuestionID(q.getID());
 		try {

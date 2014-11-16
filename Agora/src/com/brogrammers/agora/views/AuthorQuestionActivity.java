@@ -14,6 +14,7 @@ import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.helper.ImageGetter;
+import com.brogrammers.agora.helper.ImageResizer;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -46,7 +47,7 @@ import android.widget.Toast;
 public class AuthorQuestionActivity extends Activity {
 
 	protected Uri imageUri = null;
-	protected Bitmap image = null;
+	protected byte[] image = null;
 
 	/**
 	 * Retrieves button layouts and activity author question layout.
@@ -107,14 +108,10 @@ public class AuthorQuestionActivity extends Activity {
 
 		}
 	};
+	
 	View.OnClickListener pictureHandler = new View.OnClickListener() {
 		public void onClick(View v) {
-			// add picture
-			Toast.makeText(Agora.getContext(),
-					"Adding Picture! (Implementation In Progress)",
-					Toast.LENGTH_SHORT).show();
-			ImageGetter imageGetter = new ImageGetter(
-					AuthorQuestionActivity.this);
+			ImageGetter imageGetter = new ImageGetter(AuthorQuestionActivity.this);
 			imageUri = imageGetter.getUri();
 			imageGetter.getImage(imageUri);
 		}
@@ -124,36 +121,24 @@ public class AuthorQuestionActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == ImageGetter.CAMERA_ACTIVITY_REQUEST_CODE
 				&& resultCode == RESULT_OK) {
+			byte[] image = ImageResizer.resize(imageUri);
+			
 			ImageView iv = (ImageView) findViewById(R.id.AuthorQuestionImage);
 //			iv.setImageDrawable(Drawable.createFromPath(imageUri.getPath()));
 
 			// https://stackoverflow.com/questions/2577221/android-how-to-create-runtime-thumbnail
 			Bitmap ThumbImage = ThumbnailUtils.extractThumbnail(
-					BitmapFactory.decodeFile(imageUri.getPath()), 480, 360);
+					BitmapFactory.decodeStream(new ByteArrayInputStream(image)), 480, 360);
+			
 			Toast.makeText(this, "ThumbImage size = "+Integer.toString(ThumbImage.getByteCount()), 0).show();
+			
 			iv.setImageBitmap(ThumbImage);
 			
-			Bitmap fullImage = null;
-			try {
-				fullImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), imageUri);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			Toast.makeText(this, "height="+fullImage.getHeight()
-					+" width="+fullImage.getWidth(), 0).show();
-			ByteArrayOutputStream baos = new ByteArrayOutputStream();
-			int quality = 100;
-			do {
-				baos.reset();
-				fullImage.compress(Bitmap.CompressFormat.JPEG, quality, baos);
-				quality -= 5;
-			} while (baos.size() > 64000); 
 			
-			byte[] imageBytes = baos.toByteArray();
-			Toast.makeText(this, "Compressed photo size = "+imageBytes.length/1000+"KB", 0).show();
-			ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
-			Bitmap jpegImage = BitmapFactory.decodeStream(bais);
+
 			
+//			ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
+//			Bitmap jpegImage = BitmapFactory.decodeStream(bais);
 //			iv.setImageBitmap(jpegImage);
 //			String s64 = Base64.encode(input, flags)(imageBytes, Base64.DEFAULT);
 //			Toast.makeText(this, "string size="+s64.length(), 0).show();

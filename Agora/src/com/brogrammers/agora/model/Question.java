@@ -23,7 +23,7 @@ public class Question implements Serializable, Comparable<Question> {
 	private String title;
 	private String body;
 	private int rating;
-	private Bitmap image = null;
+	private byte[] image;
 	private Author author;
 	private Long date;
 	private Long uniqueID;
@@ -36,7 +36,7 @@ public class Question implements Serializable, Comparable<Question> {
 	 * @param image Image to be set in the body of the image. Not yet implemented. Null.
 	 * @param author Username of the author will be set as author of the question.
 	 */
-	public Question(String title, String body, Bitmap image, Author author) {
+	public Question(String title, String body, byte[] image, Author author) {
 		this.title = title;
 		this.body = body;
 		this.author = author;
@@ -63,7 +63,7 @@ public class Question implements Serializable, Comparable<Question> {
 		}
 	}
 
-	public void setImage(Bitmap image) {
+	public void setImage(byte[] image) {
 		this.image = image;
 	}
 	/**
@@ -134,7 +134,7 @@ public class Question implements Serializable, Comparable<Question> {
 		return rating;
 	}
 
-	public Bitmap getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
