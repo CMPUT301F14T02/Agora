@@ -83,4 +83,11 @@
         android:hint="Loading..."
         android:textSize="18dp" />
 
+    <ImageView
+        android:id="@+id/QuestionImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/AuthourDate"
+        android:layout_alignLeft="@+id/AuthourDate" />
+
 </RelativeLayout>

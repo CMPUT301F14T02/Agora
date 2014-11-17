@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 
 public class ImageGetter {
 	public static final int CAMERA_ACTIVITY_REQUEST_CODE = 24672; // 24672 = AGORA
@@ -21,18 +22,16 @@ public class ImageGetter {
 
 	public Uri getUri() {
 		// TODO: cite Lab5-3
-		String path = Environment.getExternalStorageDirectory()
-				.getAbsolutePath() + "/AgoraImages";
-		File folder = new File(path);
+		File folder = new File("/sdcard/AgoraImages");
 		if (!folder.exists())
 			folder.mkdir();
 
-		String imagePathAndFileName = path + File.separator
+		String imagePathAndFileName = folder.getAbsolutePath() + File.separator
 				+ String.valueOf(System.currentTimeMillis()) + ".jpg";
-
+		Log.e("IMAGE", "imagePathAndFileName="+imagePathAndFileName);
 		File imageFile = new File(imagePathAndFileName);
 		Uri imageUri = Uri.fromFile(imageFile);
-
+		if (imageUri == null) Log.e("IMAGE", "returning null uri");
 		return imageUri;
 	}
 	

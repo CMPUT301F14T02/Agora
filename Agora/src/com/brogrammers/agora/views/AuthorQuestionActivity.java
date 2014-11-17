@@ -27,6 +27,7 @@ import android.os.Bundle;
 import android.os.UserManager;
 import android.provider.MediaStore;
 import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -104,6 +105,7 @@ public class AuthorQuestionActivity extends Activity {
 			// Toast.LENGTH_SHORT).show();
 
 			QuestionController.getController().addQuestion(title, body, image);
+//			Toast.makeText(Agora.getContext(), "adding question, image size = "+image.length, 0).show();
 			finish();
 
 		}
@@ -121,7 +123,10 @@ public class AuthorQuestionActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == ImageGetter.CAMERA_ACTIVITY_REQUEST_CODE
 				&& resultCode == RESULT_OK) {
-			byte[] image = ImageResizer.resize(imageUri);
+			Log.e("IMAGE", "onActivityResult uri ="+imageUri.getPath());
+			image = ImageResizer.resize(imageUri);
+			if (image == null) Log.e("IMAGE", "image is null");
+			else Log.e("IMAGE", "image byte[] size = "+image.length);
 			
 			ImageView iv = (ImageView) findViewById(R.id.AuthorQuestionImage);
 //			iv.setImageDrawable(Drawable.createFromPath(imageUri.getPath()));

@@ -1,5 +1,6 @@
 package com.brogrammers.agora.views;
 
+import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,6 +18,7 @@ import com.brogrammers.agora.model.Question;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -113,6 +115,13 @@ public class QuestionActivity extends Activity implements Observer {
 			CacheDataManager.getInstance().pushQuestion(q);
 			viewAnswer.setText("Answers ("+Integer.toString(q.getAnswers().size())+")");
 			viewComment.setText("Comments ("+Integer.toString(q.getComments().size())+")");
+			if (q.getImage() != null) {
+				Toast.makeText(this, "size of image:"+q.getImage().length, 0).show();
+				((ImageView)findViewById(R.id.QuestionImage)).setImageBitmap(
+						BitmapFactory.decodeStream(new ByteArrayInputStream(q.getImage())));
+			} else {
+				Toast.makeText(this, "image is null", 0).show();
+			}
 		} else {
 			Toast.makeText(this, "QuestionActivity recieved empty list on update", 0).show();
 		}
