@@ -8,6 +8,7 @@ import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.R;
 import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
+import com.brogrammers.agora.data.DeviceUser;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.model.Question;
 
@@ -20,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,17 +81,20 @@ public class QuestionAdapter extends BaseAdapter {
 
 		LinearLayout HLayout = (LinearLayout)convertView.findViewById(R.id.RatingHLayout);
 		((TextView)HLayout.findViewById(R.id.qObjectScore)).setText(Integer.toString(question.getRating()));
+		
+		LinearLayout HLayoutAcount = (LinearLayout)convertView.findViewById(R.id.HLayoutAnswerCount);
+		((TextView)HLayoutAcount.findViewById(R.id.qACountText)).setText(Integer.toString(question.countAnswers()));
 
 
-		/*List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
+		List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
 		
 		if (favoritedQuestions.contains(question.getID())) {
-			((ImageButton)convertView.findViewById(R.id.qObjectFavourite)).setImageResource(R.drawable.ic_action_rating_favoritepink);	
+			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_action_rating_favoritepink);	
 		} else {
-			// TODO: change to grey
-			((ImageButton)convertView.findViewById(R.id.qObjectFavourite)).setImageResource(R.drawable.ic_action_rating_favoritepink);	
+			
+			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_action_unfavorite);	
 		}
-		*/
+	
 		
 		convertView.setOnClickListener(new QuestionOnClickListener(position));
 		
