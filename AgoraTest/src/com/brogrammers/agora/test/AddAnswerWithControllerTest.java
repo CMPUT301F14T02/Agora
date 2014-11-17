@@ -100,12 +100,8 @@ public class AddAnswerWithControllerTest extends ActivityInstrumentationTestCase
 		
 		// check that the question was pushed to the ES server
 		runTestOnUiThread(new Runnable() { public void run() {
-				try {
-					results.add((ArrayList<Question>)es.getQuestions());
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}	
-			}
+			results.add((ArrayList<Question>)es.getQuestions());
+		}
 		});
 		
 		// wait for the response

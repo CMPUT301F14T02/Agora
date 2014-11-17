@@ -81,11 +81,7 @@ public class AddQuestionTestES extends ActivityInstrumentationTestCase2<MainActi
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
 			public void run() {
-				try {
-					results.add((ArrayList<Question>)es.getQuestions());
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}	
+				results.add((ArrayList<Question>)es.getQuestions());
 			}
 		});
 		assertTrue("Got result before one was expected", results.get(0).size() == 0);

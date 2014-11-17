@@ -1,5 +1,9 @@
 package com.brogrammers.agora.test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -7,6 +11,7 @@ import java.util.ArrayList;
 import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.data.DeviceUser;
 import com.brogrammers.agora.helper.ImageGetter;
+import com.brogrammers.agora.helper.ImageResizer;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Question;
 import com.brogrammers.agora.views.MainActivity;
@@ -40,9 +45,33 @@ public class ImageResizeTest extends ActivityInstrumentationTestCase2<MainActivi
 		super.tearDown();
 	}
 	
-	public void testImage() {
+	public void testImage() throws IOException {
 		Bitmap image = BitmapFactory.decodeResource(Agora.getContext().getResources(), R.drawable.bingsf_sock);		
 		assertTrue(image.getByteCount() > 64000);
+		
+		String path = "/sdcard/AgoraTest/";
+		File folder = new File(path);
+		if (!folder.exists()){
+			folder.mkdir();
+		}
+		File testImage = new File(path + "test.png");
+		testImage.createNewFile();
+		
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		image.compress(Bitmap.CompressFormat.PNG, 100, baos); 
+		FileOutputStream fos = new FileOutputStream(testImage);
+		fos.write(baos.toByteArray());
+		fos.flush();
+		fos.close();
+		
+		Bitmap image2 = BitmapFactory.decodeFile(path + "test.png");
+		assertTrue(image2.getByteCount() > 64000);
+		
+		byte[] resized = ImageResizer.resize(Uri.parse(path + "test.png"));
+		
+		assertTrue(resized.length <= 64000);
+		
+		testImage.delete();
 		
 
 	}

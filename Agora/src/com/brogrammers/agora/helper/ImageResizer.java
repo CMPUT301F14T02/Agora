@@ -1,6 +1,9 @@
 package com.brogrammers.agora.helper;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 import com.brogrammers.agora.Agora;
 
@@ -24,13 +27,14 @@ public class ImageResizer {
 	public static final int size = 64000; // 64KB
 
 	public static byte[] resize(Uri imageUri) {
-		Bitmap fullImage = null;
+		Bitmap fullImage = null;	
+		File imageFile = new File(imageUri.getPath());
 		try {
-//			fullImage = BitmapFactory.decodeFile(imageUri.getPath());
-			fullImage = MediaStore.Images.Media.getBitmap(Agora.getContext().getContentResolver(), imageUri);
-		} catch (Exception e) {
-			Log.e("RESIZER", "Exception: "+Log.getStackTraceString(e));
+			fullImage = BitmapFactory.decodeStream(new FileInputStream(imageFile));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
 		}
+		
 		Log.e("RESIZER", "before scale height="+fullImage.getHeight()+" width="+fullImage.getWidth());
 		Bitmap scaledImage = scaleImageToMaxDimension(fullImage, 640);
 		Log.e("RESIZER", "after scale height="+scaledImage.getHeight()+" width="+scaledImage.getWidth());
