@@ -159,7 +159,7 @@ public class ESDataManager { // implements DataManager
 				+ "\"sort\": [" + "{" + "\"date\": {" + "\"order\": \"desc\""
 				+ "}" + "}]}";
 		String endPoint = "_search";
-		return getQuestions(Question.class, requestBody, endPoint, null);
+		return getQuestions(Question.class, requestBody, endPoint, null, true);
 	}
 
 	/**
@@ -185,7 +185,7 @@ public class ESDataManager { // implements DataManager
 	 *         Question objects.
 	 */
 	private <T> ArrayList<T> getQuestions(Class<T> returnType,
-			String requestBody, String endPoint, final String answerQuery)
+			String requestBody, String endPoint, final String answerQuery, final boolean filtered)
 			throws UnsupportedEncodingException {
 		final List<Question> questionList = new ArrayList<Question>();
 		final List<Answer> answerList = new ArrayList<Answer>();
@@ -221,8 +221,14 @@ public class ESDataManager { // implements DataManager
 						try {
 							String responseBody = new String(arg2);
 							JSONObject jsonRes = new JSONObject(responseBody);
-							jsonRes = jsonRes.getJSONObject("hits");
-							JSONArray jsonArray = jsonRes.getJSONArray("hits");
+							JSONArray jsonArray;
+							if (!filtered){
+							    jsonRes = jsonRes.getJSONObject("hits");
+							    jsonArray = jsonRes.getJSONArray("hits");
+							} else {
+								jsonRes = jsonRes.getJSONObject("fields");
+								jsonArray = jsonRes.getJSONArray("partial1");
+							}
 							Gson gson = new Gson();
 							for (int i = 0; i < jsonArray.length(); i++) {
 								// get each object in the response, convert to
@@ -290,7 +296,7 @@ public class ESDataManager { // implements DataManager
 				+ "}}}}}";
 		String endpoint = "_search";
 		List<Answer> list = getQuestions(Answer.class, requestBody, endpoint,
-				query);
+				query, false);
 		// sort through questions and extract answers
 		return list;
 	}
@@ -313,7 +319,7 @@ public class ESDataManager { // implements DataManager
 				+ "\"type\": \"most_fields\"," + "\"fields\": ["
 				+ "\"title\", \"body\"" + "]}}}";
 		String endPoint = "_search";
-		return getQuestions(Question.class, requestBody, endPoint, null);
+		return getQuestions(Question.class, requestBody, endPoint, null, false);
 	}
 
 	/**
@@ -331,7 +337,7 @@ public class ESDataManager { // implements DataManager
 		String requestBody = "{" + "\"query\": {" + "\"match\": {" + "\"_id\":"
 				+ id.toString() + "}}}";
 		String endPoint = "_search";
-		return getQuestions(Question.class, requestBody, endPoint, null);
+		return getQuestions(Question.class, requestBody, endPoint, null, false);
 	}
 
 	/**
