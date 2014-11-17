@@ -155,9 +155,22 @@ public class ESDataManager { // implements DataManager
 	 */
 	public List<Question> getQuestions() throws UnsupportedEncodingException {
 		// assuming the question view by default sorts by date
+		String requestBody = "{" +
+				    "\"partial_fields\" : {" +
+				        "\"partial1\" : {" +
+				            "\"exclude\" : \"image\"" +
+				        "}" +
+				    "}," +
+
+				    "\"query\": {" +
+				      "\"match_all\": {}" +
+				   "}" +
+				"}";
+		/* query for use when not filtering
 		String requestBody = "{" + "\"query\": {\"match_all\": {}},"
 				+ "\"sort\": [" + "{" + "\"date\": {" + "\"order\": \"desc\""
 				+ "}" + "}]}";
+		*/
 		String endPoint = "_search";
 		return getQuestions(Question.class, requestBody, endPoint, null, true);
 	}
@@ -221,14 +234,8 @@ public class ESDataManager { // implements DataManager
 						try {
 							String responseBody = new String(arg2);
 							JSONObject jsonRes = new JSONObject(responseBody);
-							JSONArray jsonArray;
-							if (!filtered){
-							    jsonRes = jsonRes.getJSONObject("hits");
-							    jsonArray = jsonRes.getJSONArray("hits");
-							} else {
-								jsonRes = jsonRes.getJSONObject("fields");
-								jsonArray = jsonRes.getJSONArray("partial1");
-							}
+							jsonRes = jsonRes.getJSONObject("hits");
+							JSONArray jsonArray = jsonRes.getJSONArray("hits");
 							Gson gson = new Gson();
 							for (int i = 0; i < jsonArray.length(); i++) {
 								// get each object in the response, convert to
@@ -237,6 +244,9 @@ public class ESDataManager { // implements DataManager
 								JSONObject q = jsonArray.getJSONObject(i);
 								if (!filtered){
 								    q = q.getJSONObject("_source");
+								} else if (filtered){
+									q = q.getJSONObject("fields");
+									q = q.getJSONArray("partial1").getJSONObject(0);
 								}
 								Question qObject = gson.fromJson(q.toString(),
 										Question.class);
