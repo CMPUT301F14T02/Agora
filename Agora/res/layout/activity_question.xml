@@ -42,7 +42,7 @@
         android:id="@+id/RelativeLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/qBody"
+        android:layout_alignLeft="@+id/linearLayout1"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="18dp"
         android:gravity="bottom" >
@@ -62,7 +62,6 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
             android:text="Comments" />
-
     </RelativeLayout>
 
     <TextView
@@ -74,20 +73,34 @@
         android:hint="Loading..."
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <TextView
-        android:id="@+id/qBody"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/linearLayout1"
-        android:layout_below="@+id/linearLayout1"
-        android:hint="Loading..."
-        android:textSize="18dp" />
-
     <ImageView
         android:id="@+id/QuestionImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/AuthourDate"
         android:layout_alignLeft="@+id/AuthourDate" />
+
+    <ScrollView
+        android:id="@+id/scrollViewqActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/RelativeLayout1"
+        android:layout_alignRight="@+id/RelativeLayout1"
+        android:layout_below="@+id/linearLayout1"
+        android:layout_above="@+id/QuestionImage" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/qBody"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Loading..."
+                android:textSize="18dp" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

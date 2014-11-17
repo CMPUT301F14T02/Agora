@@ -58,7 +58,7 @@
             android:src="@drawable/ic_action_rating_favoritepink" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/qQuestionFlag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_action_flag" />
@@ -98,5 +98,15 @@
             android:textSize="20dp" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/qlocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/HLayoutAnswerCount"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/RatingHLayout"
+        android:hint="Post Location"
+        android:textColor="#444444" />
 
 </RelativeLayout>
