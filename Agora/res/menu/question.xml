@@ -2,12 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brogrammers.agora.QuestionActivity" >
 
-    <item android:id="@+id/action_addanswer" 
-        android:icon="@drawable/ic_action_new" 
-        android:title="addanswer" 
-        android:titleCondensed="addanswer"
-        android:showAsAction="always"></item>
-    
     <item android:id="@+id/action_favorite" 
         android:icon="@drawable/ic_action_rating_favoritepink" 
         android:title="favorite" 
