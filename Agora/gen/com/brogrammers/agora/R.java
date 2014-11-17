@@ -130,10 +130,11 @@ public final class R {
         public static final int answer_object=0x7f03000b;
         public static final int comment_object=0x7f03000c;
         public static final int empty_answers=0x7f03000d;
-        public static final int fragment_search_answers=0x7f03000e;
-        public static final int fragment_search_questions=0x7f03000f;
-        public static final int question_object=0x7f030010;
-        public static final int sortdialogue=0x7f030011;
+        public static final int empty_comments=0x7f03000e;
+        public static final int fragment_search_answers=0x7f03000f;
+        public static final int fragment_search_questions=0x7f030010;
+        public static final int question_object=0x7f030011;
+        public static final int sortdialogue=0x7f030012;
     }
     public static final class menu {
         public static final int answer=0x7f070000;

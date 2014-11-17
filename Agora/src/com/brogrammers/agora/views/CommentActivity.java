@@ -16,9 +16,11 @@ import com.brogrammers.agora.model.Question;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -58,7 +60,11 @@ public class CommentActivity extends Activity implements Observer {
 		cadapter = new CommentAdapter(qList.get(0));
 		lv = (ListView) findViewById(R.id.CommentListView);
 		lv.setAdapter(cadapter);
-
+		
+		LayoutInflater inflater = getLayoutInflater();
+		View emptyView = inflater.inflate(R.layout.empty_comments, null);
+		lv.setEmptyView(emptyView);
+		((ViewGroup)lv.getParent()).addView(emptyView);
 	}
 	/**
 	 * Called when question/answer list is populated. retrieves new set of comments from question/answer.

@@ -124,7 +124,6 @@ public class QuestionController {
 	 * @return the ID of the created question
 	 */
 	public Long addQuestion(String title, String body, byte[] image) {
-		Log.e("CONTROLLER", "image byte[] length="+image.length);
 		Question q = new Question(title, body, image, user);
 //		q.setImage(null); // Images to be implemented in Part 4
 		cache.pushQuestion(q);
