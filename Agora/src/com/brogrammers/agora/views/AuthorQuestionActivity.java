@@ -126,7 +126,6 @@ public class AuthorQuestionActivity extends Activity {
 			(new File(imageUri.getPath())).delete(); // delete the original file
 			ImageView iv = (ImageView) findViewById(R.id.AuthorQuestionImage);
 
-			// https://stackoverflow.com/questions/2577221/android-how-to-create-runtime-thumbnail
 			Bitmap ThumbImage = ThumbnailUtils.extractThumbnail(
 					BitmapFactory.decodeStream(new ByteArrayInputStream(image)), 480, 360);
 			iv.setImageBitmap(ThumbImage);

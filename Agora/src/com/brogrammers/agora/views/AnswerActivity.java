@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
+import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.Observer;
 import com.brogrammers.agora.R;
 import com.brogrammers.agora.R.id;
@@ -35,6 +36,7 @@ public class AnswerActivity extends Activity implements Observer {
 	private QuestionController qController = QuestionController.getController();
 	private List<Question> qList;
 	private AnswerAdapter aadapter;
+	private Long qid;
 
 	ListView lv;
 
@@ -49,7 +51,7 @@ public class AnswerActivity extends Activity implements Observer {
 		setContentView(R.layout.activity_answer);
 
 		Intent intent = getIntent();
-		Long qid = intent.getLongExtra("qid", 0L);
+		qid = intent.getLongExtra("qid", 0L);
 		if (qid.equals(0L)) {
 			Toast.makeText(this, "Didn't recieve a qid in intent", 0).show();
 			finish();
@@ -87,7 +89,11 @@ public class AnswerActivity extends Activity implements Observer {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		switch (id) {
+		case R.id.action_settings:
+			return true;
+		case R.id.action_addanswer:
+			openAddAnswerView();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -127,6 +133,17 @@ public class AnswerActivity extends Activity implements Observer {
 			// 0).show();
 		}
 
+	}
+
+	/**
+	 * Opens AuthorAnswer activity to post an answer to the question. Sends
+	 * question id via intent.
+	 */
+	public void openAddAnswerView() {
+		Intent intent = new Intent(Agora.getContext(),
+				AuthorAnswerActivity.class);
+		intent.putExtra("qid", qid);
+		startActivity(intent);
 	}
 
 }
