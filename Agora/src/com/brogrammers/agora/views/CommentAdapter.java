@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.apache.http.util.TextUtils;
+
 import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.R;
 import com.brogrammers.agora.R.id;
@@ -96,7 +98,13 @@ public class CommentAdapter extends BaseAdapter {
 		//inflate each listview item with "comment_object"
 		Comment comment = (Comment)getItem(position);
 		//set text on each TextView			
-		((TextView)convertView.findViewById(R.id.cBody)).setText(comment.getBody());
+		
+		if (!TextUtils.isEmpty(comment.getBody())) {
+			((TextView)convertView.findViewById(R.id.cBody)).setText(comment.getBody());
+		} else {
+			((TextView)convertView.findViewById(R.id.cBody)).setText(" ");
+		}
+		
 		((TextView)convertView.findViewById(R.id.cAuthourDate)).setText("Submitted by: " +comment.getAuthor().getUsername()+", "+ datetostring(comment.getDate()));
 	
 		return convertView;

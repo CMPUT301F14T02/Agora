@@ -94,6 +94,14 @@ public class QuestionAdapter extends BaseAdapter {
 			
 			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_action_unfavorite);	
 		}
+		
+		List<Long> flaggedQuestions = DeviceUser.getUser().getCachedQuestionIDs();
+		
+		if (flaggedQuestions.contains(question.getID())) {
+			((ImageView)convertView.findViewById(R.id.qQuestionFlag)).setImageResource(R.drawable.ic_action_flag);
+		} else {
+			((ImageView)convertView.findViewById(R.id.qQuestionFlag)).setImageResource(R.drawable.ic_actionunflag);
+		}
 	
 		
 		convertView.setOnClickListener(new QuestionOnClickListener(position));

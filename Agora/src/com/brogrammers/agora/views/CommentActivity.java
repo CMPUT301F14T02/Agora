@@ -120,7 +120,7 @@ public class CommentActivity extends Activity implements Observer {
 		return super.onOptionsItemSelected(item);
 	}
 	/**
-	 * When postcomment button clicked on. Posts comment to via corresponding question/answer id.
+	 * When post comment button clicked on. Posts comment to via corresponding question/answer id.
 	 */
 	View.OnClickListener postcomment = new View.OnClickListener() {
 		@Override

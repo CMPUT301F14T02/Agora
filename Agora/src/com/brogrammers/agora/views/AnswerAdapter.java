@@ -10,6 +10,7 @@ import java.util.Locale;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -106,7 +107,14 @@ public class AnswerAdapter extends BaseAdapter {
 		
 		//set text on each TextView & Buttons\
 		comment.setText("Comments ("+Integer.toString(answer.getComments().size())+")");
-		((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
+		
+		if (!TextUtils.isEmpty(answer.getBody())) {
+			((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
+		} else {
+			((TextView)convertView.findViewById(R.id.aBody)).setText(" ");
+		}
+		
+		
 		TextView aScore = (TextView)convertView.findViewById(R.id.aScore);
 		aScore.setText(Integer.toString(answer.getRating()));
 		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText("Submitted by: " +answer.getAuthor().getUsername()+", "+ datetostring(answer.getDate()));
