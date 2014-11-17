@@ -235,7 +235,9 @@ public class ESDataManager { // implements DataManager
 								// object
 								// and add to list.
 								JSONObject q = jsonArray.getJSONObject(i);
-								q = q.getJSONObject("_source");
+								if (!filtered){
+								    q = q.getJSONObject("_source");
+								}
 								Question qObject = gson.fromJson(q.toString(),
 										Question.class);
 								questionList.add(qObject);
