@@ -153,7 +153,7 @@ public class ESDataManager { // implements DataManager
 	 * 
 	 * @return a List of all questions on the server
 	 */
-	public List<Question> getQuestions() throws UnsupportedEncodingException {
+	public List<Question> getQuestions() {
 		// assuming the question view by default sorts by date
 		String requestBody = "{" +
 				    "\"partial_fields\" : {" +
@@ -171,7 +171,7 @@ public class ESDataManager { // implements DataManager
 				+ "\"sort\": [" + "{" + "\"date\": {" + "\"order\": \"desc\""
 				+ "}" + "}]}";
 		*/
-		String endPoint = "_search";
+		String endPoint = "_search?size=50";
 		return getQuestions(Question.class, requestBody, endPoint, null, true);
 	}
 
@@ -198,8 +198,7 @@ public class ESDataManager { // implements DataManager
 	 *         Question objects.
 	 */
 	private <T> ArrayList<T> getQuestions(Class<T> returnType,
-			String requestBody, String endPoint, final String answerQuery, final boolean filtered)
-			throws UnsupportedEncodingException {
+			String requestBody, String endPoint, final String answerQuery, final boolean filtered) {
 		final List<Question> questionList = new ArrayList<Question>();
 		final List<Answer> answerList = new ArrayList<Answer>();
 		// TODO figure out a better
@@ -208,7 +207,12 @@ public class ESDataManager { // implements DataManager
 			return (ArrayList<T>) questionList;
 		}
 		AsyncHttpClient client = new AsyncHttpClient();
-		StringEntity stringEntityBody = new StringEntity(requestBody);
+		StringEntity stringEntityBody = null;
+		try {
+			stringEntityBody = new StringEntity(requestBody);
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
 		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
 		Log.e("SERVER GET URI", DOMAIN + INDEXNAME + TYPENAME + endPoint);
 		Log.e("SERVER GET BODY", requestBody);
@@ -324,8 +328,7 @@ public class ESDataManager { // implements DataManager
 	 * @return  A list of questions meeting the specified search
 	 *         criteria.
 	 */
-	public List<Question> searchQuestions(String query)
-			throws UnsupportedEncodingException {
+	public List<Question> searchQuestions(String query) {
 		String requestBody = "{" + "\"query\": {" + "\"multi_match\": {"
 				+ "\"query\":" + "\"" + query + "\"" + ","
 				+ "\"type\": \"most_fields\"," + "\"fields\": ["
@@ -343,8 +346,7 @@ public class ESDataManager { // implements DataManager
 	 * @return  A list containing the single question object from
 	 *         the server.
 	 */
-	public List<Question> getQuestionById(Long id)
-			throws UnsupportedEncodingException {
+	public List<Question> getQuestionById(Long id) {
 		// assuming the question view by default sorts by date
 		String requestBody = "{" + "\"query\": {" + "\"match\": {" + "\"_id\":"
 				+ id.toString() + "}}}";
@@ -361,7 +363,7 @@ public class ESDataManager { // implements DataManager
 	 * @param q
 	 *            The question object to send to the server.
 	 */
-	public void pushQuestion(Question q) throws UnsupportedEncodingException {
+	public void pushQuestion(Question q) {
 		Gson gson = new Gson();
 		String questionSerialized = gson.toJson(q);
 		String endPoint = Long.toString(q.getID());
@@ -382,8 +384,7 @@ public class ESDataManager { // implements DataManager
 	 * @param cache
 	 *            Synthetic cache for testing purposes.
 	 */
-	public void pushAnswer(Answer a, Long qID, CacheDataManager cache)
-			throws UnsupportedEncodingException {
+	public void pushAnswer(Answer a, Long qID, CacheDataManager cache) {
 		Question q = cache.getQuestionById(qID);
 		Gson gson = new Gson();
 		String answerSerialized = gson.toJson(q.getAnswers());
@@ -410,7 +411,7 @@ public class ESDataManager { // implements DataManager
 	 *            Synthetic cache for testing purposes.
 	 */
 	public void pushComment(Comment c, Long qID, Long aID,
-			CacheDataManager cache) throws UnsupportedEncodingException {
+			CacheDataManager cache) {
 		// if comment is on an answer pass aID, if on question itself pass null
 		String endPoint = Long.toString(qID) + "/" + "_update";
 		Question q = cache.getQuestionById(qID);
@@ -440,8 +441,7 @@ public class ESDataManager { // implements DataManager
 	 *            The id of the question that the upvote to be pushed belongs
 	 *            to.
 	 */
-	public void pushUpvote(Long qID, CacheDataManager cache)
-			throws UnsupportedEncodingException {
+	public void pushUpvote(Long qID, CacheDataManager cache) {
 		Question q = cache.getQuestionById(qID);
 		int upvotes = q.getRating();
 		String upVoteSerialized = "{" + "\"doc\": { " + "\"rating\":"
@@ -461,9 +461,13 @@ public class ESDataManager { // implements DataManager
 	 * @param endPoint
 	 *            Specifies the endpoint of the server request.
 	 */
-	public void push(String body, String endPoint)
-			throws UnsupportedEncodingException {
-		StringEntity stringEntityBody = new StringEntity(body);
+	public void push(String body, String endPoint) {
+		StringEntity stringEntityBody = null;
+		try {
+			stringEntityBody = new StringEntity(body);
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
 		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
 		QueryItem queryItem = new QueryItem(stringEntityBody, URI,
 				RequestType.POST);
@@ -504,11 +508,10 @@ public class ESDataManager { // implements DataManager
 									"updateServer method failure: "
 											+ Integer.toString(statusCode));
 							Toast.makeText(Agora.getContext(),
-									"Update server method failure.", 0).show();
+									"Server update failure.", 0).show();
 							// offlineQueue.addToQueue(qItem);
 						}
 					});
-
 		} else {
 			offlineQueue.addToQueue(qItem);
 		}

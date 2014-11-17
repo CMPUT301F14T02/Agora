@@ -76,11 +76,7 @@ public class GetQuestionByIDTestES extends ActivityInstrumentationTestCase2<Main
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
 			public void run() {
-				try {
-					results.add((ArrayList<Question>)es.getQuestionById(q.getID()));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}	
+				results.add((ArrayList<Question>)es.getQuestionById(q.getID()));
 			}
 		});
 

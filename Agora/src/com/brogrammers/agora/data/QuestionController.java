@@ -98,11 +98,7 @@ public class QuestionController {
 	 */
 	public List<Question> searchQuestions(String query) {
 		if (eSearch.isConnected()) {
-			try {
-				searchQuestionResults = eSearch.searchQuestions(query);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
+			searchQuestionResults = eSearch.searchQuestions(query);
 			return searchQuestionResults;
 		} else {
 			// TODO: throw exception to notify view that network is out
@@ -128,11 +124,7 @@ public class QuestionController {
 //		q.setImage(null); // Images to be implemented in Part 4
 		cache.pushQuestion(q);
 		user.addAuthoredQuestionID(q.getID());
-		try {
-			eSearch.pushQuestion(q);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		eSearch.pushQuestion(q);
 
 		return q.getID(); // for testing
 	}
@@ -191,11 +183,7 @@ public class QuestionController {
 			q.getAnswerByID(aID).addComment(c);
 		}
 
-		try {
-			eSearch.pushComment(c, qID, aID, cache);
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
+		eSearch.pushComment(c, qID, aID, cache);
 	}
 
 	/**
@@ -238,10 +226,7 @@ public class QuestionController {
 		tempRemoteAllQuestionList.clear();
 		allQuestionList = cache.getQuestions();
 		if (eSearch.isConnected()) {
-			try {
-				// when the remote server responds, eSearch will update this list	
-				tempRemoteAllQuestionList = eSearch.getQuestions();
-			} catch (UnsupportedEncodingException e) {e.printStackTrace();}
+			tempRemoteAllQuestionList = eSearch.getQuestions();
 		} else {
 			Toast.makeText(Agora.getContext(), 
 					"Controller: not connected, getAllQuestions from cache", 0)
@@ -269,15 +254,11 @@ public class QuestionController {
 			questionByIdList.add(q);
 		}
 		if (eSearch.isConnected()) {
-			try {
-				tempRemoteQuestionByIdList = eSearch.getQuestionById(id);
-			} catch (UnsupportedEncodingException e) {
-				e.printStackTrace();
-			}
+			tempRemoteQuestionByIdList = eSearch.getQuestionById(id);
 			return questionByIdList;
 		} else {
-			// TODO: handle no network
-		}
+			Toast.makeText(Agora.getContext(), "Error: no internet connection", 0).show();
+		} 
 		return questionByIdList;
 	}
 

@@ -5,8 +5,11 @@ import java.io.ByteArrayOutputStream;
 import com.brogrammers.agora.Agora;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.widget.Toast;
 
 
@@ -23,17 +26,20 @@ public class ImageResizer {
 	public static byte[] resize(Uri imageUri) {
 		Bitmap fullImage = null;
 		try {
+//			fullImage = BitmapFactory.decodeFile(imageUri.getPath());
 			fullImage = MediaStore.Images.Media.getBitmap(Agora.getContext().getContentResolver(), imageUri);
 		} catch (Exception e) {
-			e.printStackTrace();
+			Log.e("RESIZER", "Exception: "+Log.getStackTraceString(e));
 		}
-		Toast.makeText(Agora.getContext(), "height="+fullImage.getHeight()
-				+" width="+fullImage.getWidth(), 0).show();
+		Log.e("RESIZER", "before scale height="+fullImage.getHeight()+" width="+fullImage.getWidth());
+		Bitmap scaledImage = scaleImageToMaxDimension(fullImage, 640);
+		Log.e("RESIZER", "after scale height="+scaledImage.getHeight()+" width="+scaledImage.getWidth());
+		
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		int quality = 100;
 		do {
 			baos.reset();
-			fullImage.compress(Bitmap.CompressFormat.JPEG, quality, baos);
+			scaledImage.compress(Bitmap.CompressFormat.JPEG, quality, baos);
 			quality -= 5;
 		} while (baos.size() > size); 
 		
@@ -43,5 +49,30 @@ public class ImageResizer {
 		return imageBytes;
 	}
 	
-	
+//	https://stackoverflow.com/questions/20467616/how-to-scale-bitmaps-according-to-the-screen-estate-available
+	public static Bitmap scaleImageToMaxDimension(Bitmap original, int maxDimension) {
+	    int width = original.getWidth();
+	    int height = original.getHeight();
+
+	    if (width > maxDimension || height > maxDimension) {
+	        int new_width;
+	        int new_height;
+	        float ratio = (float) width / height;
+	        if (ratio > 1.0f) {
+	            new_width = maxDimension;
+	            new_height = (int) ((float) new_width / ratio);
+	        } else {
+	            new_height = maxDimension;
+	            new_width = (int) ((float) new_height * ratio);
+	        }
+	        float scaleWidth = ((float) new_width) / width;
+	        float scaleHeight = ((float) new_height) / height;
+	        Matrix matrix = new Matrix();
+	        matrix.postScale(scaleWidth, scaleHeight);
+	        Bitmap resizedBitmap = Bitmap.createBitmap(original, 0, 0, width,
+	                height, matrix, true);
+	        return resizedBitmap;
+	    }
+	    return original;
+	}
 }

@@ -1,6 +1,7 @@
 package com.brogrammers.agora.helper;
 
 import java.io.File;
+import java.io.IOException;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -22,11 +23,17 @@ public class ImageGetter {
 
 	public Uri getUri() {
 		// TODO: cite Lab5-3
-		File folder = new File("/sdcard/AgoraImages");
+		String path = null;
+		try {
+			path = Environment.getExternalStorageDirectory().getCanonicalPath() + "/AgoraImages";
+		} catch (IOException e) {
+			Log.e("IMAGEGETTER", Log.getStackTraceString(e));
+		}
+		File folder = new File(path);
 		if (!folder.exists())
 			folder.mkdir();
 
-		String imagePathAndFileName = folder.getAbsolutePath() + File.separator
+		String imagePathAndFileName = path + File.separator
 				+ String.valueOf(System.currentTimeMillis()) + ".jpg";
 		Log.e("IMAGE", "imagePathAndFileName="+imagePathAndFileName);
 		File imageFile = new File(imagePathAndFileName);

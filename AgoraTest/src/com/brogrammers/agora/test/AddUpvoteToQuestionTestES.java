@@ -97,11 +97,7 @@ public class AddUpvoteToQuestionTestES extends ActivityInstrumentationTestCase2<
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
 			public void run() {
-				try {
-					results.add((ArrayList<Question>)es.getQuestionById(qID));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}	
+				results.add((ArrayList<Question>)es.getQuestionById(qID));
 			}
 		});
 		

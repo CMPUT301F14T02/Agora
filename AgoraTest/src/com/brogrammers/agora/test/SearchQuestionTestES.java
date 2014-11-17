@@ -76,11 +76,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
 			public void run() {
-				try {
-					results.add((ArrayList<Question>)es.searchQuestions("weird"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}	
+				results.add((ArrayList<Question>)es.searchQuestions("weird"));
 			}
 		});
 
@@ -102,11 +98,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		final List<ArrayList<Question>> resultsEmpty = new ArrayList<ArrayList<Question>>();
 		runTestOnUiThread(new Runnable() {
 			public void run() {
-				try {
-					resultsEmpty.add((ArrayList<Question>)es.searchQuestions("Memory"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}	
+				resultsEmpty.add((ArrayList<Question>)es.searchQuestions("Memory"));
 			}
 		});
 
@@ -124,11 +116,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		final List<ArrayList<Question>> results4 = new ArrayList<ArrayList<Question>>();
 		runTestOnUiThread(new Runnable() {
 			public void run() {
-				try {
-					results4.add((ArrayList<Question>)es.searchQuestions("Questions"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}	
+				results4.add((ArrayList<Question>)es.searchQuestions("Questions"));
 			}
 		});
 

@@ -2,6 +2,7 @@ package com.brogrammers.agora.views;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.concurrent.CountDownLatch;
@@ -94,20 +95,18 @@ public class AuthorQuestionActivity extends Activity {
 			// add question
 			EditText titleText = (EditText) findViewById(R.id.authorQuestionEditText);
 			EditText bodyText = (EditText) findViewById(R.id.authorQuestionBodyEditText);
-			Toast.makeText(Agora.getContext(), "Adding Question!",
-					Toast.LENGTH_SHORT).show();
 
 			String title = titleText.getText().toString();
 			String body = bodyText.getText().toString();
-			// Toast.makeText(Agora.getContext(), "Title: "+title,
-			// Toast.LENGTH_SHORT).show();
-			// Toast.makeText(Agora.getContext(), "Body: "+body,
-			// Toast.LENGTH_SHORT).show();
+			if (title.isEmpty() || body.isEmpty()) {
+				Toast.makeText(Agora.getContext(), "Please include a title and a description", 1).show();
+				return;
+			} else {
+				Toast.makeText(Agora.getContext(), "Adding Question!", Toast.LENGTH_SHORT).show();
+			}
 
 			QuestionController.getController().addQuestion(title, body, image);
-//			Toast.makeText(Agora.getContext(), "adding question, image size = "+image.length, 0).show();
-			finish();
-
+			finish(); // ends activity
 		}
 	};
 	
@@ -123,36 +122,36 @@ public class AuthorQuestionActivity extends Activity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == ImageGetter.CAMERA_ACTIVITY_REQUEST_CODE
 				&& resultCode == RESULT_OK) {
-			Log.e("IMAGE", "onActivityResult uri ="+imageUri.getPath());
 			image = ImageResizer.resize(imageUri);
-			if (image == null) Log.e("IMAGE", "image is null");
-			else Log.e("IMAGE", "image byte[] size = "+image.length);
-			
+			(new File(imageUri.getPath())).delete(); // delete the original file
 			ImageView iv = (ImageView) findViewById(R.id.AuthorQuestionImage);
-//			iv.setImageDrawable(Drawable.createFromPath(imageUri.getPath()));
 
 			// https://stackoverflow.com/questions/2577221/android-how-to-create-runtime-thumbnail
 			Bitmap ThumbImage = ThumbnailUtils.extractThumbnail(
 					BitmapFactory.decodeStream(new ByteArrayInputStream(image)), 480, 360);
-			
-			Toast.makeText(this, "ThumbImage size = "+Integer.toString(ThumbImage.getByteCount()), 0).show();
-			
 			iv.setImageBitmap(ThumbImage);
 			
-			
-
-			
-//			ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
-//			Bitmap jpegImage = BitmapFactory.decodeStream(bais);
-//			iv.setImageBitmap(jpegImage);
-//			String s64 = Base64.encode(input, flags)(imageBytes, Base64.DEFAULT);
-//			Toast.makeText(this, "string size="+s64.length(), 0).show();
-			
-		} else {
+		} else if (resultCode != RESULT_CANCELED) {
 			Toast.makeText(this, "Error when adding image.", 0).show();
 		}
 	}
 
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+	   super.onSaveInstanceState(outState);
+	   outState.putString("uri", imageUri.getPath());
+	   Log.e("ONSAVEDINSTANCESTATE", "AQA ONSAVE");
+	}
+	
+	@Override
+	 protected void onRestoreInstanceState(Bundle savedInstanceState) {
+	     super.onRestoreInstanceState(savedInstanceState);
+	     imageUri = Uri.parse(savedInstanceState.getString("uri"));
+	     Log.e("ONRESTOREINSTANCESTATE", "AQA onRestoreInstanceState()");
+	 }
+	
+	
+	
 }
 
 

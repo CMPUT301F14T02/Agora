@@ -119,8 +119,6 @@ public class QuestionActivity extends Activity implements Observer {
 				Toast.makeText(this, "size of image:"+q.getImage().length, 0).show();
 				((ImageView)findViewById(R.id.QuestionImage)).setImageBitmap(
 						BitmapFactory.decodeStream(new ByteArrayInputStream(q.getImage())));
-			} else {
-				Toast.makeText(this, "image is null", 0).show();
 			}
 		} else {
 			Toast.makeText(this, "QuestionActivity recieved empty list on update", 0).show();
