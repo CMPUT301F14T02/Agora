@@ -57,17 +57,17 @@
 	        android:layout_width="match_parent"
 	        android:layout_height="match_parent"
 	        android:layout_below="@+id/linearLayout1"
-	        android:orientation="vertical" 
-	        android:layout_marginTop="5dp">
-	
+	        android:layout_marginTop="5dp"
+	        android:orientation="vertical" >
+
 	        <TextView
 	            android:id="@+id/qBody"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:hint="Loading..."
-	            android:textSize="18dp" 
-	            android:paddingTop="2dp"/>
-	
+	            android:paddingTop="2dp"
+	            android:textSize="18dp" />
+
 	        <View
 	            android:id="@+id/qView1"
 	            android:layout_width="fill_parent"
@@ -76,51 +76,58 @@
 	            android:focusable="false"
 	            android:focusableInTouchMode="false"
 	            android:longClickable="false" />
-	
+
 	        <ImageView
 	            android:id="@+id/QuestionImage"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center" />
-		   <TextView
-		        android:id="@+id/AuthourDate"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:hint="Loading..."
-		        android:textAppearance="?android:attr/textAppearanceSmall" />
-		   
-		   <TextView
-		        android:id="@+id/aqLocationText"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:hint="Location Information"
-		        android:textAppearance="?android:attr/textAppearanceSmall" />	
-	    	        
-		   <RelativeLayout
-		        android:id="@+id/RelativeLayout1"
-			    android:layout_width="match_parent"
-			    android:layout_height="wrap_content"
-			    android:layout_alignLeft="@+id/linearLayout1"			 
-			    android:layout_alignParentBottom="true"
-			    android:layout_marginBottom="18dp"
-			    android:gravity="bottom" >
-			
-			    <Button
-			        android:id="@+id/QuestionAnswersButton"
-			        android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_alignParentLeft="true"
-		            android:layout_alignParentTop="true"
-		            android:text="Answers" />
-			
-		        <Button
-		            android:id="@+id/QuestionCommentsButton"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
-		            android:layout_alignParentRight="true"
-		            android:layout_alignParentTop="true"
-		            android:text="Comments" />
-		    </RelativeLayout>	
+
+	        <TextView
+	            android:id="@+id/AuthourDate"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.23"
+	            android:gravity="right"
+	            android:hint="Loading..."
+	            android:textAlignment="gravity"
+	            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	        <TextView
+	            android:id="@+id/aqLocationText"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight="0.48"
+	            android:gravity="right"
+	            android:hint="Location Information"
+	            android:textAlignment="gravity"
+	            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	        <RelativeLayout
+	            android:id="@+id/RelativeLayout1"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_alignLeft="@+id/linearLayout1"
+	            android:layout_alignParentBottom="true"
+	            android:layout_marginBottom="18dp"
+	            android:gravity="bottom" >
+
+	            <Button
+	                android:id="@+id/QuestionAnswersButton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentLeft="true"
+	                android:layout_alignParentTop="true"
+	                android:text="Answers" />
+
+	            <Button
+	                android:id="@+id/QuestionCommentsButton"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_alignParentRight="true"
+	                android:layout_alignParentTop="true"
+	                android:text="Comments" />
+	        </RelativeLayout>
 	    </LinearLayout>
 	
 	</RelativeLayout>
