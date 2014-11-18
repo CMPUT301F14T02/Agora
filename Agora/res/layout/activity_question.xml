@@ -56,9 +56,9 @@
         android:id="@+id/scrollViewqActivity"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_above="@+id/AuthourDate"
         android:layout_alignLeft="@+id/linearLayout1"
         android:layout_alignRight="@+id/linearLayout1"
-        android:layout_above="@+id/qView1"
         android:layout_below="@+id/linearLayout1"
         android:layout_marginTop="5dp" >
 
@@ -73,35 +73,23 @@
                 android:layout_height="wrap_content"
                 android:hint="Loading..."
                 android:textSize="18dp" />
+
+            <View
+                android:id="@+id/qView1"
+                android:layout_width="fill_parent"
+                android:layout_height="10dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false"
+                android:longClickable="false" />
+
+            <ImageView
+                android:id="@+id/QuestionImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_gravity="center"/>
         </LinearLayout>
     </ScrollView>
-
-    <View
-        android:id="@+id/qView1"
-        android:layout_width="fill_parent"
-        android:layout_height="10dp"
-        android:layout_above="@+id/qActivityRelLayoutImage"
-        android:layout_alignLeft="@+id/qActivityRelLayoutImage"
-        android:clickable="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"
-        android:longClickable="false" />
-    
-	<RelativeLayout
-        android:id="@+id/qActivityRelLayoutImage"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/AuthourDate"
-        android:layout_alignLeft="@+id/AuthourDate"
-        android:layout_alignRight="@+id/RelativeLayout1"
-        android:orientation="vertical" >
-
-        <ImageView
-            android:id="@+id/QuestionImage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true" />
-    </RelativeLayout>
     
 	<RelativeLayout
         android:id="@+id/RelativeLayout1"
@@ -133,9 +121,18 @@
         android:id="@+id/AuthourDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/RelativeLayout1"
+        android:layout_above="@+id/aqLocationText"
         android:layout_alignLeft="@+id/RelativeLayout1"
         android:hint="Loading..."
         android:textAppearance="?android:attr/textAppearanceSmall" />
+   
+      <TextView
+          android:id="@+id/aqLocationText"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_above="@+id/RelativeLayout1"
+          android:layout_alignLeft="@+id/RelativeLayout1"
+          android:hint="Location Information"
+          android:textAppearance="?android:attr/textAppearanceSmall" />
 	
 </RelativeLayout>
