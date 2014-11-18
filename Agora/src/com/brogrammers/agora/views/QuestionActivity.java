@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.http.util.TextUtils;
+
 import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.Observer;
 import com.brogrammers.agora.R;
@@ -120,8 +122,20 @@ public class QuestionActivity extends Activity implements Observer {
 			authorline += q.getAuthor().getUsername() + ", "
 					+ datetostring(q.getDate());
 			authordate.setText(authorline);
-			qTitle.setText(q.getTitle());
-			qBody.setText(q.getBody());
+			
+			// Handle Empty String Cases to display a blank instead of the hint text
+			if (!TextUtils.isEmpty(q.getTitle())) {
+				qTitle.setText(q.getTitle().trim());
+			} else {
+				qTitle.setText(" ");
+			}
+			
+			if (!TextUtils.isEmpty(q.getBody())) {
+				qBody.setText(q.getBody().trim());
+			} else {
+				qBody.setText(" ");
+			}
+			
 			qScore.setText(Integer.toString(q.getRating()));
 			CacheDataManager.getInstance().pushQuestion(q);
 			viewAnswer.setText("Answers ("

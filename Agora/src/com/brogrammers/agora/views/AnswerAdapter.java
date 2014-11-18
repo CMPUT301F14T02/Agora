@@ -108,8 +108,9 @@ public class AnswerAdapter extends BaseAdapter {
 		//set text on each TextView & Buttons\
 		comment.setText("Comments ("+Integer.toString(answer.getComments().size())+")");
 		
+		// Handles the empty string case to display a blank instead of hint text
 		if (!TextUtils.isEmpty(answer.getBody())) {
-			((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody());
+			((TextView)convertView.findViewById(R.id.aBody)).setText(answer.getBody().trim());
 		} else {
 			((TextView)convertView.findViewById(R.id.aBody)).setText(" ");
 		}

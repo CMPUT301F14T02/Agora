@@ -75,7 +75,7 @@ public class QuestionAdapter extends BaseAdapter {
 	
 		Question question = (Question)getItem(position);
 //		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
-		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle());
+		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle().trim());
 
 		((TextView)convertView.findViewById(R.id.qAuthor)).setText("Submitted by: " +question.getAuthor().getUsername()+", "+ datetostring(question.getDate()));
 
@@ -103,7 +103,6 @@ public class QuestionAdapter extends BaseAdapter {
 			((ImageView)convertView.findViewById(R.id.qQuestionFlag)).setImageResource(R.drawable.ic_actionunflag);
 		}
 	
-		
 		convertView.setOnClickListener(new QuestionOnClickListener(position));
 		
 		return convertView;
@@ -111,9 +110,9 @@ public class QuestionAdapter extends BaseAdapter {
 	
 	
 	/**
-	 * This converts the date from milliseconds to a date format that the user can interprete.
+	 * This converts the date from milliseconds to a date format that the user can interpret.
 	 * 
-	 * @param milliseconds		Input the java built in time as milliseconds
+	 * @param milliseconds			Input the java built in time as milliseconds
 	 * @return newDate 				Output a date format that interprets time from milliseconds
 	 */
 	public String datetostring(long milliseconds){
