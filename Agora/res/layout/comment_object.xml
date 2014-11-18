@@ -4,16 +4,6 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/cBody"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:hint="Comment Body"
-        android:textColor="#000000" />
-
-    <TextView
         android:id="@+id/cAuthourDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,5 +22,14 @@
         android:hint="Location Text Here"
         android:paddingTop="2dp"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/cBody"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:hint="Comment Body"
+        android:textColor="#000000" />
 
 </RelativeLayout>

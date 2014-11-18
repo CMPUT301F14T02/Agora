@@ -76,7 +76,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/aLocationText"
-        android:paddingTop="2dp"
-        android:text="Comments" />
+        android:minHeight="32dp"
+        android:paddingTop="6dp"
+        android:text="Comments"
+        android:textSize="14sp" />
 
 </RelativeLayout>
