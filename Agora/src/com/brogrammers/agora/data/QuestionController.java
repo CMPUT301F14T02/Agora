@@ -42,6 +42,8 @@ public class QuestionController {
 	private List<Question> questionByIdList = new ArrayList<Question>();
 	private List<Question> tempRemoteAllQuestionList = new ArrayList<Question>();
 	private List<Question> 	tempRemoteQuestionByIdList = new ArrayList<Question>();
+	private List<Question> 	addCacheList = new ArrayList<Question>();
+	private List<Question> 	addFavoritesList = new ArrayList<Question>();
 
 	private Observer observer;
 
@@ -279,6 +281,10 @@ public class QuestionController {
 				questionByIdList.clear();
 				questionByIdList.add(tempRemoteQuestionByIdList.get(0));
 			}
+			if (addCacheList.size() > 0) {
+				cache.pushQuestion(addCacheList.get(0));
+				addCacheList.clear();
+			}
 			observer.update();
 		} else {
 			Toast.makeText(Agora.getContext(),
@@ -303,6 +309,7 @@ public class QuestionController {
 	public void addCache(Long id) {
 		user = DeviceUser.getUser();
 		user.addCachedQuestionID(id);
+		addCacheList = eSearch.getQuestionById(id);
 	}
 
 	/**
@@ -312,6 +319,7 @@ public class QuestionController {
 	public void addFavorite(Long id) {
 		user = DeviceUser.getUser();
 		user.addFavoritedQuestionID(id);
+		addCacheList = eSearch.getQuestionById(id);
 	}
 
 }
