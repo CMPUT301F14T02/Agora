@@ -14,6 +14,7 @@ import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.R.string;
+import com.brogrammers.agora.UserPrefActivity;
 import com.brogrammers.agora.data.CacheDataManager;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.model.Question;
@@ -115,12 +116,23 @@ public class MainActivity extends Activity implements Observer {
         case R.id.clearCache:
         	CacheDataManager.getInstance().clearCache();
         	return true; 
+        case R.id.action_settings:
+        	openUserPref();
+        	return true; 
         default:
             return super.onOptionsItemSelected(item);
         }
     }
-      
-    /**
+	/**
+     * Opens author UserPref view so that user can set Geo Location Awareness.
+     * 
+     */
+    private void openUserPref() {
+    	Intent intent = new Intent(Agora.getContext(), UserPrefActivity.class);    	
+    	startActivity(intent);
+		
+	}
+	/**
      * Opens author question view so that user can author question.
      * 
      */

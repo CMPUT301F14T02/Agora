@@ -30,5 +30,6 @@
     <string name="title_activity_answer">AnswerActivity</string>
     <string name="title_activity_comment">CommentActivity</string>
     <string name="answer">Answer</string>
+    <string name="title_activity_user_pref">Settings</string>
 
 </resources>
