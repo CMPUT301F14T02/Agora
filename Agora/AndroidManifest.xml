@@ -59,10 +59,8 @@
             android:name=".UserPrefActivity"
             android:label="@string/title_activity_user_pref" >
         </activity>
-        <activity
-            android:name=".UserPrefActivity"
-            android:label="@string/title_activity_user_pref" >
-        </activity>
+        <meta-data android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
     </application>
 
 </manifest>
