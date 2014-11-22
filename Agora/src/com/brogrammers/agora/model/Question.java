@@ -29,6 +29,8 @@ public class Question implements Serializable, Comparable<Question> {
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
 	private ArrayList<Answer> answers;
+	private boolean hasImage;
+	
 	/**
 	 * Question constructor. Date is created at time of creation.
 	 * @param title String will be set as title/
@@ -46,26 +48,18 @@ public class Question implements Serializable, Comparable<Question> {
 		uniqueID = md5.hash(date.toString()+author.getUsername()+body+title);
 		comments = new ArrayList<Comment>();
 		answers = new ArrayList<Answer>();
-
+		hasImage = ((image != null) ? (image.length > 0) : false);
 	}
 	
-	public Question(Object o) {
-		if (o == null) {
-			this.title = null;
-			this.body = null;
-			this.author = null;
-			this.image = null;
-			rating = 0;
-			date = null;
-			uniqueID = null;
-			comments = null;
-			answers = null;
-		}
+	public boolean hasImage() {
+		return hasImage;
 	}
 
 	public void setImage(byte[] image) {
 		this.image = image;
+		hasImage = ((image != null) ? (image.length > 0) : false);
 	}
+	
 	/**
 	 * Returns size of comments list.
 	 * @return

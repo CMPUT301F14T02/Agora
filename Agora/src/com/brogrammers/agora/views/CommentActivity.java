@@ -96,7 +96,7 @@ public class CommentActivity extends Activity implements Observer {
 			}
 		} else {
 			Toast.makeText(this, "qList empty onUpdate", 0).show();
-		}
+		} 
 			
 
 	}
@@ -116,8 +116,15 @@ public class CommentActivity extends Activity implements Observer {
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
 			return true;
+		} else if (id == R.id.refreshC) {
+			refresh();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	private void refresh() {
+		// TODO Auto-generated method stub
+		
 	}
 	/**
 	 * When post comment button clicked on. Posts comment to via corresponding question/answer id.

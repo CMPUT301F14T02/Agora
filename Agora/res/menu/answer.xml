@@ -2,6 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brogrammers.agora.AnswerActivity" >
 
+    <item android:id="@+id/refreshA" 
+        android:title="Refresh" 
+        android:icon="@drawable/ic_action_refresh" 
+        android:titleCondensed="Refresh" 
+        android:showAsAction="always">
+    </item>
+    
     <item android:id="@+id/action_addanswer" 
         android:icon="@drawable/ic_action_new" 
         android:title="addanswer" 

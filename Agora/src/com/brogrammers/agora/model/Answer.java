@@ -23,21 +23,12 @@ public class Answer implements Serializable {
 
 	private String body;
 	private int rating;
-	private Bitmap image = null;
+	private byte[] image;
 	private Author author;
 	private Long date;
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
-	private int version;
-	private boolean posted;
-
-	public boolean isPosted() {
-		return posted;
-	}
-
-	public void setPosted(boolean posted) {
-		this.posted = posted;
-	}
+	private boolean hasImage;
 
 	/**
 	 * Answer constructor
@@ -46,7 +37,7 @@ public class Answer implements Serializable {
 	 * @param image Image will be set in body of the answer. To be implemented, null.
 	 * @param author username of the author posting the answer
 	 */
-	public Answer(String body, Bitmap image, Author author) {
+	public Answer(String body, byte[] image, Author author) {
 		this.body = body;
 		this.image = image;
 		this.author = author;
@@ -54,6 +45,11 @@ public class Answer implements Serializable {
 		date = System.currentTimeMillis();
 		uniqueID = md5.hash(date.toString() + author.getUsername() + body);
 		comments = new ArrayList<Comment>();
+		hasImage = ((image != null) ? (image.length > 0) : false);
+	}
+
+	public boolean hasImage() {
+		return hasImage;
 	}
 
 	/**
@@ -90,7 +86,7 @@ public class Answer implements Serializable {
 		rating++;
 	}
 
-	public Bitmap getImage() {
+	public byte[] getImage() {
 		return image;
 	}
 
@@ -114,8 +110,9 @@ public class Answer implements Serializable {
 		return uniqueID;
 	}
 
-	public void setImage(Bitmap image) {
+	public void setImage(byte[] image) {
 		this.image = image;
+		this.hasImage = ((image != null) ? (image.length > 0) : false);
 	}
 
 }

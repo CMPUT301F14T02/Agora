@@ -218,74 +218,73 @@ public class ESDataManager { // implements DataManager
 		Log.e("SERVER GET BODY", requestBody);
 		client.post(Agora.getContext(), URI, stringEntityBody,
 				"application/json", new AsyncHttpResponseHandler() {
+		
+			@Override
+			public boolean getUseSynchronousMode() {
+				return false;
+			}
 
-					@Override
-					public void onFailure(int status, Header[] arg1,
-							byte[] responseBody, Throwable arg3) {
+			@Override
+			public void onFailure(int status, Header[] arg1,
+					byte[] responseBody, Throwable arg3) {
 
-						Log.e("SERVER",
-								"getQuestion failure: "
-										+ Integer.toString(status));
-						Log.e("SERVER", "responsebody: "
-								/*+ new String(responseBody)*/);
-						Toast.makeText(Agora.getContext(),
-								"Failed to pull data from server", 0).show();
+				Log.e("SERVER",
+						"getQuestion failure: "
+								+ Integer.toString(status));
+				Log.e("SERVER", "responsebody: "
+						/*+ new String(responseBody)*/);
+				Toast.makeText(Agora.getContext(),
+						"Failed to pull data from server", 0).show();
+			}
+
+			@Override
+			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
+				Log.e("SERVER", "Question get success");
+				try {
+					String responseBody = new String(arg2);
+					JSONObject jsonRes = new JSONObject(responseBody);
+					jsonRes = jsonRes.getJSONObject("hits");
+					JSONArray jsonArray = jsonRes.getJSONArray("hits");
+					Gson gson = new Gson();
+					for (int i = 0; i < jsonArray.length(); i++) {
+						// get each object in the response, convert to
+						// object
+						// and add to list.
+						JSONObject q = jsonArray.getJSONObject(i);
+						if (!filtered){
+							q = q.getJSONObject("_source");
+						} else if (filtered){
+							q = q.getJSONObject("fields");
+							q = q.getJSONArray("partial1").getJSONObject(0);
+						}
+						Question qObject = gson.fromJson(q.toString(),
+								Question.class);
+						questionList.add(qObject);
 					}
-
-					@Override
-					public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-						Log.e("SERVER", "Question get success");
-						try {
-							String responseBody = new String(arg2);
-							JSONObject jsonRes = new JSONObject(responseBody);
-							jsonRes = jsonRes.getJSONObject("hits");
-							JSONArray jsonArray = jsonRes.getJSONArray("hits");
-							Gson gson = new Gson();
-							for (int i = 0; i < jsonArray.length(); i++) {
-								// get each object in the response, convert to
-								// object
-								// and add to list.
-								JSONObject q = jsonArray.getJSONObject(i);
-								if (!filtered){
-								    q = q.getJSONObject("_source");
-								} else if (filtered){
-									q = q.getJSONObject("fields");
-									q = q.getJSONArray("partial1").getJSONObject(0);
-								}
-								Question qObject = gson.fromJson(q.toString(),
-										Question.class);
-								questionList.add(qObject);
-//								Log.e("SERVER", qObject.getID().toString()
-//										+ " " + qObject.getBody());
-							}
-							// if this is an answer search remove any answers
-							// that don't
-							// contain the search term.
-							if (answerQuery != null) {
-								for (Question question : questionList) {
-									List<Answer> answers = ((Question) question)
-											.getAnswers();
-									for (int i = 0; i < answers.size(); i++) {
-										if (answers
-												.get(i)
-												.getBody()
-												.toLowerCase()
-												.contains(
-														answerQuery
-																.toLowerCase())) {
-											answerList.add(answers.get(i));
-										}
-									}
+					// if this is an answer search remove any answers that don't contain the search term.
+					if (answerQuery != null) {
+						for (Question question : questionList) {
+							List<Answer> answers = ((Question) question)
+									.getAnswers();
+							for (int i = 0; i < answers.size(); i++) {
+								if (answers
+										.get(i)
+										.getBody()
+										.toLowerCase()
+										.contains(
+												answerQuery
+												.toLowerCase())) {
+									answerList.add(answers.get(i));
 								}
 							}
-							QuestionController.getController().update();
-//							Toast.makeText(Agora.getContext(),
-//									"ES Get Question Sucess", 0).show();
-						} catch (JSONException e) {
-							e.printStackTrace();
 						}
 					}
-				});
+					QuestionController.getController().update();
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		if (answerQuery != null) {
 			return (ArrayList<T>) answerList;
 		} else {

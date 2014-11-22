@@ -107,59 +107,60 @@ public class QuestionActivity extends Activity implements Observer {
 	 */
 	@Override
 	public void update() {
+		if (qList.size() == 0) {
+			Toast.makeText(this, "QuestionActivity recieved empty list on update", 0).show();
+			return;
+		}
+		Question q = qList.get(0);
+		
 		TextView qTitle = (TextView) findViewById(R.id.qTitle);
 		TextView qBody = (TextView) findViewById(R.id.qBody);
 		TextView qScore = (TextView) findViewById(R.id.qScore);
-		TextView authordate = (TextView) findViewById(R.id.AuthourDate);
-		String authorline = "Submitted by: ";
+		TextView authorDate = (TextView) findViewById(R.id.AuthourDate);
+		String authorLine = "Submitted by: ";
 
-		if (qList.size() > 0) {
-			Question q = qList.get(0);
+		Button viewComment = (Button) findViewById(R.id.QuestionCommentsButton);
+		Button viewAnswer = (Button) findViewById(R.id.QuestionAnswersButton);
 
-			Button viewComment = (Button) findViewById(R.id.QuestionCommentsButton);
-			Button viewAnswer = (Button) findViewById(R.id.QuestionAnswersButton);
+		authorLine += q.getAuthor().getUsername() + ", "
+				+ datetostring(q.getDate());
+		authorDate.setText(authorLine);
 
-			authorline += q.getAuthor().getUsername() + ", "
-					+ datetostring(q.getDate());
-			authordate.setText(authorline);
-			
-			// Handle Empty String Cases to display a blank instead of the hint text
-			if (!TextUtils.isEmpty(q.getTitle())) {
-				qTitle.setText(q.getTitle().trim());
-			} else {
-				qTitle.setText(" ");
-			}
-			
-			if (!TextUtils.isEmpty(q.getBody())) {
-				qBody.setText(q.getBody().trim());
-			} else {
-				qBody.setText(" ");
-			}
-			
-			qScore.setText(Integer.toString(q.getRating()));
-			CacheDataManager.getInstance().pushQuestion(q);
-			viewAnswer.setText("Answers ("
-					+ Integer.toString(q.getAnswers().size()) + ")");
-			viewComment.setText("Comments ("
-					+ Integer.toString(q.getComments().size()) + ")");
-			
-			// set associated image, if any
-			if (q.getImage() != null) {
-				ImageView thumbView = (ImageView) findViewById(R.id.QuestionImage);
-				final Bitmap imageBitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(q.getImage()));
-				Bitmap thumbImage = ThumbnailUtils.extractThumbnail(imageBitmap, 200, 200);
-				thumbView.setImageBitmap(thumbImage);
-						
-				thumbView.setOnClickListener(new View.OnClickListener() {
-					public void onClick(View v) {
-						(new SimpleImagePopup(imageBitmap, QuestionActivity.this)).show();
-					}
-				});
-			}
+		// Handle Empty String Cases to display a blank instead of the hint text
+		if (!TextUtils.isEmpty(q.getTitle())) {
+			qTitle.setText(q.getTitle().trim());
 		} else {
-			Toast.makeText(this,
-					"QuestionActivity recieved empty list on update", 0).show();
+			qTitle.setText(" ");
 		}
+
+		if (!TextUtils.isEmpty(q.getBody())) {
+			qBody.setText(q.getBody().trim());
+		} else {
+			qBody.setText(" ");
+		}
+
+		qScore.setText(Integer.toString(q.getRating()));
+		CacheDataManager.getInstance().rememberQuestion(q);
+		viewAnswer.setText("Answers ("
+				+ Integer.toString(q.getAnswers().size()) + ")");
+		viewComment.setText("Comments ("
+				+ Integer.toString(q.getComments().size()) + ")");
+
+		// set associated image, if any
+		if (q.hasImage() && q.getImage() != null) {
+			ImageView thumbView = (ImageView) findViewById(R.id.QuestionImage);
+			thumbView.setVisibility(View.VISIBLE); // this ImageView is set to GONE by default
+			final Bitmap imageBitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(q.getImage()));
+			Bitmap thumbImage = ThumbnailUtils.extractThumbnail(imageBitmap, 200, 200);
+			thumbView.setImageBitmap(thumbImage);
+
+			thumbView.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					(new SimpleImagePopup(imageBitmap, QuestionActivity.this)).show();
+				}
+			});
+		}
+
 	}
 
 	@Override
@@ -188,6 +189,9 @@ public class QuestionActivity extends Activity implements Observer {
 		case R.id.action_flag:
 			flag();
 			return true;
+        case R.id.refreshQ:
+        	onResume();
+        	return true;
 
 		default:
 			return super.onOptionsItemSelected(item);

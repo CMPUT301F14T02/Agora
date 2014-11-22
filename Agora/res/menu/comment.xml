@@ -2,6 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brogrammers.agora.CommentActivity" >
 
+    <item android:id="@+id/refreshC" 
+        android:title="Refresh" 
+        android:icon="@drawable/ic_action_refresh" 
+        android:titleCondensed="Refresh" 
+        android:showAsAction="always">
+    </item>
+    
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

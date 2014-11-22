@@ -22,8 +22,8 @@
         android:id="@+id/CommentEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/CommentListView"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/CommentPostButton"
         android:ems="10" >
 
@@ -38,5 +38,5 @@
         android:layout_alignBottom="@+id/CommentEditText"
         android:layout_alignParentRight="true"
         android:text="Post" />
-
+	
 </RelativeLayout>

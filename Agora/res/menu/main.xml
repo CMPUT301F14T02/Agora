@@ -39,7 +39,7 @@
     </item>
     
     <item
-        android:id="@+id/clearCache"
+        android:id="@+id/clearAllData"
         android:orderInCategory="100"
         android:title="Clear Cache" 
         android:icon="@drawable/ic_action_settings" 

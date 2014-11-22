@@ -35,15 +35,12 @@ import android.widget.Toast;
  */
 public class QuestionAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
-	private QuestionController controller;
 	private List<Question> qList;
 	private Activity activity;
 	
 	// Adapter Constructor
 	public QuestionAdapter(List<Question> qList, Activity activity) {
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		// Need to pull from the controller the list of questions for the adapter
-//		this.controller = QuestionController.getController();
 		this.qList = qList;
 		this.activity = activity;
 	}
@@ -86,7 +83,7 @@ public class QuestionAdapter extends BaseAdapter {
 		((TextView)HLayoutAcount.findViewById(R.id.qACountText)).setText(Integer.toString(question.countAnswers()));
 
 
-		List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
+		List<Long> favoritedQuestions = DeviceUser.getUser(activity).getFavoritedQuestionIDs();
 		
 		if (favoritedQuestions.contains(question.getID())) {
 			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_action_rating_favoritepink);	

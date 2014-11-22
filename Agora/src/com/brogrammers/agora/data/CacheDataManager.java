@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.TreeMap;
 
+import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.helper.QuestionLoaderSaver;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Comment;
@@ -44,9 +45,8 @@ public class CacheDataManager implements DataManager {
 		qls = new QuestionLoaderSaver();
 		for (Question q : qls.loadQuestions()) {
 			questionCache.put(q.getID(), q);
-			
+
 		}
-		Log.e("CACHE", "Loaded from QLS: size = "+questionCache.size());
 	}
 
 	protected CacheDataManager(String fileName) {
@@ -72,7 +72,7 @@ public class CacheDataManager implements DataManager {
 	 */
 
 	public List<Question> getQuestions() {
-		Log.e("CACHE", "size of questionCache is "+questionCache.size());
+		Log.e("CACHE", "size of questionCache is " + questionCache.size());
 		return new ArrayList<Question>(questionCache.values());
 	}
 
@@ -86,6 +86,17 @@ public class CacheDataManager implements DataManager {
 	// Warning: can return null
 	public Question getQuestionById(Long id) {
 		Question q = questionCache.get(id);
+		// if (q != null) {
+		// if (q.hasImage()) {
+		// if (q.getImage() == null) {
+		// Toast.makeText(Agora.getContext(),
+		// "Cached image detected but image is null", 0).show();
+		// } else {
+		// Toast.makeText(Agora.getContext(),
+		// "Cached image detected: "+q.getImage().length, 0).show();
+		// }
+		// }
+		// }
 		return q;
 	}
 
@@ -101,16 +112,36 @@ public class CacheDataManager implements DataManager {
 	}
 
 	/**
-	 * Adds questions to the cache without saving them. Used for smoother
-	 * loading of views.
+	 * Adds questions to the cache without saving them to file. Used for
+	 * smoother loading of views.
 	 * 
 	 * @param qList
 	 *            A list of questions to be cached
 	 */
 	public void rememberQuestions(List<Question> qList) {
 		for (Question q : qList) {
-			questionCache.put(q.getID(), q);
+			rememberQuestion(q);
 		}
+	}
+
+	/**
+	 * Add a question to the cache without saving it to file. Used for smoother
+	 * loading of views.
+	 * 
+	 * @param q
+	 *            The question to be cached
+	 */
+	public void rememberQuestion(Question q) {
+		// If the incoming question claims to have an image but has no image
+		// (probably because it's coming from MainActivity) then don't overwrite
+		// the cached image with null.
+		if (q.hasImage() && q.getImage() == null) {
+			Question prev_q = questionCache.get(q.getID());
+			if (prev_q != null && prev_q.getImage() != null) {
+				q.setImage(prev_q.getImage());
+			}
+		}
+		questionCache.put(q.getID(), q);
 	}
 
 	/**

@@ -18,23 +18,23 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 
 public class SimpleImagePopup {
-	private Dialog dialog; 
+	private Dialog popup; 
 	
 	public SimpleImagePopup(Bitmap image, Activity activity) {
-		
-		AlertDialog.Builder popup = new AlertDialog.Builder(activity);
-		
+		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		ImageView imageView = new ImageView(activity);
 		imageView.setImageBitmap(image);
-		popup.setView(imageView);
+		builder.setView(imageView);
 		
+		// this prevents white bars on landscape oriented images
 		if (image.getWidth() > image.getHeight()) {
 			imageView.setAdjustViewBounds(true);
 		}
-		dialog = popup.create();
+		
+		popup = builder.create();
 	}
 	
 	public void show() {
-		dialog.show();
+		popup.show();
 	}
 }

@@ -2,6 +2,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.brogrammers.agora.QuestionActivity" >
 
+    <item android:id="@+id/refreshQ" 
+        android:title="Refresh" 
+        android:icon="@drawable/ic_action_refresh" 
+        android:titleCondensed="Refresh" 
+        android:showAsAction="always">
+    </item>   
+    
     <item android:id="@+id/action_favorite" 
         android:icon="@drawable/ic_action_rating_favoritepink" 
         android:title="favorite" 
@@ -18,6 +25,8 @@
         android:icon="@drawable/ic_action_settings" 
         android:title="settings" 
         android:titleCondensed="settings"
-        android:showAsAction="always"></item>
+        android:showAsAction="ifRoom"></item>
+    
+
 
 </menu>

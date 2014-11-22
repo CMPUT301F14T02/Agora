@@ -146,7 +146,7 @@ public class QuestionController {
 	 * @return the ID of the created Answer
 	 * @throws UnsupportedEncodingException
 	 */
-	public Long addAnswer(String body, Bitmap image, Long qID)
+	public Long addAnswer(String body, byte[] image, Long qID)
 			throws UnsupportedEncodingException {
 		Answer a = new Answer(body, image, user);
 		// a.setImage(resizer.resizeTo64KB(image)); // TODO: implement
@@ -257,7 +257,6 @@ public class QuestionController {
 		}
 		if (eSearch.isConnected()) {
 			tempRemoteQuestionByIdList = eSearch.getQuestionById(id);
-			return questionByIdList;
 		} else {
 			Toast.makeText(Agora.getContext(), "Error: no internet connection", 0).show();
 		} 
@@ -276,10 +275,12 @@ public class QuestionController {
 					allQuestionList.add(q);
 				}
 				cache.rememberQuestions(tempRemoteAllQuestionList);
+				tempRemoteAllQuestionList.clear();
 			}
 			if (tempRemoteQuestionByIdList.size() > 0) {
 				questionByIdList.clear();
 				questionByIdList.add(tempRemoteQuestionByIdList.get(0));
+				cache.rememberQuestions(tempRemoteQuestionByIdList);
 			}
 			if (addCacheList.size() > 0) {
 				cache.pushQuestion(addCacheList.get(0));

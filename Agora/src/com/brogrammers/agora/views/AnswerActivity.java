@@ -95,28 +95,14 @@ public class AnswerActivity extends Activity implements Observer {
 		case R.id.action_addanswer:
 			openAddAnswerView();
 			return true;
+        case R.id.refreshA:
+        	onResume();
+        	return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-	/* This goes in the AnswerAdapter */
-	// //open comment view
-	// View.OnClickListener opencommentview = new View.OnClickListener() {
-	// @Override
-	// public void onClick(View v) {
-	// // TODO Auto-generated method stub
-	// Intent intent = new Intent(Agora.getContext(), CommentActivity.class);
-	//
-	// startActivity(intent);
-	// }
-	// };
-	//
-	// remove these later, made for button testing. actual function is
-	// implemented in controller.
-	/*
-	 * public void upvote(){ Toast.makeText(this, "upvote",
-	 * Toast.LENGTH_SHORT).show(); }
-	 */
+
 
 	/**
 	 * Update when new answer is added.
@@ -128,9 +114,7 @@ public class AnswerActivity extends Activity implements Observer {
 					"AnswerActivity update() called, but qList is empty", 0);
 		} else {
 			aadapter.setQuestion(qList.get(0));
-			// aadapter.notifyDataSetChanged();
-			// Toast.makeText(this, "AnswerActivity got update notification",
-			// 0).show();
+			aadapter.notifyDataSetChanged();
 		}
 
 	}
