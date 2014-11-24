@@ -25,10 +25,15 @@ import android.widget.Toast;
  */
 public class ImageResizer {
 	public static final int size = 64000; // 64KB
-
+	
 	public static byte[] resize(Uri imageUri) {
+		return resize(imageUri.getPath());
+	}
+	
+	public static byte[] resize(String path) {
 		Bitmap fullImage = null;	
-		File imageFile = new File(imageUri.getPath());
+		File imageFile = new File(path);
+
 		try {
 			fullImage = BitmapFactory.decodeStream(new FileInputStream(imageFile));
 		} catch (FileNotFoundException e) {
