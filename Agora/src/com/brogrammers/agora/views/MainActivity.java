@@ -65,7 +65,7 @@ public class MainActivity extends Activity implements Observer {
 		setContentView(R.layout.activity_main);
 		
 
-		qController = QuestionController.getController();
+		//qController = QuestionController.getController();
 	}
 
 	/**
@@ -74,23 +74,23 @@ public class MainActivity extends Activity implements Observer {
 	 */
 	protected void onResume() {
 		super.onResume();
-		refresh();
-		// Sometimes when returning from authoring a new Question, the remote
-		// server hasn't yet indexed it, so try again in 2 seconds just in case
-		// we get something new.
-		(new Handler()).postDelayed(new Runnable() {
-			public void run() {
-				refresh();
-			}
-		}, 2000);
+//		refresh();
+//		// Sometimes when returning from authoring a new Question, the remote
+//		// server hasn't yet indexed it, so try again in 2 seconds just in case
+//		// we get something new.
+//		(new Handler()).postDelayed(new Runnable() {
+//			public void run() {
+//				refresh();
+//			}
+//		}, 2000);
 	}
 
 	protected void refresh() {
-		qController.setObserver(this);
-		List<Question> qList = qController.getAllQuestions();
-		ListView lv = (ListView) findViewById(R.id.listView1);
-		qAdapter = new QuestionAdapter(qList, this);
-		lv.setAdapter(qAdapter);
+//		qController.setObserver(this);
+//		List<Question> qList = qController.getAllQuestions();
+//		ListView lv = (ListView) findViewById(R.id.listView1);
+//		qAdapter = new QuestionAdapter(qList, this);
+//		lv.setAdapter(qAdapter);
 	}
 
 	@Override
@@ -211,7 +211,7 @@ public class MainActivity extends Activity implements Observer {
 
 	@Override
 	public void update() {
-		qAdapter.notifyDataSetChanged();
+		//qAdapter.notifyDataSetChanged();
 		// Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
 	}
 

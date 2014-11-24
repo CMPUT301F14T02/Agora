@@ -12,6 +12,7 @@ import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.model.Question;
+import com.google.android.gms.location.LocationClient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -37,7 +38,6 @@ public class AnswerActivity extends Activity implements Observer {
 	private List<Question> qList;
 	private AnswerAdapter aadapter;
 	private Long qid;
-
 	ListView lv;
 
 	/**
