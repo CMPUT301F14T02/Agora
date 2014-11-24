@@ -16,12 +16,16 @@ import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.helper.ImageGetter;
 import com.brogrammers.agora.helper.ImageResizer;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.location.LocationClient;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,10 +50,13 @@ import android.widget.Toast;
  * @author Group02
  * 
  */
-public class AuthorQuestionActivity extends Activity {
+public class AuthorQuestionActivity extends Activity implements GooglePlayServicesClient.ConnectionCallbacks,
+GooglePlayServicesClient.OnConnectionFailedListener {
 
 	protected Uri imageUri = null;
 	protected byte[] image = null;
+	private LocationClient mLocationClient;
+	private Location mCurrentLocation;
 
 	/**
 	 * Retrieves button layouts and activity author question layout.
@@ -58,6 +65,7 @@ public class AuthorQuestionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_author_question);
+		mLocationClient = new LocationClient(this, this, this);
 
 		Button addQuestion = (Button) findViewById(R.id.authorQuestionAddQuestionButton);
 		Button addPicture = (Button) findViewById(R.id.authorQuestionAddPictureButton);
@@ -73,6 +81,20 @@ public class AuthorQuestionActivity extends Activity {
 		getMenuInflater().inflate(R.menu.author_question, menu);
 		return true;
 	}
+	
+	   @Override
+	    protected void onStart() {
+	        super.onStart();
+	        // Connect the client.
+	        mLocationClient.connect();
+	    }
+	   
+	    @Override
+	    protected void onStop() {
+	        // Disconnecting the client invalidates it.
+	        mLocationClient.disconnect();
+	        super.onStop();
+	    }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
@@ -81,9 +103,16 @@ public class AuthorQuestionActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			toastLocationTest();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void toastLocationTest() {
+		Toast.makeText(Agora.getContext(), "Location Test!", Toast.LENGTH_SHORT).show();
+		mLocationClient.getLastLocation();
+
 	}
 
 	/**
@@ -148,6 +177,24 @@ public class AuthorQuestionActivity extends Activity {
 	     imageUri = Uri.parse(savedInstanceState.getString("uri"));
 	     Log.e("ONRESTOREINSTANCESTATE", "AQA onRestoreInstanceState()");
 	 }
+
+	@Override
+	public void onConnectionFailed(ConnectionResult arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onConnected(Bundle arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
