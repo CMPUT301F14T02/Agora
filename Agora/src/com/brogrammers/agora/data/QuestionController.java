@@ -122,8 +122,8 @@ public class QuestionController {
 	 * @return the ID of the created question
 	 */
 	public Long addQuestion(String title, String body, byte[] image) {
-		Question q = new Question(title, body, image, user);
-//		q.setImage(null); // Images to be implemented in Part 4
+		Log.e("CONTROLLER", "addQuestion username="+user.getUsername());
+		Question q = new Question(title, body, image, user.getUsername());
 		cache.pushQuestion(q);
 		user.addAuthoredQuestionID(q.getID());
 		eSearch.pushQuestion(q);
@@ -148,7 +148,7 @@ public class QuestionController {
 	 */
 	public Long addAnswer(String body, byte[] image, Long qID)
 			throws UnsupportedEncodingException {
-		Answer a = new Answer(body, image, user);
+		Answer a = new Answer(body, image, user.getUsername());
 		// a.setImage(resizer.resizeTo64KB(image)); // TODO: implement
 		a.setImage(null);
 

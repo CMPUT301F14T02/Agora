@@ -22,6 +22,7 @@ import com.google.android.gms.location.LocationClient;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -68,10 +69,12 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 		mLocationClient = new LocationClient(this, this, this);
 
 		Button addQuestion = (Button) findViewById(R.id.authorQuestionAddQuestionButton);
-		Button addPicture = (Button) findViewById(R.id.authorQuestionAddPictureButton);
+		Button addPictureCamera = (Button) findViewById(R.id.authorQuestionAddPictureCamera);
+		Button addPictureGallery = (Button) findViewById(R.id.authorQuestionAddPictureGallery);
 
 		addQuestion.setOnClickListener(questionHandler);
-		addPicture.setOnClickListener(pictureHandler);
+		addPictureCamera.setOnClickListener(cameraHandler);
+		addPictureGallery.setOnClickListener(galleryHandler);
 
 	}
 
@@ -139,11 +142,19 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 		}
 	};
 	
-	View.OnClickListener pictureHandler = new View.OnClickListener() {
+	View.OnClickListener cameraHandler = new View.OnClickListener() {
 		public void onClick(View v) {
 			ImageGetter imageGetter = new ImageGetter(AuthorQuestionActivity.this);
-			imageUri = imageGetter.getUri();
-			imageGetter.getImage(imageUri);
+			imageUri = imageGetter.getCameraUri();
+			imageGetter.getCameraImage(imageUri);
+		}
+	};
+	
+	View.OnClickListener galleryHandler = new View.OnClickListener() {
+		public void onClick(View v) {
+			ImageGetter imageGetter = new ImageGetter(AuthorQuestionActivity.this);
+//			imageUri = imageGetter.getCameraUri();
+			imageGetter.getGalleryImage();
 		}
 	};
 
@@ -159,6 +170,22 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 					BitmapFactory.decodeStream(new ByteArrayInputStream(image)), 480, 360);
 			iv.setImageBitmap(ThumbImage);
 			
+		} else if (requestCode == ImageGetter.GALLERY_ACTIVITY_REQUEST_CODE
+				&& resultCode == RESULT_OK) {
+			Uri galleryImage = data.getData();
+			String[] filePathColumn = { MediaStore.Images.Media.DATA };
+			Cursor cursor = getContentResolver().query(galleryImage, filePathColumn, null, null, null);
+			cursor.moveToFirst();
+			String picturePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
+			
+			image = ImageResizer.resize(picturePath);
+			
+			ImageView iv = (ImageView) findViewById(R.id.AuthorQuestionImage);
+
+			Bitmap ThumbImage = ThumbnailUtils.extractThumbnail(
+					BitmapFactory.decodeStream(new ByteArrayInputStream(image)), 480, 360);
+			iv.setImageBitmap(ThumbImage);
+
 		} else if (resultCode != RESULT_CANCELED) {
 			Toast.makeText(this, "Error when adding image.", 0).show();
 		}
@@ -167,7 +194,9 @@ GooglePlayServicesClient.OnConnectionFailedListener {
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
 	   super.onSaveInstanceState(outState);
-	   outState.putString("uri", imageUri.getPath());
+	   if (imageUri != null) {
+		   outState.putString("uri", imageUri.getPath());
+	   }
 	   Log.e("ONSAVEDINSTANCESTATE", "AQA ONSAVE");
 	}
 	

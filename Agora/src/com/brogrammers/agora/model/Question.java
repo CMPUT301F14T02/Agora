@@ -24,7 +24,7 @@ public class Question implements Serializable, Comparable<Question> {
 	private String body;
 	private int rating;
 	private byte[] image;
-	private Author author;
+	private String author;
 	private Long date;
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
@@ -38,14 +38,14 @@ public class Question implements Serializable, Comparable<Question> {
 	 * @param image Image to be set in the body of the image. Not yet implemented. Null.
 	 * @param author Username of the author will be set as author of the question.
 	 */
-	public Question(String title, String body, byte[] image, Author author) {
+	public Question(String title, String body, byte[] image, String user) {
 		this.title = title;
 		this.body = body;
-		this.author = author;
+		this.author = user;
 		this.image = image;
 		rating = 0;
 		date = System.currentTimeMillis();
-		uniqueID = md5.hash(date.toString()+author.getUsername()+body+title);
+		uniqueID = md5.hash(date.toString()+author+body+title);
 		comments = new ArrayList<Comment>();
 		answers = new ArrayList<Answer>();
 		hasImage = ((image != null) ? (image.length > 0) : false);
@@ -132,7 +132,7 @@ public class Question implements Serializable, Comparable<Question> {
 		return image;
 	}
 
-	public Author getAuthor() {
+	public String getAuthor() {
 		return author;
 	}
 

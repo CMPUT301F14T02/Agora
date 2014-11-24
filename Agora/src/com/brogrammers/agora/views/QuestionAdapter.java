@@ -74,7 +74,7 @@ public class QuestionAdapter extends BaseAdapter {
 //		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
 		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle().trim());
 
-		((TextView)convertView.findViewById(R.id.qAuthor)).setText("Submitted by: " +question.getAuthor().getUsername()+", "+ datetostring(question.getDate()));
+		((TextView)convertView.findViewById(R.id.qAuthor)).setText("" +question.getAuthor()+", "+ datetostring(question.getDate()));
 
 		LinearLayout HLayout = (LinearLayout)convertView.findViewById(R.id.RatingHLayout);
 		((TextView)HLayout.findViewById(R.id.qObjectScore)).setText(Integer.toString(question.getRating()));
@@ -83,7 +83,7 @@ public class QuestionAdapter extends BaseAdapter {
 		((TextView)HLayoutAcount.findViewById(R.id.qACountText)).setText(Integer.toString(question.countAnswers()));
 
 
-		List<Long> favoritedQuestions = DeviceUser.getUser(activity).getFavoritedQuestionIDs();
+		List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
 		
 		if (favoritedQuestions.contains(question.getID())) {
 			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_action_rating_favoritepink);	

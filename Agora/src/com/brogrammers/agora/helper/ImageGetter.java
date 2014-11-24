@@ -13,6 +13,7 @@ import android.util.Log;
 
 public class ImageGetter {
 	public static final int CAMERA_ACTIVITY_REQUEST_CODE = 24672; // 24672 = AGORA
+	public static final int GALLERY_ACTIVITY_REQUEST_CODE = 24673;
 	protected Activity activity;
 
 	public ImageGetter(Activity activity) {
@@ -20,8 +21,14 @@ public class ImageGetter {
 		// cannot be called from a non-activity class.
 		this.activity = activity;
 	}
+	
+	public void getGalleryImage() {
+		Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+		activity.startActivityForResult(i, GALLERY_ACTIVITY_REQUEST_CODE);
+		
+	}
 
-	public Uri getUri() {
+	public Uri getCameraUri() {
 		// TODO: cite Lab5-3
 		String path = null;
 		try {
@@ -42,7 +49,7 @@ public class ImageGetter {
 		return imageUri;
 	}
 	
-	public void getImage(Uri imageUri) {
+	public void getCameraImage(Uri imageUri) {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
 		activity.startActivityForResult(intent, CAMERA_ACTIVITY_REQUEST_CODE);

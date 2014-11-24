@@ -118,7 +118,7 @@ public class AnswerAdapter extends BaseAdapter {
 		
 		TextView aScore = (TextView)convertView.findViewById(R.id.aScore);
 		aScore.setText(Integer.toString(answer.getRating()));
-		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText("Submitted by: " +answer.getAuthor().getUsername()+", "+ datetostring(answer.getDate()));
+		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText("Submitted by: " +answer.getAuthor()+", "+ datetostring(answer.getDate()));
 		
 		
 		//comment.setOnClickListener(answercomments);
