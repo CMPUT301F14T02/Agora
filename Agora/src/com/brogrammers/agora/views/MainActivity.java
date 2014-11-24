@@ -18,6 +18,7 @@ import com.brogrammers.agora.UserPrefActivity;
 import com.brogrammers.agora.data.CacheDataManager;
 import com.brogrammers.agora.data.DeviceUser;
 import com.brogrammers.agora.data.QuestionController;
+import com.brogrammers.agora.helper.QuestionLoaderSaver;
 import com.brogrammers.agora.model.Question;
 
 import android.app.ActionBar;
@@ -55,7 +56,7 @@ public class MainActivity extends Activity implements Observer {
 			.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	private List<Question> results = new ArrayList<Question>();
 
-	private DeviceUser user = DeviceUser.getUser();
+	private DeviceUser user;
 	private QuestionController qController;
 	private QuestionAdapter qAdapter;
 
@@ -63,9 +64,13 @@ public class MainActivity extends Activity implements Observer {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
 
+		user = DeviceUser.getUser();
 		qController = QuestionController.getController();
+		if (user.getUsername() == null) {
+			(new UserNameSelector(this)).show();	
+			Log.e("MAIN ONCREATE","username set to "+user.getUsername());
+		}
 	}
 
 	/**

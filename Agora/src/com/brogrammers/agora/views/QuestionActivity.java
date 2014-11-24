@@ -122,7 +122,7 @@ public class QuestionActivity extends Activity implements Observer {
 		Button viewComment = (Button) findViewById(R.id.QuestionCommentsButton);
 		Button viewAnswer = (Button) findViewById(R.id.QuestionAnswersButton);
 
-		authorLine += q.getAuthor().getUsername() + ", "
+		authorLine += q.getAuthor() + ", "
 				+ datetostring(q.getDate());
 		authorDate.setText(authorLine);
 

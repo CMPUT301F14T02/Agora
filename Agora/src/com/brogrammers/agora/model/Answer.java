@@ -24,7 +24,7 @@ public class Answer implements Serializable {
 	private String body;
 	private int rating;
 	private byte[] image;
-	private Author author;
+	private String author;
 	private Long date;
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
@@ -37,13 +37,13 @@ public class Answer implements Serializable {
 	 * @param image Image will be set in body of the answer. To be implemented, null.
 	 * @param author username of the author posting the answer
 	 */
-	public Answer(String body, byte[] image, Author author) {
+	public Answer(String body, byte[] image, String author) {
 		this.body = body;
 		this.image = image;
 		this.author = author;
 		rating = 0;
 		date = System.currentTimeMillis();
-		uniqueID = md5.hash(date.toString() + author.getUsername() + body);
+		uniqueID = md5.hash(date.toString() + author + body);
 		comments = new ArrayList<Comment>();
 		hasImage = ((image != null) ? (image.length > 0) : false);
 	}
@@ -98,7 +98,7 @@ public class Answer implements Serializable {
 		return rating;
 	}
 
-	public Author getAuthor() {
+	public String getAuthor() {
 		return author;
 	}
 
