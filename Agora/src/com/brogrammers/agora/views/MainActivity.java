@@ -65,6 +65,9 @@ public class MainActivity extends Activity implements Observer {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+
+		qController = QuestionController.getController();
+
 		user = DeviceUser.getUser();
 		qController = QuestionController.getController();
 		if (user.getUsername() == null) {

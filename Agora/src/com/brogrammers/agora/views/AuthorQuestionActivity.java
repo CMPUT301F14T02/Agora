@@ -16,6 +16,11 @@ import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.helper.ImageGetter;
 import com.brogrammers.agora.helper.ImageResizer;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesClient;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationRequest;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -23,9 +28,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.location.Location;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.UserManager;
 import android.provider.MediaStore;
 import android.util.Base64;
@@ -47,10 +54,14 @@ import android.widget.Toast;
  * @author Group02
  * 
  */
-public class AuthorQuestionActivity extends Activity {
+public class AuthorQuestionActivity extends Activity implements
+		GooglePlayServicesClient.ConnectionCallbacks,
+		GooglePlayServicesClient.OnConnectionFailedListener {
 
 	protected Uri imageUri = null;
 	protected byte[] image = null;
+	private LocationClient mLocationClient;
+	private Location mCurrentLocation;
 
 	/**
 	 * Retrieves button layouts and activity author question layout.
@@ -59,6 +70,7 @@ public class AuthorQuestionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_author_question);
+		mLocationClient = new LocationClient(this, this, this);
 
 		Button addQuestion = (Button) findViewById(R.id.authorQuestionAddQuestionButton);
 		Button addPictureCamera = (Button) findViewById(R.id.authorQuestionAddPictureCamera);
@@ -78,15 +90,68 @@ public class AuthorQuestionActivity extends Activity {
 	}
 
 	@Override
+	protected void onStart() {
+		super.onStart();
+		// Connect the client.
+		mLocationClient.connect();
+	}
+
+	@Override
+	protected void onStop() {
+		// Disconnecting the client invalidates it.
+		mLocationClient.disconnect();
+		super.onStop();
+	}
+	protected void onResume() {
+		super.onResume();
+		mLocationClient.connect();
+	}
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+	        int isGooglePlayServiceAvilable = GooglePlayServicesUtil
+	                .isGooglePlayServicesAvailable(Agora.getContext());
+	        if (isGooglePlayServiceAvilable == ConnectionResult.SUCCESS){
+				Toast.makeText(Agora.getContext(), "Google play services available",
+						Toast.LENGTH_SHORT).show();
+	        }
+	        else{
+				Toast.makeText(Agora.getContext(), "Nien, Google play services ist not available. Error Number: "+ isGooglePlayServiceAvilable,
+						Toast.LENGTH_SHORT).show();
+	            GooglePlayServicesUtil.getErrorDialog(isGooglePlayServiceAvilable, this, 1122).show();
+				
+	        }
+			
+			toastLocationTest();
+
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	private void toastLocationTest() {
+		mLocationClient.connect();
+		if (mLocationClient.isConnected()) {
+			mCurrentLocation = mLocationClient.getLastLocation();
+			if (mCurrentLocation != null) {
+				Toast.makeText(Agora.getContext(), "Working...",
+						Toast.LENGTH_SHORT).show();
+				Toast.makeText(Agora.getContext(), mCurrentLocation.toString(),
+						Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(Agora.getContext(), "Location not available...",
+						Toast.LENGTH_SHORT).show();
+			}
+		} else {
+			Toast.makeText(Agora.getContext(),
+					"No Bueno, Location Client not connecting",
+					Toast.LENGTH_SHORT).show();
+
+		}
 	}
 
 	/**
@@ -102,28 +167,32 @@ public class AuthorQuestionActivity extends Activity {
 			String title = titleText.getText().toString();
 			String body = bodyText.getText().toString();
 			if (title.isEmpty() || body.isEmpty()) {
-				Toast.makeText(Agora.getContext(), "Please include a title and a description", 1).show();
+				Toast.makeText(Agora.getContext(),
+						"Please include a title and a description", 1).show();
 				return;
 			} else {
-				Toast.makeText(Agora.getContext(), "Adding Question!", Toast.LENGTH_SHORT).show();
+				Toast.makeText(Agora.getContext(), "Adding Question!",
+						Toast.LENGTH_SHORT).show();
 			}
 
 			QuestionController.getController().addQuestion(title, body, image);
 			finish(); // ends activity
 		}
 	};
-	
+
 	View.OnClickListener cameraHandler = new View.OnClickListener() {
 		public void onClick(View v) {
-			ImageGetter imageGetter = new ImageGetter(AuthorQuestionActivity.this);
+			ImageGetter imageGetter = new ImageGetter(
+					AuthorQuestionActivity.this);
 			imageUri = imageGetter.getCameraUri();
 			imageGetter.getCameraImage(imageUri);
 		}
 	};
-	
+
 	View.OnClickListener galleryHandler = new View.OnClickListener() {
 		public void onClick(View v) {
-			ImageGetter imageGetter = new ImageGetter(AuthorQuestionActivity.this);
+			ImageGetter imageGetter = new ImageGetter(
+					AuthorQuestionActivity.this);
 			imageGetter.getGalleryImage();
 		}
 	};
@@ -136,24 +205,30 @@ public class AuthorQuestionActivity extends Activity {
 			(new File(imageUri.getPath())).delete(); // delete the original file
 			ImageView iv = (ImageView) findViewById(R.id.AuthorQuestionImage);
 
-			Bitmap ThumbImage = ThumbnailUtils.extractThumbnail(
-					BitmapFactory.decodeStream(new ByteArrayInputStream(image)), 480, 360);
+			Bitmap ThumbImage = ThumbnailUtils
+					.extractThumbnail(BitmapFactory
+							.decodeStream(new ByteArrayInputStream(image)),
+							480, 360);
 			iv.setImageBitmap(ThumbImage);
-			
+
 		} else if (requestCode == ImageGetter.GALLERY_ACTIVITY_REQUEST_CODE
 				&& resultCode == RESULT_OK) {
 			Uri galleryImage = data.getData();
 			String[] filePathColumn = { MediaStore.Images.Media.DATA };
-			Cursor cursor = getContentResolver().query(galleryImage, filePathColumn, null, null, null);
+			Cursor cursor = getContentResolver().query(galleryImage,
+					filePathColumn, null, null, null);
 			cursor.moveToFirst();
-			String picturePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
-			
+			String picturePath = cursor.getString(cursor
+					.getColumnIndex(filePathColumn[0]));
+
 			image = ImageResizer.resize(picturePath);
-			
+
 			ImageView iv = (ImageView) findViewById(R.id.AuthorQuestionImage);
 
-			Bitmap ThumbImage = ThumbnailUtils.extractThumbnail(
-					BitmapFactory.decodeStream(new ByteArrayInputStream(image)), 480, 360);
+			Bitmap ThumbImage = ThumbnailUtils
+					.extractThumbnail(BitmapFactory
+							.decodeStream(new ByteArrayInputStream(image)),
+							480, 360);
 			iv.setImageBitmap(ThumbImage);
 
 		} else if (resultCode != RESULT_CANCELED) {
@@ -163,29 +238,39 @@ public class AuthorQuestionActivity extends Activity {
 
 	@Override
 	public void onSaveInstanceState(Bundle outState) {
-	   super.onSaveInstanceState(outState);
-	   if (imageUri != null) {
-		   outState.putString("uri", imageUri.getPath());
-	   }
-	   Log.e("ONSAVEDINSTANCESTATE", "AQA ONSAVE");
+		super.onSaveInstanceState(outState);
+		if (imageUri != null) {
+			outState.putString("uri", imageUri.getPath());
+		}
+		Log.e("ONSAVEDINSTANCESTATE", "AQA ONSAVE");
 	}
-	
+
 	@Override
-	 protected void onRestoreInstanceState(Bundle savedInstanceState) {
-	     super.onRestoreInstanceState(savedInstanceState);
-	     imageUri = Uri.parse(savedInstanceState.getString("uri"));
-	     Log.e("ONRESTOREINSTANCESTATE", "AQA onRestoreInstanceState()");
-	 }
-	
-	
-	
+	protected void onRestoreInstanceState(Bundle savedInstanceState) {
+		super.onRestoreInstanceState(savedInstanceState);
+		imageUri = Uri.parse(savedInstanceState.getString("uri"));
+		Log.e("ONRESTOREINSTANCESTATE", "AQA onRestoreInstanceState()");
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onConnected(Bundle arg0) {
+		mLocationClient.connect();
+		if (!mLocationClient.isConnecting()) {
+			mLocationClient.getLastLocation();
+			toastLocationTest();
+		}
+	}
+
+	@Override
+	public void onDisconnected() {
+		// TODO Auto-generated method stub
+
+	}
+
 }
-
-
-
-
-
-
-
-
-
