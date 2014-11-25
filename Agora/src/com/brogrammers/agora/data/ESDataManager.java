@@ -158,7 +158,7 @@ public class ESDataManager { // implements DataManager
 		String requestBody = "{" +
 				    "\"partial_fields\" : {" +
 				        "\"partial1\" : {" +
-				            "\"exclude\" : \"image\"" +
+				            "\"exclude\" : \"*image\"" +
 				        "}" +
 				    "}," +
 

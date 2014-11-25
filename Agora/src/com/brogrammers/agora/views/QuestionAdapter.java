@@ -71,7 +71,6 @@ public class QuestionAdapter extends BaseAdapter {
 		}
 	
 		Question question = (Question)getItem(position);
-//		((TextView)convertView.findViewById(R.id.qobjectbody)).setText(question.getBody());
 		((TextView)convertView.findViewById(R.id.qobjecttitle)).setText(question.getTitle().trim());
 
 		((TextView)convertView.findViewById(R.id.qAuthor)).setText("" +question.getAuthor()+", "+ datetostring(question.getDate()));

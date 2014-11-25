@@ -81,4 +81,12 @@
         android:text="Comments"
         android:textSize="14sp" />
 
+    <ImageView
+        android:id="@+id/AnswerImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/AnswerScoreVLayout"
+        android:visibility="gone" />
+
 </RelativeLayout>

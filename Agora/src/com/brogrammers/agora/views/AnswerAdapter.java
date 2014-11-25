@@ -1,5 +1,6 @@
 package com.brogrammers.agora.views;
 
+import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,9 @@ import java.util.Locale;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.ThumbnailUtils;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,35 +124,26 @@ public class AnswerAdapter extends BaseAdapter {
 		aScore.setText(Integer.toString(answer.getRating()));
 		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText("Submitted by: " +answer.getAuthor()+", "+ datetostring(answer.getDate()));
 		
-		
-		//comment.setOnClickListener(answercomments);
 		comment.setOnClickListener(new CommentOnClickListener(position));
-		
-		//upvote.setOnClickListener(answerupvote);
 		upvote.setOnClickListener(new UpVoteOnClickListener(position, aScore));
 		
+		if(answer.hasImage() && answer.getImage() != null) {
+			ImageView thumbView = (ImageView) convertView.findViewById(R.id.AnswerImage);
+			thumbView.setVisibility(View.VISIBLE);
+			final Bitmap imageBitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(answer.getImage()));
+			Bitmap thumbImage = ThumbnailUtils.extractThumbnail(imageBitmap, 150, 100);
+			thumbView.setImageBitmap(thumbImage);
+			
+			thumbView.setOnClickListener(new View.OnClickListener() {
+				public void onClick(View v) {
+					(new SimpleImagePopup(imageBitmap, activity)).show();
+				}
+			});
+		}
 		
 		return convertView;
 	}
 
-	
-//	View.OnClickListener answercomments  = new View.OnClickListener() {
-//		@Override
-//		public void onClick(View v) {
-//			// TODO Auto-generated method stub
-//			Intent intent = new Intent(Agora.getContext(), CommentActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//			Agora.getContext().startActivity(intent);
-//		}
-//	};
-//	
-//	View.OnClickListener answerupvote =  new View.OnClickListener() {
-//		@Override
-//		public void onClick(View v) {
-//			// TODO Auto-generated method stub
-//			Toast.makeText(Agora.getContext(), "call upvote" , Toast.LENGTH_SHORT).show();
-//		}
-//	};
-	
 	public void setQuestion(Question q) {
 		this.question = q;
 		notifyDataSetChanged();
