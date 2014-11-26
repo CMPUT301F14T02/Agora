@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="6dp"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+    android:paddingTop="6dp"
     tools:context="com.brogrammers.agora.views.AuthorAnswerActivity" >
 
     <TextView
@@ -13,9 +13,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="@string/answer"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:text="Answer:"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#000000" />
+
+    <EditText
+        android:id="@+id/authorAnswerBodyEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/AuthorAnswerImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/authorAnswerBodyTextView"
+        android:ems="10"
+        android:gravity="top|left"
+        android:hint="Enter Answer Here."
+        android:inputType="textCapSentences|textMultiLine" />
 
     <Button
         android:id="@+id/authorAnswerAddAnswerButton"
@@ -23,32 +36,32 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignRight="@+id/authorAnswerBodyEditText"
         android:text="@string/submitAnswerButton" />
 
     <Button
-        android:id="@+id/authorAnswerAddPictureButton"
+        android:id="@+id/authorAnswerAddPictureCamera"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/authorAnswerAddAnswerButton"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:text="@string/addPictureButton" />
+        android:text="Take Picture With Camera" />
 
-    <EditText
-        android:id="@+id/authorAnswerBodyEditText"
+    <Button
+        android:id="@+id/authorAnswerAddPictureGallery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/authorAnswerAddPictureButton"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/authorAnswerBodyTextView"
-        android:ems="10"
-        android:gravity="top|left"
-        android:hint="Enter Answer Here."
-        android:inputType="textMultiLine" >
+        android:layout_above="@+id/authorAnswerAddPictureCamera"
+        android:layout_alignLeft="@+id/authorAnswerBodyEditText"
+        android:layout_alignRight="@+id/authorAnswerBodyEditText"
+        android:text="Select Existing Picture" />
 
-        <requestFocus />
-    </EditText>
+    <ImageView
+        android:id="@+id/AuthorAnswerImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/authorAnswerAddPictureGallery"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

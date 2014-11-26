@@ -193,12 +193,11 @@ public class AuthorQuestionActivity extends Activity implements
 		public void onClick(View v) {
 			ImageGetter imageGetter = new ImageGetter(
 					AuthorQuestionActivity.this);
-			// imageUri = imageGetter.getCameraUri();
 			imageGetter.getGalleryImage();
 		}
 	};
 
-	// ImageGetter camera activity callback
+	// ImageGetter activity callback
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == ImageGetter.CAMERA_ACTIVITY_REQUEST_CODE
 				&& resultCode == RESULT_OK) {

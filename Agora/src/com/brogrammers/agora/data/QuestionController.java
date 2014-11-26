@@ -32,7 +32,6 @@ public class QuestionController {
 	private static DeviceUser user;
 	private static CacheDataManager cache;
 	private static ESDataManager eSearch;
-	private static ImageResizer resizer;
 
 	static private QuestionController self = null;
 
@@ -149,14 +148,8 @@ public class QuestionController {
 	public Long addAnswer(String body, byte[] image, Long qID)
 			throws UnsupportedEncodingException {
 		Answer a = new Answer(body, image, user.getUsername());
-		// a.setImage(resizer.resizeTo64KB(image)); // TODO: implement
-		a.setImage(null);
-
-		// the cache operation MUST be called before the eSearch operation
-		// Question q = cache.getQuestionById(qID);
-		// q.addAnswer(a);
+		
 		cache.pushAnswer(a, qID);
-
 		eSearch.pushAnswer(a, qID, cache);
 
 		return a.getID();

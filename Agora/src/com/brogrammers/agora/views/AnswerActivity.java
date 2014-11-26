@@ -96,13 +96,15 @@ public class AnswerActivity extends Activity implements Observer {
 			openAddAnswerView();
 			return true;
         case R.id.refreshA:
-        	onResume();
+        	refresh();
         	return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
-
+	public void refresh() {
+		qList = qController.getQuestionById(qid);
+	}
 
 	/**
 	 * Update when new answer is added.
