@@ -39,27 +39,45 @@ public class FilterSorterHelper {
 	 * @param questions list
 	 * @return sorted questions list
 	 */
-	public List<Question> sortByUpvote(List<Question> questions) {
-		Collections.sort(questions, new Comparator<Question>() {
-		    public int compare(Question m1, Question m2) {
-		        return ((Integer) m1.getRating()).compareTo(m2.getRating());
-		    }
-		});
+	public List<Question> sortByUpvote(List<Question> questions, boolean assendOrDesend) {
+		if(assendOrDesend){
+			Collections.sort(questions, new Comparator<Question>() {
+			    public int compare(Question m1, Question m2) {
+			        return ((Integer) m1.getRating()).compareTo(m2.getRating());
+			    }
+			});
+		} else {
+			Collections.sort(questions, new Comparator<Question>() {
+			    public int compare(Question m1, Question m2) {
+			        return ((Integer) m2.getRating()).compareTo(m1.getRating());
+			    }
+			});	
+		}
+		
 		return questions;
 	}
 
 	/**
 	 * Sorts a questions list by date
-	 * @param questions list
+	 * @param qList list
 	 * @return sorted questions list
 	 */
-	public ArrayList<Question> sortByDate(ArrayList<Question> questions) {
-		Collections.sort(questions, new Comparator<Question>() {
-		    public int compare(Question m1, Question m2) {
-		        return m1.getDate().compareTo(m2.getDate());
-		    }
-		});
-		return questions;
+	public List<Question> sortByDate(List<Question> qList, boolean assendOrDesend) {
+		if (assendOrDesend) {
+			Collections.sort(qList, new Comparator<Question>() {
+			    public int compare(Question m1, Question m2) {
+			        return m1.getDate().compareTo(m2.getDate());
+			    }
+			});
+		} else {
+			Collections.sort(qList, new Comparator<Question>() {
+			    public int compare(Question m1, Question m2) {
+			        return m2.getDate().compareTo(m1.getDate());
+			    }
+			});
+		}
+
+		return qList;
 	}
 
 }

@@ -27,7 +27,7 @@
         android:longClickable="false" />
 
     <TextView
-        android:id="@+id/sortbyTextDialoug"
+        android:id="@+id/sortbyText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:clickable="false"
@@ -49,7 +49,7 @@
 	    android:layout_height="wrap_content" >
         
         <RadioButton
-            android:id="@id/sortbyTextDialoug"
+            android:id="@+id/sortbyDateRadioButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="8dp"

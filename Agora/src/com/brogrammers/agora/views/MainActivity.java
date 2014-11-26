@@ -18,6 +18,7 @@ import com.brogrammers.agora.UserPrefActivity;
 import com.brogrammers.agora.data.CacheDataManager;
 import com.brogrammers.agora.data.DeviceUser;
 import com.brogrammers.agora.data.QuestionController;
+import com.brogrammers.agora.helper.FilterSorterHelper;
 import com.brogrammers.agora.helper.QuestionLoaderSaver;
 import com.brogrammers.agora.model.Question;
 
@@ -37,9 +38,11 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.PopupMenu;
+import android.widget.RadioButton;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -96,6 +99,26 @@ public class MainActivity extends Activity implements Observer {
 	protected void refresh() {
 		qController.setObserver(this);
 		List<Question> qList = qController.getAllQuestions();
+		ListView lv = (ListView) findViewById(R.id.listView1);
+		qAdapter = new QuestionAdapter(qList, this);
+		lv.setAdapter(qAdapter);
+	}
+	
+	protected void sortByUpvote(boolean assendOrDesend) {
+		//qController.setObserver(this);
+		List<Question> qList = qController.getAllQuestions();
+		FilterSorterHelper fsHelper = new FilterSorterHelper();
+		qList = fsHelper.sortByUpvote(qList, assendOrDesend);
+		ListView lv = (ListView) findViewById(R.id.listView1);
+		qAdapter = new QuestionAdapter(qList, this);
+		lv.setAdapter(qAdapter);
+	}
+	
+	protected void sortByDate(boolean assendOrDesend) {
+		//qController.setObserver(this);
+		List<Question> qList = qController.getAllQuestions();
+		FilterSorterHelper fsHelper = new FilterSorterHelper();
+		qList = fsHelper.sortByDate(qList, assendOrDesend);
 		ListView lv = (ListView) findViewById(R.id.listView1);
 		qAdapter = new QuestionAdapter(qList, this);
 		lv.setAdapter(qAdapter);
@@ -192,11 +215,19 @@ public class MainActivity extends Activity implements Observer {
 	public void openSortMenu() {
 		// Create Dialog Menu for the Sorting Menu
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+				
 		// Get the layout inflater;
 		// Inflate and set the layout for the dialog
 		// Pass null as the parent view because its going in the dialog layout
+		final View dialog = inflater.inflate(R.layout.sortdialogue, null);
+		
+		final RadioButton rbUpvote = (RadioButton) dialog.findViewById(R.id.sortupvoteradioButton);
+		final RadioButton rbDate = (RadioButton) dialog.findViewById(R.id.sortbyDateRadioButton);
+		final RadioButton rbAssending = (RadioButton) dialog.findViewById(R.id.arrangebyAscOrderRadio);
+		final RadioButton rbDesending = (RadioButton) dialog.findViewById(R.id.descOrderRadioButton);
+		
 		builder.setTitle("Sorting Options");
-		builder.setView(inflater.inflate(R.layout.sortdialogue, null))
+		builder.setView(dialog)
 				// Add action buttons
 				.setPositiveButton(R.string.sort,
 						new DialogInterface.OnClickListener() {
@@ -204,6 +235,23 @@ public class MainActivity extends Activity implements Observer {
 							public void onClick(DialogInterface dialog, int id) {
 								// Do something (i.e. pull id from sorting
 								// option)
+								if(rbUpvote.isChecked()) {
+									Toast.makeText(Agora.getContext(), "Sorting by Upvote", Toast.LENGTH_SHORT).show();
+									
+									if(rbDesending.isChecked()) {
+										sortByUpvote(true);
+									} else {
+										sortByUpvote(false);
+									}
+									
+								} else if(rbDate.isChecked()) {
+									Toast.makeText(Agora.getContext(), "Sorting by Date", Toast.LENGTH_SHORT).show();
+									if(rbDesending.isChecked()) {
+										sortByDate(true);
+									} else {
+										sortByDate(false);
+									}
+								}
 							}
 						})
 				.setNegativeButton("Cancel",
@@ -219,7 +267,7 @@ public class MainActivity extends Activity implements Observer {
 
 	@Override
 	public void update() {
-		qAdapter.notifyDataSetChanged();
+		//qAdapter.notifyDataSetChanged();
 		// Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
 	}
 
