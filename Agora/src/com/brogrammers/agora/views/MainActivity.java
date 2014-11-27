@@ -103,26 +103,26 @@ public class MainActivity extends Activity implements Observer {
 		qAdapter = new QuestionAdapter(qList, this);
 		lv.setAdapter(qAdapter);
 	}
-	
-	protected void sortByUpvote(boolean assendOrDesend) {
-		//qController.setObserver(this);
-		List<Question> qList = qController.getAllQuestions();
-		FilterSorterHelper fsHelper = new FilterSorterHelper();
-		qList = fsHelper.sortByUpvote(qList, assendOrDesend);
-		ListView lv = (ListView) findViewById(R.id.listView1);
-		qAdapter = new QuestionAdapter(qList, this);
-		lv.setAdapter(qAdapter);
-	}
-	
-	protected void sortByDate(boolean assendOrDesend) {
-		//qController.setObserver(this);
-		List<Question> qList = qController.getAllQuestions();
-		FilterSorterHelper fsHelper = new FilterSorterHelper();
-		qList = fsHelper.sortByDate(qList, assendOrDesend);
-		ListView lv = (ListView) findViewById(R.id.listView1);
-		qAdapter = new QuestionAdapter(qList, this);
-		lv.setAdapter(qAdapter);
-	}
+//	
+//	protected void sortByUpvote(boolean assendOrDesend) {
+//		//qController.setObserver(this);
+//		List<Question> qList = qController.getAllQuestions();
+//		FilterSorterHelper fsHelper = new FilterSorterHelper();
+//		qList = fsHelper.sortByUpvote(qList, assendOrDesend);
+//		ListView lv = (ListView) findViewById(R.id.listView1);
+//		qAdapter = new QuestionAdapter(qList, this);
+//		lv.setAdapter(qAdapter);
+//	}
+//	
+//	protected void sortByDate(boolean assendOrDesend) {
+//		//qController.setObserver(this);
+//		List<Question> qList = qController.getAllQuestions();
+//		FilterSorterHelper fsHelper = new FilterSorterHelper();
+//		qList = fsHelper.sortByDate(qList, assendOrDesend);
+//		ListView lv = (ListView) findViewById(R.id.listView1);
+//		qAdapter = new QuestionAdapter(qList, this);
+//		lv.setAdapter(qAdapter);
+//	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -153,7 +153,7 @@ public class MainActivity extends Activity implements Observer {
 			openSearchBar(item);
 			return true;
 		case R.id.sortBQV:
-			openSortMenu();
+			openSortMenu(qAdapter);
 			return true;
 		case R.id.refreshMain:
 			onResume();
@@ -212,7 +212,7 @@ public class MainActivity extends Activity implements Observer {
 	 * Opens sort dialog where user can filter/sort mainActivity. By favourites,
 	 * score, and by picture. Currently does not work. Need to implement.
 	 */
-	public void openSortMenu() {
+	public void openSortMenu(final QuestionAdapter qAdapter) {
 		// Create Dialog Menu for the Sorting Menu
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 				
@@ -223,37 +223,27 @@ public class MainActivity extends Activity implements Observer {
 		
 		final RadioButton rbUpvote = (RadioButton) dialog.findViewById(R.id.sortupvoteradioButton);
 		final RadioButton rbDate = (RadioButton) dialog.findViewById(R.id.sortbyDateRadioButton);
-		final RadioButton rbAssending = (RadioButton) dialog.findViewById(R.id.arrangebyAscOrderRadio);
-		final RadioButton rbDesending = (RadioButton) dialog.findViewById(R.id.descOrderRadioButton);
+		final RadioButton rbAscending = (RadioButton) dialog.findViewById(R.id.arrangebyAscOrderRadio);
+		final RadioButton rbDescending = (RadioButton) dialog.findViewById(R.id.descOrderRadioButton);
 		
 		builder.setTitle("Sorting Options");
 		builder.setView(dialog)
 				// Add action buttons
 				.setPositiveButton(R.string.sort,
 						new DialogInterface.OnClickListener() {
-							@Override
 							public void onClick(DialogInterface dialog, int id) {
-								// Do something (i.e. pull id from sorting
-								// option)
-								if(rbUpvote.isChecked()) {
-									Toast.makeText(Agora.getContext(), "Sorting by Upvote", Toast.LENGTH_SHORT).show();
-									
-									if(rbDesending.isChecked()) {
-										sortByUpvote(true);
-									} else {
-										sortByUpvote(false);
-									}
-									
-								} else if(rbDate.isChecked()) {
+								FilterSorterHelper.byUpvote = rbUpvote.isChecked();
+								FilterSorterHelper.descending = rbDescending.isChecked();
+							
+								if(rbDate.isChecked()) {
 									Toast.makeText(Agora.getContext(), "Sorting by Date", Toast.LENGTH_SHORT).show();
-									if(rbDesending.isChecked()) {
-										sortByDate(true);
-									} else {
-										sortByDate(false);
-									}
+								} else {
+									Toast.makeText(Agora.getContext(), "Sorting by Upvote", Toast.LENGTH_SHORT).show();
 								}
+								
+								qAdapter.doSort();
 							}
-						})
+				})
 				.setNegativeButton("Cancel",
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
@@ -267,7 +257,8 @@ public class MainActivity extends Activity implements Observer {
 
 	@Override
 	public void update() {
-		//qAdapter.notifyDataSetChanged();
+		qAdapter.doSort();
+//		qAdapter.notifyDataSetChanged();
 		// Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
 	}
 

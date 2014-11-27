@@ -107,7 +107,6 @@ public class AnswerAdapter extends BaseAdapter {
 		Answer answer = (Answer)getItem(position);
 		Button comment = (Button) convertView.findViewById(R.id.aComment);
 		ImageView upvote = (ImageView) convertView.findViewById(R.id.aUpvote);
-//		LinearLayout upvote = (LinearLayout)convertView.findViewById(R.id.AnswerScoreHLayout);
 		
 		//set text on each TextView & Buttons\
 		comment.setText("Comments ("+Integer.toString(answer.getComments().size())+")");
@@ -127,8 +126,8 @@ public class AnswerAdapter extends BaseAdapter {
 		comment.setOnClickListener(new CommentOnClickListener(position));
 		upvote.setOnClickListener(new UpVoteOnClickListener(position, aScore));
 		
-		if(answer.hasImage() && answer.getImage() != null) {
-			ImageView thumbView = (ImageView) convertView.findViewById(R.id.AnswerImage);
+		ImageView thumbView = (ImageView) convertView.findViewById(R.id.AnswerImage);
+		if (answer.hasImage() && answer.getImage() != null) {
 			thumbView.setVisibility(View.VISIBLE);
 			final Bitmap imageBitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(answer.getImage()));
 			Bitmap thumbImage = ThumbnailUtils.extractThumbnail(imageBitmap, 150, 100);
@@ -139,6 +138,8 @@ public class AnswerAdapter extends BaseAdapter {
 					(new SimpleImagePopup(imageBitmap, activity)).show();
 				}
 			});
+		} else {
+			thumbView.setVisibility(View.GONE);
 		}
 		
 		return convertView;

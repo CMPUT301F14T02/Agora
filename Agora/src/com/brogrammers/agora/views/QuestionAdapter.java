@@ -10,6 +10,7 @@ import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.data.DeviceUser;
 import com.brogrammers.agora.data.QuestionController;
+import com.brogrammers.agora.helper.FilterSorterHelper;
 import com.brogrammers.agora.model.Question;
 
 import android.app.Activity;
@@ -43,6 +44,7 @@ public class QuestionAdapter extends BaseAdapter {
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.qList = qList;
 		this.activity = activity;
+		doSort();
 	}
 
 	@Override
@@ -118,18 +120,22 @@ public class QuestionAdapter extends BaseAdapter {
 	    return newDate;
 	}
 	
-	
 	private class QuestionOnClickListener implements OnClickListener {
 		private int position;
 		QuestionOnClickListener(int position) {
 			this.position = position;
 		}
 		public void onClick(View view) {
-			Long qid = getItemId(position);
+			Long qid = qList.get(position).getID();
 			Intent intent = new Intent(activity, QuestionActivity.class);
 			intent.putExtra("qid", qid);
 			activity.startActivity(intent);
 		}
+	}
+	
+	public void doSort() {
+		qList = (new FilterSorterHelper()).sort(qList);
+		notifyDataSetChanged();
 	}
 }
 
