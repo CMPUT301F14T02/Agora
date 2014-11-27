@@ -29,6 +29,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
+import android.location.LocationListener;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -56,12 +57,28 @@ import android.widget.Toast;
  */
 public class AuthorQuestionActivity extends Activity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
-		GooglePlayServicesClient.OnConnectionFailedListener {
+		GooglePlayServicesClient.OnConnectionFailedListener,
+		com.google.android.gms.location.LocationListener {
 
 	protected Uri imageUri = null;
 	protected byte[] image = null;
 	private LocationClient mLocationClient;
 	private Location mCurrentLocation;
+    // Milliseconds per second
+    private static final int MILLISECONDS_PER_SECOND = 1000;
+    // Update frequency in seconds
+    public static final int UPDATE_INTERVAL_IN_SECONDS = 2;
+    // Update frequency in milliseconds
+    private static final long UPDATE_INTERVAL =
+            MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
+    // The fastest update frequency, in seconds
+    private static final int FASTEST_INTERVAL_IN_SECONDS = 1;
+    // A fast frequency ceiling in milliseconds
+    private static final long FASTEST_INTERVAL =
+            MILLISECONDS_PER_SECOND * FASTEST_INTERVAL_IN_SECONDS;
+   
+    // Define an object that holds accuracy and frequency parameters
+    LocationRequest mLocationRequest;
 
 	/**
 	 * Retrieves button layouts and activity author question layout.
@@ -70,7 +87,17 @@ public class AuthorQuestionActivity extends Activity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_author_question);
+		
 		mLocationClient = new LocationClient(this, this, this);
+        // Create the LocationRequest object
+        mLocationRequest = LocationRequest.create();
+        // Use high accuracy
+        mLocationRequest.setPriority(
+                LocationRequest.PRIORITY_HIGH_ACCURACY);
+        // Set the update interval to 5 seconds
+        mLocationRequest.setInterval(UPDATE_INTERVAL);
+        // Set the fastest update interval to 1 second
+        mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
 
 		Button addQuestion = (Button) findViewById(R.id.authorQuestionAddQuestionButton);
 		Button addPictureCamera = (Button) findViewById(R.id.authorQuestionAddPictureCamera);
@@ -118,6 +145,7 @@ public class AuthorQuestionActivity extends Activity implements
 	        if (isGooglePlayServiceAvilable == ConnectionResult.SUCCESS){
 				Toast.makeText(Agora.getContext(), "Google play services available",
 						Toast.LENGTH_SHORT).show();
+				
 	        }
 	        else{
 				Toast.makeText(Agora.getContext(), "Nien, Google play services ist not available. Error Number: "+ isGooglePlayServiceAvilable,
@@ -265,14 +293,32 @@ public class AuthorQuestionActivity extends Activity implements
 		if (!mLocationClient.isConnecting()) {
 			Toast.makeText(Agora.getContext(), "Connected!",
 					Toast.LENGTH_SHORT).show();
+			mLocationClient.setMockMode(true);
+
 			mCurrentLocation = mLocationClient.getLastLocation();
+			mLocationClient.requestLocationUpdates(mLocationRequest, this);
+
 		}
 	}
 
 	@Override
 	public void onDisconnected() {
 		// TODO Auto-generated method stub
+		Toast.makeText(Agora.getContext(), "Location disconnected",
+				Toast.LENGTH_SHORT).show();
 
 	}
+
+	@Override
+	public void onLocationChanged(Location location) {
+		// TODO Auto-generated method stub
+        String msg = "Updated Location: " +
+                Double.toString(location.getLatitude()) + "," +
+                Double.toString(location.getLongitude());
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+
+	}
+
+
 
 }
