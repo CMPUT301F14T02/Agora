@@ -134,7 +134,6 @@ public class AuthorQuestionActivity extends Activity implements
 	}
 
 	private void toastLocationTest() {
-		mLocationClient.connect();
 		if (mLocationClient.isConnected()) {
 			mCurrentLocation = mLocationClient.getLastLocation();
 			if (mCurrentLocation != null) {
@@ -143,14 +142,13 @@ public class AuthorQuestionActivity extends Activity implements
 				Toast.makeText(Agora.getContext(), mCurrentLocation.toString(),
 						Toast.LENGTH_SHORT).show();
 			} else {
-				Toast.makeText(Agora.getContext(), "Location not available...",
+				Toast.makeText(Agora.getContext(), "Location is null",
 						Toast.LENGTH_SHORT).show();
 			}
 		} else {
 			Toast.makeText(Agora.getContext(),
-					"No Bueno, Location Client not connecting",
+					"No Bueno, Location Client not connected",
 					Toast.LENGTH_SHORT).show();
-
 		}
 	}
 
@@ -254,16 +252,20 @@ public class AuthorQuestionActivity extends Activity implements
 
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		// TODO Auto-generated method stub
+		Toast.makeText(Agora.getContext(), "Connection to location client Failed",
+				Toast.LENGTH_SHORT).show();
 
 	}
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		mLocationClient.connect();
+		Toast.makeText(Agora.getContext(), "Connecting to location client...",
+				Toast.LENGTH_SHORT).show();
+
 		if (!mLocationClient.isConnecting()) {
-			mLocationClient.getLastLocation();
-			toastLocationTest();
+			Toast.makeText(Agora.getContext(), "Connected!",
+					Toast.LENGTH_SHORT).show();
+			mCurrentLocation = mLocationClient.getLastLocation();
 		}
 	}
 
