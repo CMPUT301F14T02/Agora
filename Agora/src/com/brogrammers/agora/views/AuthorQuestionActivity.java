@@ -326,8 +326,8 @@ public class AuthorQuestionActivity extends Activity implements
 
 	 
     private static final String PROVIDER = "flp";
-    private static final double LAT = 37.377166;
-    private static final double LNG = -122.086966;
+    private static final double LAT = 53.526797;
+    private static final double LNG = -113.5273;
     private static final float ACCURACY = 3.0f;
     /*
      * From input arguments, create a single Location with provider set to
