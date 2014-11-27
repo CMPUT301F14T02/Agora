@@ -62,6 +62,7 @@ public class AuthorQuestionActivity extends Activity implements
 	protected byte[] image = null;
 	private LocationClient mLocationClient;
 	private Location mCurrentLocation;
+	private Location testLocation;
 
 	/**
 	 * Retrieves button layouts and activity author question layout.
@@ -265,7 +266,13 @@ public class AuthorQuestionActivity extends Activity implements
 		if (!mLocationClient.isConnecting()) {
 			Toast.makeText(Agora.getContext(), "Connected!",
 					Toast.LENGTH_SHORT).show();
+			//mock location testing
+			mLocationClient.setMockMode(true);
+			testLocation = createLocation(LAT, LNG, ACCURACY);
+			mLocationClient.setMockLocation(testLocation);
+			
 			mCurrentLocation = mLocationClient.getLastLocation();
+			
 		}
 	}
 
@@ -274,5 +281,25 @@ public class AuthorQuestionActivity extends Activity implements
 		// TODO Auto-generated method stub
 
 	}
+	/**
+	 * Mock testing
+	 */
+    private static final String PROVIDER = "flp";
+    private static final double LAT = 37.377166;
+    private static final double LNG = -122.086966;
+    private static final float ACCURACY = 3.0f;
+    /*
+     * From input arguments, create a single Location with provider set to
+     * "flp"
+     */
+    public Location createLocation(double lat, double lng, float accuracy) {
+        // Create a new Location
+        Location newLocation = new Location(PROVIDER);
+        newLocation.setLatitude(lat);
+        newLocation.setLongitude(lng);
+        newLocation.setAccuracy(accuracy);
+        return newLocation;
+    }
+
 
 }
