@@ -73,7 +73,12 @@ public class AnswerActivity extends Activity implements Observer {
 
 	protected void onResume() {
 		super.onResume();
+		lv = (ListView) findViewById(R.id.AnswerListView);
+		aadapter = new AnswerAdapter(null, this);
+		lv.setAdapter(aadapter);
 		refresh();
+		
+		aadapter.notifyDataSetChanged();
 	}
 
 	@Override	
