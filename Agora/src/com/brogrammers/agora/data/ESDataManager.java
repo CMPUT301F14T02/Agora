@@ -346,7 +346,9 @@ public class ESDataManager { // implements DataManager
 	 * @return  A list containing the single question object from
 	 *         the server.
 	 */
+	/*
     public List<Question> searchQuestionsByLocation(Location location) {
+
 		String requestBody = "{" + "\"query\": {" + "\"multi_match\": {"
 				+ "\"query\":" + "\"" + query + "\"" + ","
 				+ "\"type\": \"most_fields\"," + "\"fields\": ["
@@ -354,7 +356,8 @@ public class ESDataManager { // implements DataManager
 		String endPoint = "_search";
 		return getQuestions(Question.class, requestBody, endPoint, null, false);
 	}
-
+	*/
+	
 	/**
 	 * Gets a question by its unique id value.
 	 * <p>
