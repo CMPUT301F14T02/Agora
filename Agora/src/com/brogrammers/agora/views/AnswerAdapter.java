@@ -191,12 +191,11 @@ public class AnswerAdapter extends BaseAdapter {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} 
+			
+			// Update the rating display
 			Answer a = (Answer)getItem(position);
-			a.upvote();
 			((TextView)aScoreTextView).setText(Integer.toString(a.getRating()));
 
-			
-			//update the rating textview afterwards
 		}
 	}
 	

@@ -20,7 +20,6 @@
             android:id="@+id/aScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="R"
             android:layout_gravity="center"
             android:textSize="20dp" />
 
@@ -62,16 +61,15 @@
         android:layout_alignLeft="@+id/aBody"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/aAuthourDate"
-        android:gravity="right"
-		android:textAlignment="gravity"
         android:layout_toRightOf="@+id/AnswerScoreVLayout"
+        android:gravity="right"
         android:hint="Location Information"
         android:paddingTop="2dp"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="#444444" />
+        android:textAlignment="gravity" />
     
     <Button
         android:id="@+id/aComment"
+        style="@style/AppBaseTheme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -79,6 +77,7 @@
         android:minHeight="32dp"
         android:paddingTop="6dp"
         android:text="Comments"
+        android:textColor="#000000"
         android:textSize="14sp" />
 
     <ImageView
