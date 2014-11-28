@@ -183,7 +183,6 @@ public class AnswerAdapter extends BaseAdapter {
 		}
 		public void onClick(View view) {
 			Long aid = getItemId(position);
-//			question.getAnswerByID(aid).upvote();
 			
 			try {
 				QuestionController.getController().upvote(question.getID(), getItemId(position));

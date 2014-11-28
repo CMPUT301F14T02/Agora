@@ -44,6 +44,7 @@ import android.view.View.OnClickListener;
 public class QuestionActivity extends Activity implements Observer {
 	private List<Question> qList;
 	private Long qid;
+	private QuestionController controller;
 
 	/**
 	 * When activity is created, retrieve question id via intent from main
@@ -61,9 +62,9 @@ public class QuestionActivity extends Activity implements Observer {
 			finish();
 		}
 
-		QuestionController controller = QuestionController.getController();
+		controller = QuestionController.getController();
 		controller.setObserver(this);
-		qList = controller.getQuestionById(qid);
+
 
 		Button viewComment = (Button) findViewById(R.id.QuestionCommentsButton);
 		Button viewAnswer = (Button) findViewById(R.id.QuestionAnswersButton);
@@ -73,17 +74,12 @@ public class QuestionActivity extends Activity implements Observer {
 		viewAnswer.setOnClickListener(new openAnswerView());
 		upVoteQuestion.setOnClickListener(new upVoteQuestion());
 
-		if (qList.size() > 0) {
-			Question q = qList.get(0);
-			viewAnswer.setText("Answers ("
-					+ Integer.toString(q.getAnswers().size()) + ")");
-			viewComment.setText("Answers ("
-					+ Integer.toString(q.getComments().size()) + ")");
-		}
+
 	}
 
 	protected void onResume() {
 		super.onResume();
+		qList = controller.getQuestionById(qid);
 		update();
 	}
 
@@ -147,9 +143,9 @@ public class QuestionActivity extends Activity implements Observer {
 				+ Integer.toString(q.getComments().size()) + ")");
 
 		// set associated image, if any
+		ImageView thumbView = (ImageView) findViewById(R.id.QuestionImage);
 		if (q.hasImage() && q.getImage() != null) {
-			ImageView thumbView = (ImageView) findViewById(R.id.QuestionImage);
-			thumbView.setVisibility(View.VISIBLE); // this ImageView is set to GONE by default
+//			thumbView.setVisibility(View.VISIBLE); // this ImageView is set to GONE by default
 			final Bitmap imageBitmap = BitmapFactory.decodeStream(new ByteArrayInputStream(q.getImage()));
 			Bitmap thumbImage = ThumbnailUtils.extractThumbnail(imageBitmap, 200, 200);
 			thumbView.setImageBitmap(thumbImage);
@@ -159,6 +155,8 @@ public class QuestionActivity extends Activity implements Observer {
 					(new SimpleImagePopup(imageBitmap, QuestionActivity.this)).show();
 				}
 			});
+		} else {
+			thumbView.setVisibility(View.GONE);
 		}
 
 	}
