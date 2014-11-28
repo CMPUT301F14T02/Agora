@@ -3,25 +3,25 @@
     tools:context="com.brogrammers.agora.QuestionAnswerActivity" >
     <item android:id="@+id/action_addanswer" 
         android:icon="@drawable/ic_action_new" 
-        android:title="addanswer" 
-        android:titleCondensed="addanswer"
+        android:title="Add Answer" 
+        android:titleCondensed="Add Answer"
         android:showAsAction="always"></item>
     
     <item android:id="@+id/action_favorite" 
-        android:icon="@drawable/ic_action_rating_favoritepink" 
-        android:title="favorite" 
-        android:titleCondensed="favorite"
+        android:icon="@drawable/ic_pinkfavouritetag" 
+        android:title="Favorite" 
+        android:titleCondensed="Favorite"
         android:showAsAction="always"></item>    
         
 	<item android:id="@+id/action_flag" 
-        android:icon="@drawable/ic_action_flag" 
-        android:title="flag" 
-        android:titleCondensed="flag"
+        android:icon="@drawable/ic_tag" 
+        android:title="Flag" 
+        android:titleCondensed="Flag"
         android:showAsAction="always"></item>    
         
     <item android:id="@+id/action_settings"
         android:icon="@drawable/ic_action_settings" 
-        android:title="settings" 
-        android:titleCondensed="settings"
+        android:title="Settings" 
+        android:titleCondensed="Settings"
         android:showAsAction="always"></item>
 </menu>
