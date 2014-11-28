@@ -39,15 +39,6 @@ public class LocationDataManager {
 		URI += "lat=" + Float.toString(lat) + "&" + "lon=" + Float.toString(lon);
 		final List<Location> locationList = new ArrayList<Location>();
 		AsyncHttpClient client = new AsyncHttpClient();
-		StringEntity stringEntityBody = null;
-		/*
-		try {
-			stringEntityBody = new StringEntity(requestBody);
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
-		*/
-
 		client.get(URI, new AsyncHttpResponseHandler() {
 
 			@Override
