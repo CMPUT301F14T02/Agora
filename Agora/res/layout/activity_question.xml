@@ -82,7 +82,7 @@
 	            android:layout_height="wrap_content"
 	            android:layout_gravity="center"
 	            android:src="@drawable/ic_image_loading"
-	            android:visibility="gone" />
+	            android:visibility="visible" />
 
 	        <TextView
 	            android:id="@+id/AuthourDate"

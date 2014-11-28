@@ -57,7 +57,7 @@ public class AnswerActivity extends Activity implements Observer {
 			finish();
 		}
 
-		qController.setObserver(this);
+//		qController.setObserver(this);
 		qList = qController.getQuestionById(qid);
 
 		lv = (ListView) findViewById(R.id.AnswerListView);
@@ -73,7 +73,7 @@ public class AnswerActivity extends Activity implements Observer {
 
 	protected void onResume() {
 		super.onResume();
-		update();
+		refresh();
 	}
 
 	@Override	
@@ -104,6 +104,7 @@ public class AnswerActivity extends Activity implements Observer {
 
 	public void refresh() {
 		qList = qController.getQuestionById(qid);
+		aadapter.setQuestion(qList.get(0));
 	}
 
 	/**
@@ -116,7 +117,6 @@ public class AnswerActivity extends Activity implements Observer {
 					"AnswerActivity update() called, but qList is empty", 0);
 		} else {
 			aadapter.setQuestion(qList.get(0));
-			aadapter.notifyDataSetChanged();
 		}
 
 	}

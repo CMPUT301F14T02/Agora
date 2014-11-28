@@ -38,7 +38,7 @@ public class CommentActivity extends Activity implements Observer {
 	private CommentAdapter cadapter;
 	private QuestionController controller;
 
-	ListView lv;
+	private ListView lv;
 	/**
 	 * Retrieves question id or answer id from intent. 
 	 * Then creates post comment button layout and the listview.
@@ -57,7 +57,11 @@ public class CommentActivity extends Activity implements Observer {
 		controller = QuestionController.getController();
 		controller.setObserver(this);
 		qList = controller.getQuestionById(qid);
-		cadapter = new CommentAdapter(qList.get(0));
+		if (aid == 0L) {
+			cadapter = new CommentAdapter(qList.get(0));
+		} else {
+			cadapter = new CommentAdapter(qList.get(0).getAnswerByID(aid));
+		}
 		lv = (ListView) findViewById(R.id.CommentListView);
 		lv.setAdapter(cadapter);
 		
