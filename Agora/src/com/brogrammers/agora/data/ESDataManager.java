@@ -20,6 +20,7 @@ import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.data.QueryItem.RequestType;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Comment;
+import com.brogrammers.agora.model.Location;
 import com.brogrammers.agora.model.Question;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -328,6 +329,24 @@ public class ESDataManager { // implements DataManager
 	 *         criteria.
 	 */
 	public List<Question> searchQuestions(String query) {
+		String requestBody = "{" + "\"query\": {" + "\"multi_match\": {"
+				+ "\"query\":" + "\"" + query + "\"" + ","
+				+ "\"type\": \"most_fields\"," + "\"fields\": ["
+				+ "\"title\", \"body\"" + "]}}}";
+		String endPoint = "_search";
+		return getQuestions(Question.class, requestBody, endPoint, null, false);
+	}
+	
+	/**
+	 * Gets a list of questions with ascending distance to current location.
+	 * <p>
+	 * 
+	 * @param id
+	 *            The questions unique ID value.
+	 * @return  A list containing the single question object from
+	 *         the server.
+	 */
+    public List<Question> searchQuestionsByLocation(Location location) {
 		String requestBody = "{" + "\"query\": {" + "\"multi_match\": {"
 				+ "\"query\":" + "\"" + query + "\"" + ","
 				+ "\"type\": \"most_fields\"," + "\"fields\": ["
