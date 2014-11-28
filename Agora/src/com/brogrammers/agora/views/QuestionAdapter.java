@@ -87,18 +87,18 @@ public class QuestionAdapter extends BaseAdapter {
 		List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
 		
 		if (favoritedQuestions.contains(question.getID())) {
-			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_action_rating_favoritepink);	
+			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_pinkfavouritetag);	
 		} else {
 			
-			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_action_unfavorite);	
+			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_pinkunfavouritetag);	
 		}
 		
 		List<Long> flaggedQuestions = DeviceUser.getUser().getCachedQuestionIDs();
 		
 		if (flaggedQuestions.contains(question.getID())) {
-			((ImageView)convertView.findViewById(R.id.qQuestionFlag)).setImageResource(R.drawable.ic_action_flag);
+			((ImageView)convertView.findViewById(R.id.qQuestionFlag)).setImageResource(R.drawable.ic_tag);
 		} else {
-			((ImageView)convertView.findViewById(R.id.qQuestionFlag)).setImageResource(R.drawable.ic_actionunflag);
+			((ImageView)convertView.findViewById(R.id.qQuestionFlag)).setImageResource(R.drawable.ic_untag);
 		}
 	
 		convertView.setOnClickListener(new QuestionOnClickListener(position));
