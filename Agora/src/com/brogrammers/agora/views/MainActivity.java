@@ -17,6 +17,7 @@ import com.brogrammers.agora.R.string;
 import com.brogrammers.agora.UserPrefActivity;
 import com.brogrammers.agora.data.CacheDataManager;
 import com.brogrammers.agora.data.DeviceUser;
+import com.brogrammers.agora.data.LocationDataManager;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.helper.FilterSorterHelper;
 import com.brogrammers.agora.helper.QuestionLoaderSaver;
@@ -67,8 +68,6 @@ public class MainActivity extends Activity implements Observer {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-
 		qController = QuestionController.getController();
 
 		user = DeviceUser.getUser();

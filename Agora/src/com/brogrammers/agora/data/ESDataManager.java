@@ -346,17 +346,33 @@ public class ESDataManager { // implements DataManager
 	 * @return  A list containing the single question object from
 	 *         the server.
 	 */
-	/*
-    public List<Question> searchQuestionsByLocation(Location location) {
-
-		String requestBody = "{" + "\"query\": {" + "\"multi_match\": {"
-				+ "\"query\":" + "\"" + query + "\"" + ","
-				+ "\"type\": \"most_fields\"," + "\"fields\": ["
-				+ "\"title\", \"body\"" + "]}}}";
+	/* Mapping for geolocation
+	 * You can add this to an existing mapping by entering this statement.
+	 * PUT _mapping/TYPENAME
+        {
+        "TYPENAME" : {
+                "properties": { 
+                    "location" : {
+                        "type" : "geo_point"
+                    }
+                }
+            }
+        }
+	 */
+	
+	public List<Question> searchQuestionsByLocation(Location location) {
+    	String requestBody = "{\"sort\" : [" +
+    	        "{" +
+    	            "\"_geo_distance\" : {" +
+    	                "\"location\" : [" + String.valueOf(location.getLat()) + "," + String.valueOf(location.getLon()) + "]," +
+    	                "\"order\" : \"asc\"," +
+    	                "\"unit\" : \"km\"" +
+    	            "}" +
+    	        "}" +
+    	    "],}";
 		String endPoint = "_search";
 		return getQuestions(Question.class, requestBody, endPoint, null, false);
 	}
-	*/
 	
 	/**
 	 * Gets a question by its unique id value.

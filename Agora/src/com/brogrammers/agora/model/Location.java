@@ -1,21 +1,21 @@
 package com.brogrammers.agora.model;
 
 public class Location {
-	private Float lat;
-	private Float lon;
+	private double lat;
+	private double lon;
 	private String locationName;
 
-	public Location(Float lat, Float lon, String locationName){
-		this.lat = lat;
-		this.lon = lon;
+	public Location(double d, double e, String locationName){
+		this.lat = d;
+		this.lon = e;
 		this.locationName = locationName;
 	}
 
-	public Float getLat() {
+	public double getLat() {
 		return lat;
 	}
 
-	public Float getLon() {
+	public double getLon() {
 		return lon;
 	}
 
