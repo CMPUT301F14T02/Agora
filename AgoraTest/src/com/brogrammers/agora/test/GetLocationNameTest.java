@@ -48,7 +48,7 @@ public class GetLocationNameTest extends ActivityInstrumentationTestCase2<MainAc
 		final CountDownLatch signal = new CountDownLatch(1);
 		// compare the local and received copies.
 		SimpleLocation location = ldm.getLocation();
-		assertTrue("Location name did not match received name", ldm.getLocationName().equalsIgnoreCase("Edmonton"));
+		assertTrue("Location name did not match received name", ldm.getLocationName().equalsIgnoreCase("Edmonton, Canada"));
 	}
 }
 

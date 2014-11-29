@@ -192,10 +192,14 @@ public class UserPrefActivity extends Activity implements
 		LocationDataManager.getInstance();
 		EditText setLocation = (EditText) findViewById(R.id.setLocationEditText);
 		String strLocation = setLocation.toString();
+
 		LocationDataManager.setLocationName(strLocation);
 		Toast.makeText(Agora.getContext(),
 				strLocation, Toast.LENGTH_SHORT)
 				.show();
+		//SimpleLocation manLocation = new SimpleLocation(strLocation);
+		//LocationDataManager.setLocation(manLocation);
+
 	}
 
 }

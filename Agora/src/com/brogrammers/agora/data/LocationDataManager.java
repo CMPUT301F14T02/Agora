@@ -136,7 +136,7 @@ public class LocationDataManager {
 			e1.printStackTrace();
 		}
 	}
-	
+
 	/*
 	public static void  geoCode(final String strLocation){
 		// compe the url
