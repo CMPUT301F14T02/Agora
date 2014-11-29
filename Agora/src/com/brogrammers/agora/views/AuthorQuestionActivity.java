@@ -13,6 +13,7 @@ import com.brogrammers.agora.R;
 import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.R.menu;
+import com.brogrammers.agora.data.LocationDataManager;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.helper.ImageGetter;
 import com.brogrammers.agora.helper.ImageResizer;
@@ -42,6 +43,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -68,7 +70,7 @@ public class AuthorQuestionActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_author_question);
-
+		
 
 		Button addQuestion = (Button) findViewById(R.id.authorQuestionAddQuestionButton);
 		Button addPictureCamera = (Button) findViewById(R.id.authorQuestionAddPictureCamera);
@@ -112,7 +114,7 @@ public class AuthorQuestionActivity extends Activity {
 			// add question
 			EditText titleText = (EditText) findViewById(R.id.authorQuestionEditText);
 			EditText bodyText = (EditText) findViewById(R.id.authorQuestionBodyEditText);
-
+			
 			String title = titleText.getText().toString();
 			String body = bodyText.getText().toString();
 			if (title.isEmpty() || body.isEmpty()) {
@@ -122,6 +124,14 @@ public class AuthorQuestionActivity extends Activity {
 			} else {
 				Toast.makeText(Agora.getContext(), "Adding Question!",
 						Toast.LENGTH_SHORT).show();
+			}
+			
+			CheckBox locationBox = (CheckBox) findViewById(R.id.attachLocationQuestionBox);
+			if (locationBox.isChecked()){
+				LocationDataManager.getInstance();
+				if (LocationDataManager.getLocationName() != null){
+					
+				}
 			}
 
 			QuestionController.getController().addQuestion(title, body, image);

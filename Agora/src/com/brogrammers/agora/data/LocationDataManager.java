@@ -52,6 +52,15 @@ public class LocationDataManager {
 	public static SimpleLocation getLocation(){
 		return currentLocation;
 	}
+	
+	public static void setLocationName(String manLocation) {
+		currentLocationName = manLocation;
+		
+	}
+	
+	public static String getLocationName(){
+		return currentLocationName;
+	}
 
 	public void initLocation(double d, double e){
 		if (currentLocation == null){
@@ -60,11 +69,7 @@ public class LocationDataManager {
 		}
 		
 	}
-	
-	public static void setLocation(SimpleLocation manLocation) {
-		currentLocation = manLocation;
-		
-	}
+
 	/**
 	 * This snippet allows UI on main thread.
 	 * Normally it's 2 lines but since we're supporting 2.x, we need to reflect.

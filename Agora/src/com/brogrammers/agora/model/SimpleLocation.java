@@ -11,10 +11,6 @@ public class SimpleLocation {
 		this.lon = e;
 	}
 
-	public SimpleLocation(String setLocation) {
-		this.locationName = setLocation;
-	}
-
 	public double getLat() {
 		return lat;
 	}
