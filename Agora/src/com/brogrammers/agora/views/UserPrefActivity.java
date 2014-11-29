@@ -168,7 +168,7 @@ public class UserPrefActivity extends Activity implements
 			if (mCurrentLocation != null) {
 				 LocationDataManager.reverseGeoCode(lat, lon);
 				 Toast.makeText(Agora.getContext(),
-				 LocationDataManager.getLocation().getLocationName(),
+				 LocationDataManager.getLocationName(),
 				 Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(Agora.getContext(),
@@ -192,8 +192,8 @@ public class UserPrefActivity extends Activity implements
 		LocationDataManager.getInstance();
 		EditText setLocation = (EditText) findViewById(R.id.setLocationEditText);
 		String strLocation = setLocation.toString();
-		SimpleLocation manLocation = new SimpleLocation(strLocation);
-		LocationDataManager.setLocation(manLocation);
+		//SimpleLocation manLocation = new SimpleLocation(strLocation);
+		//LocationDataManager.setLocation(manLocation);
 	}
 
 }

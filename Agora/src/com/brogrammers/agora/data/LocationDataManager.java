@@ -131,6 +131,10 @@ public class LocationDataManager {
 			e1.printStackTrace();
 		}
 	}
+
+	public static String getLocationName(){
+		return currentLocationName;
+	}
 	
 	/*
 	public static void  geoCode(final String strLocation){
