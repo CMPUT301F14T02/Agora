@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +38,6 @@ public class LocationDataManager {
 	private static String URI2 = "http://nominatim.openstreetmap.org/search/";
 	private static String parameters = "?format=json&addressdetails=0";
 	private static SimpleLocation currentLocation;
-	private static String currentLocationName;
 	public static JSONObject testjson;
 	public static LocationDataManager self;
 	
@@ -51,19 +52,52 @@ public class LocationDataManager {
 		return currentLocation;
 	}
 
-	public static String getLocationName(){
-		return currentLocationName;
-	}
-
 	public void initLocation(double d, double e){
-		if (currentLocation == null){
-			currentLocation = new SimpleLocation(d, e);
-			reverseGeoCode(d, e);
-		}
+		reverseGeoCode(d, e);
+		
 	}
+	
+	public static void setLocation(SimpleLocation manLocation) {
+		currentLocation = manLocation;
+		
+	}
+	/**
+	 * This snippet allows UI on main thread.
+	 * Normally it's 2 lines but since we're supporting 2.x, we need to reflect.
+	 */
+	private static void disableStrictMode() {
+		  // StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+		  // StrictMode.setThreadPolicy(policy);
+		//http://twigstechtips.blogspot.co.uk/2013/08/android-how-to-fix-networkonmainthreade.html
+
+		  try {
+		    Class<?> strictModeClass = Class.forName("android.os.StrictMode", true, Thread.currentThread().getContextClassLoader());
+		    Class<?> threadPolicyClass = Class.forName("android.os.StrictMode$ThreadPolicy", true, Thread .currentThread().getContextClassLoader());
+		    Class<?> threadPolicyBuilderClass = Class.forName("android.os.StrictMode$ThreadPolicy$Builder", true, Thread.currentThread().getContextClassLoader());
+
+		    Method setThreadPolicyMethod = strictModeClass.getMethod("setThreadPolicy", threadPolicyClass);
+
+		    Method detectAllMethod = threadPolicyBuilderClass.getMethod("detectAll");
+		    Method penaltyMethod = threadPolicyBuilderClass.getMethod("penaltyLog");
+		    Method buildMethod = threadPolicyBuilderClass.getMethod("build");
+
+		    Constructor<?> threadPolicyBuilderConstructor = threadPolicyBuilderClass.getConstructor();
+		    Object threadPolicyBuilderObject = threadPolicyBuilderConstructor.newInstance();
+
+		    Object obj = detectAllMethod.invoke(threadPolicyBuilderObject);
+
+		    obj = penaltyMethod.invoke(obj);
+		    Object threadPolicyObject = buildMethod.invoke(obj);
+		    setThreadPolicyMethod.invoke(strictModeClass, threadPolicyObject);
+		  }
+		  catch (Exception ex) {
+		    Log.w("disableStrictMode", ex);
+		  }
+		} 
 	
 	public static void  reverseGeoCode(final double d, final double e){
 		// compe the url
+		disableStrictMode();
 		URI += "lat=" + String.valueOf(d) + "&" + "lon=" + String.valueOf(e);
 		final List<SimpleLocation> locationList = new ArrayList<SimpleLocation>();
         HttpClient client = new DefaultHttpClient();
@@ -79,7 +113,10 @@ public class LocationDataManager {
             JSONObject o = new JSONObject(result.toString());
             o = o.getJSONObject("address");
             String parsedLocation = o.getString("city");
-            currentLocationName = parsedLocation;
+            parsedLocation += ", ";
+            parsedLocation += o.getString("country");
+            currentLocation = new SimpleLocation(d, e, parsedLocation);
+
         }  catch (JSONException e1){
         	e1.printStackTrace();
         } catch (IllegalStateException e1) {
@@ -90,7 +127,7 @@ public class LocationDataManager {
 			e1.printStackTrace();
 		}
 	}
-	/*
+	
 	public static void  geoCode(final String strLocation){
 		// compe the url
 		URI2+=strLocation + parameters;
@@ -121,5 +158,10 @@ public class LocationDataManager {
 			e1.printStackTrace();
 		}
 	}
-	*/
+
+
+	
+	
+
+
 }
