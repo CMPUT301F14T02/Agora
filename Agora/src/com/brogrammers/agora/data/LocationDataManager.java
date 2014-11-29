@@ -18,12 +18,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.R.string;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.model.Answer;
-import com.brogrammers.agora.model.Location;
+import com.brogrammers.agora.model.SimpleLocation;
 import com.brogrammers.agora.model.Question;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
@@ -32,7 +33,9 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 public class LocationDataManager {
 	private static String URI = "http://nominatim.openstreetmap.org/reverse?format=json&";
-	private static Location currentLocation;
+	private static String URI2 = "http://nominatim.openstreetmap.org/search/";
+	private static String parameters = "?format=json&addressdetails=0";
+	private static SimpleLocation currentLocation;
 	public static JSONObject testjson;
 	public static LocationDataManager self;
 	
@@ -43,7 +46,7 @@ public class LocationDataManager {
 		return self;
 	}
 	
-	public static Location getLocation(){
+	public static SimpleLocation getLocation(){
 		return currentLocation;
 	}
 
@@ -56,7 +59,7 @@ public class LocationDataManager {
 	public static void  reverseGeoCode(final double d, final double e){
 		// compe the url
 		URI += "lat=" + String.valueOf(d) + "&" + "lon=" + String.valueOf(e);
-		final List<Location> locationList = new ArrayList<Location>();
+		final List<SimpleLocation> locationList = new ArrayList<SimpleLocation>();
         HttpClient client = new DefaultHttpClient();
         try {
             HttpGet locationRequest = new HttpGet(URI);
@@ -70,7 +73,38 @@ public class LocationDataManager {
             JSONObject o = new JSONObject(result.toString());
             o = o.getJSONObject("address");
             String parsedLocation = o.getString("city");
-            currentLocation = new Location(d, e, parsedLocation);
+            currentLocation = new SimpleLocation(d, e, parsedLocation);
+
+        }  catch (JSONException e1){
+        	e1.printStackTrace();
+        } catch (IllegalStateException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	}
+	
+	public static void  geoCode(final String strLocation){
+		// compe the url
+		URI2+=strLocation + parameters;
+		final List<SimpleLocation> locationList = new ArrayList<SimpleLocation>();
+        HttpClient client = new DefaultHttpClient();
+        try {
+            HttpGet locationRequest = new HttpGet(URI);
+            HttpResponse response = client.execute(locationRequest);
+            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+            StringBuffer result = new StringBuffer();
+            String line = "";
+            while ((line = rd.readLine()) != null) {
+                result.append(line);
+            } 
+            JSONObject o = new JSONObject(result.toString());
+            o = o.getJSONObject("boundingbox");
+            Double parsedLat = o.getDouble("lat");
+            Double parsedLon = o.getDouble("lon");
+            currentLocation = new SimpleLocation(parsedLat,parsedLon, strLocation);
 
         }  catch (JSONException e1){
         	e1.printStackTrace();

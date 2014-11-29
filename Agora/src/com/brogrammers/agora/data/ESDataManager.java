@@ -20,7 +20,7 @@ import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.data.QueryItem.RequestType;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Comment;
-import com.brogrammers.agora.model.Location;
+import com.brogrammers.agora.model.SimpleLocation;
 import com.brogrammers.agora.model.Question;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -360,7 +360,7 @@ public class ESDataManager { // implements DataManager
         }
 	 */
 	
-	public List<Question> searchQuestionsByLocation(Location location) {
+	public List<Question> searchQuestionsByLocation(SimpleLocation location) {
     	String requestBody = "{\"sort\" : [" +
     	        "{" +
     	            "\"_geo_distance\" : {" +

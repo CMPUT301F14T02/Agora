@@ -294,13 +294,6 @@ public class AuthorQuestionActivity extends Activity implements
 		if (!mLocationClient.isConnecting()) {
 			Toast.makeText(Agora.getContext(), "Connected!",
 					Toast.LENGTH_SHORT).show();
-			//mock location testing
-			mLocationClient.setMockMode(true);
-			testLocation = createLocation(LAT, LNG, ACCURACY);
-			mLocationClient.setMockLocation(testLocation);
-			
-			mCurrentLocation = mLocationClient.getLastLocation();
-			mLocationClient.requestLocationUpdates(mLocationRequest, this);
 
 		}
 	}

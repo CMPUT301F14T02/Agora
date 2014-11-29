@@ -22,7 +22,7 @@ import com.brogrammers.agora.helper.QuestionLoaderSaver;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Author;
 import com.brogrammers.agora.model.Comment;
-import com.brogrammers.agora.model.Location;
+import com.brogrammers.agora.model.SimpleLocation;
 import com.brogrammers.agora.model.Question;
 import com.brogrammers.agora.views.MainActivity;
 import com.google.gson.Gson;
@@ -47,7 +47,7 @@ public class GetLocationNameTest extends ActivityInstrumentationTestCase2<MainAc
 		postSignal.await(1, TimeUnit.SECONDS);
 		final CountDownLatch signal = new CountDownLatch(1);
 		// compare the local and received copies.
-		Location location = ldm.getLocation();
+		SimpleLocation location = ldm.getLocation();
 		assertTrue("Location name did not match received name", location.getLocationName().equalsIgnoreCase("Edmonton"));
 	}
 }

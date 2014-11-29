@@ -1,11 +1,11 @@
 package com.brogrammers.agora.model;
 
-public class Location {
+public class SimpleLocation {
 	private double lat;
 	private double lon;
 	private String locationName;
 
-	public Location(double d, double e, String locationName){
+	public SimpleLocation(double d, double e, String locationName){
 		this.lat = d;
 		this.lon = e;
 		this.locationName = locationName;

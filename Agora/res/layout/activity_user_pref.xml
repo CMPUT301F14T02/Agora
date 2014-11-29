@@ -6,84 +6,71 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.brogrammers.agora.UserPrefActivity" >
+    tools:context="com.brogrammers.agora.views.UserPrefActivity" >
 
     <TextView
-        android:id="@+id/locationAwareTextView"
+        android:id="@+id/locationTopicText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/locationAwareCheckBox"
-        android:text="Allow Location Awareness"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+        android:text="Location Awareness"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+	<RadioGroup
+	    android:id="@+id/gpsRadioGroup"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content" >
 
-    <TextView
-        android:id="@+id/EnterLocationTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/view1"
-        android:layout_below="@+id/view1"
-        android:layout_marginTop="19dp"
-        android:text="Enter Location"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+		<RadioButton
+		    android:id="@+id/useGpsRadio"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="46dp"
+		    android:onClick="onRadioButtonClicked" />
 
-    <EditText
-        android:id="@+id/LocationEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/EnterLocationTextView"
-        android:ems="10"
-        android:hint="Location here..." >
+		<RadioButton
+		    android:id="@+id/setTextRadio"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginBottom="17dp"
+		    android:onClick="onRadioButtonClicked" />
 
-        <requestFocus />
-    </EditText>
+	</RadioGroup>
 
-    <TextView
-        android:id="@+id/gpsTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/LocationEditText"
-        android:layout_marginTop="22dp"
-        android:layout_toLeftOf="@+id/gpsCheckBox"
-        android:text="Or Enable GPS"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
+	<TextView
+	    android:id="@+id/useGpsTextView"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@+id/locationTopicText"
+	    android:layout_marginTop="24dp"
+	    android:layout_toRightOf="@+id/gpsRadioGroup"
+	    android:text="Use GPS"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <CheckBox
-        android:id="@+id/gpsCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/gpsTextView"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/gpsTextView"
-        android:layout_toRightOf="@+id/locationAwareTextView" />
+	<TextView
+	    android:id="@+id/setLocationTextView"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@+id/useGpsTextView"
+	    android:layout_marginTop="14dp"
+	    android:layout_toRightOf="@+id/gpsRadioGroup"
+	    android:text="Set Location"
+	    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <CheckBox
-        android:id="@+id/locationAwareCheckBox"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/locationAwareTextView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
+	<EditText
+	    android:id="@+id/setLocationEditText"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/gpsRadioGroup"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@+id/setLocationTextView"
+	    android:ems="10"
+	    android:hint="Enter Location..." >
 
-    <View
-        android:id="@+id/view1"
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:layout_alignLeft="@+id/locationAwareTextView"
-        android:layout_below="@+id/locationAwareTextView"
-        android:layout_marginTop="14dp"
-        android:background="@android:color/darker_gray" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:text="Save" />
-
+	    <requestFocus />
+	</EditText>
+	
 </RelativeLayout>
