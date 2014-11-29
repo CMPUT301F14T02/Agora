@@ -38,6 +38,7 @@ public class LocationDataManager {
 	private static String URI2 = "http://nominatim.openstreetmap.org/search/";
 	private static String parameters = "?format=json&addressdetails=0";
 	private static SimpleLocation currentLocation;
+	private static String currentLocationName;
 	public static JSONObject testjson;
 	public static LocationDataManager self;
 	
@@ -53,7 +54,10 @@ public class LocationDataManager {
 	}
 
 	public void initLocation(double d, double e){
-		reverseGeoCode(d, e);
+		if (currentLocation == null){
+			currentLocation = new SimpleLocation(d, e);
+			reverseGeoCode(d, e);
+		}
 		
 	}
 	
@@ -115,7 +119,7 @@ public class LocationDataManager {
             String parsedLocation = o.getString("city");
             parsedLocation += ", ";
             parsedLocation += o.getString("country");
-            currentLocation = new SimpleLocation(d, e, parsedLocation);
+            currentLocationName = parsedLocation;
 
         }  catch (JSONException e1){
         	e1.printStackTrace();
@@ -128,6 +132,7 @@ public class LocationDataManager {
 		}
 	}
 	
+	/*
 	public static void  geoCode(final String strLocation){
 		// compe the url
 		URI2+=strLocation + parameters;
@@ -158,10 +163,5 @@ public class LocationDataManager {
 			e1.printStackTrace();
 		}
 	}
-
-
-	
-	
-
-
+	*/
 }
