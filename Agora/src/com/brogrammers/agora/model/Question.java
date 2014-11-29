@@ -29,6 +29,7 @@ public class Question implements Serializable, Comparable<Question> {
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
 	private ArrayList<Answer> answers;
+	private boolean hasLocation;
 	private boolean hasImage;
 	private SimpleLocation location;
 	private String locationName;
@@ -49,6 +50,22 @@ public class Question implements Serializable, Comparable<Question> {
 		uniqueID = md5.hash(date.toString()+author+body+title);
 		comments = new ArrayList<Comment>();
 		answers = new ArrayList<Answer>();
+		hasLocation = false;
+		hasImage = ((image != null) ? (image.length > 0) : false);
+	}
+	public Question(String title, String body, byte[] image, String user, SimpleLocation location, String locationName) {
+		this.title = title;
+		this.body = body;
+		this.author = user;
+		this.image = image;
+		this.location = location;
+		this.locationName = locationName;
+		rating = 0;
+		date = System.currentTimeMillis();
+		uniqueID = md5.hash(date.toString()+author+body+title);
+		comments = new ArrayList<Comment>();
+		answers = new ArrayList<Answer>();
+		hasLocation = true;
 		hasImage = ((image != null) ? (image.length > 0) : false);
 	}
 	
