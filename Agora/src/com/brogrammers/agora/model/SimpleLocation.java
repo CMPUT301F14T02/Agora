@@ -3,12 +3,10 @@ package com.brogrammers.agora.model;
 public class SimpleLocation {
 	private double lat;
 	private double lon;
-	private String locationName;
 
-	public SimpleLocation(double d, double e, String locationName){
+	public SimpleLocation(double d, double e){
 		this.lat = d;
 		this.lon = e;
-		this.locationName = locationName;
 	}
 
 	public double getLat() {
@@ -17,9 +15,5 @@ public class SimpleLocation {
 
 	public double getLon() {
 		return lon;
-	}
-
-	public String getLocationName() {
-		return locationName;
 	}
 }

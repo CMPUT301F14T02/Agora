@@ -20,6 +20,7 @@ import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Author;
 import com.brogrammers.agora.model.Comment;
 import com.brogrammers.agora.model.Question;
+import com.brogrammers.agora.model.SimpleLocation;
 import com.brogrammers.agora.views.MainActivity;
 import com.google.gson.Gson;
 
@@ -27,9 +28,9 @@ import android.content.Context;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-public class AddCommentToanswerTestES extends ActivityInstrumentationTestCase2<MainActivity> {
+public class GetNearestPostTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
-	public AddCommentToanswerTestES() {
+	public GetNearestPostTest() {
 		super(MainActivity.class);
 	}
 
@@ -37,7 +38,7 @@ public class AddCommentToanswerTestES extends ActivityInstrumentationTestCase2<M
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/AddCommentToanswerTest/_query?q=_type:AddCommentToanswerTest");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/GetNearestPostTest/_query?q=_type:GetNearestPostTest");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -50,7 +51,7 @@ public class AddCommentToanswerTestES extends ActivityInstrumentationTestCase2<M
 
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "AddCommentToanswerTest/");
+			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "GetNearestPostTest/");
 		}
 	}
 	
@@ -64,39 +65,35 @@ public class AddCommentToanswerTestES extends ActivityInstrumentationTestCase2<M
 		// create a question object post it, add a comment locally to one of the answers.
 		Question q = new Question("Big Questions", "What do you think the meaning of life is?", null, "Ted");
 		Answer a = new Answer("Not really sure", null, "Bill");
-		a.addComment(new Comment("Yikes", new Author("Dr. Bob")));
 		q.addAnswer(a);
 		q.addAnswer(new Answer("I mean who really knows?", null, "Bob"));
 		Answer b = new Answer("This post doesn't belong here.", null, "Tim");
-		b.addComment(new Comment("It's a secret", new Author("Dr. Joe")));
-		q.addAnswer(b);
-		q.addComment(new Comment("Wow", new Author("Eric")));
-		
+		q.setLocation(new SimpleLocation(53.526797, -113.52735));
+		q.setLocationName("Edmonton");
+
+		Question q1 = new Question("Big Things", "Wow", null, "Bob");
+		q1.setLocation(new SimpleLocation(55, -115.52735));
+		q1.setLocationName("Calgary");
+
+		Question q2 = new Question("grand things", "Wow", null, "Tim");
+		q2.setLocation(new SimpleLocation(55, -120.52735));
+		q2.setLocationName("Slave Lake");
+
 		// update the server with the new question
 		final ESDataManager es = new TestESManager();
-		final CacheDataManager cache = new TestCacheManager();
+		//final CacheDataManager cache = new TestCacheManager();
 		final CountDownLatch postSignal = new CountDownLatch(1);
+		es.pushQuestion(q2);
 		es.pushQuestion(q);
+		es.pushQuestion(q1);
 		postSignal.await(2, TimeUnit.SECONDS);
 		
-		// add a comment to the question locally
-		Comment c = new Comment("Test Post. See this?", new Author("Dr. Winston"));
-		b.addComment(c);
-		
-		// cache the question
-		cache.pushQuestion(q);
-		
-		// push the new comment to the server.
-		es.pushComment(c, q.getID(), b.getID(), cache);
-		postSignal.await(2, TimeUnit.SECONDS);
-
 		// get the question from the server
-		final Long qID = q.getID();
 		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
 			public void run() {
-					results.add((ArrayList<Question>)es.getQuestionById(qID));
+					results.add((ArrayList<Question>)es.searchQuestionsByLocation(new SimpleLocation(53.526797, -113.52735)));
 			}
 		});
 		
@@ -110,11 +107,13 @@ public class AddCommentToanswerTestES extends ActivityInstrumentationTestCase2<M
 		
 		// compare the local and received copies to ensure the server
 		// copy matches the local copy.
-		assertTrue("Did not get exactly 1 comment", results.get(0).size() == 1);
 		Gson gson = new Gson();
-		String jsonLocalQuestion = gson.toJson(q);
-		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
-		assertTrue("Commented question does not match local copy", jsonLocalQuestion.equals(jsonReceivedQuestion));
+		String jsonReceivedQuestionNearest = gson.toJson(results.get(0).get(0));
+		String jsonReceivedQuestionSecondNearest = gson.toJson(results.get(0).get(1));
+		String jsonReceivedQuestionThirdNearest = gson.toJson(results.get(0).get(2));
+		assertTrue("Nearest question was not first result", gson.toJson(q).equals(jsonReceivedQuestionNearest));
+		assertTrue("Second nearest question was not first result", gson.toJson(q1).equals(jsonReceivedQuestionSecondNearest));
+		assertTrue("Nearest question was not first result", gson.toJson(q2).equals(jsonReceivedQuestionThirdNearest));
 	}
 }
 

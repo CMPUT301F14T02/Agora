@@ -16,7 +16,9 @@ public class Comment implements Serializable {
 	private String body;
 	private Author author;
 	private boolean posted;
-	
+	private SimpleLocation location;
+	private String locationName;
+
 	public boolean isPosted() {
 		return posted;
 	}
@@ -47,6 +49,29 @@ public class Comment implements Serializable {
 		date = System.currentTimeMillis();
 	}
 
+	public void setLocation(SimpleLocation location){
+		this.location = location;
+	}
+	
+	public void setLocationName(String locationName){
+		this.locationName = locationName;
+	}
+	
+	public SimpleLocation getLocation(){
+		if (this.location != null){
+            return location;
+		} else {
+			return null;
+		}
+	}
+
+    public String getLocationName(){
+		if (this.locationName != null){
+            return locationName;
+		} else {
+			return null;
+		}
+	}
 	public Long getDate() {
 		return date;
 	}

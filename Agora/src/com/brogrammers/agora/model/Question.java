@@ -30,7 +30,8 @@ public class Question implements Serializable, Comparable<Question> {
 	private ArrayList<Comment> comments;
 	private ArrayList<Answer> answers;
 	private boolean hasImage;
-	
+	private SimpleLocation location;
+	private String locationName;
 	/**
 	 * Question constructor. Date is created at time of creation.
 	 * @param title String will be set as title/
@@ -53,6 +54,30 @@ public class Question implements Serializable, Comparable<Question> {
 	
 	public boolean hasImage() {
 		return hasImage;
+	}
+	
+	public void setLocation(SimpleLocation location){
+		this.location = location;
+	}
+	
+	public void setLocationName(String locationName){
+		this.locationName = locationName;
+	}
+	
+	public SimpleLocation getLocation(){
+		if (this.location != null){
+            return location;
+		} else {
+			return null;
+		}
+	}
+
+    public String getLocationName(){
+		if (this.locationName != null){
+            return locationName;
+		} else {
+			return null;
+		}
 	}
 
 	public void setImage(byte[] image) {

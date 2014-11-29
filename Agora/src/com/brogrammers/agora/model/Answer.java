@@ -29,7 +29,10 @@ public class Answer implements Serializable {
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
 	private boolean hasImage;
-
+	private SimpleLocation location;
+	private String locationName;
+	
+	
 	/**
 	 * Answer constructor
 	 * 
@@ -51,7 +54,30 @@ public class Answer implements Serializable {
 	public boolean hasImage() {
 		return hasImage;
 	}
+	
+	public void setLocation(SimpleLocation location){
+		this.location = location;
+	}
+	
+	public void setLocationName(String locationName){
+		this.locationName = locationName;
+	}
+	
+	public SimpleLocation getLocation(){
+		if (this.location != null){
+            return location;
+		} else {
+			return null;
+		}
+	}
 
+    public String getLocationName(){
+		if (this.locationName != null){
+            return locationName;
+		} else {
+			return null;
+		}
+	}
 	/**
 	 * Returns number of comments
 	 * 

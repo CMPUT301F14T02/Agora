@@ -243,6 +243,7 @@ public class ESDataManager { // implements DataManager
 				Log.e("SERVER", "Question get success");
 				try {
 					String responseBody = new String(arg2);
+					Log.i("SERVER", "Server received data"); 
 					JSONObject jsonRes = new JSONObject(responseBody);
 					jsonRes = jsonRes.getJSONObject("hits");
 					JSONArray jsonArray = jsonRes.getJSONArray("hits");
@@ -369,7 +370,7 @@ public class ESDataManager { // implements DataManager
     	                "\"unit\" : \"km\"" +
     	            "}" +
     	        "}" +
-    	    "],}";
+    	    "]}";
 		String endPoint = "_search";
 		return getQuestions(Question.class, requestBody, endPoint, null, false);
 	}
