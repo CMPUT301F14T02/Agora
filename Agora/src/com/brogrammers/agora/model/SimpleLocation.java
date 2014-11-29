@@ -1,5 +1,7 @@
 package com.brogrammers.agora.model;
 
+import android.widget.EditText;
+
 public class SimpleLocation {
 	private double lat;
 	private double lon;
@@ -9,6 +11,10 @@ public class SimpleLocation {
 		this.lat = d;
 		this.lon = e;
 		this.locationName = locationName;
+	}
+
+	public SimpleLocation(String setLocation) {
+		this.locationName = setLocation;
 	}
 
 	public double getLat() {

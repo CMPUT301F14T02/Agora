@@ -6,6 +6,7 @@ import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.data.LocationDataManager;
+import com.brogrammers.agora.model.SimpleLocation;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -20,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -100,22 +102,21 @@ public class UserPrefActivity extends Activity implements
 		// Is the button now checked?
 		boolean checked = ((RadioButton) view).isChecked();
 		LocationDataManager.getInstance();
-		// Check which radio button was clicked 
+		// Check which radio button was clicked
 		switch (view.getId()) {
-		//GPS enabled
+		// GPS enabled
 		case R.id.useGpsRadio:
 			if (checked) {
-				setHardGpsLocation();
-				//setGpsLocation();
+				setGpsLocation();
+				// setGpsLocation();
 			}
 			break;
 		case R.id.setTextRadio:
 			if (checked) {
-				Toast.makeText(Agora.getContext(),
-						"Google play services available", Toast.LENGTH_SHORT)
-						.show();
+				manualLocation();
+
+				break;
 			}
-			break;
 		}
 	}
 
@@ -155,30 +156,44 @@ public class UserPrefActivity extends Activity implements
 		// TODO Auto-generated method stub
 
 	}
-/*
- * Creates instance of location data manger which parses the coordinates given by the GPS/Wifi Location Client
- */
+
+	/*
+	 * Creates instance of location data manger which parses the coordinates
+	 * given by the GPS/Wifi Location Client
+	 */
 	private void setGpsLocation() {
 		if (mLocationClient.isConnected()) {
 			LocationDataManager.getInstance();
 			mCurrentLocation = mLocationClient.getLastLocation();
 			if (mCurrentLocation != null) {
-				//LocationDataManager.reverseGeoCode(lat, lon);
-				//Toast.makeText(Agora.getContext(),
-						//LocationDataManager.getLocation().getLocationName(),
-						//Toast.LENGTH_SHORT).show();
+				// LocationDataManager.reverseGeoCode(lat, lon);
+				// Toast.makeText(Agora.getContext(),
+				// LocationDataManager.getLocation().getLocationName(),
+				// Toast.LENGTH_SHORT).show();
 			} else {
-				Toast.makeText(Agora.getContext(), "Location is not available...",
-						Toast.LENGTH_SHORT).show();
+				Toast.makeText(Agora.getContext(),
+						"Location is not available...", Toast.LENGTH_SHORT)
+						.show();
 			}
 		}
 	}
-	private void setHardGpsLocation() {
-		if (mLocationClient.isConnected()) {
-			LocationDataManager.getInstance();
-			LocationDataManager.reverseGeoCode(53.5343609, 113.5065085);
 
-		}
+	private void setHardGpsLocation() {
+		// if (mLocationClient.isConnected()) {
+		double e = 53.5343609;
+		double d = 113.5065085;
+		LocationDataManager.getInstance();
+		LocationDataManager.reverseGeoCode(e, d);
+
+		// }
+	}
+
+	private void manualLocation() {
+		LocationDataManager.getInstance();
+		EditText setLocation = (EditText) findViewById(R.id.setLocationEditText);
+		String strLocation = setLocation.toString();
+		SimpleLocation manLocation = new SimpleLocation(strLocation);
+		LocationDataManager.setLocation(manLocation);
 	}
 
 }
