@@ -232,8 +232,8 @@ public class ESDataManager { // implements DataManager
 				Log.e("SERVER",
 						"getQuestion failure: "
 								+ Integer.toString(status));
-				Log.e("SERVER", "responsebody: "
-						/*+ new String(responseBody)*/);
+				Log.e("SERVER", "responsebody: " +
+						new String(responseBody));
 				Toast.makeText(Agora.getContext(),
 						"Failed to pull data from server", 0).show();
 			}

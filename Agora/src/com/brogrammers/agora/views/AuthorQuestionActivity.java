@@ -130,11 +130,16 @@ public class AuthorQuestionActivity extends Activity {
 			if (locationBox.isChecked()){
 				LocationDataManager.getInstance();
 				if (LocationDataManager.getLocationName() != null){
-					
+					QuestionController.getController().addQuestion(title, body, image, true);
+				}
+				else{
+					Toast.makeText(Agora.getContext(), "Please check your location settings.",
+							Toast.LENGTH_SHORT).show();
+					return;
 				}
 			}
 
-			QuestionController.getController().addQuestion(title, body, image);
+			QuestionController.getController().addQuestion(title, body, image, false);
 			finish(); // ends activity
 		}
 	};
