@@ -85,21 +85,23 @@ public class QuestionAdapter extends BaseAdapter {
 
 
 		List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
-		
+		ImageView qFavorite = (ImageView)convertView.findViewById(R.id.qQuestionFavourite);
 		if (favoritedQuestions.contains(question.getID())) {
-			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_pinkfavouritetag);	
+			qFavorite.setImageResource(R.drawable.ic_pinkfavouritetag);	
 		} else {
 			
-			((ImageView)convertView.findViewById(R.id.qQuestionFavourite)).setImageResource(R.drawable.ic_pinkunfavouritetag);	
+			qFavorite.setImageResource(R.drawable.ic_pinkunfavouritetag);	
 		}
+		qFavorite.setOnClickListener(new qFavoriteOnClickListener(position, qFavorite));
 		
 		List<Long> flaggedQuestions = DeviceUser.getUser().getCachedQuestionIDs();
-		
+		ImageView qFlag = (ImageView)convertView.findViewById(R.id.qQuestionFlag);
 		if (flaggedQuestions.contains(question.getID())) {
-			((ImageView)convertView.findViewById(R.id.qQuestionFlag)).setImageResource(R.drawable.ic_tag);
+			qFlag.setImageResource(R.drawable.ic_tag);
 		} else {
-			((ImageView)convertView.findViewById(R.id.qQuestionFlag)).setImageResource(R.drawable.ic_untag);
+			qFlag.setImageResource(R.drawable.ic_untag);
 		}
+		qFlag.setOnClickListener(new qFlagOnClickListener(position, qFlag));
 	
 		convertView.setOnClickListener(new QuestionOnClickListener(position));
 		
@@ -130,6 +132,36 @@ public class QuestionAdapter extends BaseAdapter {
 			Intent intent = new Intent(activity, QuestionActivity.class);
 			intent.putExtra("qid", qid);
 			activity.startActivity(intent);
+		}
+	} 
+	
+	private class qFlagOnClickListener implements OnClickListener {
+		private int position;
+		private ImageView image;
+		qFlagOnClickListener(int position, ImageView image) {
+			this.position = position;
+			this.image = image;
+		}
+		public void onClick(View view) {
+			Long qid = qList.get(position).getID();
+			QuestionController controller = QuestionController.getController();
+			controller.addCache(qid);
+			image.setImageResource(R.drawable.ic_tag);
+		}
+	}
+	
+	private class qFavoriteOnClickListener implements OnClickListener {
+		private int position;
+		private ImageView image;
+		qFavoriteOnClickListener(int position, ImageView image) {
+			this.position = position;
+			this.image = image;
+		}
+		public void onClick(View view) {
+			Long qid = qList.get(position).getID();
+			QuestionController controller = QuestionController.getController();
+			controller.addFavorite(qid);
+			image.setImageResource(R.drawable.ic_pinkfavouritetag);	
 		}
 	}
 	
