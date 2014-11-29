@@ -46,7 +46,7 @@
         android:id="@+id/authorQuestionBodyEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/AuthorQuestionImage"
+        android:layout_above="@+id/attachLocationQuestionBox"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/authorQuestionBodyTextView"
@@ -88,5 +88,14 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/authorQuestionAddPictureGallery"
         android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/attachLocationQuestionBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/AuthorQuestionImage"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="Attach Location" />
 
 </RelativeLayout>

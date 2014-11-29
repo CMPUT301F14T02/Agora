@@ -166,10 +166,10 @@ public class UserPrefActivity extends Activity implements
 			LocationDataManager.getInstance();
 			mCurrentLocation = mLocationClient.getLastLocation();
 			if (mCurrentLocation != null) {
-				// LocationDataManager.reverseGeoCode(lat, lon);
-				// Toast.makeText(Agora.getContext(),
-				// LocationDataManager.getLocation().getLocationName(),
-				// Toast.LENGTH_SHORT).show();
+				 LocationDataManager.reverseGeoCode(lat, lon);
+				 Toast.makeText(Agora.getContext(),
+				 LocationDataManager.getLocation().getLocationName(),
+				 Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(Agora.getContext(),
 						"Location is not available...", Toast.LENGTH_SHORT)

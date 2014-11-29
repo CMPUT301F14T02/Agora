@@ -68,6 +68,7 @@ public class LocationDataManager {
 	private static void disableStrictMode() {
 		  // StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 		  // StrictMode.setThreadPolicy(policy);
+		//http://twigstechtips.blogspot.co.uk/2013/08/android-how-to-fix-networkonmainthreade.html
 
 		  try {
 		    Class<?> strictModeClass = Class.forName("android.os.StrictMode", true, Thread.currentThread().getContextClassLoader());
@@ -112,6 +113,8 @@ public class LocationDataManager {
             JSONObject o = new JSONObject(result.toString());
             o = o.getJSONObject("address");
             String parsedLocation = o.getString("city");
+            parsedLocation += ", ";
+            parsedLocation += o.getString("country");
             currentLocation = new SimpleLocation(d, e, parsedLocation);
 
         }  catch (JSONException e1){
