@@ -82,7 +82,8 @@ public class QuestionAdapter extends BaseAdapter {
 		
 		LinearLayout HLayoutAcount = (LinearLayout)convertView.findViewById(R.id.HLayoutAnswerCount);
 		((TextView)HLayoutAcount.findViewById(R.id.qACountText)).setText(Integer.toString(question.countAnswers()));
-
+		
+		((TextView)convertView.findViewById(R.id.qlocation)).setText(question.getLocationName());
 
 		List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
 		

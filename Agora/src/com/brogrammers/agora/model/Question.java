@@ -93,7 +93,7 @@ public class Question implements Serializable, Comparable<Question> {
 		if (this.locationName != null){
             return locationName;
 		} else {
-			return null;
+			return "";
 		}
 	}
 
