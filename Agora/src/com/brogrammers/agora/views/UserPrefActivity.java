@@ -105,7 +105,8 @@ public class UserPrefActivity extends Activity implements
 		//GPS enabled
 		case R.id.useGpsRadio:
 			if (checked) {
-				setGpsLocation();
+				setHardGpsLocation();
+				//setGpsLocation();
 			}
 			break;
 		case R.id.setTextRadio:
@@ -143,8 +144,8 @@ public class UserPrefActivity extends Activity implements
 				lon = mCurrentLocation.getLongitude();
 
 			} else {
-				LocationDataManager.getInstance();
-				LocationDataManager.reverseGeoCode(53.5343609, 113.5065085);
+				Toast.makeText(Agora.getContext(), "Location is null",
+						Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
@@ -172,4 +173,12 @@ public class UserPrefActivity extends Activity implements
 			}
 		}
 	}
+	private void setHardGpsLocation() {
+		if (mLocationClient.isConnected()) {
+			LocationDataManager.getInstance();
+			LocationDataManager.reverseGeoCode(53.5343609, 113.5065085);
+
+		}
+	}
+
 }
