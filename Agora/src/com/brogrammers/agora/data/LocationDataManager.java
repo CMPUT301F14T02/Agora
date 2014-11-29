@@ -158,6 +158,7 @@ public class LocationDataManager {
 
 	public static void geoCode(final String strLocation) {
 		// compe the url
+		URI2 = "http://nominatim.openstreetmap.org/search/";
 		disableStrictMode();
 		URI2 += strLocation + parameters;
 		URI2.replace(" ", "%20");
@@ -165,7 +166,7 @@ public class LocationDataManager {
 		final List<SimpleLocation> locationList = new ArrayList<SimpleLocation>();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpGet locationRequest = new HttpGet(URI);
+			HttpGet locationRequest = new HttpGet(URI2);
 			HttpResponse response = client.execute(locationRequest);
 			BufferedReader rd = new BufferedReader(new InputStreamReader(
 					response.getEntity().getContent()));
@@ -175,16 +176,18 @@ public class LocationDataManager {
 				result.append(line);
 			}
 
-
-			JSONObject o = new JSONObject(result.toString());
+			JSONArray array = new JSONArray(result.toString());
+			JSONObject o = array.getJSONObject(0);
 			Log.e("JSON Location Result",result.toString());
 			Double parsedLat = o.getDouble("lat");
 			Double parsedLon = o.getDouble("lon");
-			String parsedLocation = o.getString("city");
+			String parsedLocation = o.getString("display_name");
 			currentLocation = new SimpleLocation(parsedLat, parsedLon);
 			currentLocationName = parsedLocation;
 
 		} catch (JSONException e1) {
+			
+			Log.wtf("JSONEXCEPTION", Log.getStackTraceString(e1));
 			e1.printStackTrace();
 		} catch (IllegalStateException e1) {
 			// TODO Auto-generated catch block
