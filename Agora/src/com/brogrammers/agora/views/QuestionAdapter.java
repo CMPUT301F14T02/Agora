@@ -37,6 +37,7 @@ import android.widget.Toast;
 public class QuestionAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private List<Question> qList;
+	private List<Question> unfilteredList = null;
 	private Activity activity;
 	
 	// Adapter Constructor
@@ -44,7 +45,7 @@ public class QuestionAdapter extends BaseAdapter {
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		this.qList = qList;
 		this.activity = activity;
-		doSort();
+		doSortAndFilter();
 	}
 
 	@Override
@@ -165,10 +166,15 @@ public class QuestionAdapter extends BaseAdapter {
 		}
 	}
 	
-	public void doSort() {
-		qList = (new FilterSorterHelper()).sort(qList);
+	public void doSortAndFilter() {
+		qList = unfilteredList == null ? qList : unfilteredList;
+		FilterSorterHelper helper = new FilterSorterHelper();
+		unfilteredList = helper.sort(qList);
+		qList = helper.filter(unfilteredList);
 		notifyDataSetChanged();
 	}
+
+	
 }
 
 
