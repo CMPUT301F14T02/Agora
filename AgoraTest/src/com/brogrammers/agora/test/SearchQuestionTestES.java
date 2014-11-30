@@ -36,7 +36,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/agora/_mapping");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/search_test");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "agora/");
+			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "search_test/");
 		}
 	}
 	
@@ -60,6 +60,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		final Question q1 = new Question("Wow Questions", "What do you think the meaning of monkey is?", null, "Tod");
 		final Question q2= new Question("Wowee Questions", "What do you think the meaning of life is?", null, "Tod");
 		final Question q3 = new Question("Bigtime Questions", "What do you think the meaning of life is?", null, "Tod");
+		final Question q4 = new Question("Bigtime Foo", "What do you think the meaning of life is?", null, "Tod");
 
 		
 		// update the server with the new questions
@@ -69,6 +70,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		es.pushQuestion(q1);
 		es.pushQuestion(q2);
 		es.pushQuestion(q3);
+		es.pushQuestion(q4);
 		postSignal.await(5, TimeUnit.SECONDS);
 		
 		// make the request

@@ -69,7 +69,6 @@ public class MainActivity extends Activity implements Observer {
 		qController = QuestionController.getController();
 
 		user = DeviceUser.getUser();
-		qController = QuestionController.getController();
 		if (user.getUsername() == null) {
 			(new UserNameSelector(this)).show();	
 			Log.e("MAIN ONCREATE","username set to "+user.getUsername());
@@ -96,7 +95,7 @@ public class MainActivity extends Activity implements Observer {
 	protected void refresh() {
 		qController.setObserver(this);
 		List<Question> qList = qController.getAllQuestions();
-		ListView lv = (ListView) findViewById(R.id.listView1);
+		ListView lv = (ListView) findViewById(R.id.answerSearchListView);
 		qAdapter = new QuestionAdapter(qList, this);
 		lv.setAdapter(qAdapter);
 	}
