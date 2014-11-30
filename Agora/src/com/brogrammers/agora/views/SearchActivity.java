@@ -104,16 +104,19 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 		final SearchView sView = (SearchView)menu.findItem(R.id.searchBQV).getActionView();
 		sView.setSubmitButtonEnabled(true);
 		sView.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
-		sView.setOnSearchClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
+		sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			public boolean onQueryTextChange(String newText) {
+				return false;
+			}
+			public boolean onQueryTextSubmit(String query) {
 				int item = (mViewPager.getCurrentItem());
-				String query = sView.getQuery().toString();
 				if (item == 0) {
 					((QuestionsFragment)mSectionsPagerAdapter.getItem(item)).doSearch(query);
+					Log.wtf("SEARCH", "EXECUTE SERACH CLICKED");
 				} else if (item == 1) {
 					((AnswersFragment)mSectionsPagerAdapter.getItem(item)).doSearch(query);
 				}
-				
+				return true;
 			}
 		});
 		return true;
