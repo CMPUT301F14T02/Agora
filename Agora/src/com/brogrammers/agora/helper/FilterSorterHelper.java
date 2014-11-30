@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import com.brogrammers.agora.data.DeviceUser;
 import com.brogrammers.agora.model.Question;
 /**
  * A helper class to help the views in sorting and filtering question lists
@@ -16,14 +17,38 @@ public class FilterSorterHelper {
 	
 	static public boolean descending = true;
 	static public boolean byUpvote = true;
+	public static boolean filterPicture = false;
+	public static boolean filterFavorite = false;
+	
 	/**
 	 * Filters out questions that have images from a questions list
 	 * @param list of questions
 	 * @return list of questions that don't have images
 	 */
-	public ArrayList<Question> filterOutImages(ArrayList<Question> list) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Question> filterOutImages(List<Question> list) {
+		ArrayList<Question> filtered = new ArrayList<Question>();
+		for (Question q : list) {
+			if (q.hasImage()) {
+				filtered.add(q);
+			}
+		}
+		return filtered;
+	}
+	
+	/**
+	 * Filters out questions that have images from a questions list
+	 * @param list of questions
+	 * @return list of questions that don't have images
+	 */
+	public List<Question> filterOutFavorites(List<Question> list) {
+		List<Question> filtered = new ArrayList<Question>();
+		List<Long> favorites = DeviceUser.getUser().getFavoritedQuestionIDs();
+		for (Question q : list) {
+			if (favorites.contains(q.getID())) {
+				filtered.add(q);
+			}
+		}
+		return filtered;
 	}
 	
 	/**
@@ -31,9 +56,24 @@ public class FilterSorterHelper {
 	 * @param list of questions
 	 * @return list of questions that have images
 	 */
-	public ArrayList<Question> filterOutNoImages(ArrayList<Question> list) {
-		// TODO Auto-generated method stub
-		return null; 
+	public List<Question> filterOutNoImages(List<Question> list) {
+		List<Question> filtered = new ArrayList<Question>();
+		for (Question q : list) {
+			if (!q.hasImage()) {
+				filtered.add(q);
+			}
+		}
+		return filtered;
+	}
+	
+	public List<Question> filter(List<Question> questions) {
+		if (filterPicture) {
+			questions = filterOutImages(questions);
+		}
+		if (filterFavorite) {
+			questions = filterOutFavorites(questions);
+		}
+		return questions;
 	}
 	
 	public List<Question> sort(List<Question> questions) {
