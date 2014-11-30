@@ -137,9 +137,10 @@ public class AuthorQuestionActivity extends Activity {
 							Toast.LENGTH_SHORT).show();
 					return;
 				}
-			}
+			} else {
+				QuestionController.getController().addQuestion(title, body, image, false);
 
-			QuestionController.getController().addQuestion(title, body, image, false);
+			}
 			finish(); // ends activity
 		}
 	};

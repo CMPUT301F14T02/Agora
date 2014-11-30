@@ -10,6 +10,5 @@
 	<classpathentry kind="lib" path="libs/java-json.jar"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry exported="true" kind="lib" path="/home/carl/Desktop/301/TheBrogrammers/Agora/libs/google-play-services_lib/libs/google-play-services.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
