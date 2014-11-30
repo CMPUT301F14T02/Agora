@@ -16,6 +16,7 @@ import android.app.Activity;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,9 +47,9 @@ public class UserPrefActivity extends Activity implements
 		int isGooglePlayServiceAvilable = GooglePlayServicesUtil
 				.isGooglePlayServicesAvailable(Agora.getContext());
 		if (isGooglePlayServiceAvilable == ConnectionResult.SUCCESS) {
-			Toast.makeText(Agora.getContext(),
-					"Google play services available", Toast.LENGTH_SHORT)
-					.show();
+			// Toast.makeText(Agora.getContext(),
+			// "Google play services available", Toast.LENGTH_SHORT)
+			// .show();
 		} else {
 			Toast.makeText(Agora.getContext(),
 					"Google play services ist required.", Toast.LENGTH_SHORT)
@@ -114,8 +115,7 @@ public class UserPrefActivity extends Activity implements
 		case R.id.setTextRadio:
 			if (checked) {
 				setHardStringLocation();
-				//manualLocation();
-
+				// manualLocation();
 				break;
 			}
 		}
@@ -135,20 +135,12 @@ public class UserPrefActivity extends Activity implements
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		Toast.makeText(Agora.getContext(), "Connecting to location client...",
-				Toast.LENGTH_SHORT).show();
+		//Toast.makeText(Agora.getContext(), "Connecting to location client...",
+		//		Toast.LENGTH_SHORT).show();
 		if (!mLocationClient.isConnecting()) {
-			Toast.makeText(Agora.getContext(), "Connected!", Toast.LENGTH_SHORT)
-					.show();
-			mCurrentLocation = mLocationClient.getLastLocation();
-			if (mCurrentLocation != null) {
-				lat = mCurrentLocation.getLatitude();
-				lon = mCurrentLocation.getLongitude();
+//			Toast.makeText(Agora.getContext(), "Connected!", Toast.LENGTH_SHORT)
+//					.show();
 
-			} else {
-				Toast.makeText(Agora.getContext(), "Location is null",
-						Toast.LENGTH_SHORT).show();
-			}
 		}
 	}
 
@@ -167,6 +159,8 @@ public class UserPrefActivity extends Activity implements
 			LocationDataManager.getInstance();
 			mCurrentLocation = mLocationClient.getLastLocation();
 			if (mCurrentLocation != null) {
+				lat = mCurrentLocation.getLatitude();
+				lon = mCurrentLocation.getLongitude();
 				locationManager.initLocation(lat, lon);
 				Toast.makeText(Agora.getContext(),
 						LocationDataManager.getLocationName(),
@@ -187,6 +181,7 @@ public class UserPrefActivity extends Activity implements
 
 		// }
 	}
+
 	private void setHardStringLocation() {
 		// if (mLocationClient.isConnected()) {
 		String s = "edmonton";
@@ -194,27 +189,29 @@ public class UserPrefActivity extends Activity implements
 		Toast.makeText(Agora.getContext(),
 				LocationDataManager.getLocationName(), Toast.LENGTH_SHORT)
 				.show();
-//		Toast.makeText(Agora.getContext(),
-//				String.valueOf(LocationDataManager.getLocation().getLat()), Toast.LENGTH_SHORT)
-//				.show();
+		// Toast.makeText(Agora.getContext(),
+		// String.valueOf(LocationDataManager.getLocation().getLat()),
+		// Toast.LENGTH_SHORT)
+		// .show();
 		// }
 	}
-	private void manualLocation() {
-		EditText setLocation = (EditText) findViewById(R.id.setLocationEditText);
-		String strLocation = setLocation.toString();
 
-		locationManager.initLocation(strLocation);
+	public void manualLocation(View v) {
+		RadioButton setLocationButton = (RadioButton) findViewById(R.id.setTextRadio);
+		if (!setLocationButton.isChecked()){
+			Toast.makeText(Agora.getContext(),
+					"Please ensure that set location option is selected", Toast.LENGTH_SHORT)
+					.show();
+			return;
+		}
+		EditText setLocation = (EditText) findViewById(R.id.setLocationEditText);
+		String strLocation = setLocation.getText().toString();
+
+		locationManager.initLocation(strLocation.replace(" ", "%20"));
 		Toast.makeText(Agora.getContext(),
 				LocationDataManager.getLocationName(), Toast.LENGTH_SHORT)
 				.show();
-		// LocationDataManager.setLocationName(strLocation);
 
-		// Toast.makeText(Agora.getContext(),
-		// strLocation, Toast.LENGTH_SHORT)
-		// .show();
-		//
-		// SimpleLocation manLocation = new SimpleLocation(strLocation);
-		// LocationDataManager.setLocation(manLocation);
 
 	}
 
