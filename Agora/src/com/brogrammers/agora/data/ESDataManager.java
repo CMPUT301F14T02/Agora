@@ -385,34 +385,6 @@ public class ESDataManager { // implements DataManager
             }
         }
 	 */
-	public List<Comment> searchCommentByLocation(SimpleLocation location) {
-		// modify query for nested search
-    	String requestBody = "{\"sort\" : [" +
-    	        "{" +
-    	            "\"_geo_distance\" : {" +
-    	                "\"location\" : [" + String.valueOf(location.getLat()) + "," + String.valueOf(location.getLon()) + "]," +
-    	                "\"order\" : \"asc\"," +
-    	                "\"unit\" : \"km\"" +
-    	            "}" +
-    	        "}" +
-    	    "]}";
-		String endPoint = "_search";
-		return getQuestions(Comment.class, requestBody, endPoint, null, false);
-	}
-	public List<Answer> searchAnswerByLocation(SimpleLocation location) {
-		// modify query for nested search
-    	String requestBody = "{\"sort\" : [" +
-    	        "{" +
-    	            "\"_geo_distance\" : {" +
-    	                "\"location\" : [" + String.valueOf(location.getLat()) + "," + String.valueOf(location.getLon()) + "]," +
-    	                "\"order\" : \"asc\"," +
-    	                "\"unit\" : \"km\"" +
-    	            "}" +
-    	        "}" +
-    	    "]}";
-		String endPoint = "_search";
-		return getQuestions(Answer.class, requestBody, endPoint, null, false);
-	}
 	
 	public List<Question> searchQuestionsByLocation(SimpleLocation location) {
 		String requestBody = "{\n"+
