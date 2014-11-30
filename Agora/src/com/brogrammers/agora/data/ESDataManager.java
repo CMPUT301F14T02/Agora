@@ -3,6 +3,7 @@ package com.brogrammers.agora.data;
 import java.io.IOException;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.concurrent.Callable;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
@@ -598,5 +600,107 @@ public class ESDataManager { // implements DataManager
 			offlineQueue.addToQueue(qItem);
 		}
 
+	}
+	
+	public void setServerMapping() throws ClientProtocolException, IOException{
+		HttpClient client = new DefaultHttpClient();
+		HttpDelete deleteRequest = new HttpDelete(DOMAIN + INDEXNAME + TYPENAME + "_mapping");
+		client.execute(deleteRequest);	
+		String mapping="{ \"" + TYPENAME + "\": {\n" +
+				" \"properties\": {\n"+
+				" \"answers\": {\n"+
+				" \"type\": \"nested\", \n"+
+				" \"properties\": {\n"+
+				" \"author\": {\n"+
+				" \"type\": \"string\"\n"+
+				" },\n"+
+				" \"body\": {\n"+
+				" \"type\": \"string\"\n"+
+				" },\n"+
+				" \"comments\": {\n"+
+				" \"properties\": {\n"+
+				" \"author\": {\n"+
+				" \"properties\": {\n"+
+				" \"username\": {\n"+
+				" \"type\": \"string\"\n"+
+				" }\n"+
+				" }\n"+
+				" },\n"+
+				" \"body\": {\n"+
+				" \"type\": \"string\"\n"+
+				" },\n"+
+				" \"date\": {\n"+
+				" \"type\": \"long\"\n"+
+				" },\n"+
+				" \"posted\": {\n"+
+				" \"type\": \"boolean\"\n"+
+				" }\n"+
+				" }\n"+
+				" },\n"+
+				" \"date\": {\n"+
+				" \"type\": \"long\"\n"+
+				" },\n"+
+				" \"hasImage\": {\n"+
+				" \"type\": \"boolean\"\n"+
+				" },\n"+
+				" \"rating\": {\n"+
+				" \"type\": \"long\"\n"+
+				" },\n"+
+				" \"uniqueID\": {\n"+
+				" \"type\": \"long\"\n"+
+				" }\n"+
+				" }\n"+
+				" },\n"+
+				" \"author\": {\n"+
+				" \"type\": \"string\"\n"+
+				" },\n"+
+				" \"body\": {\n"+
+				" \"type\": \"string\"\n"+
+				" },\n"+
+				" \"comments\": {\n"+
+				" \"properties\": {\n"+
+				" \"author\": {\n"+
+				" \"properties\": {\n"+
+				" \"username\": {\n"+
+				" \"type\": \"string\"\n"+
+				" }\n"+
+				" }\n"+
+				" },\n"+
+				" \"body\": {\n"+
+				" \"type\": \"string\"\n"+
+				" },\n"+
+				" \"date\": {\n"+
+				" \"type\": \"long\"\n"+
+				" },\n"+
+				" \"posted\": {\n"+
+				" \"type\": \"boolean\"\n"+
+				" }\n"+
+				" }\n"+
+				" },\n"+
+				" \"date\": {\n"+
+				" \"type\": \"long\"\n"+
+				" },\n"+
+				" \"hasImage\": {\n"+
+				" \"type\": \"boolean\"\n"+
+				" },\n"+
+				" \"location\": {\n"+
+				" \"type\": \"geo_point\" \n"+
+				" },\n"+
+				" \"rating\": {\n"+
+				" \"type\": \"long\"\n"+
+				" },\n"+
+				" \"title\": {\n"+
+				" \"type\": \"string\"\n"+
+				" },\n"+
+				" \"uniqueID\": {\n"+
+				" \"type\": \"long\"\n"+
+				" }\n"+
+				" }\n"+
+				" }\n"+
+				" }";
+		HttpPost httppost = new HttpPost(DOMAIN + INDEXNAME + TYPENAME + "_mapping");
+		httppost.setEntity(new StringEntity(mapping));
+		httppost.setHeader("Accept", "application/json");
+		client.execute(httppost);	
 	}
 }

@@ -117,6 +117,9 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 					" \"hasImage\": {\n"+
 					" \"type\": \"boolean\"\n"+
 					" },\n"+
+					" \"location\": {\n"+
+					" \"type\": \"geo_point\" \n"+
+					" },\n"+
 					" \"rating\": {\n"+
 					" \"type\": \"long\"\n"+
 					" },\n"+
