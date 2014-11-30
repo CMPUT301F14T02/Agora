@@ -36,7 +36,7 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 public class LocationDataManager {
 	private static String URI = "http://nominatim.openstreetmap.org/reverse?format=json&";
 	private static String URI2 = "http://nominatim.openstreetmap.org/search/";
-	private static String parameters = "?format=json&limit=1";
+	private static String parameters = "?format=json&limit=1&addressdetails=1";
 	private static SimpleLocation currentLocation;
 	private static String currentLocationName;
 	public static JSONObject testjson;
@@ -63,16 +63,14 @@ public class LocationDataManager {
 	}
 
 	public void initLocation(double d, double e) {
-		if (currentLocation == null) {
-			currentLocation = new SimpleLocation(d, e);
-			reverseGeoCode(d, e);
-		}
+		currentLocation = new SimpleLocation(d, e);
+		reverseGeoCode(d, e);
+
 	}
 
 	public void initLocation(String strLocation) {
-		if (currentLocation == null) {
-			geoCode(strLocation);
-		}
+		geoCode(strLocation);
+		
 
 	}
 
@@ -161,7 +159,6 @@ public class LocationDataManager {
 		URI2 = "http://nominatim.openstreetmap.org/search/";
 		disableStrictMode();
 		URI2 += strLocation + parameters;
-		URI2.replace(" ", "%20");
 		Log.e("Location URL", URI2);
 		final List<SimpleLocation> locationList = new ArrayList<SimpleLocation>();
 		HttpClient client = new DefaultHttpClient();
@@ -178,10 +175,13 @@ public class LocationDataManager {
 
 			JSONArray array = new JSONArray(result.toString());
 			JSONObject o = array.getJSONObject(0);
-			Log.e("JSON Location Result",result.toString());
 			Double parsedLat = o.getDouble("lat");
 			Double parsedLon = o.getDouble("lon");
-			String parsedLocation = o.getString("display_name");
+			o = o.getJSONObject("address");
+			Log.e("JSON Location Result",result.toString());
+			String parsedLocation = o.getString("city");
+			parsedLocation += ", ";
+			parsedLocation += o.getString("country");
 			currentLocation = new SimpleLocation(parsedLat, parsedLon);
 			currentLocationName = parsedLocation;
 

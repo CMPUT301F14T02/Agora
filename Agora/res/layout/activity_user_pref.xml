@@ -17,60 +17,54 @@
         android:layout_alignParentTop="true"
         android:text="Location Awareness"
         android:textAppearance="?android:attr/textAppearanceLarge" />
+
 	<RadioGroup
 	    android:id="@+id/gpsRadioGroup"
 	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content" >
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_alignParentRight="true" >
 
 		<RadioButton
 		    android:id="@+id/useGpsRadio"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:layout_marginTop="46dp"
-		    android:onClick="onRadioButtonClicked" />
+		    android:onClick="onRadioButtonClicked"
+		    android:text="Use GPS" />
 
 		<RadioButton
 		    android:id="@+id/setTextRadio"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
-		    android:layout_marginBottom="17dp"
-		    android:onClick="onRadioButtonClicked" />
+		    android:layout_marginBottom="5dp"
+		    android:onClick="onRadioButtonClicked"
+		    android:text="Set Location" />
 
 	</RadioGroup>
-
-	<TextView
-	    android:id="@+id/useGpsTextView"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/locationTopicText"
-	    android:layout_marginTop="24dp"
-	    android:layout_toRightOf="@+id/gpsRadioGroup"
-	    android:text="Use GPS"
-	    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-	<TextView
-	    android:id="@+id/setLocationTextView"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/useGpsTextView"
-	    android:layout_marginTop="14dp"
-	    android:layout_toRightOf="@+id/gpsRadioGroup"
-	    android:text="Set Location"
-	    android:textAppearance="?android:attr/textAppearanceMedium" />
 
 	<EditText
 	    android:id="@+id/setLocationEditText"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-	    android:layout_alignLeft="@+id/gpsRadioGroup"
-	    android:layout_alignParentRight="true"
-	    android:layout_below="@+id/setLocationTextView"
+	    android:layout_alignBottom="@+id/setLocationButton"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/gpsRadioGroup"
+	    android:layout_toLeftOf="@+id/setLocationButton"
 	    android:ems="10"
 	    android:hint="Enter Location..." >
 
 	    <requestFocus />
 	</EditText>
+
+	<Button
+	    android:id="@+id/setLocationButton"
+	    style="?android:attr/buttonStyleSmall"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignRight="@+id/locationTopicText"
+	    android:layout_below="@+id/gpsRadioGroup"
+	    android:onClick="manualLocation"
+	    android:text="Set" />
 	
 </RelativeLayout>
