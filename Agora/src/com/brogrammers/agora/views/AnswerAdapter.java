@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.PorterDuff;
 import java.util.Date;
 
 import com.brogrammers.agora.Agora;
@@ -110,6 +111,7 @@ public class AnswerAdapter extends BaseAdapter {
 		
 		//set text on each TextView & Buttons\
 		comment.setText("Comments ("+Integer.toString(answer.getComments().size())+")");
+		comment.getBackground().setColorFilter(0x44BABABA, PorterDuff.Mode.MULTIPLY);
 		
 		// Handles the empty string case to display a blank instead of hint text
 		if (!TextUtils.isEmpty(answer.getBody())) {
