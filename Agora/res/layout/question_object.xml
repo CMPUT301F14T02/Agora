@@ -3,30 +3,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <TextView
-        android:id="@+id/qobjecttitle"
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/RatingHLayout"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_alignLeft="@+id/qAuthor"
-        android:layout_alignRight="@+id/qAuthor"
-        android:layout_toRightOf="@+id/RatingHLayout"
-        android:gravity="left"
-        android:hint="@string/titletext"
-        android:textColor="#000000"
-        android:ellipsize="end"
-        android:scrollHorizontally="true"
-        android:maxLines="2"
-        android:textSize="18dp" />
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/qQuestionFavourite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/ic_pinkfavouritetag" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/RatingHLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/HLayoutAnswerCount"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/HLayoutAnswerCount" >
 
         <ImageView
             android:id="@+id/AuthorQuestionImage"
@@ -45,46 +43,54 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/linearLayout2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/linearLayout1"
+        android:layout_toRightOf="@+id/RatingHLayout"
         android:orientation="vertical" >
 
-        <ImageView
-            android:id="@+id/qQuestionFavourite"
+        <TextView
+            android:id="@+id/qobjecttitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:src="@drawable/ic_pinkfavouritetag" />
+            android:ellipsize="end"
+            android:gravity="left"
+            android:hint="@string/titletext"
+            android:maxLines="2"
+            android:scrollHorizontally="true"
+            android:textColor="#000000"
+            android:textSize="18dp" />
 
-        <ImageView
-            android:id="@+id/qQuestionFlag"
+        <TextView
+            android:id="@+id/qAuthor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:clickable="true"
-            android:src="@drawable/ic_tag" />
+            android:hint="Author, Date"
+            android:paddingTop="2px"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="#444444" />
+
+        <TextView
+            android:id="@+id/qlocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Post Location"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="#444444"
+            android:textColorHint="#444444" />
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/qAuthor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/linearLayout1"
-        android:layout_toLeftOf="@+id/linearLayout1"
-        android:layout_toRightOf="@+id/HLayoutAnswerCount"
-        android:hint="Author, Date"
-        android:paddingTop="2px"
-        android:textColor="#444444" />
 
     <LinearLayout
         android:id="@+id/HLayoutAnswerCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignTop="@+id/qAuthor" >
+        android:layout_below="@+id/linearLayout2" >
 
         <ImageView
             android:id="@+id/q_AnswerCountIcon"
@@ -100,17 +106,23 @@
             android:hint="Count"
             android:textColor="#000000"
             android:textSize="20dp" />
-
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/qlocation"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toLeftOf="@+id/linearLayout1"
-        android:layout_alignBottom="@+id/HLayoutAnswerCount"
-        android:layout_toRightOf="@+id/HLayoutAnswerCount"
-        android:hint="Post Location"
-        android:textColor="#444444" />
+        android:layout_alignLeft="@+id/linearLayout1"
+        android:layout_alignTop="@+id/HLayoutAnswerCount"
+        android:orientation="vertical" >
+
+        <ImageView
+            android:id="@+id/qQuestionFlag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:src="@drawable/ic_tag" />
+
+    </LinearLayout>
 
 </RelativeLayout>
