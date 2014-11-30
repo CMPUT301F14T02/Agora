@@ -107,6 +107,16 @@ public class QuestionController {
 			return null;
 		}
 	}
+	
+	public List<Answer> searchAnswers(String query) {
+		if (eSearch.isConnected()) {
+			searchAnswerResults = eSearch.searchAnswers(query);
+			return searchAnswerResults;
+		} else {
+			// TODO: handle no network
+			return null;
+		}
+	}
 
 	/**
 	 * Called when a user submits a question. Uploads the question to the

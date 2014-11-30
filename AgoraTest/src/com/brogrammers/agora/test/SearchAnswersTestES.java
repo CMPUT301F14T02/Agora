@@ -186,11 +186,7 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
 			public void run() {
-				try {
-					results.add((ArrayList<Answer>)es.searchAnswers("perspective"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}	
+				results.add((ArrayList<Answer>)es.searchAnswers("perspective"));
 			}
 		});
 		assertTrue("Received result before one was expected.", results.get(0).size() == 0);

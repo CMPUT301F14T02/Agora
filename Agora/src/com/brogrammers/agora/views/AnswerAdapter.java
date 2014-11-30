@@ -46,22 +46,29 @@ public class AnswerAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private List<Question> qList;
 	private Activity activity;
+	private List<Answer> answers;
 	private DateFormat df = new SimpleDateFormat ("dd/MM/yy HH:mm:ss",Locale.getDefault());
 	
-	AnswerAdapter(Question q, Activity a){
+	AnswerAdapter(Question q, Activity activity){
 		this.question = q;
-		this.activity = a;
-//		if (q.size() > 0) {
-//			this.question = q.get(0);
-//		}
+		this.activity = activity;
+		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
+		this.answers = null;
+	}
+	
+	AnswerAdapter(List<Answer> answers, Activity activity) {
+		this.question = null;
+		this.activity = activity;
+		this.answers = answers;
 		this.inflater = (LayoutInflater)Agora.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);	
 	}
 
 	@Override
 	public int getCount() {
 		if (question != null) {
-//			Toast.makeText(Agora.getContext(), "AnswerAdapter getCount returning "+Integer.toString(question.countAnswers()), 0).show();
 			return question.countAnswers();
+		} else if (answers != null) {
+			return answers.size();
 		} else {
 			return 0;
 		}
@@ -71,6 +78,8 @@ public class AnswerAdapter extends BaseAdapter {
 	public Object getItem(int position) {
 		if (question != null) {
 			return question.getAnswers().get(position);
+		} else if (answers != null) {
+			return answers.get(position);
 		} else {
 			return 0;
 		}
@@ -80,6 +89,8 @@ public class AnswerAdapter extends BaseAdapter {
 	public long getItemId(int position) {
 		if (question != null) {
 			return question.getAnswers().get(position).getID();
+		} else if (answers != null) {
+			return answers.get(position).getID();
 		} else {
 			return 0;
 		}
