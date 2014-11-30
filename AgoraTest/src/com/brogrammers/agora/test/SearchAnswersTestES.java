@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.brogrammers.agora.Agora;
@@ -38,6 +40,99 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 		try {
 			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/SearchAnswers/_mapping");
 			client.execute(deleteRequest);
+			String mapping="{ \"SearchAnswers\": {\n"+
+					" \"properties\": {\n"+
+					" \"answers\": {\n"+
+					" \"type\": \"nested\", \n"+
+					" \"properties\": {\n"+
+					" \"author\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"body\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"comments\": {\n"+
+					" \"properties\": {\n"+
+					" \"author\": {\n"+
+					" \"properties\": {\n"+
+					" \"username\": {\n"+
+					" \"type\": \"string\"\n"+
+					" }\n"+
+					" }\n"+
+					" },\n"+
+					" \"body\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"date\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"posted\": {\n"+
+					" \"type\": \"boolean\"\n"+
+					" }\n"+
+					" }\n"+
+					" },\n"+
+					" \"date\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"hasImage\": {\n"+
+					" \"type\": \"boolean\"\n"+
+					" },\n"+
+					" \"rating\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"uniqueID\": {\n"+
+					" \"type\": \"long\"\n"+
+					" }\n"+
+					" }\n"+
+					" },\n"+
+					" \"author\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"body\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"comments\": {\n"+
+					" \"properties\": {\n"+
+					" \"author\": {\n"+
+					" \"properties\": {\n"+
+					" \"username\": {\n"+
+					" \"type\": \"string\"\n"+
+					" }\n"+
+					" }\n"+
+					" },\n"+
+					" \"body\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"date\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"posted\": {\n"+
+					" \"type\": \"boolean\"\n"+
+					" }\n"+
+					" }\n"+
+					" },\n"+
+					" \"date\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"hasImage\": {\n"+
+					" \"type\": \"boolean\"\n"+
+					" },\n"+
+					" \"rating\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"title\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"uniqueID\": {\n"+
+					" \"type\": \"long\"\n"+
+					" }\n"+
+					" }\n"+
+					" }\n"+
+					" }";
+			HttpPost httppost = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f14t02/SearchAnswers/_mapping");
+			httppost.setEntity(new StringEntity(mapping));
+			httppost.setHeader("Accept", "application/json");
+			client.execute(httppost);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 

@@ -271,6 +271,7 @@ public class ESDataManager { // implements DataManager
 					} else {
 						Log.e("SERVER", "Receiving answer results");
 						Log.e("SERVER", jsonArray.toString());
+						String[] tokens = answerQuery.split("\\s+");
 						for (int i = 0; i < jsonArray.length(); i++) {
 							JSONObject a = jsonArray.getJSONObject(i);
 							a = a.getJSONObject("_source");
@@ -281,7 +282,14 @@ public class ESDataManager { // implements DataManager
 						    	Log.e("SERVER", answer.toString());
 						    	Answer qObject = gson.fromJson(answer.toString(),
 						    			Answer.class);
-						    	answerList.add(qObject);
+						    	for (int k = 0; k < tokens.length; k++){
+						    		Log.e("SERVER", "Token " + tokens[k]);
+						    		Log.e("SERVER", "body being searched " + qObject.getBody());
+						    		if (qObject.getBody().contains(tokens[k])){
+						    			answerList.add(qObject);
+						    			break;
+						    		}
+						    	}
 							}
 						}
 					}
