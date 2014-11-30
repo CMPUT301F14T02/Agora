@@ -29,9 +29,11 @@ public class Question implements Serializable, Comparable<Question> {
 	private Long uniqueID;
 	private ArrayList<Comment> comments;
 	private ArrayList<Answer> answers;
+	private boolean hasLocation;
 	private boolean hasImage;
 	private SimpleLocation location;
 	private String locationName;
+	
 	/**
 	 * Question constructor. Date is created at time of creation.
 	 * @param title String will be set as title/
@@ -49,7 +51,15 @@ public class Question implements Serializable, Comparable<Question> {
 		uniqueID = md5.hash(date.toString()+author+body+title);
 		comments = new ArrayList<Comment>();
 		answers = new ArrayList<Answer>();
+		hasLocation = false;
 		hasImage = ((image != null) ? (image.length > 0) : false);
+	}
+	
+	public Question(String title, String body, byte[] image, String user, SimpleLocation location, String locationName) {
+		this(title, body, image, user);
+		this.location = location;
+		this.locationName = locationName;
+		hasLocation = true;
 	}
 	
 	public boolean hasImage() {
@@ -76,7 +86,7 @@ public class Question implements Serializable, Comparable<Question> {
 		if (this.locationName != null){
             return locationName;
 		} else {
-			return null;
+			return "";
 		}
 	}
 

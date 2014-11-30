@@ -216,8 +216,8 @@ public class ESDataManager { // implements DataManager
 			e1.printStackTrace();
 		}
 		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
-		Log.e("SERVER GET URI", DOMAIN + INDEXNAME + TYPENAME + endPoint);
-		Log.e("SERVER GET BODY", requestBody);
+//		Log.e("SERVER GET URI", DOMAIN + INDEXNAME + TYPENAME + endPoint);
+//		Log.e("SERVER GET BODY", requestBody);
 		client.post(Agora.getContext(), URI, stringEntityBody,
 				"application/json", new AsyncHttpResponseHandler() {
 		
@@ -241,7 +241,7 @@ public class ESDataManager { // implements DataManager
 
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-				Log.e("SERVER", "Question get success");
+//				Log.e("SERVER", "Question get success");
 				try {
 					String responseBody = new String(arg2);
 					Log.e("SERVER", "Server received data"); 
@@ -570,6 +570,7 @@ public class ESDataManager { // implements DataManager
 	 *            request.
 	 */
 	private void updateServer(final QueryItem qItem) {
+//		Log.e("SERVER UPDATED", "updateServer called");
 		if (connected) {
 
             Log.e("SERVER", "Pass Connected test");
@@ -582,8 +583,7 @@ public class ESDataManager { // implements DataManager
 								byte[] response) {
 							// called when response HTTP status is "200 OK"
 							Log.e("SERVER UPDATED URI = ", qItem.getURI());
-							Log.e("SERVER UPDATED",
-									"updateServer method success.");
+							Log.e("SERVER UPDATED",	"updateServer method success.");
 						}
 
 						@Override

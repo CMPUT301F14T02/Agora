@@ -150,7 +150,7 @@ public class MainActivity extends Activity implements Observer {
 			openSearchBar(item);
 			return true;
 		case R.id.sortBQV:
-			openSortMenu(qAdapter);
+			(new SortFilterMenu(this, qAdapter)).openMenu();
 			return true;
 		case R.id.refreshMain:
 			onResume();
@@ -205,58 +205,12 @@ public class MainActivity extends Activity implements Observer {
 		startActivity(i);
 	}
 
-	/**
-	 * Opens sort dialog where user can filter/sort mainActivity. By favourites,
-	 * score, and by picture. Currently does not work. Need to implement.
-	 */
-	public void openSortMenu(final QuestionAdapter qAdapter) {
-		// Create Dialog Menu for the Sorting Menu
-		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-				
-		// Get the layout inflater;
-		// Inflate and set the layout for the dialog
-		// Pass null as the parent view because its going in the dialog layout
-		final View dialog = inflater.inflate(R.layout.sortdialogue, null);
-		
-		final RadioButton rbUpvote = (RadioButton) dialog.findViewById(R.id.sortupvoteradioButton);
-		final RadioButton rbDate = (RadioButton) dialog.findViewById(R.id.sortbyDateRadioButton);
-		final RadioButton rbAscending = (RadioButton) dialog.findViewById(R.id.arrangebyAscOrderRadio);
-		final RadioButton rbDescending = (RadioButton) dialog.findViewById(R.id.descOrderRadioButton);
-		
-		builder.setTitle("Sorting Options");
-		builder.setView(dialog)
-				// Add action buttons
-				.setPositiveButton(R.string.sort,
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-								FilterSorterHelper.byUpvote = rbUpvote.isChecked();
-								FilterSorterHelper.descending = rbDescending.isChecked();
-							
-								if(rbDate.isChecked()) {
-									Toast.makeText(Agora.getContext(), "Sorting by Date", Toast.LENGTH_SHORT).show();
-								} else {
-									Toast.makeText(Agora.getContext(), "Sorting by Upvote", Toast.LENGTH_SHORT).show();
-								}
-								
-								qAdapter.doSort();
-							}
-				})
-				.setNegativeButton("Cancel",
-						new DialogInterface.OnClickListener() {
-							public void onClick(DialogInterface dialog, int id) {
-							}
-						});
 
-		builder.create();
-		builder.show();
-
-	}
 
 	@Override
 	public void update() {
-		qAdapter.doSort();
-//		qAdapter.notifyDataSetChanged();
-		// Toast.makeText(this, "Notifiy qAdapter Change", 0).show();
+		qAdapter.doSortAndFilter();
+
 	}
 
 }

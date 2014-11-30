@@ -56,6 +56,7 @@ public class UserPrefActivity extends Activity implements
 			GooglePlayServicesUtil.getErrorDialog(isGooglePlayServiceAvilable,
 					this, 1122).show();
 		}
+		locationManager = LocationDataManager.getInstance();
 
 	}
 
@@ -108,12 +109,12 @@ public class UserPrefActivity extends Activity implements
 		case R.id.useGpsRadio:
 			if (checked) {
 				setGpsLocation();
-				// setGpsLocation();
 			}
 			break;
 		case R.id.setTextRadio:
 			if (checked) {
-				manualLocation();
+				setHardStringLocation();
+				//manualLocation();
 
 				break;
 			}
@@ -166,10 +167,10 @@ public class UserPrefActivity extends Activity implements
 			LocationDataManager.getInstance();
 			mCurrentLocation = mLocationClient.getLastLocation();
 			if (mCurrentLocation != null) {
-				 LocationDataManager.reverseGeoCode(lat, lon);
-				 Toast.makeText(Agora.getContext(),
-				 LocationDataManager.getLocationName(),
-				 Toast.LENGTH_SHORT).show();
+				locationManager.initLocation(lat, lon);
+				Toast.makeText(Agora.getContext(),
+						LocationDataManager.getLocationName(),
+						Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(Agora.getContext(),
 						"Location is not available...", Toast.LENGTH_SHORT)
@@ -182,23 +183,38 @@ public class UserPrefActivity extends Activity implements
 		// if (mLocationClient.isConnected()) {
 		double e = 53.5343609;
 		double d = 113.5065085;
-		LocationDataManager.getInstance();
-		LocationDataManager.reverseGeoCode(e, d);
+		LocationDataManager.getInstance().initLocation(e, d);
 
 		// }
 	}
-
+	private void setHardStringLocation() {
+		// if (mLocationClient.isConnected()) {
+		String s = "edmonton";
+		LocationDataManager.getInstance().initLocation(s);
+		Toast.makeText(Agora.getContext(),
+				LocationDataManager.getLocationName(), Toast.LENGTH_SHORT)
+				.show();
+//		Toast.makeText(Agora.getContext(),
+//				String.valueOf(LocationDataManager.getLocation().getLat()), Toast.LENGTH_SHORT)
+//				.show();
+		// }
+	}
 	private void manualLocation() {
-		LocationDataManager.getInstance();
 		EditText setLocation = (EditText) findViewById(R.id.setLocationEditText);
 		String strLocation = setLocation.toString();
 
-		LocationDataManager.setLocationName(strLocation);
+		locationManager.initLocation(strLocation);
 		Toast.makeText(Agora.getContext(),
-				strLocation, Toast.LENGTH_SHORT)
+				LocationDataManager.getLocationName(), Toast.LENGTH_SHORT)
 				.show();
-		//SimpleLocation manLocation = new SimpleLocation(strLocation);
-		//LocationDataManager.setLocation(manLocation);
+		// LocationDataManager.setLocationName(strLocation);
+
+		// Toast.makeText(Agora.getContext(),
+		// strLocation, Toast.LENGTH_SHORT)
+		// .show();
+		//
+		// SimpleLocation manLocation = new SimpleLocation(strLocation);
+		// LocationDataManager.setLocation(manLocation);
 
 	}
 

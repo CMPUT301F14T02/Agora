@@ -72,7 +72,7 @@ public class CacheDataManager implements DataManager {
 	 */
 
 	public List<Question> getQuestions() {
-		Log.e("CACHE", "size of questionCache is " + questionCache.size());
+//		Log.e("CACHE", "size of questionCache is " + questionCache.size());
 		return new ArrayList<Question>(questionCache.values());
 	}
 

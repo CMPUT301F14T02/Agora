@@ -36,99 +36,118 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 public class LocationDataManager {
 	private static String URI = "http://nominatim.openstreetmap.org/reverse?format=json&";
 	private static String URI2 = "http://nominatim.openstreetmap.org/search/";
-	private static String parameters = "?format=json&addressdetails=0";
+	private static String parameters = "?format=json&limit=1";
 	private static SimpleLocation currentLocation;
 	private static String currentLocationName;
 	public static JSONObject testjson;
 	public static LocationDataManager self;
-	
+
 	public static LocationDataManager getInstance() {
 		if (self == null) {
 			self = new LocationDataManager();
 		}
 		return self;
 	}
-	
-	public static SimpleLocation getLocation(){
+
+	public static SimpleLocation getLocation() {
 		return currentLocation;
 	}
-	
+
 	public static void setLocationName(String manLocation) {
 		currentLocationName = manLocation;
-		
+
 	}
-	
-	public static String getLocationName(){
+
+	public static String getLocationName() {
 		return currentLocationName;
 	}
 
-	public void initLocation(double d, double e){
-		if (currentLocation == null){
+	public void initLocation(double d, double e) {
+		if (currentLocation == null) {
 			currentLocation = new SimpleLocation(d, e);
 			reverseGeoCode(d, e);
 		}
-		
+	}
+
+	public void initLocation(String strLocation) {
+		if (currentLocation == null) {
+			geoCode(strLocation);
+		}
+
 	}
 
 	/**
-	 * This snippet allows UI on main thread.
-	 * Normally it's 2 lines but since we're supporting 2.x, we need to reflect.
+	 * This snippet allows UI on main thread. Normally it's 2 lines but since
+	 * we're supporting 2.x, we need to reflect.
 	 */
 	private static void disableStrictMode() {
-		  // StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		  // StrictMode.setThreadPolicy(policy);
-		//http://twigstechtips.blogspot.co.uk/2013/08/android-how-to-fix-networkonmainthreade.html
+		// StrictMode.ThreadPolicy policy = new
+		// StrictMode.ThreadPolicy.Builder().permitAll().build();
+		// StrictMode.setThreadPolicy(policy);
+		// http://twigstechtips.blogspot.co.uk/2013/08/android-how-to-fix-networkonmainthreade.html
 
-		  try {
-		    Class<?> strictModeClass = Class.forName("android.os.StrictMode", true, Thread.currentThread().getContextClassLoader());
-		    Class<?> threadPolicyClass = Class.forName("android.os.StrictMode$ThreadPolicy", true, Thread .currentThread().getContextClassLoader());
-		    Class<?> threadPolicyBuilderClass = Class.forName("android.os.StrictMode$ThreadPolicy$Builder", true, Thread.currentThread().getContextClassLoader());
+		try {
+			Class<?> strictModeClass = Class.forName("android.os.StrictMode",
+					true, Thread.currentThread().getContextClassLoader());
+			Class<?> threadPolicyClass = Class.forName(
+					"android.os.StrictMode$ThreadPolicy", true, Thread
+							.currentThread().getContextClassLoader());
+			Class<?> threadPolicyBuilderClass = Class.forName(
+					"android.os.StrictMode$ThreadPolicy$Builder", true, Thread
+							.currentThread().getContextClassLoader());
 
-		    Method setThreadPolicyMethod = strictModeClass.getMethod("setThreadPolicy", threadPolicyClass);
+			Method setThreadPolicyMethod = strictModeClass.getMethod(
+					"setThreadPolicy", threadPolicyClass);
 
-		    Method detectAllMethod = threadPolicyBuilderClass.getMethod("detectAll");
-		    Method penaltyMethod = threadPolicyBuilderClass.getMethod("penaltyLog");
-		    Method buildMethod = threadPolicyBuilderClass.getMethod("build");
+			Method detectAllMethod = threadPolicyBuilderClass
+					.getMethod("detectAll");
+			Method penaltyMethod = threadPolicyBuilderClass
+					.getMethod("penaltyLog");
+			Method buildMethod = threadPolicyBuilderClass.getMethod("build");
 
-		    Constructor<?> threadPolicyBuilderConstructor = threadPolicyBuilderClass.getConstructor();
-		    Object threadPolicyBuilderObject = threadPolicyBuilderConstructor.newInstance();
+			Constructor<?> threadPolicyBuilderConstructor = threadPolicyBuilderClass
+					.getConstructor();
+			Object threadPolicyBuilderObject = threadPolicyBuilderConstructor
+					.newInstance();
 
-		    Object obj = detectAllMethod.invoke(threadPolicyBuilderObject);
+			Object obj = detectAllMethod.invoke(threadPolicyBuilderObject);
 
-		    obj = penaltyMethod.invoke(obj);
-		    Object threadPolicyObject = buildMethod.invoke(obj);
-		    setThreadPolicyMethod.invoke(strictModeClass, threadPolicyObject);
-		  }
-		  catch (Exception ex) {
-		    Log.w("disableStrictMode", ex);
-		  }
-		} 
-	
-	public static void  reverseGeoCode(final double d, final double e){
+			obj = penaltyMethod.invoke(obj);
+			Object threadPolicyObject = buildMethod.invoke(obj);
+			setThreadPolicyMethod.invoke(strictModeClass, threadPolicyObject);
+		} catch (Exception ex) {
+			Log.w("disableStrictMode", ex);
+		}
+	}
+
+	private static void reverseGeoCode(final double d, final double e) {
 		// compe the url
 		disableStrictMode();
 		URI += "lat=" + String.valueOf(d) + "&" + "lon=" + String.valueOf(e);
+		Log.e("Location URL", URI);
 		final List<SimpleLocation> locationList = new ArrayList<SimpleLocation>();
-        HttpClient client = new DefaultHttpClient();
-        try {
-            HttpGet locationRequest = new HttpGet(URI);
-            HttpResponse response = client.execute(locationRequest);
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuffer result = new StringBuffer();
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
-            } 
-            JSONObject o = new JSONObject(result.toString());
-            o = o.getJSONObject("address");
-            String parsedLocation = o.getString("city");
-            parsedLocation += ", ";
-            parsedLocation += o.getString("country");
-            currentLocationName = parsedLocation;
+		HttpClient client = new DefaultHttpClient();
+		try {
+			HttpGet locationRequest = new HttpGet(URI);
+			HttpResponse response = client.execute(locationRequest);
+			BufferedReader rd = new BufferedReader(new InputStreamReader(
+					response.getEntity().getContent()));
+			StringBuffer result = new StringBuffer();
+			String line = "";
+			while ((line = rd.readLine()) != null) {
+				result.append(line);
+			}
+			JSONObject o = new JSONObject(result.toString());
+			Log.e("JSON Location Result",result.toString());
+			o = o.getJSONObject("address");
+			String parsedLocation = o.getString("city");
+			parsedLocation += ", ";
+			parsedLocation += o.getString("country");
+			currentLocationName = parsedLocation;
 
-        }  catch (JSONException e1){
-        	e1.printStackTrace();
-        } catch (IllegalStateException e1) {
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		} catch (IllegalStateException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
@@ -137,30 +156,40 @@ public class LocationDataManager {
 		}
 	}
 
-	/*
-	public static void  geoCode(final String strLocation){
+	public static void geoCode(final String strLocation) {
 		// compe the url
-		URI2+=strLocation + parameters;
+		URI2 = "http://nominatim.openstreetmap.org/search/";
+		disableStrictMode();
+		URI2 += strLocation + parameters;
+		URI2.replace(" ", "%20");
+		Log.e("Location URL", URI2);
 		final List<SimpleLocation> locationList = new ArrayList<SimpleLocation>();
-        HttpClient client = new DefaultHttpClient();
-        try {
-            HttpGet locationRequest = new HttpGet(URI);
-            HttpResponse response = client.execute(locationRequest);
-            BufferedReader rd = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            StringBuffer result = new StringBuffer();
-            String line = "";
-            while ((line = rd.readLine()) != null) {
-                result.append(line);
-            } 
-            JSONObject o = new JSONObject(result.toString());
-            o = o.getJSONObject("boundingbox");
-            Double parsedLat = o.getDouble("lat");
-            Double parsedLon = o.getDouble("lon");
-            currentLocation = new SimpleLocation(parsedLat,parsedLon, strLocation);
+		HttpClient client = new DefaultHttpClient();
+		try {
+			HttpGet locationRequest = new HttpGet(URI2);
+			HttpResponse response = client.execute(locationRequest);
+			BufferedReader rd = new BufferedReader(new InputStreamReader(
+					response.getEntity().getContent()));
+			StringBuffer result = new StringBuffer();
+			String line = "";
+			while ((line = rd.readLine()) != null) {
+				result.append(line);
+			}
 
-        }  catch (JSONException e1){
-        	e1.printStackTrace();
-        } catch (IllegalStateException e1) {
+			JSONArray array = new JSONArray(result.toString());
+			JSONObject o = array.getJSONObject(0);
+			Log.e("JSON Location Result",result.toString());
+			Double parsedLat = o.getDouble("lat");
+			Double parsedLon = o.getDouble("lon");
+			String parsedLocation = o.getString("display_name");
+			currentLocation = new SimpleLocation(parsedLat, parsedLon);
+			currentLocationName = parsedLocation;
+
+		} catch (JSONException e1) {
+			
+			Log.wtf("JSONEXCEPTION", Log.getStackTraceString(e1));
+			e1.printStackTrace();
+		} catch (IllegalStateException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
@@ -168,5 +197,5 @@ public class LocationDataManager {
 			e1.printStackTrace();
 		}
 	}
-	*/
+
 }

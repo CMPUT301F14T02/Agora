@@ -13,6 +13,7 @@ import com.brogrammers.agora.helper.ImageResizer;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Comment;
 import com.brogrammers.agora.model.Question;
+import com.brogrammers.agora.model.SimpleLocation;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.loopj.android.http.*;
@@ -118,11 +119,22 @@ public class QuestionController {
 	 * @param image
 	 *            user input - an image to be uploaded with the question (null
 	 *            if no image provided)
+	 * @param location 
 	 * @return the ID of the created question
 	 */
-	public Long addQuestion(String title, String body, byte[] image) {
+	public Long addQuestion(String title, String body, byte[] image, boolean location) {
 		Log.e("CONTROLLER", "addQuestion username="+user.getUsername());
-		Question q = new Question(title, body, image, user.getUsername());
+		LocationDataManager.getInstance();
+		SimpleLocation locationCoor = LocationDataManager.getLocation();
+		String locationName = LocationDataManager.getLocationName();
+		Question q;
+		if (location){
+			q = new Question(title, body, image, user.getUsername(), locationCoor, locationName);
+		}
+		else{
+			q = new Question(title, body, image, user.getUsername());
+		}
+		
 		cache.pushQuestion(q);
 		user.addAuthoredQuestionID(q.getID());
 		eSearch.pushQuestion(q);

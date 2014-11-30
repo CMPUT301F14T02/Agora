@@ -56,13 +56,16 @@
             android:id="@+id/qQuestionFavourite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:src="@drawable/ic_pinkfavouritetag" />
 
         <ImageView
             android:id="@+id/qQuestionFlag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="true"
             android:src="@drawable/ic_tag" />
+
     </LinearLayout>
 
     <TextView
