@@ -145,6 +145,9 @@ public class SetMainServerMapping extends ActivityInstrumentationTestCase2<MainA
 		super.tearDown();
 	}
 
+	public void test_() {
+		// empty test to let the above run
+	}
 }
 
 	

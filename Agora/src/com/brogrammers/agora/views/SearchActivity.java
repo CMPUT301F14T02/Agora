@@ -248,7 +248,7 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 			qAdapter = new QuestionAdapter(qList, activity);
 			if (qAdapter == null) Log.wtf("SEARCH", "null qAdapter");
 			if (lv == null) Log.wtf("SERRCH", "lv null in update");
-			lv.setAdapter(qAdapter);
+			lv.setAdapter(qAdapter); 
 		}
 		
 		public void doSearch(String query) {
@@ -269,6 +269,7 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 			private List<Answer> aList;
 			private AnswerAdapter aAdapter;
 			private View rootView;
+			private static ListView lv;
 			private static Activity activity;
 			
 			/**
@@ -289,20 +290,22 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 			@Override
 			public View onCreateView(LayoutInflater inflater, ViewGroup container,
 					Bundle savedInstanceState) {
-				View rootView = inflater.inflate(R.layout.fragment_search_answers,
+				rootView = inflater.inflate(R.layout.fragment_search_answers,
 						container, false);
+				lv = (ListView)rootView.findViewById(R.id.answerSearchListView);
+				if (lv == null) {Log.wtf("SEARCH", "lv set to null");}
 				return rootView;
 			}
 			
 			public void update() {
-				ListView lv = (ListView)this.rootView.findViewById(R.id.qSearchListView);
-//				aAdapter = new AnswerAdapter(aList, activity);
-//				lv.setAdapter(aAdapter);
+//				ListView lv = (ListView)this.rootView.findViewById(R.id.qSearchListView);
+				aAdapter = new AnswerAdapter(aList, activity);
+				lv.setAdapter(aAdapter);
 			}
 			
 			public void doSearch(String query) {
 				controller.setObserver(this);
-//				aList = controller.searchAnswers(query);
+				aList = controller.searchAnswers(query);
 			}
 		 }	
 	 

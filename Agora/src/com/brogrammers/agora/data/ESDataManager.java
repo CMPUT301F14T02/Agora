@@ -317,8 +317,7 @@ public class ESDataManager { // implements DataManager
 	 * @return A list of answers meeting the specified search
 	 *         criteria.
 	 */
-	public List<Answer> searchAnswers(String query)
-			throws UnsupportedEncodingException {
+	public List<Answer> searchAnswers(String query) {
 	    String requestBody = "{\"query\" : {" +
 		        "\"bool\" : {" +
 		            "\"must\" : [" +

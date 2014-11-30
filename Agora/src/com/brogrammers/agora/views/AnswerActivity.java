@@ -62,7 +62,7 @@ public class AnswerActivity extends Activity implements Observer {
 
 		lv = (ListView) findViewById(R.id.AnswerListView);
 
-		aadapter = new AnswerAdapter(null, this);
+		aadapter = new AnswerAdapter(new Question(null, null, null, null), this);
 		lv.setAdapter(aadapter);
 		
 		LayoutInflater inflater = getLayoutInflater();
@@ -74,7 +74,7 @@ public class AnswerActivity extends Activity implements Observer {
 	protected void onResume() {
 		super.onResume();
 		lv = (ListView) findViewById(R.id.AnswerListView);
-		aadapter = new AnswerAdapter(null, this);
+		aadapter = new AnswerAdapter(new Question(null, null, null, null), this);
 		lv.setAdapter(aadapter);
 		refresh();
 		
