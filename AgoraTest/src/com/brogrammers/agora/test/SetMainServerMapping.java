@@ -38,9 +38,9 @@ public class SetMainServerMapping extends ActivityInstrumentationTestCase2<MainA
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/Agora/_mapping");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/agora/_mapping");
 			client.execute(deleteRequest);
-			String mapping="{ \"Agora\": {\n"+
+			String mapping="{ \"agora\": {\n"+
 					" \"properties\": {\n"+
 					" \"answers\": {\n"+
 					" \"type\": \"nested\", \n"+
@@ -132,7 +132,7 @@ public class SetMainServerMapping extends ActivityInstrumentationTestCase2<MainA
 					" }\n"+
 					" }\n"+
 					" }";
-			HttpPost httppost = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f14t02/Agora/_mapping");
+			HttpPost httppost = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f14t02/agora/_mapping");
 			httppost.setEntity(new StringEntity(mapping));
 			httppost.setHeader("Accept", "application/json");
 			client.execute(httppost);

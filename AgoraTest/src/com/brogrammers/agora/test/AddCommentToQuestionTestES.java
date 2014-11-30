@@ -61,7 +61,7 @@ public class AddCommentToQuestionTestES extends ActivityInstrumentationTestCase2
 	}
 	
 	public void testESGetQuestions() throws Throwable {
-		// create a question object post it, add a comment locally.
+		// Create several test question objects
 		Question q = new Question("Big Questions", "What do you think the meaning of life is?", null, "Ted");
 		Answer a = new Answer("Not really sure", null, "Bill");
 		a.addComment(new Comment("Yikes", new Author("Dr. Bob")));

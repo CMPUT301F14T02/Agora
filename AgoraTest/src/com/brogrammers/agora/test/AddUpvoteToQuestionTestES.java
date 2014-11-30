@@ -59,10 +59,9 @@ public class AddUpvoteToQuestionTestES extends ActivityInstrumentationTestCase2<
 			super("TEST_CACHE");
 		}
 	}
-		
 	
 	public void testESGetQuestions() throws Throwable {
-		// create a question object post it, add a comment locally to one of the answers.
+		// Create several test questions to load on the server
 		Question q = new Question("Big Questions", "What do you think the meaning of life is?", null, "Ted");
 		Answer a = new Answer("Not really sure", null, "Bill");
 		a.addComment(new Comment("Yikes", new Author("Dr. Bob")));
@@ -81,7 +80,6 @@ public class AddUpvoteToQuestionTestES extends ActivityInstrumentationTestCase2<
 		
 		// add an upvote to the question locally
 		q.upvote();
-		
 		CacheDataManager cache = new TestCacheManager();
 		
 		// cache the question
@@ -91,7 +89,7 @@ public class AddUpvoteToQuestionTestES extends ActivityInstrumentationTestCase2<
 		es.pushUpvote(q.getID(), cache);
 		postSignal.await(2, TimeUnit.SECONDS);
 
-		// get the question from the server
+		// get the question that was upvoted from the server
 		final Long qID = q.getID();
 		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
 		final CountDownLatch signal = new CountDownLatch(1);
@@ -101,7 +99,7 @@ public class AddUpvoteToQuestionTestES extends ActivityInstrumentationTestCase2<
 			}
 		});
 		
-		// ensure is empty before receiving any response
+		// ensure response is empty before receiving any response
 		assertTrue("Got a result before one was expected.", results.get(0).size() == 0);
 		try {
 			signal.await(3, TimeUnit.SECONDS);

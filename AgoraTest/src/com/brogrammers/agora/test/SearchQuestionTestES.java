@@ -36,7 +36,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/agora/_mapping");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/testing/SearchQuestionTest/_mapping");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,13 +49,13 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "agora/");
+			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "SearchQuestionTests/");
 		}
 	}
 	
 	
 	public void testGetQuestionsByID() throws Throwable {
-		// create a question object post it, and ensure we get back the same object.
+		// create several question objects ensure only 1 contains "weird" 
 		final Question q = new Question("Bad weird Questions", "It's weird isn't it?", null, "Tod");
 		final Question q1 = new Question("Wow Questions", "What do you think the meaning of monkey is?", null, "Tod");
 		final Question q2= new Question("Wowee Questions", "What do you think the meaning of life is?", null, "Tod");
@@ -71,7 +71,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		es.pushQuestion(q3);
 		postSignal.await(5, TimeUnit.SECONDS);
 		
-		// make the request
+		// Search all questions for the term "weird"
 		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
@@ -86,8 +86,8 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 			assertTrue(false);
 		}
 		
-		// compare the local and received copies.
-		//assertTrue("Received result before one was expected.", results.get(0).size() == 1);
+		// ensure we only get 1 match back
+		assertTrue("Received result before one was expected.", results.get(0).size() == 1);
 		Gson gson = new Gson();
 		String jsonLocalQuestion = gson.toJson(q);
 		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
@@ -112,7 +112,7 @@ public class SearchQuestionTestES extends ActivityInstrumentationTestCase2<MainA
 		assertTrue("Received result before one was expected.", resultsEmpty.get(0).size() == 0);
 		
 		
-		// Search for a word not present in all 4 posts and make sure we get all 4 back
+		// Search for a word present in all 4 posts and make sure we get all 4 back
 		final List<ArrayList<Question>> results4 = new ArrayList<ArrayList<Question>>();
 		runTestOnUiThread(new Runnable() {
 			public void run() {

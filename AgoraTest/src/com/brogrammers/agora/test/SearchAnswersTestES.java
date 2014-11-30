@@ -36,6 +36,7 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 
 	protected void setUp() throws Exception {
 		super.setUp();
+		// Set the server mapping for nested answer objects
 		HttpClient client = new DefaultHttpClient();
 		try {
 			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/SearchAnswers/_mapping");
@@ -152,7 +153,7 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 	}
 	
 	public void testESGetQuestions() throws Throwable {
-		// create a question object post it, and ensure we get back the same object.
+		// create a question objects with comments and answers attached
 		Question q = new Question("Big Questions", "What do you think the meaning of life is?", null, "Ted");
 		Answer a = new Answer("It's all about perspective", null, "Bill");
 		a.addComment(new Comment("Yikes", new Author("Dr. Bob")));
@@ -171,9 +172,9 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 		q2.addAnswer(d);
 		Question q3 = new Question("Small ideas", "Chocolate or vanilla is better?", null, "Ted");
 		Answer e = new Answer("Who cares about vision when you can't see.", null, "Tim");
+
 		// update the server with the new questions
 		final ESDataManager es = new TestESManager();
-		//es.setServerMapping();
 		final CountDownLatch postSignal = new CountDownLatch(1);
 		es.pushQuestion(q);
 		postSignal.await(1, TimeUnit.SECONDS);
@@ -181,7 +182,8 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 		postSignal.await(1, TimeUnit.SECONDS);
 		es.pushQuestion(q3);
 		postSignal.await(1, TimeUnit.SECONDS);
-
+		
+		// Search the newly posted objects for the word "perspective".
 		final List<ArrayList<Answer>> results = new ArrayList<ArrayList<Answer>>();
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
@@ -193,14 +195,16 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 				}	
 			}
 		});
+		
+		// Ensure not results before we receive a server response for the search
 		assertTrue("Received result before one was expected.", results.get(0).size() == 0);
 		try {
 			signal.await(1, TimeUnit.SECONDS);
 		} catch (InterruptedException f) {
 			assertTrue(false);
 		}
-		
-		// compare the local and received copies.
+
+		// Create json objects of the local and received question objects
 		assertTrue(results.get(0).size() == 3);
 		Gson gson = new Gson();
 		String locAnswer1 = gson.toJson(a);
@@ -210,7 +214,8 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 		String recAnswer2 = gson.toJson(results.get(0).get(1));
 		String recAnswer3 = gson.toJson(results.get(0).get(2));
 		
-		// can't guarantee order here so make sure the questions match each other
+		// Make sure all the received objects match the their local counterparts
+		// Can't guarantee order here so make sure the questions match each other
 		assertTrue("Local answer did not match server counterpart.", locAnswer1.equals(recAnswer1) || locAnswer1.equals(recAnswer2) || locAnswer1.equals(recAnswer3));
 		assertTrue("Local answer did not match server counterpart.", locAnswer2.equals(recAnswer1) || locAnswer2.equals(recAnswer2) || locAnswer2.equals(recAnswer3));
 		assertTrue("Local answer did not match server counterpart.", locAnswer3.equals(recAnswer1) || locAnswer3.equals(recAnswer2) || locAnswer3.equals(recAnswer3));

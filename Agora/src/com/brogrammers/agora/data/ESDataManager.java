@@ -218,8 +218,6 @@ public class ESDataManager { // implements DataManager
 			e1.printStackTrace();
 		}
 		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
-//		Log.e("SERVER GET URI", DOMAIN + INDEXNAME + TYPENAME + endPoint);
-//		Log.e("SERVER GET BODY", requestBody);
 		client.post(Agora.getContext(), URI, stringEntityBody,
 				"application/json", new AsyncHttpResponseHandler() {
 		
@@ -333,12 +331,6 @@ public class ESDataManager { // implements DataManager
 		                                    "{ \"match\" : {\"answers.body\" : \"" + query + "\"}}" +
 		                                "]}}}}]}}}";
 		
-		/*
-		String requestBody = "{" + "\"query\": {" + "\"filtered\": {"
-				+ "\"query\": {" + "\"match_all\": {}" + "}," + "\"filter\": {"
-				+ "\"term\": {" + "\"answers.body\": \"" + query + "\""
-				+ "}}}}}";
-		*/
 		String endpoint = "_search";
 		List<Answer> list = getQuestions(Answer.class, requestBody, endpoint,
 				query, false);
@@ -366,26 +358,11 @@ public class ESDataManager { // implements DataManager
 	}
 	
 	/**
-	 * Gets a list of questions with ascending distance to current location.
+	 * Gets a list of questions within 50km of the users location
 	 * <p>
 	 * 
-	 * @param id
-	 *            The questions unique ID value.
 	 * @return  A list containing the single question object from
 	 *         the server.
-	 */
-	/* Mapping for geolocation
-	 * You can add this to an existing mapping by entering this statement.
-	 * PUT _mapping/TYPENAME
-        {
-        "TYPENAME" : {
-                "properties": { 
-                    "location" : {
-                        "type" : "geo_point"
-                    }
-                }
-            }
-        }
 	 */
 	
 	public List<Question> searchQuestionsByLocation(SimpleLocation location) {
@@ -400,18 +377,6 @@ public class ESDataManager { // implements DataManager
 				" }\n"+
 				" }\n"+
 				" }";
-
-		/*
-    	String requestBody = "{\"sort\" : [" +
-    	        "{" +
-    	            "\"_geo_distance\" : {" +
-    	                "\"location\" : [" + String.valueOf(location.getLat()) + "," + String.valueOf(location.getLon()) + "]," +
-    	                "\"order\" : \"asc\"," +
-    	                "\"unit\" : \"km\"" +
-    	            "}" +
-    	        "}" +
-    	    "]}";
-    	*/
 		String endPoint = "_search";
 		return getQuestions(Question.class, requestBody, endPoint, null, false);
 	}
@@ -566,35 +531,29 @@ public class ESDataManager { // implements DataManager
 	 *            request.
 	 */
 	private void updateServer(final QueryItem qItem) {
-//		Log.e("SERVER UPDATED", "updateServer called");
 		if (connected) {
-
             Log.e("SERVER", "Pass Connected test");
             Log.e("SERVER", "POST BODY: " + qItem.getBody());
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.post(Agora.getContext(), qItem.getURI(), qItem.getBody(),
-					"application/json", new AsyncHttpResponseHandler() {
-						@Override
-						public void onSuccess(int statusCode, Header[] headers,
-								byte[] response) {
-							// called when response HTTP status is "200 OK"
-							Log.e("SERVER UPDATED URI = ", qItem.getURI());
-							Log.e("SERVER UPDATED",	"updateServer method success.");
-						}
+				"application/json", new AsyncHttpResponseHandler() {
 
-						@Override
-						public void onFailure(int statusCode, Header[] headers,
-								byte[] errorResponse, Throwable e) {
-							// called when response HTTP status is "4XX" (eg.
-							// 401, 403, 404)
-							Log.e("SERVER UPDATE",
-									"updateServer method failure: "
-											+ Integer.toString(statusCode));
-							Toast.makeText(Agora.getContext(),
-									"Server update failure.", 0).show();
-							// offlineQueue.addToQueue(qItem);
-						}
-					});
+                // called on status 200
+                @Override
+                public void onSuccess(int statusCode, Header[] headers,
+                                byte[] response) {
+                    Log.e("SERVER UPDATED URI = ", qItem.getURI());
+                    Log.e("SERVER UPDATED",	"updateServer method success.");
+                }
+                
+                // called on status != 200
+                @Override
+                public void onFailure(int statusCode, Header[] headers,
+                                byte[] errorResponse, Throwable e) {
+                    Log.e("SERVER UPDATE", "updateServer method failure: " + Integer.toString(statusCode));
+                    Toast.makeText(Agora.getContext(), "Server update failure.", 0).show();
+                }
+        });
 		} else {
 			Log.e("SERVER", "Server offline request queued");
 			offlineQueue.addToQueue(qItem);
