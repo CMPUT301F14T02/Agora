@@ -36,7 +36,7 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/SearchAnswersTest/_query?q=_type:SearchAnswersTest");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/SearchAnswers/_mapping");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class SearchAnswersTestES extends ActivityInstrumentationTestCase2<MainAc
 
 	private class TestESManager extends ESDataManager {
 		public TestESManager() {
-			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "SearchAnswersTest/");
+			super("http://cmput301.softwareprocess.es:8080/", "cmput301f14t02/", "SearchAnswers/");
 		}
 	}
 	

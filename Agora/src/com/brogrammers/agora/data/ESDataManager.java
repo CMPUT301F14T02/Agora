@@ -202,6 +202,7 @@ public class ESDataManager { // implements DataManager
 			String requestBody, String endPoint, final String answerQuery, final boolean filtered) {
 		final List<Question> questionList = new ArrayList<Question>();
 		final List<Answer> answerList = new ArrayList<Answer>();
+		Log.e("SERVER QUERY", requestBody);
 		// TODO figure out a better
 		if (!connected) {
 			Log.e("SERVER", "No internet connection");
@@ -243,41 +244,44 @@ public class ESDataManager { // implements DataManager
 				Log.e("SERVER", "Question get success");
 				try {
 					String responseBody = new String(arg2);
-					Log.i("SERVER", "Server received data"); 
+					Log.e("SERVER", "Server received data"); 
 					JSONObject jsonRes = new JSONObject(responseBody);
+					Log.e("SERVER RESPONSE BODY", jsonRes.toString());
 					jsonRes = jsonRes.getJSONObject("hits");
 					JSONArray jsonArray = jsonRes.getJSONArray("hits");
+						
 					Gson gson = new Gson();
-					for (int i = 0; i < jsonArray.length(); i++) {
-						// get each object in the response, convert to
-						// object
-						// and add to list.
-						JSONObject q = jsonArray.getJSONObject(i);
-						if (!filtered){
-							q = q.getJSONObject("_source");
-						} else if (filtered){
-							q = q.getJSONObject("fields");
-							q = q.getJSONArray("partial1").getJSONObject(0);
-						}
-						Question qObject = gson.fromJson(q.toString(),
-								Question.class);
-						questionList.add(qObject);
-					}
-					// if this is an answer search remove any answers that don't contain the search term.
-					if (answerQuery != null) {
-						for (Question question : questionList) {
-							List<Answer> answers = ((Question) question)
-									.getAnswers();
-							for (int i = 0; i < answers.size(); i++) {
-								if (answers
-										.get(i)
-										.getBody()
-										.toLowerCase()
-										.contains(
-												answerQuery
-												.toLowerCase())) {
-									answerList.add(answers.get(i));
-								}
+					// when returning question objects
+					if (answerQuery == null){
+					    for (int i = 0; i < jsonArray.length(); i++) {
+						    // get each object in the response, convert to object and add to list.
+						    JSONObject q = jsonArray.getJSONObject(i);
+						    if (!filtered){
+						    	q = q.getJSONObject("_source");
+						    } else if (filtered){
+						    	q = q.getJSONObject("fields");
+						    	q = q.getJSONArray("partial1").getJSONObject(0);
+						    }
+						    Log.i("SERVER RECEIVED", q.toString());
+						    Question qObject = gson.fromJson(q.toString(),
+						    		Question.class);
+						    questionList.add(qObject);
+					    }
+				    // when returning answer objects
+					} else {
+						Log.e("SERVER", "Receiving answer results");
+						Log.e("SERVER", jsonArray.toString());
+						for (int i = 0; i < jsonArray.length(); i++) {
+							JSONObject a = jsonArray.getJSONObject(i);
+							a = a.getJSONObject("_source");
+							JSONArray answers = a.getJSONArray("answers");
+							// get each answer from the question
+							for (int j = 0; j < answers.length(); j++){
+						    	JSONObject answer = answers.getJSONObject(j);
+						    	Log.e("SERVER", answer.toString());
+						    	Answer qObject = gson.fromJson(answer.toString(),
+						    			Answer.class);
+						    	answerList.add(qObject);
 							}
 						}
 					}
@@ -291,7 +295,7 @@ public class ESDataManager { // implements DataManager
 			return (ArrayList<T>) answerList;
 		} else {
 			return (ArrayList<T>) questionList;
-		}
+		} 
 	}
 
 	/**
@@ -307,14 +311,27 @@ public class ESDataManager { // implements DataManager
 	 */
 	public List<Answer> searchAnswers(String query)
 			throws UnsupportedEncodingException {
+	    String requestBody = "{\"query\" : {" +
+		        "\"bool\" : {" +
+		            "\"must\" : [" +
+		                "{" +
+		                    "\"nested\" : {" +
+		                        "\"path\" : \"answers\"," +
+		                        "\"query\" : {" +
+		                            "\"bool\" : {" +
+		                                "\"must\" : [" +
+		                                    "{ \"match\" : {\"answers.body\" : \"" + query + "\"}}" +
+		                                "]}}}}]}}}";
+		
+		/*
 		String requestBody = "{" + "\"query\": {" + "\"filtered\": {"
 				+ "\"query\": {" + "\"match_all\": {}" + "}," + "\"filter\": {"
 				+ "\"term\": {" + "\"answers.body\": \"" + query + "\""
 				+ "}}}}}";
+		*/
 		String endpoint = "_search";
 		List<Answer> list = getQuestions(Answer.class, requestBody, endpoint,
 				query, false);
-		// sort through questions and extract answers
 		return list;
 	}
 
@@ -360,6 +377,34 @@ public class ESDataManager { // implements DataManager
             }
         }
 	 */
+	public List<Comment> searchCommentByLocation(SimpleLocation location) {
+		// modify query for nested search
+    	String requestBody = "{\"sort\" : [" +
+    	        "{" +
+    	            "\"_geo_distance\" : {" +
+    	                "\"location\" : [" + String.valueOf(location.getLat()) + "," + String.valueOf(location.getLon()) + "]," +
+    	                "\"order\" : \"asc\"," +
+    	                "\"unit\" : \"km\"" +
+    	            "}" +
+    	        "}" +
+    	    "]}";
+		String endPoint = "_search";
+		return getQuestions(Comment.class, requestBody, endPoint, null, false);
+	}
+	public List<Answer> searchAnswerByLocation(SimpleLocation location) {
+		// modify query for nested search
+    	String requestBody = "{\"sort\" : [" +
+    	        "{" +
+    	            "\"_geo_distance\" : {" +
+    	                "\"location\" : [" + String.valueOf(location.getLat()) + "," + String.valueOf(location.getLon()) + "]," +
+    	                "\"order\" : \"asc\"," +
+    	                "\"unit\" : \"km\"" +
+    	            "}" +
+    	        "}" +
+    	    "]}";
+		String endPoint = "_search";
+		return getQuestions(Answer.class, requestBody, endPoint, null, false);
+	}
 	
 	public List<Question> searchQuestionsByLocation(SimpleLocation location) {
     	String requestBody = "{\"sort\" : [" +
@@ -501,6 +546,7 @@ public class ESDataManager { // implements DataManager
 	 */
 	public void push(String body, String endPoint) {
 		StringEntity stringEntityBody = null;
+		Log.e("SERVER UPLOAD", body);
 		try {
 			stringEntityBody = new StringEntity(body);
 		} catch (UnsupportedEncodingException e) {
@@ -524,8 +570,10 @@ public class ESDataManager { // implements DataManager
 	 *            request.
 	 */
 	private void updateServer(final QueryItem qItem) {
-		Log.e("SERVER UPDATED", "updateServer called");
 		if (connected) {
+
+            Log.e("SERVER", "Pass Connected test");
+            Log.e("SERVER", "POST BODY: " + qItem.getBody());
 			AsyncHttpClient client = new AsyncHttpClient();
 			client.post(Agora.getContext(), qItem.getURI(), qItem.getBody(),
 					"application/json", new AsyncHttpResponseHandler() {
@@ -533,6 +581,7 @@ public class ESDataManager { // implements DataManager
 						public void onSuccess(int statusCode, Header[] headers,
 								byte[] response) {
 							// called when response HTTP status is "200 OK"
+							Log.e("SERVER UPDATED URI = ", qItem.getURI());
 							Log.e("SERVER UPDATED",
 									"updateServer method success.");
 						}
@@ -551,6 +600,7 @@ public class ESDataManager { // implements DataManager
 						}
 					});
 		} else {
+			Log.e("SERVER", "Server offline request queued");
 			offlineQueue.addToQueue(qItem);
 		}
 

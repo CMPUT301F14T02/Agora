@@ -10,6 +10,8 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.brogrammers.agora.Agora;
@@ -40,6 +42,43 @@ public class GetNearestPostTest extends ActivityInstrumentationTestCase2<MainAct
 		try {
 			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/GetNearestPostTest/_mapping");
 			client.execute(deleteRequest);
+			String mapping="{\n"+
+					" \"GetNearestPostTest\": {"+
+					" \"properties\": {"+
+					" \"author\": {"+
+					" \"type\": \"string\""+
+					" },"+
+					" \"body\": {"+
+					" \"type\": \"string\""+
+					" },"+
+					" \"date\": {"+
+					" \"type\": \"long\""+
+					" },"+
+					" \"hasImage\": {"+
+					" \"type\": \"boolean\""+
+					" },"+
+					" \"location\": {"+
+					" \"type\": \"geo_point\""+
+					" },"+
+					" \"locationName\": {"+
+					" \"type\": \"string\""+
+					" },"+
+					" \"rating\": {"+
+					" \"type\": \"long\""+
+					" },"+
+					" \"title\": {"+
+					" \"type\": \"string\""+
+					" },"+
+					" \"uniqueID\": {"+
+					" \"type\": \"long\""+
+					" }"+
+					" }"+
+					" }"+
+					" }";
+			HttpPost httppost = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f14t02/GetNearestPostTest/_mapping");
+			httppost.setEntity(new StringEntity(mapping));
+			httppost.setHeader("Accept", "application/json");
+			client.execute(httppost);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -73,12 +112,12 @@ public class GetNearestPostTest extends ActivityInstrumentationTestCase2<MainAct
 		q.setLocationName("Edmonton");
 
 		Question q1 = new Question("Big Things", "Wow", null, "Bob");
-		q1.setLocation(new SimpleLocation(55, -115.52735));
+		q1.setLocation(new SimpleLocation(51.05, 114.06));
 		q1.setLocationName("Calgary");
 
 		Question q2 = new Question("grand things", "Wow", null, "Tim");
-		q2.setLocation(new SimpleLocation(55, -120.52735));
-		q2.setLocationName("Slave Lake");
+		q2.setLocation(new SimpleLocation(49.25, 123.1));
+		q2.setLocationName("Vancouver");
 
 		// update the server with the new question
 		final ESDataManager es = new TestESManager();
@@ -94,7 +133,7 @@ public class GetNearestPostTest extends ActivityInstrumentationTestCase2<MainAct
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
 			public void run() {
-					results.add((ArrayList<Question>)es.searchQuestionsByLocation(new SimpleLocation(53.526797, -113.52735)));
+					results.add((ArrayList<Question>)es.searchQuestionsByLocation(new SimpleLocation(53.526797, 113.52735)));
 			}
 		});
 		

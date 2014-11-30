@@ -37,7 +37,7 @@ public class AddCommentToanswerTestES extends ActivityInstrumentationTestCase2<M
 		super.setUp();
 		HttpClient client = new DefaultHttpClient();
 		try {
-			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/AddCommentToanswerTest/_query?q=_type:AddCommentToanswerTest");
+			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/AddCommentToanswerTest/_mapping");
 			client.execute(deleteRequest);
 		} catch (Exception e) {
 			e.printStackTrace();
