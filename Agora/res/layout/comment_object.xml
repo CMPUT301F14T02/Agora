@@ -8,10 +8,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:paddingTop="8dp"
         android:layout_below="@+id/cBody"
         android:hint="Author, Date"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:paddingTop="8dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#444444"
+        android:textColorHint="#444444" />
 
     <TextView
         android:id="@+id/cLocationtext"
@@ -21,7 +23,9 @@
         android:layout_below="@+id/cAuthourDate"
         android:hint="Location Text Here"
         android:paddingTop="2dp"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="#444444"
+        android:textColorHint="#444444" />
 
     <TextView
         android:id="@+id/cBody"
@@ -30,6 +34,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:hint="Comment Body"
-        android:textColor="#000000" />
+        android:textColor="#000000"
+        android:textColorHint="#444444" />
 
 </RelativeLayout>
