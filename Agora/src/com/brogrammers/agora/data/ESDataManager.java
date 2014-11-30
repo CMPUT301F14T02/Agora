@@ -606,7 +606,7 @@ public class ESDataManager { // implements DataManager
 		HttpClient client = new DefaultHttpClient();
 		HttpDelete deleteRequest = new HttpDelete(DOMAIN + INDEXNAME + TYPENAME + "_mapping");
 		client.execute(deleteRequest);	
-		String mapping="{ \"GetNearestPostTest\": {\n"+
+		String mapping="{ \"" + TYPENAME + "\": {\n" +
 				" \"properties\": {\n"+
 				" \"answers\": {\n"+
 				" \"type\": \"nested\", \n"+
