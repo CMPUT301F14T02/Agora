@@ -42,38 +42,97 @@ public class GetNearestPostTest extends ActivityInstrumentationTestCase2<MainAct
 		try {
 			HttpDelete deleteRequest = new HttpDelete("http://cmput301.softwareprocess.es:8080/cmput301f14t02/GetNearestPostTest/_mapping");
 			client.execute(deleteRequest);
-			String mapping="{\n"+
-					" \"GetNearestPostTest\": {"+
-					" \"properties\": {"+
-					" \"author\": {"+
-					" \"type\": \"string\""+
-					" },"+
-					" \"body\": {"+
-					" \"type\": \"string\""+
-					" },"+
-					" \"date\": {"+
-					" \"type\": \"long\""+
-					" },"+
-					" \"hasImage\": {"+
-					" \"type\": \"boolean\""+
-					" },"+
-					" \"location\": {"+
-					" \"type\": \"geo_point\""+
-					" },"+
-					" \"locationName\": {"+
-					" \"type\": \"string\""+
-					" },"+
-					" \"rating\": {"+
-					" \"type\": \"long\""+
-					" },"+
-					" \"title\": {"+
-					" \"type\": \"string\""+
-					" },"+
-					" \"uniqueID\": {"+
-					" \"type\": \"long\""+
-					" }"+
-					" }"+
-					" }"+
+			String mapping="{ \"GetNearestPostTest\": {\n"+
+					" \"properties\": {\n"+
+					" \"answers\": {\n"+
+					" \"type\": \"nested\", \n"+
+					" \"properties\": {\n"+
+					" \"author\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"body\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"comments\": {\n"+
+					" \"properties\": {\n"+
+					" \"author\": {\n"+
+					" \"properties\": {\n"+
+					" \"username\": {\n"+
+					" \"type\": \"string\"\n"+
+					" }\n"+
+					" }\n"+
+					" },\n"+
+					" \"body\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"date\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"posted\": {\n"+
+					" \"type\": \"boolean\"\n"+
+					" }\n"+
+					" }\n"+
+					" },\n"+
+					" \"date\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"hasImage\": {\n"+
+					" \"type\": \"boolean\"\n"+
+					" },\n"+
+					" \"rating\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"uniqueID\": {\n"+
+					" \"type\": \"long\"\n"+
+					" }\n"+
+					" }\n"+
+					" },\n"+
+					" \"author\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"body\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"comments\": {\n"+
+					" \"properties\": {\n"+
+					" \"author\": {\n"+
+					" \"properties\": {\n"+
+					" \"username\": {\n"+
+					" \"type\": \"string\"\n"+
+					" }\n"+
+					" }\n"+
+					" },\n"+
+					" \"body\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"date\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"posted\": {\n"+
+					" \"type\": \"boolean\"\n"+
+					" }\n"+
+					" }\n"+
+					" },\n"+
+					" \"date\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"hasImage\": {\n"+
+					" \"type\": \"boolean\"\n"+
+					" },\n"+
+					" \"location\": {\n"+
+					" \"type\": \"geo_point\" \n"+
+					" },\n"+
+					" \"rating\": {\n"+
+					" \"type\": \"long\"\n"+
+					" },\n"+
+					" \"title\": {\n"+
+					" \"type\": \"string\"\n"+
+					" },\n"+
+					" \"uniqueID\": {\n"+
+					" \"type\": \"long\"\n"+
+					" }\n"+
+					" }\n"+
+					" }\n"+
 					" }";
 			HttpPost httppost = new HttpPost("http://cmput301.softwareprocess.es:8080/cmput301f14t02/GetNearestPostTest/_mapping");
 			httppost.setEntity(new StringEntity(mapping));
