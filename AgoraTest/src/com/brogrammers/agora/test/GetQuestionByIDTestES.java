@@ -53,14 +53,12 @@ public class GetQuestionByIDTestES extends ActivityInstrumentationTestCase2<Main
 		}
 	}
 	
-	
 	public void testGetQuestionsByID() throws Throwable {
-		// create a question object post it, and ensure we get back the same object.
+		// Create  several test question objects and post them to the server.
 		final Question q = new Question("Bad Questions", "What do you think the meaning of life is?", null, "Tod");
 		final Question q1 = new Question("Wow Questions", "What do you think the meaning of life is?", null, "Tod");
 		final Question q2= new Question("Wowee Questions", "What do you think the meaning of life is?", null, "Tod");
 		final Question q3 = new Question("Bigtime Questions", "What do you think the meaning of life is?", null, "Tod");
-
 		
 		// update the server with the new questions
 		final ESDataManager es = new TestESManager();
@@ -71,7 +69,7 @@ public class GetQuestionByIDTestES extends ActivityInstrumentationTestCase2<Main
 		es.pushQuestion(q3);
 		postSignal.await(5, TimeUnit.SECONDS);
 		
-		// make the request
+		// Search for a question by ID
 		final List<ArrayList<Question>> results = new ArrayList<ArrayList<Question>>();
 		final CountDownLatch signal = new CountDownLatch(1);
 		runTestOnUiThread(new Runnable() {
@@ -86,11 +84,13 @@ public class GetQuestionByIDTestES extends ActivityInstrumentationTestCase2<Main
 			assertTrue(false);
 		}
 		
-		// compare the local and received copies.
+		// Make sure the search only gives one of the question back.
 		assertTrue("Received a result before one was expected.", results.get(0).size() == 1);
 		Gson gson = new Gson();
 		String jsonLocalQuestion = gson.toJson(q);
 		String jsonReceivedQuestion = gson.toJson(results.get(0).get(0));
+		
+		// Compare the local question to the question posted and received back.
 		assertTrue("Local question did not match the server copy.", jsonLocalQuestion.equals(jsonReceivedQuestion));
 	}
 }
