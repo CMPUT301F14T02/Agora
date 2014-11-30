@@ -1,12 +1,17 @@
 package com.brogrammers.agora.views;
 
+import java.util.List;
 import java.util.Locale;
 
+import com.brogrammers.agora.Observer;
 import com.brogrammers.agora.R;
 import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.R.string;
+import com.brogrammers.agora.data.QuestionController;
+import com.brogrammers.agora.model.Answer;
+import com.brogrammers.agora.model.Question;
 
 import android.app.Activity;
 import android.app.ActionBar;
@@ -16,12 +21,15 @@ import android.app.FragmentTransaction;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 /**
@@ -38,12 +46,16 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 	 * becomes too memory intensive, it may be best to switch to a
 	 * {@link android.support.v13.app.FragmentStatePagerAdapter}.
 	 */
-	SectionsPagerAdapter mSectionsPagerAdapter;
+	private SectionsPagerAdapter mSectionsPagerAdapter;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
-	ViewPager mViewPager;
+	private ViewPager mViewPager;
+	private SearchView mSearchView;
+	private static QuestionController controller = QuestionController.getController();
+
+	private List<Answer> aList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +101,24 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.search, menu);
+		final SearchView sView = (SearchView)menu.findItem(R.id.searchBQV).getActionView();
+		sView.setSubmitButtonEnabled(true);
+		sView.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
+		sView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+			public boolean onQueryTextChange(String newText) {
+				return false;
+			}
+			public boolean onQueryTextSubmit(String query) {
+				int item = (mViewPager.getCurrentItem());
+				if (item == 0) {
+					((QuestionsFragment)mSectionsPagerAdapter.getItem(item)).doSearch(query);
+					Log.wtf("SEARCH", "EXECUTE SERACH CLICKED");
+				} else if (item == 1) {
+					((AnswersFragment)mSectionsPagerAdapter.getItem(item)).doSearch(query);
+				}
+				return true;
+			}
+		});
 		return true;
 	}
 
@@ -108,7 +138,7 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 	}
 
 	private void openSearchBar(MenuItem item) {
-		SearchView searchView = (SearchView) item.getActionView();
+		SearchView mSearchView = (SearchView) item.getActionView();
 	}
 
 	@Override
@@ -129,6 +159,7 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 			FragmentTransaction fragmentTransaction) {
 	}
 
+
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
 	 * one of the sections/tabs/pages.
@@ -146,9 +177,9 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 			// below).
 			switch (position) {
 			case 0:
-				return QuestionsFragment.newInstance(position + 1);
+				return QuestionsFragment.newInstance(position + 1, SearchActivity.this);
 			case 1:
-				return AnswersFragment.newInstance(position + 1);
+				return AnswersFragment.newInstance(position + 1, SearchActivity.this);
 			}
 			return null;
 		}
@@ -175,21 +206,26 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 	/**
 	 * A fragment containing a list of Questions from the search results
 	 */
-	 public static class QuestionsFragment extends Fragment {
+	 public static class QuestionsFragment extends Fragment implements Observer {
 		/**
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
 		private static final String ARG_SECTION_NUMBER = "section_number";
-
+		private List<Question> qList;
+		private QuestionAdapter qAdapter;
+		private View rootView;
+		private static ListView lv; 
+		private static Activity activity;
 		/**
 		 * Returns a new instance of this fragment for the given section number.
 		 */
-		public static QuestionsFragment newInstance(int sectionNumber) {
+		public static QuestionsFragment newInstance(int sectionNumber, Activity activity) {
 			QuestionsFragment fragment = new QuestionsFragment();
 			Bundle args = new Bundle();
 			args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 			fragment.setArguments(args);
+			QuestionsFragment.activity = activity;
 			return fragment;
 		}
 
@@ -199,30 +235,51 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_search_questions,
+			rootView = inflater.inflate(R.layout.fragment_search_questions,
 					container, false);
+
+			lv = (ListView)rootView.findViewById(R.id.qSearchListView);
+			if (lv == null) {Log.wtf("SEARCH", "lv set to null");}
 			return rootView;
+		}
+		
+		public void update() {
+			
+			qAdapter = new QuestionAdapter(qList, activity);
+			if (qAdapter == null) Log.wtf("SEARCH", "null qAdapter");
+			if (lv == null) Log.wtf("SERRCH", "lv null in update");
+			lv.setAdapter(qAdapter);
+		}
+		
+		public void doSearch(String query) {
+			controller.setObserver(this);
+			qList = controller.searchQuestions(query);
 		}
 	}
 	 
 	 	/**
 		 * A fragment containing a list of Questions from the search results
 		 */
-		 public static class AnswersFragment extends Fragment {
+		 public static class AnswersFragment extends Fragment implements Observer {
 			/**
 			 * The fragment argument representing the section number for this
 			 * fragment.
 			 */
 			private static final String ARG_SECTION_NUMBER = "section_number";
-
+			private List<Answer> aList;
+			private AnswerAdapter aAdapter;
+			private View rootView;
+			private static Activity activity;
+			
 			/**
 			 * Returns a new instance of this fragment for the given section number.
 			 */
-			public static AnswersFragment newInstance(int sectionNumber) {
+			public static AnswersFragment newInstance(int sectionNumber, Activity activity) {
 				AnswersFragment fragment = new AnswersFragment();
 				Bundle args = new Bundle();
 				args.putInt(ARG_SECTION_NUMBER, sectionNumber);
 				fragment.setArguments(args);
+				AnswersFragment.activity = activity;
 				return fragment;
 			}
 
@@ -236,6 +293,17 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 						container, false);
 				return rootView;
 			}
-		}
-
+			
+			public void update() {
+				ListView lv = (ListView)this.rootView.findViewById(R.id.qSearchListView);
+//				aAdapter = new AnswerAdapter(aList, activity);
+//				lv.setAdapter(aAdapter);
+			}
+			
+			public void doSearch(String query) {
+				controller.setObserver(this);
+//				aList = controller.searchAnswers(query);
+			}
+		 }	
+	 
 }

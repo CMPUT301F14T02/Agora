@@ -246,7 +246,7 @@ public class ESDataManager { // implements DataManager
 					String responseBody = new String(arg2);
 					Log.e("SERVER", "Server received data"); 
 					JSONObject jsonRes = new JSONObject(responseBody);
-					Log.e("SERVER RESPONSE BODY", jsonRes.toString());
+//					Log.e("SERVER RESPONSE BODY", jsonRes.toString());
 					jsonRes = jsonRes.getJSONObject("hits");
 					JSONArray jsonArray = jsonRes.getJSONArray("hits");
 						
