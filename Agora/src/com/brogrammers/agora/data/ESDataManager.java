@@ -407,6 +407,19 @@ public class ESDataManager { // implements DataManager
 	}
 	
 	public List<Question> searchQuestionsByLocation(SimpleLocation location) {
+		String requestBody = "{\n"+
+				" \"filter\" : {\n"+
+				" \"geo_distance\" : {\n"+
+				" \"distance\" : \"50km\",\n"+
+				" \"location\" : {\n"+
+				" \"lat\" : " + location.getLat() + ","+
+				" \"lon\" : " + location.getLon() +
+				" }\n"+
+				" }\n"+
+				" }\n"+
+				" }";
+
+		/*
     	String requestBody = "{\"sort\" : [" +
     	        "{" +
     	            "\"_geo_distance\" : {" +
@@ -416,6 +429,7 @@ public class ESDataManager { // implements DataManager
     	            "}" +
     	        "}" +
     	    "]}";
+    	*/
 		String endPoint = "_search";
 		return getQuestions(Question.class, requestBody, endPoint, null, false);
 	}
