@@ -210,8 +210,7 @@ public class QuestionController {
 		Comment c;
 		if (location){
 			c = new Comment(body, locationCoor, locationName);
-		}
-		else{
+		} else{
 			c = new Comment(body);
 		}
 		Question q = cache.getQuestionById(qID);

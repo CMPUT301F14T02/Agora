@@ -58,8 +58,8 @@ public class Comment implements Serializable {
 	public Comment(String text,SimpleLocation location, String locationName) {
 		this.location = location;
 		this.locationName = locationName;
+		author = DeviceUser.getUser();
 		body = text;
-		this.author = author;  
 		date = System.currentTimeMillis();	}
 
 	public void setLocation(SimpleLocation location){

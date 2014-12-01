@@ -114,7 +114,7 @@ public class UserPrefActivity extends Activity implements
 			break;
 		case R.id.setTextRadio:
 			if (checked) {
-				setHardStringLocation();
+				//setHardStringLocation();
 				// manualLocation();
 				break;
 			}
