@@ -75,15 +75,14 @@
     
     <Button
         android:id="@+id/aComment"
-        style="@style/AppBaseTheme"
+        style="@style/Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@id/aLocationText"
+        android:gravity="center"
         android:minHeight="32dp"
-        android:paddingTop="6dp"
         android:text="Comments"
-        android:textColor="#000000"
         android:textSize="14sp" />
 
     <ImageView

@@ -30,7 +30,6 @@ public class SimpleImagePopup {
 		if (image.getWidth() > image.getHeight()) {
 			imageView.setAdjustViewBounds(true);
 		}
-		
 		popup = builder.create();
 	}
 	

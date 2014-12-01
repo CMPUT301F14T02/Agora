@@ -14,7 +14,7 @@ public class Author implements Serializable {
 	
 	protected Author() { }
 	/**
-	 * Author contstructor.
+	 * Author constructor.
 	 * @param author String will be set as the author's username.
 	 */
 	public Author(String author) {

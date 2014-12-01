@@ -187,10 +187,8 @@ public class LocationDataManager {
 			Log.wtf("JSONEXCEPTION", Log.getStackTraceString(e1));
 			e1.printStackTrace();
 		} catch (IllegalStateException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}

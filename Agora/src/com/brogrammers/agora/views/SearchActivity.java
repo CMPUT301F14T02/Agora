@@ -246,9 +246,14 @@ public class SearchActivity extends Activity implements ActionBar.TabListener {
 		public void update() {
 			
 			qAdapter = new QuestionAdapter(qList, activity);
+			
 			if (qAdapter == null) Log.wtf("SEARCH", "null qAdapter");
 			if (lv == null) Log.wtf("SERRCH", "lv null in update");
 			lv.setAdapter(qAdapter); 
+			LayoutInflater inflater = activity.getLayoutInflater();
+			View emptyView = inflater.inflate(R.layout.empty_question_search, null);
+			lv.setEmptyView(emptyView);
+			((ViewGroup)lv.getParent()).addView(emptyView);
 		}
 		
 		public void doSearch(String query) {

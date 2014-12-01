@@ -18,6 +18,7 @@ import com.brogrammers.agora.data.CacheDataManager;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.model.Question;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -54,18 +55,19 @@ public class QuestionActivity extends Activity implements Observer {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_question);
-
+		
+		ActionBar ab = getActionBar();
+		ab.setTitle("");
+		
 		Intent intent = getIntent();
 		qid = intent.getLongExtra("qid", 0L);
 		if (qid.equals(0L)) {
-			Toast.makeText(this, "Didn't recieve a qid in intent", 0).show();
 			finish();
 		}
 
 		controller = QuestionController.getController();
 		controller.setObserver(this);
 
-		
 		Button viewComment = (Button) findViewById(R.id.QuestionCommentsButton);
 		Button viewAnswer = (Button) findViewById(R.id.QuestionAnswersButton);
 		ImageView upVoteQuestion = (ImageView) findViewById(R.id.QuestionUpVoteButton);
@@ -73,8 +75,6 @@ public class QuestionActivity extends Activity implements Observer {
 		viewComment.setOnClickListener(new openCommentsView());
 		viewAnswer.setOnClickListener(new openAnswerView());
 		upVoteQuestion.setOnClickListener(new upVoteQuestion());
-
-
 	}
 
 	protected void onResume() {
@@ -104,7 +104,6 @@ public class QuestionActivity extends Activity implements Observer {
 	@Override
 	public void update() {
 		if (qList.size() == 0) {
-			Toast.makeText(this, "QuestionActivity recieved empty list on update", 0).show();
 			return;
 		}
 		Question q = qList.get(0);
@@ -173,6 +172,8 @@ public class QuestionActivity extends Activity implements Observer {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.question, menu);
+		Question q = qList.get(0);
+		getActionBar().setTitle(q.getTitle());
 		return true;
 	}
 
@@ -240,7 +241,6 @@ public class QuestionActivity extends Activity implements Observer {
 
 	// Placeholder functions, remove later
 	public void favorite() {
-		Toast.makeText(this, "favorite", Toast.LENGTH_SHORT).show();
 		if (qList.size() != 0) {
 			// increments votes in the view, but does not save.
 			QuestionController controller = QuestionController.getController();
@@ -250,7 +250,6 @@ public class QuestionActivity extends Activity implements Observer {
 	}
 
 	public void flag() {
-		Toast.makeText(this, "flag", Toast.LENGTH_SHORT).show();
 		if (qList.size() != 0) {
 			// increments votes in the view, but does not save.
 			QuestionController controller = QuestionController.getController();

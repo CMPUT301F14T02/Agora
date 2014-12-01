@@ -17,11 +17,5 @@
         android:icon="@drawable/ic_tag" 
         android:title="Flag" 
         android:titleCondensed="Flag"
-        android:showAsAction="always"></item>    
-        
-    <item android:id="@+id/action_settings"
-        android:icon="@drawable/ic_action_settings" 
-        android:title="Settings" 
-        android:titleCondensed="Settings"
         android:showAsAction="always"></item>
 </menu>

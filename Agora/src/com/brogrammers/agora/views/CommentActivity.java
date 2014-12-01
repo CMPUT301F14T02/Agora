@@ -84,8 +84,6 @@ public class CommentActivity extends Activity implements Observer {
 				try {
 					lv.setAdapter(cadapter);
 				} catch (NullPointerException e) {
-					Toast.makeText(this,
-							"CommentActivity Nullptr in setting adapter", 0).show();
 				}
 			
 			} else { // we're in answer comments
@@ -95,15 +93,11 @@ public class CommentActivity extends Activity implements Observer {
 				try {
 					lv.setAdapter(cadapter);
 				} catch (NullPointerException e) {
-					Toast.makeText(this,
-							"CommentActivity Nullptr in setting adapter", 0).show();
 				}
 			}
 		} else {
 			Toast.makeText(this, "qList empty onUpdate", 0).show();
 		} 
-			
-
 	}
 
 	@Override
@@ -151,8 +145,6 @@ public class CommentActivity extends Activity implements Observer {
 
 					}
 				} catch (NullPointerException e) {
-					Toast.makeText(Agora.getContext(),
-							"CommentActivity Nullptr in adding comment", 0).show();
 				}
 			} else { // adding comment to answer
 				try {
@@ -164,8 +156,6 @@ public class CommentActivity extends Activity implements Observer {
 						Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
 					}
 				} catch (NullPointerException e) {
-					Toast.makeText(Agora.getContext(),
-							"CommentActivity Nullptr in adding comment", 0).show();
 				}
 			}
     	 
