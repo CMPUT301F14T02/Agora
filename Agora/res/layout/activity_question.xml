@@ -121,19 +121,24 @@
 
 	            <Button
 	                android:id="@+id/QuestionAnswersButton"
+	                style="@style/Button"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentLeft="true"
 	                android:layout_alignParentTop="true"
+	                android:minWidth="120dp"
 	                android:text="Answers" />
 
 	            <Button
 	                android:id="@+id/QuestionCommentsButton"
+	                style="@style/Button"
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_alignParentRight="true"
 	                android:layout_alignParentTop="true"
+	                android:minWidth="120dp"
 	                android:text="Comments" />
+
 	        </RelativeLayout>
 	    </LinearLayout>
 	

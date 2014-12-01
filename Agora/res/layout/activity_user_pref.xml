@@ -59,7 +59,7 @@
 
 	<Button
 	    android:id="@+id/setLocationButton"
-	    style="?android:attr/buttonStyleSmall"
+	    style="@style/Button"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
 	    android:layout_alignRight="@+id/locationTopicText"

@@ -32,12 +32,13 @@
 
     <Button
         android:id="@+id/CommentPostButton"
+        style="@style/Button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/CommentEditText"
         android:layout_alignBottom="@+id/CommentEditText"
         android:layout_alignParentRight="true"
-        android:text="Post" />
+        android:text="Post"/>
 
     <CheckBox
         android:id="@+id/addLocationCommentBox"
