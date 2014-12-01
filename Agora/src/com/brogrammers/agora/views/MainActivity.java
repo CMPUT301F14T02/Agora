@@ -16,6 +16,7 @@ import com.brogrammers.agora.R.menu;
 import com.brogrammers.agora.R.string;
 import com.brogrammers.agora.data.CacheDataManager;
 import com.brogrammers.agora.data.DeviceUser;
+import com.brogrammers.agora.data.LocationDataManager;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.helper.FilterSorterHelper;
 import com.brogrammers.agora.helper.QuestionLoaderSaver;
@@ -73,6 +74,7 @@ public class MainActivity extends Activity implements Observer {
 			(new UserNameSelector(this)).show();	
 			Log.e("MAIN ONCREATE","username set to "+user.getUsername());
 		}
+		LocationDataManager.getInstance().initLocation("edmonton");
 	}
 
 	/**
@@ -94,31 +96,13 @@ public class MainActivity extends Activity implements Observer {
 
 	protected void refresh() {
 		qController.setObserver(this);
-		List<Question> qList = qController.getAllQuestions();
+		List<Question> qList = (FilterSorterHelper.filterLocation) ? 
+				qController.searchQuestionsByLocation() :
+				qController.getAllQuestions();
 		ListView lv = (ListView) findViewById(R.id.answerSearchListView);
 		qAdapter = new QuestionAdapter(qList, this);
 		lv.setAdapter(qAdapter);
 	}
-//	
-//	protected void sortByUpvote(boolean assendOrDesend) {
-//		//qController.setObserver(this);
-//		List<Question> qList = qController.getAllQuestions();
-//		FilterSorterHelper fsHelper = new FilterSorterHelper();
-//		qList = fsHelper.sortByUpvote(qList, assendOrDesend);
-//		ListView lv = (ListView) findViewById(R.id.listView1);
-//		qAdapter = new QuestionAdapter(qList, this);
-//		lv.setAdapter(qAdapter);
-//	}
-//	
-//	protected void sortByDate(boolean assendOrDesend) {
-//		//qController.setObserver(this);
-//		List<Question> qList = qController.getAllQuestions();
-//		FilterSorterHelper fsHelper = new FilterSorterHelper();
-//		qList = fsHelper.sortByDate(qList, assendOrDesend);
-//		ListView lv = (ListView) findViewById(R.id.listView1);
-//		qAdapter = new QuestionAdapter(qList, this);
-//		lv.setAdapter(qAdapter);
-//	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
