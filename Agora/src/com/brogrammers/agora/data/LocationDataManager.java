@@ -159,7 +159,7 @@ public class LocationDataManager {
 		URI2 = "http://nominatim.openstreetmap.org/search/";
 		disableStrictMode();
 		URI2 += strLocation + parameters;
-		Log.e("Location URL", URI2);
+		URI2 = URI2.replace(" ", "%20");
 		final List<SimpleLocation> locationList = new ArrayList<SimpleLocation>();
 		HttpClient client = new DefaultHttpClient();
 		try {
