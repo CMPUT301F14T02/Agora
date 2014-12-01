@@ -288,6 +288,16 @@ public class QuestionController {
 		return questionByIdList;
 	}
 
+	public List<Question> searchQuestionsByLocation() {
+		if (eSearch.isConnected()) {
+			Log.wtf("CONTROLLER SEARCH", "lat/lon: " + LocationDataManager.getLocation().getLat() + LocationDataManager.getLocation().getLat());
+			return eSearch.searchQuestionsByLocation(LocationDataManager.getLocation());
+		} else {
+			return new ArrayList<Question>();
+		}
+		
+	}
+	
 	/**
 	 * This method is called by a DataManager when it successfully populates a
 	 * list requested by the controller. Notifies the registered observer.
