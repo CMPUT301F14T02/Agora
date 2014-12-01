@@ -136,6 +136,13 @@ public class AnswerAdapter extends BaseAdapter {
 		aScore.setText(Integer.toString(answer.getRating()));
 		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText("Submitted by: " +answer.getAuthor()+", "+ datetostring(answer.getDate()));
 		
+		if (!TextUtils.isEmpty(answer.getLocationName())) {
+			((TextView)convertView.findViewById(R.id.aLocationText)).setText(answer.getLocationName());
+		} else {
+			((TextView)convertView.findViewById(R.id.aLocationText)).setVisibility(View.GONE);
+		}
+		
+		
 		comment.setOnClickListener(new CommentOnClickListener(position));
 		upvote.setOnClickListener(new UpVoteOnClickListener(position, aScore));
 		
