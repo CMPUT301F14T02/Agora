@@ -133,7 +133,7 @@ public class MainActivity extends Activity implements Observer {
 			openSearchBar(item);
 			return true;
 		case R.id.sortBQV:
-			(new SortFilterMenu(this, qAdapter)).openMenu();
+			(new SortFilterMenu(this)).openMenu();
 			return true;
 		case R.id.refreshMain:
 			onResume();

@@ -18,9 +18,8 @@ public class SortFilterMenu {
 	private MainActivity activity; 
 	private QuestionAdapter qAdapter;
 	
-	public SortFilterMenu(MainActivity activity, QuestionAdapter qAdapter) {
+	public SortFilterMenu(MainActivity activity) {
 		this.activity = activity;
-		this.qAdapter = qAdapter;
 	}
 	
 	/**
