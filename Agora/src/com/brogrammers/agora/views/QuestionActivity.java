@@ -173,6 +173,8 @@ public class QuestionActivity extends Activity implements Observer {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.question, menu);
+		Question q = qList.get(0);
+		getActionBar().setTitle(q.getTitle());   
 		return true;
 	}
 
