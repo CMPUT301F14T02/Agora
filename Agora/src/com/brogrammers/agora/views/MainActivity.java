@@ -173,7 +173,6 @@ public class MainActivity extends Activity implements Observer {
 	private void openUserPref() {
 		Intent intent = new Intent(Agora.getContext(), UserPrefActivity.class);
 		startActivity(intent);
-
 	}
 
 	/**
@@ -203,8 +202,6 @@ public class MainActivity extends Activity implements Observer {
 		Intent i = new Intent(this, SearchActivity.class);
 		startActivity(i);
 	}
-
-
 
 	@Override
 	public void update() {
