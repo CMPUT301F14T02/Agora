@@ -20,6 +20,7 @@ public class FilterSorterHelper {
 	public static boolean filterPicture = false;
 	public static boolean filterFavorite = false;
 	public static boolean filterAuthor = false;
+	public static boolean filterLocation = false;
 	
 	
 	/**
@@ -94,6 +95,7 @@ public class FilterSorterHelper {
 		if (filterAuthor) {
 			questions = filterAuthoredQuestions(questions);
 		}
+
 		return questions;
 	}
 	

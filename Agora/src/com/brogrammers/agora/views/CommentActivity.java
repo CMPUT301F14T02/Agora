@@ -120,17 +120,14 @@ public class CommentActivity extends Activity implements Observer {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Intent intent = new Intent(Agora.getContext(), UserPrefActivity.class);
+			startActivity(intent);
 			return true;
-		} else if (id == R.id.refreshC) {
-			refresh();
-			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
-	private void refresh() {
-		// TODO Auto-generated method stub
-		
-	}
+
 	/**
 	 * When post comment button clicked on. Posts comment to via corresponding question/answer id.
 	 */

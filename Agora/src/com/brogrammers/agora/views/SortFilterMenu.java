@@ -15,10 +15,10 @@ import com.brogrammers.agora.R;
 import com.brogrammers.agora.helper.FilterSorterHelper;
 
 public class SortFilterMenu {
-	private Activity activity; 
+	private MainActivity activity; 
 	private QuestionAdapter qAdapter;
 	
-	public SortFilterMenu(Activity activity, QuestionAdapter qAdapter) {
+	public SortFilterMenu(MainActivity activity, QuestionAdapter qAdapter) {
 		this.activity = activity;
 		this.qAdapter = qAdapter;
 	}
@@ -45,12 +45,14 @@ public class SortFilterMenu {
 		final CheckBox checkFavorite = (CheckBox) dialog.findViewById(R.id.favouritecheck);
 		final CheckBox checkPicture = (CheckBox) dialog.findViewById(R.id.picturecheck);
 		final CheckBox checkAuthor = (CheckBox) dialog.findViewById(R.id.authorcheck);
+		final CheckBox checkLocation = (CheckBox) dialog.findViewById(R.id.checkCloseToMe);
 		
 		rbUpvote.setChecked(FilterSorterHelper.byUpvote);
 		rbDescending.setChecked(FilterSorterHelper.descending);
 		checkFavorite.setChecked(FilterSorterHelper.filterFavorite);
 		checkPicture.setChecked(FilterSorterHelper.filterPicture);
 		checkAuthor.setChecked(FilterSorterHelper.filterAuthor);
+		checkLocation.setChecked(FilterSorterHelper.filterLocation);
 		
 		builder.setTitle("Sorting Options");
 		builder.setView(dialog)
@@ -63,6 +65,7 @@ public class SortFilterMenu {
 								FilterSorterHelper.filterFavorite = checkFavorite.isChecked();
 								FilterSorterHelper.filterPicture = checkPicture.isChecked();
 								FilterSorterHelper.filterAuthor = checkAuthor.isChecked();
+								FilterSorterHelper.filterLocation = checkLocation.isChecked();
 							
 								if(rbDate.isChecked()) {
 									Toast.makeText(Agora.getContext(), "Sorting by Date", Toast.LENGTH_SHORT).show();
@@ -70,7 +73,7 @@ public class SortFilterMenu {
 									Toast.makeText(Agora.getContext(), "Sorting by Upvote", Toast.LENGTH_SHORT).show();
 								}
 								
-								qAdapter.doSortAndFilter();
+								activity.refresh();
 							}
 				})
 				.setNegativeButton("Cancel",

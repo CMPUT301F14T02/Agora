@@ -100,13 +100,19 @@ public class CommentAdapter extends BaseAdapter {
 		//set text on each TextView			
 		
 		if (!TextUtils.isEmpty(comment.getBody())) {
-			((TextView)convertView.findViewById(R.id.cBody)).setText(comment.getBody());
+			((TextView)convertView.findViewById(R.id.cBody)).setText(comment.getBody().trim());
 		} else {
 			((TextView)convertView.findViewById(R.id.cBody)).setText(" ");
 		}
 		
 		((TextView)convertView.findViewById(R.id.cAuthourDate)).setText("Submitted by: " +comment.getAuthor().getUsername()+", "+ datetostring(comment.getDate()));
 	
+		if (!TextUtils.isEmpty(comment.getLocationName())) {
+			((TextView)convertView.findViewById(R.id.cLocationtext)).setText(comment.getLocationName());
+		} else {
+			((TextView)convertView.findViewById(R.id.cLocationtext)).setVisibility(View.GONE);
+		}
+		
 		return convertView;
 	}
 

@@ -96,6 +96,8 @@ public class AnswerActivity extends Activity implements Observer {
 		int id = item.getItemId();
 		switch (id) {
 		case R.id.action_settings:
+			Intent intent = new Intent(Agora.getContext(), UserPrefActivity.class);
+			startActivity(intent);
 			return true;
 		case R.id.action_addanswer:
 			openAddAnswerView();
