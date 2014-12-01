@@ -55,6 +55,16 @@ public class Question implements Serializable, Comparable<Question> {
 		hasImage = ((image != null) ? (image.length > 0) : false);
 	}
 	
+	/**
+	 * 
+	 * Question constructor. Date is created at time of creation. This question will add a location to the question object.
+	 * @param title String will be set as title/
+	 * @param body String will be set as body.
+	 * @param image Image to be set in the body of the image. Not yet implemented. Null.
+	 * @param author Username of the author will be set as author of the question.
+	 * @param location simple location object containing coordinates
+	 * @param locationName simple location string containing name of location
+	 */
 	public Question(String title, String body, byte[] image, String user, SimpleLocation location, String locationName) {
 		this(title, body, image, user);
 		this.location = location;
@@ -86,7 +96,7 @@ public class Question implements Serializable, Comparable<Question> {
 		if (this.locationName != null){
             return locationName;
 		} else {
-			return "";
+			return "  ";
 		}
 	}
 

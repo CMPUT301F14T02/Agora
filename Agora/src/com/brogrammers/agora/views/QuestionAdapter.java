@@ -10,12 +10,14 @@ import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.data.DeviceUser;
 import com.brogrammers.agora.data.QuestionController;
-import com.brogrammers.agora.helper.FilterSorterHelper;
+import com.brogrammers.agora.helper.QuestionFilterer;
+import com.brogrammers.agora.helper.QuestionSorter;
 import com.brogrammers.agora.model.Question;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -84,8 +86,13 @@ public class QuestionAdapter extends BaseAdapter {
 		LinearLayout HLayoutAcount = (LinearLayout)convertView.findViewById(R.id.HLayoutAnswerCount);
 		((TextView)HLayoutAcount.findViewById(R.id.qACountText)).setText(Integer.toString(question.countAnswers()));
 		
-		((TextView)convertView.findViewById(R.id.qlocation)).setText(question.getLocationName());
-
+		
+		if (!TextUtils.isEmpty(question.getLocationName())) {
+			((TextView)convertView.findViewById(R.id.qlocation)).setText(question.getLocationName());
+		} else {
+			((TextView)convertView.findViewById(R.id.qlocation)).setVisibility(View.GONE);
+		}
+		
 		List<Long> favoritedQuestions = DeviceUser.getUser().getFavoritedQuestionIDs();
 		ImageView qFavorite = (ImageView)convertView.findViewById(R.id.qQuestionFavourite);
 		if (favoritedQuestions.contains(question.getID())) {
@@ -169,9 +176,10 @@ public class QuestionAdapter extends BaseAdapter {
 	
 	public void doSortAndFilter() {
 		qList = unfilteredList == null ? qList : unfilteredList;
-		FilterSorterHelper helper = new FilterSorterHelper();
-		unfilteredList = helper.sort(qList);
-		qList = helper.filter(unfilteredList);
+		QuestionSorter sorter = new QuestionSorter();
+		unfilteredList = sorter.sort(qList);
+		QuestionFilterer filterer = new QuestionFilterer();
+		qList = filterer.filter(unfilteredList);
 		notifyDataSetChanged();
 	}
 

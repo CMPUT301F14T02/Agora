@@ -72,7 +72,7 @@ public class CacheDataManager implements DataManager {
 	 */
 
 	public List<Question> getQuestions() {
-//		Log.e("CACHE", "size of questionCache is " + questionCache.size());
+		// Log.e("CACHE", "size of questionCache is " + questionCache.size());
 		return new ArrayList<Question>(questionCache.values());
 	}
 
@@ -183,6 +183,10 @@ public class CacheDataManager implements DataManager {
 		pushQuestion(q);
 	}
 
+	/**
+	 * Clears both the in-memory cache of questions, as well as the on-disk
+	 * cache of questions.
+	 */
 	public void clearCache() {
 		questionCache.clear();
 		qls.clearAll();

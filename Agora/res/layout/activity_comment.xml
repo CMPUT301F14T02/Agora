@@ -12,7 +12,7 @@
         android:id="@+id/CommentListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/attachLocationCommentBox"
+        android:layout_above="@+id/addLocationCommentBox"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true" >
 
@@ -40,11 +40,12 @@
         android:text="Post" />
 
     <CheckBox
-        android:id="@+id/attachLocationCommentBox"
+        android:id="@+id/addLocationCommentBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/CommentEditText"
+        android:layout_above="@+id/CommentPostButton"
         android:layout_alignParentLeft="true"
-        android:text="Attach Location" />
+        android:layout_alignParentRight="true"
+        android:text="Add Location" />
 	
 </RelativeLayout>

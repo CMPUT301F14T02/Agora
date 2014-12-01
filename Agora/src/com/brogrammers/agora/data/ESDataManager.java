@@ -169,11 +169,6 @@ public class ESDataManager { // implements DataManager
 				      "\"match_all\": {}" +
 				   "}" +
 				"}";
-		/* query for use when not filtering
-		String requestBody = "{" + "\"query\": {\"match_all\": {}},"
-				+ "\"sort\": [" + "{" + "\"date\": {" + "\"order\": \"desc\""
-				+ "}" + "}]}";
-		*/
 		String endPoint = "_search?size=50";
 		return getQuestions(Question.class, requestBody, endPoint, null, true);
 	}
@@ -204,12 +199,12 @@ public class ESDataManager { // implements DataManager
 			String requestBody, String endPoint, final String answerQuery, final boolean filtered) {
 		final List<Question> questionList = new ArrayList<Question>();
 		final List<Answer> answerList = new ArrayList<Answer>();
-		Log.e("SERVER QUERY", requestBody);
-		// TODO figure out a better
+
 		if (!connected) {
 			Log.e("SERVER", "No internet connection");
 			return (ArrayList<T>) questionList;
 		}
+
 		AsyncHttpClient client = new AsyncHttpClient();
 		StringEntity stringEntityBody = null;
 		try {
@@ -217,9 +212,9 @@ public class ESDataManager { // implements DataManager
 		} catch (UnsupportedEncodingException e1) {
 			e1.printStackTrace();
 		}
+
 		String URI = DOMAIN + INDEXNAME + TYPENAME + endPoint;
-		client.post(Agora.getContext(), URI, stringEntityBody,
-				"application/json", new AsyncHttpResponseHandler() {
+		client.post(Agora.getContext(), URI, stringEntityBody, "application/json", new AsyncHttpResponseHandler() {
 		
 			@Override
 			public boolean getUseSynchronousMode() {
@@ -227,72 +222,18 @@ public class ESDataManager { // implements DataManager
 			}
 
 			@Override
-			public void onFailure(int status, Header[] arg1,
-					byte[] responseBody, Throwable arg3) {
-
-				Log.e("SERVER",
-						"getQuestion failure: "
-								+ Integer.toString(status));
-				Log.e("SERVER", "responsebody: " +
-						new String(responseBody));
-				Toast.makeText(Agora.getContext(),
-						"Failed to pull data from server", 0).show();
+			public void onFailure(int status, Header[] arg1, byte[] responseBody, Throwable arg3) {
+				Log.e("SERVER", "getQuestion failure: " + Integer.toString(status));
+				Log.e("SERVER", "responsebody: " + new String(responseBody));
+				Toast.makeText(Agora.getContext(), "Failed to pull data from server", 0).show();
 			}
 
 			@Override
 			public void onSuccess(int arg0, Header[] arg1, byte[] arg2) {
-//				Log.e("SERVER", "Question get success");
 				try {
-					String responseBody = new String(arg2);
-					Log.e("SERVER", "Server received data"); 
-					JSONObject jsonRes = new JSONObject(responseBody);
-//					Log.e("SERVER RESPONSE BODY", jsonRes.toString());
-					jsonRes = jsonRes.getJSONObject("hits");
-					JSONArray jsonArray = jsonRes.getJSONArray("hits");
-						
-					Gson gson = new Gson();
+					JSONArray jsonArray = getPostObjects(arg2);
 					// when returning question objects
-					if (answerQuery == null){
-					    for (int i = 0; i < jsonArray.length(); i++) {
-						    // get each object in the response, convert to object and add to list.
-						    JSONObject q = jsonArray.getJSONObject(i);
-						    if (!filtered){
-						    	q = q.getJSONObject("_source");
-						    } else if (filtered){
-						    	q = q.getJSONObject("fields");
-						    	q = q.getJSONArray("partial1").getJSONObject(0);
-						    }
-						    Log.i("SERVER RECEIVED", q.toString());
-						    Question qObject = gson.fromJson(q.toString(),
-						    		Question.class);
-						    questionList.add(qObject);
-					    }
-				    // when returning answer objects
-					} else {
-						Log.e("SERVER", "Receiving answer results");
-						Log.e("SERVER", jsonArray.toString());
-						String[] tokens = answerQuery.split("\\s+");
-						for (int i = 0; i < jsonArray.length(); i++) {
-							JSONObject a = jsonArray.getJSONObject(i);
-							a = a.getJSONObject("_source");
-							JSONArray answers = a.getJSONArray("answers");
-							// get each answer from the question
-							for (int j = 0; j < answers.length(); j++){
-						    	JSONObject answer = answers.getJSONObject(j);
-						    	Log.e("SERVER", answer.toString());
-						    	Answer qObject = gson.fromJson(answer.toString(),
-						    			Answer.class);
-						    	for (int k = 0; k < tokens.length; k++){
-						    		Log.e("SERVER", "Token " + tokens[k]);
-						    		Log.e("SERVER", "body being searched " + qObject.getBody());
-						    		if (qObject.getBody().contains(tokens[k])){
-						    			answerList.add(qObject);
-						    			break;
-						    		}
-						    	}
-							}
-						}
-					}
+					extractPostObjectsFromResults(answerQuery, filtered, questionList, answerList, jsonArray);
 					QuestionController.getController().update();
 				} catch (JSONException e) {
 					e.printStackTrace();
@@ -558,5 +499,76 @@ public class ESDataManager { // implements DataManager
 			offlineQueue.addToQueue(qItem);
 		}
 
+	}
+
+	private JSONArray getPostObjects(byte[] arg2) throws JSONException {
+		String responseBody = new String(arg2);
+		Log.e("SERVER", "Server received data"); 
+		JSONObject jsonRes = new JSONObject(responseBody);
+		jsonRes = jsonRes.getJSONObject("hits");
+		JSONArray jsonArray = jsonRes.getJSONArray("hits");
+		return jsonArray;
+	}
+
+	private void extractPostObjectsFromResults(final String answerQuery,
+			final boolean filtered, final List<Question> questionList,
+			final List<Answer> answerList, JSONArray jsonArray)
+			throws JSONException {
+
+		Gson gson = new Gson();
+		// when returning question objects
+		if (answerQuery == null){
+		    for (int i = 0; i < jsonArray.length(); i++) {
+			    // get each object in the response, convert to object and add to list.
+			    JSONObject q = jsonArray.getJSONObject(i);
+			    q = getQuestionObject(filtered, q);
+			    Question qObject = gson.fromJson(q.toString(), Question.class);
+			    questionList.add(qObject);
+		    }
+
+		// when returning answer objects
+		} else {
+			Log.e("SERVER", "Receiving answer results");
+			Log.e("SERVER", jsonArray.toString());
+			String[] tokens = answerQuery.split("\\s+");
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONArray answers = getAnswersArray(jsonArray, i);
+				// get each answer from the question
+				for (int j = 0; j < answers.length(); j++){
+			    	Answer aObject = getAnswerObject(gson, answers, j);
+			    	if (aObject.verifyTokens(tokens)) {
+			    		answerList.add(aObject);
+			    	}
+				}
+			}
+		}
+	}
+
+	private Answer getAnswerObject(Gson gson, JSONArray answers, int j)
+			throws JSONException {
+		JSONObject answer = answers.getJSONObject(j);
+		Log.e("SERVER", answer.toString());
+		Answer qObject = gson.fromJson(answer.toString(),
+				Answer.class);
+		return qObject;
+	}
+
+	private JSONArray getAnswersArray(JSONArray jsonArray, int i)
+			throws JSONException {
+		JSONObject a = jsonArray.getJSONObject(i);
+		a = a.getJSONObject("_source");
+		JSONArray answers = a.getJSONArray("answers");
+		return answers;
+	}
+
+	private JSONObject getQuestionObject(final boolean filtered, JSONObject q)
+			throws JSONException {
+		if (!filtered){
+			q = q.getJSONObject("_source");
+		} else if (filtered){
+			q = q.getJSONObject("fields");
+			q = q.getJSONArray("partial1").getJSONObject(0);
+		}
+		return q;
 	}
 }

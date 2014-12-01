@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -119,17 +120,14 @@ public class CommentActivity extends Activity implements Observer {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Intent intent = new Intent(Agora.getContext(), UserPrefActivity.class);
+			startActivity(intent);
 			return true;
-		} else if (id == R.id.refreshC) {
-			refresh();
-			return true;
+		} else {
+			return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
 	}
-	private void refresh() {
-		// TODO Auto-generated method stub
-		
-	}
+
 	/**
 	 * When post comment button clicked on. Posts comment to via corresponding question/answer id.
 	 */
@@ -138,20 +136,33 @@ public class CommentActivity extends Activity implements Observer {
 		public void onClick(View v) {
 			EditText commentBody = (EditText) findViewById(R.id.CommentEditText);
     		String body = commentBody.getText().toString();
+			CheckBox locationBox = (CheckBox) findViewById(R.id.addLocationCommentBox);
 
 			//
 			if (aid == 0) { // adding comment to question 
 				try {
-					controller.addComment(body, qid, null);
-					Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
+					if (locationBox.isChecked()){
+						controller.addComment(body, qid, null, true);
+						Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
+					}
+					else{
+						controller.addComment(body, qid, null, false);
+						Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
+
+					}
 				} catch (NullPointerException e) {
 					Toast.makeText(Agora.getContext(),
 							"CommentActivity Nullptr in adding comment", 0).show();
 				}
 			} else { // adding comment to answer
 				try {
-					controller.addComment(body, qid, aid);
-					Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
+					if (locationBox.isChecked()){
+						controller.addComment(body, qid, aid, true);
+						Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
+					} else{
+						controller.addComment(body, qid, aid, false);
+						Toast.makeText(Agora.getContext(), "Comment added!", 0).show();
+					}
 				} catch (NullPointerException e) {
 					Toast.makeText(Agora.getContext(),
 							"CommentActivity Nullptr in adding comment", 0).show();

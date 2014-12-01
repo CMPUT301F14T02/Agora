@@ -159,7 +159,7 @@ public class LocationDataManager {
 		URI2 = "http://nominatim.openstreetmap.org/search/";
 		disableStrictMode();
 		URI2 += strLocation + parameters;
-		Log.e("Location URL", URI2);
+		URI2 = URI2.replace(" ", "%20");
 		final List<SimpleLocation> locationList = new ArrayList<SimpleLocation>();
 		HttpClient client = new DefaultHttpClient();
 		try {
@@ -177,13 +177,10 @@ public class LocationDataManager {
 			JSONObject o = array.getJSONObject(0);
 			Double parsedLat = o.getDouble("lat");
 			Double parsedLon = o.getDouble("lon");
-			o = o.getJSONObject("address");
 			Log.e("JSON Location Result",result.toString());
-			String parsedLocation = o.getString("city");
-			parsedLocation += ", ";
-			parsedLocation += o.getString("country");
+
 			currentLocation = new SimpleLocation(parsedLat, parsedLon);
-			currentLocationName = parsedLocation;
+			currentLocationName = strLocation;
 
 		} catch (JSONException e1) {
 			

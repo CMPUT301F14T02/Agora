@@ -114,7 +114,7 @@ public class UserPrefActivity extends Activity implements
 			break;
 		case R.id.setTextRadio:
 			if (checked) {
-				setHardStringLocation();
+				//setHardStringLocation();
 				// manualLocation();
 				break;
 			}
@@ -173,28 +173,8 @@ public class UserPrefActivity extends Activity implements
 		}
 	}
 
-	private void setHardGpsLocation() {
-		// if (mLocationClient.isConnected()) {
-		double e = 53.5343609;
-		double d = 113.5065085;
-		LocationDataManager.getInstance().initLocation(e, d);
 
-		// }
-	}
 
-	private void setHardStringLocation() {
-		// if (mLocationClient.isConnected()) {
-		String s = "edmonton";
-		LocationDataManager.getInstance().initLocation(s);
-		Toast.makeText(Agora.getContext(),
-				LocationDataManager.getLocationName(), Toast.LENGTH_SHORT)
-				.show();
-		// Toast.makeText(Agora.getContext(),
-		// String.valueOf(LocationDataManager.getLocation().getLat()),
-		// Toast.LENGTH_SHORT)
-		// .show();
-		// }
-	}
 
 	public void manualLocation(View v) {
 		RadioButton setLocationButton = (RadioButton) findViewById(R.id.setTextRadio);
@@ -207,7 +187,7 @@ public class UserPrefActivity extends Activity implements
 		EditText setLocation = (EditText) findViewById(R.id.setLocationEditText);
 		String strLocation = setLocation.getText().toString();
 
-		locationManager.initLocation(strLocation.replace(" ", "%20"));
+		locationManager.initLocation(strLocation);
 		Toast.makeText(Agora.getContext(),
 				LocationDataManager.getLocationName(), Toast.LENGTH_SHORT)
 				.show();
