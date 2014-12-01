@@ -48,6 +48,19 @@ public class Comment implements Serializable {
 		this.author = author;  
 		date = System.currentTimeMillis();
 	}
+	
+	/**
+	 * Comment constructor for comments with locations 
+	 * @param text body text
+	 * @param location location object contain coordinates
+	 * @param locationName simple text name of the location
+	 */
+	public Comment(String text,SimpleLocation location, String locationName) {
+		this.location = location;
+		this.locationName = locationName;
+		author = DeviceUser.getUser();
+		body = text;
+		date = System.currentTimeMillis();	}
 
 	public void setLocation(SimpleLocation location){
 		this.location = location;
