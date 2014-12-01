@@ -9,6 +9,7 @@ import java.util.List;
 import com.brogrammers.agora.helper.md5;
 
 import android.graphics.Bitmap;
+import android.util.Log;
 
 /**
  * Answer model data class. Contains information about Answer, including
@@ -154,6 +155,15 @@ public class Answer implements Serializable {
 	public void setImage(byte[] image) {
 		this.image = image;
 		this.hasImage = ((image != null) ? (image.length > 0) : false);
+	}
+	
+	public boolean verifyTokens(String[] tokens) {
+		for (int k = 0; k < tokens.length; k++){
+			if (getBody().contains(tokens[k])){
+				return true;	
+			}
+		}
+		return false;
 	}
 
 }

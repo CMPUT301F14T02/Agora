@@ -535,21 +535,11 @@ public class ESDataManager { // implements DataManager
 				JSONArray answers = getAnswersArray(jsonArray, i);
 				// get each answer from the question
 				for (int j = 0; j < answers.length(); j++){
-			    	Answer qObject = getAnswerObject(gson, answers, j);
-			    	verifyAnswer(answerList, tokens, qObject);
+			    	Answer aObject = getAnswerObject(gson, answers, j);
+			    	if (aObject.verifyTokens(tokens)) {
+			    		answerList.add(aObject);
+			    	}
 				}
-			}
-		}
-	}
-
-	private void verifyAnswer(final List<Answer> answerList, String[] tokens,
-			Answer qObject) {
-		for (int k = 0; k < tokens.length; k++){
-			Log.e("SERVER", "Token " + tokens[k]);
-			Log.e("SERVER", "body being searched " + qObject.getBody());
-			if (qObject.getBody().contains(tokens[k])){
-				answerList.add(qObject);
-				break;
 			}
 		}
 	}
