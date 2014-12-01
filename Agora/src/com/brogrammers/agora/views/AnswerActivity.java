@@ -97,9 +97,6 @@ public class AnswerActivity extends Activity implements Observer {
 		switch (id) {
 		case R.id.action_settings:
 			return true;
-		case R.id.action_addanswer:
-			openAddAnswerView();
-			return true;
         case R.id.refreshA:
         	refresh();
         	return true;
@@ -130,7 +127,7 @@ public class AnswerActivity extends Activity implements Observer {
 	 * Opens AuthorAnswer activity to post an answer to the question. Sends
 	 * question id via intent.
 	 */
-	public void openAddAnswerView() {
+	public void openAddAnswerView(View v) {
 		Intent intent = new Intent(Agora.getContext(),
 				AuthorAnswerActivity.class);
 		intent.putExtra("qid", qid);
