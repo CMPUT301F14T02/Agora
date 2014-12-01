@@ -4,7 +4,6 @@ import java.io.ByteArrayInputStream;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,18 +20,13 @@ import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.graphics.PorterDuff;
 import java.util.Date;
 
 import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.R;
-import com.brogrammers.agora.R.id;
-import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.model.Answer;
 import com.brogrammers.agora.model.Question;
@@ -47,7 +41,6 @@ public class AnswerAdapter extends BaseAdapter {
 	private List<Question> qList;
 	private Activity activity;
 	private List<Answer> answers;
-	private DateFormat df = new SimpleDateFormat ("dd/MM/yy HH:mm:ss",Locale.getDefault());
 	
 	AnswerAdapter(Question q, Activity activity){
 		this.question = q;
@@ -202,9 +195,7 @@ public class AnswerAdapter extends BaseAdapter {
 			this.aScoreTextView = aScoreTextView;
 			this.position = position;
 		}
-		public void onClick(View view) {
-			Long aid = getItemId(position);
-			
+		public void onClick(View view) {			
 			try {
 				QuestionController.getController().upvote(question.getID(), getItemId(position));
 			} catch (UnsupportedEncodingException e) {

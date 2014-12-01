@@ -164,12 +164,7 @@ public class MainActivity extends Activity implements Observer {
 	public void openAddQuestionView(View v) {
 		Intent intent = new Intent(Agora.getContext(),
 				AuthorQuestionActivity.class);
-		// Intent intent = new Intent(Agora.getContext(),
-		// QuestionActivity.class); //for opening QuestionActivity
-
 		startActivity(intent);
-		// Toast.makeText(Agora.getContext(), "Hook up Add a question here",
-		// Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -178,9 +173,6 @@ public class MainActivity extends Activity implements Observer {
 	 * @param item
 	 */
 	public void openSearchBar(MenuItem item) {
-		// SearchView searchView = (SearchView) item.getActionView();
-		// Toast.makeText(Agora.getContext(), "Add Dropdown Search",
-		// Toast.LENGTH_SHORT).show();
 		Intent i = new Intent(this, SearchActivity.class);
 		startActivity(i);
 	}
@@ -188,7 +180,6 @@ public class MainActivity extends Activity implements Observer {
 	@Override
 	public void update() {
 		qAdapter.doSortAndFilter();
-
 	}
 
 }
