@@ -28,7 +28,7 @@ import android.widget.Toast;
  * 
  */
 
-public class CacheDataManager implements DataManager {
+public class CacheDataManager {
 
 	static private CacheDataManager self;
 

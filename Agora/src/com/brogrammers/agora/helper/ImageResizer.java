@@ -56,23 +56,17 @@ public class ImageResizer {
 		return imageBytes;
 	}
 	
-//	https://stackoverflow.com/questions/20467616/how-to-scale-bitmaps-according-to-the-screen-estate-available
 	public static Bitmap scaleImageToMaxDimension(Bitmap original, int maxDimension) {
 	    int width = original.getWidth();
 	    int height = original.getHeight();
 
-//	    if (width > maxDimension || height > maxDimension) {
 	    if (width > maxDimension) {
 	        int new_width;
 	        int new_height;
 	        float ratio = (float) width / height;
-//	        if (ratio > 1.0f) {
 	            new_width = maxDimension;
 	            new_height = (int) ((float) new_width / ratio);
-//	        } else {
-//	            new_height = maxDimension;
-//	            new_width = (int) ((float) new_height * ratio);
-//	        }
+
 	        float scaleWidth = ((float) new_width) / width;
 	        float scaleHeight = ((float) new_height) / height;
 	        Matrix matrix = new Matrix();

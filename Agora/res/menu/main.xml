@@ -17,7 +17,7 @@
     </item>
     
     <item android:id="@+id/sortBQV" 
-        android:title="@string/sortBy" 
+        android:title="Organize" 
         android:icon="@drawable/ic_action_view_as_list" 
         android:titleCondensed="@string/sort" 
         android:showAsAction="ifRoom">       

@@ -51,7 +51,7 @@ import org.apache.http.entity.StringEntity;
  * @author Group 02
  * 
  */
-public class ESDataManager { // implements DataManager
+public class ESDataManager { // 
 	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
 	protected String INDEXNAME = "cmput301f14t02/"; // name of the ES
 													// database/index
