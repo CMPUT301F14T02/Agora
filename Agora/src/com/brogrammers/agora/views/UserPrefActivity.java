@@ -27,7 +27,12 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
-
+/**
+ * Settings activity for the user. Allows user to set their GPS coordinates
+ * either by GPS or by manual input. 
+ * @author Group02
+ *
+ */
 public class UserPrefActivity extends Activity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener,
@@ -162,7 +167,10 @@ public class UserPrefActivity extends Activity implements
 			}
 		}
 	}
-	
+	/*
+	 * Creates instance of location data manger which parses the string
+	 * given by the user
+	 */
 	public void manualLocation(View v) {
 		RadioButton setLocationButton = (RadioButton) findViewById(R.id.setTextRadio);
 		if (!setLocationButton.isChecked()){
