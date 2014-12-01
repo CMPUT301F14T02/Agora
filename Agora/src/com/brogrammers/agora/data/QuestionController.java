@@ -129,7 +129,7 @@ public class QuestionController {
 	 * @param image
 	 *            user input - an image to be uploaded with the question (null
 	 *            if no image provided)
-	 * @param location 
+	 * @param location boolean to indicate whether addQuetion is attaching location to the question object
 	 * @return the ID of the created question
 	 */
 	public Long addQuestion(String title, String body, byte[] image, boolean location) {
@@ -164,7 +164,7 @@ public class QuestionController {
 	 *            no image provided)
 	 * @param qID
 	 *            the ID of the question that the Answer is to be added to.
-	 * @param location 
+	 * @param location boolean to indicate whether to attach a location to the answer object 
 	 * @return the ID of the created Answer
 	 * @throws UnsupportedEncodingException
 	 */
@@ -200,9 +200,20 @@ public class QuestionController {
 	 * @param aID
 	 *            null if the comment is on the question directly, otherwise the
 	 *            ID of the answer being commented on.
+	 * @param location 
+	 * 				boolean will determine whether or not a comment contains a location
 	 */
-	public void addComment(String body, Long qID, Long aID) {
-		Comment c = new Comment(body);
+	public void addComment(String body, Long qID, Long aID, boolean location) {
+		LocationDataManager.getInstance();
+		SimpleLocation locationCoor = LocationDataManager.getLocation();
+		String locationName = LocationDataManager.getLocationName();
+		Comment c;
+		if (location){
+			c = new Comment(body, locationCoor, locationName);
+		}
+		else{
+			c = new Comment(body);
+		}
 		Question q = cache.getQuestionById(qID);
 		if (aID == null) {
 			q.addComment(c);
