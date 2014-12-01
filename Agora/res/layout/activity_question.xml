@@ -59,6 +59,11 @@
 	        android:layout_marginTop="5dp"
 	        android:orientation="vertical" >
 
+	        <View
+	            android:layout_width="fill_parent"
+	            android:layout_height="1dp"
+	            android:background="@android:color/darker_gray" />
+
 	        <TextView
 	            android:id="@+id/qBody"
 	            android:layout_width="match_parent"
@@ -83,6 +88,11 @@
 	            android:layout_gravity="center"
 	            android:src="@drawable/ic_image_loading"
 	            android:visibility="visible" />
+
+	        <View
+	            android:layout_width="fill_parent"
+	            android:layout_height="1dp"
+	            android:background="@android:color/darker_gray" />
 
 	        <TextView
 	            android:id="@+id/AuthourDate"

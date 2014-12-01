@@ -65,7 +65,7 @@ public class QuestionActivity extends Activity implements Observer {
 		controller = QuestionController.getController();
 		controller.setObserver(this);
 
-
+		
 		Button viewComment = (Button) findViewById(R.id.QuestionCommentsButton);
 		Button viewAnswer = (Button) findViewById(R.id.QuestionAnswersButton);
 		ImageView upVoteQuestion = (ImageView) findViewById(R.id.QuestionUpVoteButton);
@@ -112,6 +112,7 @@ public class QuestionActivity extends Activity implements Observer {
 		TextView qTitle = (TextView) findViewById(R.id.qTitle);
 		TextView qBody = (TextView) findViewById(R.id.qBody);
 		TextView qScore = (TextView) findViewById(R.id.qScore);
+		TextView qLocation = (TextView) findViewById(R.id.aqLocationText);
 		TextView authorDate = (TextView) findViewById(R.id.AuthourDate);
 		String authorLine = "Submitted by: ";
 
@@ -134,6 +135,13 @@ public class QuestionActivity extends Activity implements Observer {
 		} else {
 			qBody.setText(" ");
 		}
+		
+		if (!TextUtils.isEmpty(q.getLocationName())) {
+			qLocation.setText(q.getLocationName().trim());
+		} else {
+			qLocation.setVisibility(View.GONE);
+		}
+		
 
 		qScore.setText(Integer.toString(q.getRating()));
 		CacheDataManager.getInstance().rememberQuestion(q);
@@ -180,6 +188,8 @@ public class QuestionActivity extends Activity implements Observer {
 		int id = item.getItemId();
 		switch (id) {
 		case R.id.action_settings:
+			Intent intent = new Intent(Agora.getContext(), UserPrefActivity.class);
+			startActivity(intent);
 			return true;
 		case R.id.action_favorite:
 			favorite();

@@ -9,6 +9,7 @@ import com.brogrammers.agora.R;
 import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.R.menu;
+import com.brogrammers.agora.data.LocationDataManager;
 import com.brogrammers.agora.data.QuestionController;
 import com.brogrammers.agora.helper.ImageGetter;
 import com.brogrammers.agora.helper.ImageResizer;
@@ -26,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -80,6 +82,8 @@ public class AuthorAnswerActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+			Intent intent = new Intent(Agora.getContext(), UserPrefActivity.class);
+			startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -92,7 +96,22 @@ public class AuthorAnswerActivity extends Activity {
     		Toast.makeText(Agora.getContext(), "Adding Answer!", Toast.LENGTH_SHORT).show();
     		String body = bodyText.getText().toString();
     		try {
-				QuestionController.getController().addAnswer(body, image, qid);
+    			
+    			CheckBox locationBox = (CheckBox) findViewById(R.id.attachLocationAnswerBox);
+    			if (locationBox.isChecked()){
+    				LocationDataManager.getInstance();
+    				if (LocationDataManager.getLocationName() != null){
+    					QuestionController.getController().addAnswer(body, image, qid, true);
+    				}
+    				else{
+    					Toast.makeText(Agora.getContext(), "Please check your location settings.",
+    							Toast.LENGTH_SHORT).show();
+    					return;
+    				}
+    			} else {
+    				QuestionController.getController().addAnswer(body, image, qid, false);
+
+    			}
 			} catch (UnsupportedEncodingException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
