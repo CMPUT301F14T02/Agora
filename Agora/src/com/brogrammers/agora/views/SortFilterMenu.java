@@ -12,7 +12,8 @@ import android.widget.Toast;
 
 import com.brogrammers.agora.Agora;
 import com.brogrammers.agora.R;
-import com.brogrammers.agora.helper.FilterSorterHelper;
+import com.brogrammers.agora.helper.QuestionFilterer;
+import com.brogrammers.agora.helper.QuestionSorter;
 
 public class SortFilterMenu {
 	private MainActivity activity; 
@@ -46,12 +47,12 @@ public class SortFilterMenu {
 		final CheckBox checkAuthor = (CheckBox) dialog.findViewById(R.id.authorcheck);
 		final CheckBox checkLocation = (CheckBox) dialog.findViewById(R.id.checkCloseToMe);
 		
-		rbUpvote.setChecked(FilterSorterHelper.byUpvote);
-		rbDescending.setChecked(FilterSorterHelper.descending);
-		checkFavorite.setChecked(FilterSorterHelper.filterFavorite);
-		checkPicture.setChecked(FilterSorterHelper.filterPicture);
-		checkAuthor.setChecked(FilterSorterHelper.filterAuthor);
-		checkLocation.setChecked(FilterSorterHelper.filterLocation);
+		rbUpvote.setChecked(QuestionSorter.byUpvote);
+		rbDescending.setChecked(QuestionSorter.descending);
+		checkFavorite.setChecked(QuestionFilterer.filterFavorite);
+		checkPicture.setChecked(QuestionFilterer.filterPicture);
+		checkAuthor.setChecked(QuestionFilterer.filterAuthor);
+		checkLocation.setChecked(QuestionFilterer.filterLocation);
 		
 		builder.setTitle("Sorting Options");
 		builder.setView(dialog)
@@ -59,12 +60,12 @@ public class SortFilterMenu {
 				.setPositiveButton(R.string.sort,
 						new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int id) {
-								FilterSorterHelper.byUpvote = rbUpvote.isChecked();
-								FilterSorterHelper.descending = rbDescending.isChecked();
-								FilterSorterHelper.filterFavorite = checkFavorite.isChecked();
-								FilterSorterHelper.filterPicture = checkPicture.isChecked();
-								FilterSorterHelper.filterAuthor = checkAuthor.isChecked();
-								FilterSorterHelper.filterLocation = checkLocation.isChecked();
+								QuestionSorter.byUpvote = rbUpvote.isChecked();
+								QuestionSorter.descending = rbDescending.isChecked();
+								QuestionFilterer.filterFavorite = checkFavorite.isChecked();
+								QuestionFilterer.filterPicture = checkPicture.isChecked();
+								QuestionFilterer.filterAuthor = checkAuthor.isChecked();
+								QuestionFilterer.filterLocation = checkLocation.isChecked();
 							
 								if(rbDate.isChecked()) {
 									Toast.makeText(Agora.getContext(), "Sorting by Date", Toast.LENGTH_SHORT).show();

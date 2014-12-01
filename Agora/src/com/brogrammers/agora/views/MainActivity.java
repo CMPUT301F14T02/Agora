@@ -18,7 +18,8 @@ import com.brogrammers.agora.data.CacheDataManager;
 import com.brogrammers.agora.data.DeviceUser;
 import com.brogrammers.agora.data.LocationDataManager;
 import com.brogrammers.agora.data.QuestionController;
-import com.brogrammers.agora.helper.FilterSorterHelper;
+import com.brogrammers.agora.helper.QuestionFilterer;
+import com.brogrammers.agora.helper.QuestionSorter;
 import com.brogrammers.agora.helper.QuestionLoaderSaver;
 import com.brogrammers.agora.model.Question;
 
@@ -96,7 +97,7 @@ public class MainActivity extends Activity implements Observer {
 
 	protected void refresh() {
 		qController.setObserver(this);
-		List<Question> qList = (FilterSorterHelper.filterLocation) ? 
+		List<Question> qList = (QuestionFilterer.filterLocation) ? 
 				qController.searchQuestionsByLocation() :
 				qController.getAllQuestions();
 		ListView lv = (ListView) findViewById(R.id.MainActivityListView);

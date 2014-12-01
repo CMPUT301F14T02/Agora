@@ -10,7 +10,8 @@ import com.brogrammers.agora.R.id;
 import com.brogrammers.agora.R.layout;
 import com.brogrammers.agora.data.DeviceUser;
 import com.brogrammers.agora.data.QuestionController;
-import com.brogrammers.agora.helper.FilterSorterHelper;
+import com.brogrammers.agora.helper.QuestionFilterer;
+import com.brogrammers.agora.helper.QuestionSorter;
 import com.brogrammers.agora.model.Question;
 
 import android.app.Activity;
@@ -175,9 +176,10 @@ public class QuestionAdapter extends BaseAdapter {
 	
 	public void doSortAndFilter() {
 		qList = unfilteredList == null ? qList : unfilteredList;
-		FilterSorterHelper helper = new FilterSorterHelper();
-		unfilteredList = helper.sort(qList);
-		qList = helper.filter(unfilteredList);
+		QuestionSorter sorter = new QuestionSorter();
+		unfilteredList = sorter.sort(qList);
+		QuestionFilterer filterer = new QuestionFilterer();
+		qList = filterer.filter(unfilteredList);
 		notifyDataSetChanged();
 	}
 
