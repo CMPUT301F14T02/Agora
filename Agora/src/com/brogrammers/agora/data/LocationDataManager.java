@@ -177,13 +177,10 @@ public class LocationDataManager {
 			JSONObject o = array.getJSONObject(0);
 			Double parsedLat = o.getDouble("lat");
 			Double parsedLon = o.getDouble("lon");
-			o = o.getJSONObject("address");
 			Log.e("JSON Location Result",result.toString());
-			String parsedLocation = o.getString("city");
-			parsedLocation += ", ";
-			parsedLocation += o.getString("country");
+
 			currentLocation = new SimpleLocation(parsedLat, parsedLon);
-			currentLocationName = parsedLocation;
+			currentLocationName = strLocation;
 
 		} catch (JSONException e1) {
 			
