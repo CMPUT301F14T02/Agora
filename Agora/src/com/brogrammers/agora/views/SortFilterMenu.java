@@ -44,11 +44,13 @@ public class SortFilterMenu {
 		final RadioButton rbDescending = (RadioButton) dialog.findViewById(R.id.descOrderRadioButton);
 		final CheckBox checkFavorite = (CheckBox) dialog.findViewById(R.id.favouritecheck);
 		final CheckBox checkPicture = (CheckBox) dialog.findViewById(R.id.picturecheck);
+		final CheckBox checkAuthor = (CheckBox) dialog.findViewById(R.id.authorcheck);
 		
 		rbUpvote.setChecked(FilterSorterHelper.byUpvote);
 		rbDescending.setChecked(FilterSorterHelper.descending);
 		checkFavorite.setChecked(FilterSorterHelper.filterFavorite);
 		checkPicture.setChecked(FilterSorterHelper.filterPicture);
+		checkAuthor.setChecked(FilterSorterHelper.filterAuthor);
 		
 		builder.setTitle("Sorting Options");
 		builder.setView(dialog)
@@ -60,6 +62,7 @@ public class SortFilterMenu {
 								FilterSorterHelper.descending = rbDescending.isChecked();
 								FilterSorterHelper.filterFavorite = checkFavorite.isChecked();
 								FilterSorterHelper.filterPicture = checkPicture.isChecked();
+								FilterSorterHelper.filterAuthor = checkAuthor.isChecked();
 							
 								if(rbDate.isChecked()) {
 									Toast.makeText(Agora.getContext(), "Sorting by Date", Toast.LENGTH_SHORT).show();
