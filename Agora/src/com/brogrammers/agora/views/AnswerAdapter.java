@@ -119,7 +119,8 @@ public class AnswerAdapter extends BaseAdapter {
 		Answer answer = (Answer)getItem(position);
 		Button comment = (Button) convertView.findViewById(R.id.aComment);
 		ImageView upvote = (ImageView) convertView.findViewById(R.id.aUpvote);
-		
+		((TextView)convertView.findViewById(R.id.aLocationText)).setText(answer.getLocationName());
+
 		//set text on each TextView & Buttons\
 		comment.setText("Comments ("+Integer.toString(answer.getComments().size())+")");
 		comment.getBackground().setColorFilter(0x44BABABA, PorterDuff.Mode.MULTIPLY);

@@ -65,7 +65,7 @@ public class QuestionActivity extends Activity implements Observer {
 		controller = QuestionController.getController();
 		controller.setObserver(this);
 
-
+		
 		Button viewComment = (Button) findViewById(R.id.QuestionCommentsButton);
 		Button viewAnswer = (Button) findViewById(R.id.QuestionAnswersButton);
 		ImageView upVoteQuestion = (ImageView) findViewById(R.id.QuestionUpVoteButton);
