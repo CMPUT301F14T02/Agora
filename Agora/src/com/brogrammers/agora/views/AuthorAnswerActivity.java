@@ -112,7 +112,6 @@ public class AuthorAnswerActivity extends Activity {
 
     			}
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     		finish();
