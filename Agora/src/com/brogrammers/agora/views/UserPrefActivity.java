@@ -47,18 +47,14 @@ public class UserPrefActivity extends Activity implements
 		int isGooglePlayServiceAvilable = GooglePlayServicesUtil
 				.isGooglePlayServicesAvailable(Agora.getContext());
 		if (isGooglePlayServiceAvilable == ConnectionResult.SUCCESS) {
-			// Toast.makeText(Agora.getContext(),
-			// "Google play services available", Toast.LENGTH_SHORT)
-			// .show();
 		} else {
 			Toast.makeText(Agora.getContext(),
-					"Google play services ist required.", Toast.LENGTH_SHORT)
+					"Google play services is required.", Toast.LENGTH_SHORT)
 					.show();
 			GooglePlayServicesUtil.getErrorDialog(isGooglePlayServiceAvilable,
 					this, 1122).show();
 		}
 		locationManager = LocationDataManager.getInstance();
-
 	}
 
 	@Override
@@ -135,13 +131,7 @@ public class UserPrefActivity extends Activity implements
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		//Toast.makeText(Agora.getContext(), "Connecting to location client...",
-		//		Toast.LENGTH_SHORT).show();
-		if (!mLocationClient.isConnecting()) {
-//			Toast.makeText(Agora.getContext(), "Connected!", Toast.LENGTH_SHORT)
-//					.show();
 
-		}
 	}
 
 	@Override
@@ -167,35 +157,12 @@ public class UserPrefActivity extends Activity implements
 						Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(Agora.getContext(),
-						"Location is not available...", Toast.LENGTH_SHORT)
+						"Location is not available.", Toast.LENGTH_SHORT)
 						.show();
 			}
 		}
 	}
-
-	private void setHardGpsLocation() {
-		// if (mLocationClient.isConnected()) {
-		double e = 53.5343609;
-		double d = 113.5065085;
-		LocationDataManager.getInstance().initLocation(e, d);
-
-		// }
-	}
-
-	private void setHardStringLocation() {
-		// if (mLocationClient.isConnected()) {
-		String s = "edmonton";
-		LocationDataManager.getInstance().initLocation(s);
-		Toast.makeText(Agora.getContext(),
-				LocationDataManager.getLocationName(), Toast.LENGTH_SHORT)
-				.show();
-		// Toast.makeText(Agora.getContext(),
-		// String.valueOf(LocationDataManager.getLocation().getLat()),
-		// Toast.LENGTH_SHORT)
-		// .show();
-		// }
-	}
-
+	
 	public void manualLocation(View v) {
 		RadioButton setLocationButton = (RadioButton) findViewById(R.id.setTextRadio);
 		if (!setLocationButton.isChecked()){
@@ -211,8 +178,6 @@ public class UserPrefActivity extends Activity implements
 		Toast.makeText(Agora.getContext(),
 				LocationDataManager.getLocationName(), Toast.LENGTH_SHORT)
 				.show();
-
-
 	}
 
 }
