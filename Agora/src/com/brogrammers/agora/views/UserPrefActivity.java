@@ -174,7 +174,7 @@ public class UserPrefActivity extends Activity implements
 		EditText setLocation = (EditText) findViewById(R.id.setLocationEditText);
 		String strLocation = setLocation.getText().toString();
 
-		locationManager.initLocation(strLocation.replace(" ", "%20"));
+		locationManager.initLocation(strLocation);
 		Toast.makeText(Agora.getContext(),
 				LocationDataManager.getLocationName(), Toast.LENGTH_SHORT)
 				.show();

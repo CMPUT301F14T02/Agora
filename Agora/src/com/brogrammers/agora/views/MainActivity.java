@@ -127,9 +127,6 @@ public class MainActivity extends Activity implements Observer {
 		int item_id = item.getItemId();
 
 		switch (item_id) {
-		case R.id.addQuestionBQV:
-			openAddQuestionView();
-			return true;
 		case R.id.searchBQV:
 			openSearchBar(item);
 			return true;
@@ -164,7 +161,7 @@ public class MainActivity extends Activity implements Observer {
 	 * Opens author question view so that user can author question.
 	 * 
 	 */
-	public void openAddQuestionView() {
+	public void openAddQuestionView(View v) {
 		Intent intent = new Intent(Agora.getContext(),
 				AuthorQuestionActivity.class);
 		startActivity(intent);
