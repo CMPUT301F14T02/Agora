@@ -293,7 +293,6 @@ public class QuestionController {
 		if (eSearch.isConnected()) {
 			tempRemoteQuestionByIdList = eSearch.getQuestionById(id);
 		} else {
-			Toast.makeText(Agora.getContext(), "Error: no internet connection", 0).show();
 		} 
 		return questionByIdList;
 	}
@@ -333,8 +332,6 @@ public class QuestionController {
 			}
 			observer.update();
 		} else {
-			Toast.makeText(Agora.getContext(),
-				"Controller: no observer registered!", 0).show();
 		}
 	}
 
