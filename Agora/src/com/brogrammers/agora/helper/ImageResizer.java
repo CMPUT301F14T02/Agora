@@ -53,8 +53,6 @@ public class ImageResizer {
 		} while (baos.size() > size); 
 		
 		byte[] imageBytes = baos.toByteArray();
-		Toast.makeText(Agora.getContext(), "Compressed photo size = "+imageBytes.length/1000+"KB", 0).show();
-		
 		return imageBytes;
 	}
 	
