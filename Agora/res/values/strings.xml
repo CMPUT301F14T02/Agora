@@ -9,7 +9,7 @@
     <string name="search">Search</string>
     <string name="sortBy">Sort By</string>
     <string name="sort">Sort</string>
-    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_search">Search</string>
     <string name="searchtab_questions">Questions</string>
     <string name="searchtab_answers">Answers</string>
     <string name="title_activity_author_question">Submit a Question</string>
@@ -26,9 +26,9 @@
     <string name="filterby">Filter By</string>
     <string name="date">Date</string>
     <string name="upvote">Upvote</string>
-    <string name="title_activity_question">QuestionActivity</string>
-    <string name="title_activity_answer">AnswerActivity</string>
-    <string name="title_activity_comment">CommentActivity</string>
+    <string name="title_activity_question">Question</string>
+    <string name="title_activity_answer">Answers</string>
+    <string name="title_activity_comment">Comments</string>
     <string name="answer">Answer</string>
     <string name="title_activity_user_pref">Settings</string>
 

@@ -56,7 +56,6 @@ public class AuthorAnswerActivity extends Activity {
 
 		Intent intent = getIntent();
 		qid = intent.getLongExtra("qid", 0L);
-		if (qid.equals(0L)) { Toast.makeText(this, "Didn't recieve a qid in intent", 0).show(); finish(); }		
 		
 		Button addAnswer = (Button) findViewById(R.id.authorAnswerAddAnswerButton);
 		Button addPictureCamera = (Button) findViewById(R.id.authorAnswerAddPictureCamera);
@@ -93,7 +92,7 @@ public class AuthorAnswerActivity extends Activity {
 		public void onClick(View v) {
 			// add answer
 			EditText bodyText = (EditText)findViewById(R.id.authorAnswerBodyEditText);
-    		Toast.makeText(Agora.getContext(), "Adding Answer!", Toast.LENGTH_SHORT).show();
+    		Toast.makeText(Agora.getContext(), "Added Answer!", Toast.LENGTH_SHORT).show();
     		String body = bodyText.getText().toString();
     		try {
     			
@@ -113,11 +112,9 @@ public class AuthorAnswerActivity extends Activity {
 
     			}
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     		finish();
-    		
 		}
 	};
 	

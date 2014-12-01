@@ -27,7 +27,12 @@ import android.widget.RadioButton;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
-
+/**
+ * Settings activity for the user. Allows user to set their GPS coordinates
+ * either by GPS or by manual input. 
+ * @author Group02
+ *
+ */
 public class UserPrefActivity extends Activity implements
 		GooglePlayServicesClient.ConnectionCallbacks,
 		GooglePlayServicesClient.OnConnectionFailedListener,
@@ -47,18 +52,14 @@ public class UserPrefActivity extends Activity implements
 		int isGooglePlayServiceAvilable = GooglePlayServicesUtil
 				.isGooglePlayServicesAvailable(Agora.getContext());
 		if (isGooglePlayServiceAvilable == ConnectionResult.SUCCESS) {
-			// Toast.makeText(Agora.getContext(),
-			// "Google play services available", Toast.LENGTH_SHORT)
-			// .show();
 		} else {
 			Toast.makeText(Agora.getContext(),
-					"Google play services ist required.", Toast.LENGTH_SHORT)
+					"Google play services is required.", Toast.LENGTH_SHORT)
 					.show();
 			GooglePlayServicesUtil.getErrorDialog(isGooglePlayServiceAvilable,
 					this, 1122).show();
 		}
 		locationManager = LocationDataManager.getInstance();
-
 	}
 
 	@Override
@@ -135,13 +136,7 @@ public class UserPrefActivity extends Activity implements
 
 	@Override
 	public void onConnected(Bundle arg0) {
-		//Toast.makeText(Agora.getContext(), "Connecting to location client...",
-		//		Toast.LENGTH_SHORT).show();
-		if (!mLocationClient.isConnecting()) {
-//			Toast.makeText(Agora.getContext(), "Connected!", Toast.LENGTH_SHORT)
-//					.show();
 
-		}
 	}
 
 	@Override
@@ -167,15 +162,15 @@ public class UserPrefActivity extends Activity implements
 						Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(Agora.getContext(),
-						"Location is not available...", Toast.LENGTH_SHORT)
+						"Location is not available.", Toast.LENGTH_SHORT)
 						.show();
 			}
 		}
 	}
-
-
-
-
+	/*
+	 * Creates instance of location data manger which parses the string
+	 * given by the user
+	 */
 	public void manualLocation(View v) {
 		RadioButton setLocationButton = (RadioButton) findViewById(R.id.setTextRadio);
 		if (!setLocationButton.isChecked()){
@@ -191,8 +186,6 @@ public class UserPrefActivity extends Activity implements
 		Toast.makeText(Agora.getContext(),
 				LocationDataManager.getLocationName(), Toast.LENGTH_SHORT)
 				.show();
-
-
 	}
 
 }

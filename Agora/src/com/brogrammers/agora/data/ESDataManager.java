@@ -51,7 +51,7 @@ import org.apache.http.entity.StringEntity;
  * @author Group 02
  * 
  */
-public class ESDataManager { // implements DataManager
+public class ESDataManager { // 
 	protected String DOMAIN = "http://cmput301.softwareprocess.es:8080/"; // domain
 	protected String INDEXNAME = "cmput301f14t02/"; // name of the ES
 													// database/index
@@ -500,7 +500,12 @@ public class ESDataManager { // implements DataManager
 		}
 
 	}
-
+	/**
+	 * Accepts byte array of server response and converts to jsonArray
+	 * 
+	 * @param arg2 byte array of elastic search server response
+	 * @return a JSONArray containing the server response           
+	 */
 	private JSONArray getPostObjects(byte[] arg2) throws JSONException {
 		String responseBody = new String(arg2);
 		Log.e("SERVER", "Server received data"); 
@@ -510,6 +515,18 @@ public class ESDataManager { // implements DataManager
 		return jsonArray;
 	}
 
+	/**
+	 * Populates a list of question or answer objects from 
+	 * Elastic Search response.
+	 * 
+	 * @param answerQuery search term for answers
+	 * @param filtered boolean indicating whether results need 
+	 * 		  extra level of filtering
+	 * @param questionList List to be populated with question objects 
+	 * @param answerList List to be populated with answer objects 
+	 * @param jsonArray array of json objects used to populates 
+	 * 			either the answer list or question list.
+	 */
 	private void extractPostObjectsFromResults(final String answerQuery,
 			final boolean filtered, final List<Question> questionList,
 			final List<Answer> answerList, JSONArray jsonArray)
@@ -543,7 +560,17 @@ public class ESDataManager { // implements DataManager
 			}
 		}
 	}
-
+	
+	/**
+	 *
+	 * Gets answer objects from a json array 
+	 * 
+	 * @param gson gson object for conversion
+	 * @param answers an array of answers
+	 * @param j the index in the array we are processing
+	 * @return and Answer object
+	 * @throws JSONException
+	 */
 	private Answer getAnswerObject(Gson gson, JSONArray answers, int j)
 			throws JSONException {
 		JSONObject answer = answers.getJSONObject(j);
@@ -553,6 +580,14 @@ public class ESDataManager { // implements DataManager
 		return qObject;
 	}
 
+	/**
+	 * Gets an array of JSON objects from Elastic Search Server response
+	 * 
+	 * @param jsonArray array of JSON objects
+	 * @param i index into the array
+	 * @return An array of Answer Objects
+	 * @throws JSONException
+	 */
 	private JSONArray getAnswersArray(JSONArray jsonArray, int i)
 			throws JSONException {
 		JSONObject a = jsonArray.getJSONObject(i);
@@ -561,6 +596,16 @@ public class ESDataManager { // implements DataManager
 		return answers;
 	}
 
+     /**
+	 * Gets a JSON objects from Elastic Search Server response
+	 * makes adjustment for type of search performed and the way 
+	 * Elastic Search provides results
+	 * 
+	 * @param filtered determines how results need to be parsed
+	 * @param q JSON representation of a question object
+	 * @return q JSON representation of question object
+	 * @throws JSONException
+	 */
 	private JSONObject getQuestionObject(final boolean filtered, JSONObject q)
 			throws JSONException {
 		if (!filtered){

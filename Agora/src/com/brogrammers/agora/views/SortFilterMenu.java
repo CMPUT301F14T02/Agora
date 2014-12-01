@@ -17,7 +17,6 @@ import com.brogrammers.agora.helper.QuestionSorter;
 
 public class SortFilterMenu {
 	private MainActivity activity; 
-	private QuestionAdapter qAdapter;
 	
 	public SortFilterMenu(MainActivity activity) {
 		this.activity = activity;
@@ -67,12 +66,6 @@ public class SortFilterMenu {
 								QuestionFilterer.filterAuthor = checkAuthor.isChecked();
 								QuestionFilterer.filterLocation = checkLocation.isChecked();
 							
-								if(rbDate.isChecked()) {
-									Toast.makeText(Agora.getContext(), "Sorting by Date", Toast.LENGTH_SHORT).show();
-								} else {
-									Toast.makeText(Agora.getContext(), "Sorting by Upvote", Toast.LENGTH_SHORT).show();
-								}
-								
 								activity.refresh();
 							}
 				})
