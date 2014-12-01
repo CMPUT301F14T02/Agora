@@ -1,7 +1,10 @@
 package com.brogrammers.agora;
 
+import com.brogrammers.agora.views.UserPrefActivity;
+
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 
 /**
  * Android Application class, extended to provide global access to application
@@ -28,4 +31,5 @@ public class Agora extends Application {
 		super.onCreate();
 		context = getApplicationContext();
 	}
+
 }

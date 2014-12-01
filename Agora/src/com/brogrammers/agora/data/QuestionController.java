@@ -164,12 +164,22 @@ public class QuestionController {
 	 *            no image provided)
 	 * @param qID
 	 *            the ID of the question that the Answer is to be added to.
+	 * @param location 
 	 * @return the ID of the created Answer
 	 * @throws UnsupportedEncodingException
 	 */
-	public Long addAnswer(String body, byte[] image, Long qID)
+	public Long addAnswer(String body, byte[] image, Long qID, boolean location)
 			throws UnsupportedEncodingException {
-		Answer a = new Answer(body, image, user.getUsername());
+		LocationDataManager.getInstance();
+		SimpleLocation locationCoor = LocationDataManager.getLocation();
+		String locationName = LocationDataManager.getLocationName();
+		Answer a;
+		if (location){
+			a = new Answer(body, image, user.getUsername(),locationCoor, locationName);
+		}else {
+			a = new Answer(body, image, user.getUsername());
+			
+		}
 		
 		cache.pushAnswer(a, qID);
 		eSearch.pushAnswer(a, qID, cache);
@@ -278,6 +288,16 @@ public class QuestionController {
 		return questionByIdList;
 	}
 
+	public List<Question> searchQuestionsByLocation() {
+		if (eSearch.isConnected()) {
+			Log.wtf("CONTROLLER SEARCH", "lat/lon: " + LocationDataManager.getLocation().getLat() + LocationDataManager.getLocation().getLat());
+			return eSearch.searchQuestionsByLocation(LocationDataManager.getLocation());
+		} else {
+			return new ArrayList<Question>();
+		}
+		
+	}
+	
 	/**
 	 * This method is called by a DataManager when it successfully populates a
 	 * list requested by the controller. Notifies the registered observer.

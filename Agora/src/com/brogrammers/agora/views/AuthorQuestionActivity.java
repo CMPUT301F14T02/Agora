@@ -97,7 +97,8 @@ public class AuthorQuestionActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
-
+			Intent intent = new Intent(Agora.getContext(), UserPrefActivity.class);
+			startActivity(intent);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

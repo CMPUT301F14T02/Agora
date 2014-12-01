@@ -158,6 +158,22 @@
         android:paddingLeft="8dp"
         android:text="Picture"
         android:textColor="#000000" />
+    
+    <CheckBox
+        android:id="@+id/authorcheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:text="My Questions"
+        android:textColor="#000000" />
+
+    <CheckBox
+        android:id="@+id/checkCloseToMe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="8dp"
+        android:text="Close To Me"
+        android:textColor="#000000" />
 
     <View
         android:layout_width="fill_parent"

@@ -119,7 +119,8 @@ public class AnswerAdapter extends BaseAdapter {
 		Answer answer = (Answer)getItem(position);
 		Button comment = (Button) convertView.findViewById(R.id.aComment);
 		ImageView upvote = (ImageView) convertView.findViewById(R.id.aUpvote);
-		
+		((TextView)convertView.findViewById(R.id.aLocationText)).setText(answer.getLocationName());
+
 		//set text on each TextView & Buttons\
 		comment.setText("Comments ("+Integer.toString(answer.getComments().size())+")");
 		comment.getBackground().setColorFilter(0x44BABABA, PorterDuff.Mode.MULTIPLY);
@@ -135,6 +136,13 @@ public class AnswerAdapter extends BaseAdapter {
 		TextView aScore = (TextView)convertView.findViewById(R.id.aScore);
 		aScore.setText(Integer.toString(answer.getRating()));
 		((TextView)convertView.findViewById(R.id.aAuthourDate)).setText("Submitted by: " +answer.getAuthor()+", "+ datetostring(answer.getDate()));
+		
+		if (!TextUtils.isEmpty(answer.getLocationName())) {
+			((TextView)convertView.findViewById(R.id.aLocationText)).setText(answer.getLocationName());
+		} else {
+			((TextView)convertView.findViewById(R.id.aLocationText)).setVisibility(View.GONE);
+		}
+		
 		
 		comment.setOnClickListener(new CommentOnClickListener(position));
 		upvote.setOnClickListener(new UpVoteOnClickListener(position, aScore));
