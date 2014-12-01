@@ -32,7 +32,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-
+/**
+ * Contains the locational information of the app. Whenever the app requires the current location of the device, LocationDataManager is called.
+ * Uses OpenStreetMap to determine locations.
+ * © OpenStreetMap contributors
+ * @author Group02
+ *
+ */
 public class LocationDataManager {
 	private static String URI = "http://nominatim.openstreetmap.org/reverse?format=json&";
 	private static String URI2 = "http://nominatim.openstreetmap.org/search/";
@@ -41,7 +47,10 @@ public class LocationDataManager {
 	private static String currentLocationName;
 	public static JSONObject testjson;
 	public static LocationDataManager self;
-
+/**
+ * Lazy singleton method of creating LocationDataManager.
+ * @return LocationDataManager
+ */
 	public static LocationDataManager getInstance() {
 		if (self == null) {
 			self = new LocationDataManager();
@@ -76,7 +85,7 @@ public class LocationDataManager {
 
 	/**
 	 * This snippet allows UI on main thread. Normally it's 2 lines but since
-	 * we're supporting 2.x, we need to reflect.
+	 * we're supporting 2.x, we need to reflect. This is to prevent Android Block Policy Errors
 	 */
 	private static void disableStrictMode() {
 		// StrictMode.ThreadPolicy policy = new
@@ -118,6 +127,13 @@ public class LocationDataManager {
 		}
 	}
 
+	/**
+	 * Reverse geocoding. Determines the location of the device, given the GPS coordinates. 
+	 * Accesses OpenStreetMap to obtain a JSON object containing information about the location.
+	 * © OpenStreetMap contributors
+	 * @param d Latitude
+	 * @param e Longitude
+	 */
 	private static void reverseGeoCode(final double d, final double e) {
 		// compe the url
 		disableStrictMode();
@@ -153,7 +169,12 @@ public class LocationDataManager {
 			e1.printStackTrace();
 		}
 	}
-
+	/**
+	 * Geocoding. Determines the location of the device, given a user inputed string location. 
+	 * Accesses OpenStreetMap to obtain a JSON object containing information about the location.
+	 * © OpenStreetMap contributors
+	 * @param strLocation String of the user inputted location
+	 */
 	public static void geoCode(final String strLocation) {
 		// compe the url
 		URI2 = "http://nominatim.openstreetmap.org/search/";
@@ -187,8 +208,10 @@ public class LocationDataManager {
 			Log.wtf("JSONEXCEPTION", Log.getStackTraceString(e1));
 			e1.printStackTrace();
 		} catch (IllegalStateException e1) {
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
