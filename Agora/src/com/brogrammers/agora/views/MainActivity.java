@@ -99,7 +99,7 @@ public class MainActivity extends Activity implements Observer {
 		List<Question> qList = (FilterSorterHelper.filterLocation) ? 
 				qController.searchQuestionsByLocation() :
 				qController.getAllQuestions();
-		ListView lv = (ListView) findViewById(R.id.answerSearchListView);
+		ListView lv = (ListView) findViewById(R.id.MainActivityListView);
 		qAdapter = new QuestionAdapter(qList, this);
 		lv.setAdapter(qAdapter);
 	}
