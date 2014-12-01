@@ -42,8 +42,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:background="#44BABABA"
         android:minWidth="80dip"
         android:text="OK"
         android:textColor="#000000" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="10dp"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false" />
 
 </LinearLayout>
